@@ -200,4 +200,9 @@ dev-debug.log
 # OS specific
 # Task files
 tasks.json
-tasks/ 
+tasks/
+
+# Added by Claude Task Master
+logs
+.idea
+.vscode

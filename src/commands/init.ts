@@ -1,11 +1,11 @@
 import {Command} from '@commander-js/extra-typings';
-import {COLOR} from '@refinio/one.core/lib/logger';
-import {generateNewIdentity} from '@refinio/one.models/lib/misc/IdentityExchange';
-import type {IdentityWithSecrets} from '@refinio/one.models/lib/misc/IdentityExchange';
+import {COLOR} from '@refinio/one.core/lib/logger.js';
+import {generateNewIdentity} from '@refinio/one.models/lib/misc/IdentityExchange.js';
+import type {IdentityWithSecrets} from '@refinio/one.models/lib/misc/IdentityExchange.js';
 import {
     readIdentityWithSecretsFile,
-    writeNewIdentityToFile
-} from '@refinio/one.models/lib/misc/IdentityExchange-fs';
+    writeIdentityWithSecretsFile
+} from '@refinio/one.models/lib/misc/IdentityExchange-fs.js';
 import Replicant from '../Replicant';
 import {DefaultConfigLocation, getStorageDirectoryFromConfig} from '../misc/commandsHelper';
 import {DefaultReplicantConfig} from '../ReplicantConfig';
@@ -95,11 +95,15 @@ initCommand
             } else if (options.createIdentityFile) {
                 console.log(`Creating new identity file ${options.createIdentityFile}`);
 
-                const newIdentity = await writeNewIdentityToFile(
-                    options.createIdentityFile,
+                const newIdentity = await generateNewIdentity(
                     options.url,
                     options.personEmail,
                     options.instanceName
+                );
+                
+                await writeIdentityWithSecretsFile(
+                    options.createIdentityFile,
+                    newIdentity.secret
                 );
 
                 identityFile = newIdentity.secret;

@@ -4,7 +4,7 @@
     "createEveryoneGroup": true,
     "useFiler": true,
     "filerConfig": {
-        "mountPoint": "/home/refinio/one-files",
+        "mountPoint": "/home/gecko/one-files",
         "pairingUrl": "https://leute.dev.refinio.one/invites/invitePartner/?invited=true/",
         "iomMode": "light",
         "logCalls": false

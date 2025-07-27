@@ -1,0 +1,35 @@
+# N-API build artifacts
+**/node_gyp_bins/
+**/n-api/build/
+**/n-api/node_modules/
+
+# Windows package directory
+windows-package/
+
+# Development files
+.git
+.gitignore
+.vscode
+.idea
+*.log
+*.tgz
+
+# Test files
+test/
+tests/
+*.test.js
+*.test.ts
+
+# Build artifacts
+build/
+dist/
+*.map
+
+# Documentation
+docs/
+*.md
+
+# Scripts
+scripts/
+windows-installer/
+electron-app/

@@ -1,0 +1,17 @@
+{
+    "mountPoint": "/home/user/one-files",
+    "pairingUrl": "https://leute.refinio.net",
+    "communication": {
+        "url": "https://comm.one-dragon.com"
+    },
+    "iomMode": "online",
+    "logCalls": false,
+    "fuseOptions": {
+        "force": true,
+        "mkdir": true
+    },
+    "useProjFS": true,
+    "projfsRoot": "C:\\OneFiler",
+    "projfsCacheSize": 104857600,
+    "_comment": "This configuration enables ProjFS mode on Windows for native performance"
+}

@@ -1,4 +1,65 @@
-# Product Requirements Document: one.filer WSL Integration
+# ONE.filer FUSE Implementation Fix - Product Requirements Document
+
+## Project Overview
+Fix the ONE.filer FUSE filesystem implementation to properly mount and provide Windows Explorer access via WSL2. The current implementation has a mock FUSE layer that needs to be replaced with a working userspace FUSE implementation.
+
+## Current State
+- Service starts successfully with correct authentication (secret: test123)
+- Mock FUSE implementation creates mount point but doesn't provide real filesystem functionality
+- ES module compatibility issues have been resolved
+- FUSE callback errors have been fixed
+- Mount point `/home/refinio/one-files` is created but not accessible from Windows Explorer
+
+## Technical Requirements
+
+### Core FUSE Implementation
+- Replace mock FUSE implementation with real userspace FUSE using fuse-shared-library-linux
+- Implement proper FUSE operations (getattr, readdir, read, write, etc.)
+- Ensure FUSE filesystem stays mounted and accessible
+- Handle FUSE callbacks correctly without "cb is not a function" errors
+
+### WSL2 Integration
+- Configure FUSE mount with proper permissions for Windows access
+- Ensure mount point is accessible via `\\wsl.localhost\kali-linux\home\refinio\one-files`
+- Set up proper uid/gid mapping (1000:1000)
+- Configure allow_other and allow_root options for Windows Explorer access
+
+### File System Operations
+- Implement directory listing functionality
+- Support file reading and writing operations
+- Handle file metadata (timestamps, permissions, size)
+- Support extended attributes for Windows compatibility
+
+### Error Handling
+- Proper error codes for FUSE operations
+- Graceful handling of mount/unmount operations
+- Recovery from FUSE errors
+- Logging for debugging Windows Explorer integration
+
+### Performance
+- Efficient file operations for Windows Explorer browsing
+- Proper caching of directory listings
+- Minimal latency for file access operations
+
+## Success Criteria
+1. Service starts and stays running with FUSE filesystem mounted
+2. Mount point `/home/refinio/one-files` is accessible from Windows Explorer via `\\wsl.localhost\kali-linux\home\refinio\one-files`
+3. Directory listings work correctly in Windows Explorer
+4. Files can be read and written through Windows Explorer
+5. No FUSE callback errors in logs
+6. Proper cleanup on service shutdown
+
+## Technical Stack
+- Node.js with ES modules
+- fuse-shared-library-linux for userspace FUSE
+- WSL2 Debian environment
+- Windows Explorer integration via WSL2 file bridge
+
+## Dependencies
+- Existing ONE.core authentication and data layer
+- FuseApiToIFileSystemAdapter for filesystem operations
+- WSL2 FUSE kernel support
+- Windows 10/11 WSL2 file bridge functionality
 
 ## Project Overview
 

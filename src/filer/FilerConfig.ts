@@ -1,17 +1,19 @@
-import {isObject} from '@refinio/one.core/lib/util/type-checks-basic';
+import {isObject} from '../utils/typeChecks';
 
 export interface FilerConfig {
     readonly mountPoint: string;
     readonly pairingUrl: string;
     readonly iomMode: 'full' | 'light';
     readonly logCalls: boolean;
+    readonly fuseOptions?: Record<string, any>;
 }
 
 export const DefaultFilerConfig: FilerConfig = {
     mountPoint: 'mnt',
     pairingUrl: 'https://leute.dev.refinio.one/invites/invitePartner/?invited=true/',
     iomMode: 'light',
-    logCalls: false
+    logCalls: false,
+    fuseOptions: {}
 };
 
 export function checkFilerConfig(config: unknown): Partial<FilerConfig> {
@@ -36,6 +38,10 @@ export function checkFilerConfig(config: unknown): Partial<FilerConfig> {
 
     if (Object.hasOwn(config, 'logCalls') !== undefined && typeof config.logCalls !== 'boolean') {
         throw new Error('"logCalls" of filer configuration needs to be a boolean');
+    }
+
+    if (Object.hasOwn(config, 'fuseOptions') && !isObject(config.fuseOptions)) {
+        throw new Error('"fuseOptions" of filer configuration needs to be an object.');
     }
 
     return config as FilerConfig;

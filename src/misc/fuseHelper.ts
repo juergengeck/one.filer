@@ -10,11 +10,9 @@
 import {
     FS_ERRORS,
     FS_INTERNAL_ERROR_CODE
-} from '@refinio/one.models/lib/fileSystems/FileSystemErrors';
-import {createError} from '@refinio/one.core/lib/errors';
-import type {FuseError} from '../fuse/native-fuse3.js';
+} from '@refinio/one.models/lib/fileSystems/FileSystemErrors.js';
+import {createError} from '@refinio/one.core/lib/errors.js';
 import { 
-    Fuse, 
     EPERM, 
     ENOENT, 
     EIO, 
@@ -28,7 +26,7 @@ import {
     EBUSY, 
     ENOTEMPTY 
 } from '../fuse/native-fuse3.js';
-import {COLOR} from '@refinio/one.core/lib/logger';
+import {COLOR} from '@refinio/one.core/lib/logger.js';
 
 export function splitRoutePath(routePath: string): {
     prefix: string;

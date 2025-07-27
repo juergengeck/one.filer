@@ -1,36 +1,46 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import type {IFileSystem} from '@refinio/one.models/lib/fileSystems/IFileSystem';
+import type {IFileSystem} from '@refinio/one.models/lib/fileSystems/IFileSystem.js';
 import fs from 'fs';
+import path from 'path';
 import FuseApiToIFileSystemAdapter from './FuseApiToIFileSystemAdapter';
 import {splitRoutePath} from '../misc/fuseHelper';
+import {isFunction} from '../utils/typeChecks';
 
-import { Fuse, OPERATIONS } from '../fuse/native-fuse3.js';
-import type { Stats as FuseStats } from '../fuse/native-fuse3.js';
-
-import {isFunction} from '@refinio/one.core/lib/util/type-checks-basic';
+import { getFuse } from '../fuse/index.js';
+import type { OPERATIONS } from '../fuse/index.js';
 
 /**
  *  This is a fuse frontend.
  */
 export class FuseFrontend {
-    private fuseInstance: null | Fuse = null;
+    private fuseInstance: null | any = null;
+    private Fuse: any;
 
     /** Start the fuse frontend.
      *
      *  @param rootFileSystem - The file system implementation that should be mounted
      *  @param mountPoint - Specifies the mount point where to mount the filesystem
      *  @param logCalls - If true log all calls to console
+     *  @param fuseOptions - FUSE mount options for Windows/WSL2 compatibility
      */
     public async start(
         rootFileSystem: IFileSystem,
         mountPoint: string,
-        logCalls: boolean = false
+        logCalls: boolean = false,
+        fuseOptions: Record<string, any> = {}
     ): Promise<void> {
         if (this.fuseInstance) {
             throw Error('Fuse frontend already started');
         }
 
-        FuseFrontend.setupMountPoint(mountPoint);
+        // Get the platform-appropriate FUSE implementation
+        this.Fuse = await getFuse();
+
+        // Resolve mount point to absolute path
+        const absoluteMountPoint = path.resolve(mountPoint);
+        console.log(`🔧 Resolved mount point: ${mountPoint} -> ${absoluteMountPoint}`);
+
+        FuseFrontend.setupMountPoint(absoluteMountPoint);
 
         // If we plan to have multiple implementations of the fuse API, then we need to move
         // this part outside this class. But at the moment we don't plan to do it (The
@@ -38,7 +48,7 @@ export class FuseFrontend {
         // the outside.
         const fuseFileSystemAdapter = new FuseApiToIFileSystemAdapter(
             rootFileSystem,
-            mountPoint,
+            absoluteMountPoint,
             logCalls
         );
 
@@ -81,6 +91,10 @@ export class FuseFrontend {
             mknod: fuseFileSystemAdapter.fuseMknod.bind(fuseFileSystemAdapter),
             setxattr: fuseFileSystemAdapter.fuseSetxattr.bind(fuseFileSystemAdapter),
             getxattr: (path: string, name: string, cb: (err: number, value?: Buffer) => void) => {
+                if (typeof cb !== 'function') {
+                    console.warn('🔧 FUSE getxattr called without callback:', { path, name });
+                    return;
+                }
                 fuseFileSystemAdapter.fuseGetxattr(path, name, 0, (err: number, xattr?: Buffer | null) => {
                     cb(err, xattr || undefined);
                 });
@@ -123,15 +137,21 @@ export class FuseFrontend {
             }
         }
 
-        this.fuseInstance = new Fuse(mountPoint, fuseHandlers, {
-            displayFolder: 'One FUSE'
-        });
+        // Merge user-provided FUSE options with defaults
+        const mountOptions = {
+            displayFolder: 'One FUSE',
+            ...fuseOptions
+        };
+        
+        console.log('🔧 FUSE mount options:', mountOptions);
+
+        this.fuseInstance = new this.Fuse(absoluteMountPoint, fuseHandlers, mountOptions);
 
         await new Promise<void>((resolve, reject) => {
             if (this.fuseInstance === null) {
                 reject(Error('Fuse frontend not yet started'));
             } else {
-                this.fuseInstance.mount(err => (err === null ? resolve() : reject(err)));
+                this.fuseInstance.mount((err: any) => (err === null ? resolve() : reject(err)));
             }
         });
     }
@@ -143,13 +163,14 @@ export class FuseFrontend {
                 if (this.fuseInstance === null) {
                     reject(Error('Fuse frontend not yet started'));
                 } else {
-                    this.fuseInstance.unmount(err => (err === null ? resolve() : reject(err)));
+                    this.fuseInstance.unmount((err: any) => (err === null ? resolve() : reject(err)));
                 }
             });
         }
     }
 
     public static async isFuseNativeConfigured(): Promise<boolean> {
+        const Fuse = await getFuse();
         return new Promise((resolve, reject) => {
             Fuse.isConfigured((err, isConfigured) => {
                 if (err !== null) {
@@ -162,6 +183,7 @@ export class FuseFrontend {
     }
 
     public static async configureFuseNative(): Promise<void> {
+        const Fuse = await getFuse();
         return new Promise((resolve, reject) => {
             Fuse.configure(errConfigure => {
                 if (errConfigure) {

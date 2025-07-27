@@ -1,6 +1,6 @@
-import {getIdObject} from '@refinio/one.core/lib/storage-versioned-objects';
-import {isFunction} from '@refinio/one.core/lib/util/type-checks-basic';
-import type {IdentityWithSecrets} from '@refinio/one.models/lib/misc/IdentityExchange';
+import {getIdObject} from '@refinio/one.core/lib/storage-versioned-objects.js';
+import {isFunction} from '@refinio/one.core/lib/util/type-checks-basic.js';
+import type {IdentityWithSecrets} from '@refinio/one.models/lib/misc/IdentityExchange.js';
 import {
     ChannelManager,
     ConnectionsModel,
@@ -9,15 +9,15 @@ import {
     LeuteModel,
     QuestionnaireModel,
     TopicModel
-} from '@refinio/one.models/lib/models';
-import IoMManager from '@refinio/one.models/lib/models/IoM/IoMManager';
-import GroupModel from '@refinio/one.models/lib/models/Leute/GroupModel';
-import Notifications from '@refinio/one.models/lib/models/Notifications';
+} from '@refinio/one.models/lib/models/index.js';
+import {default as IoMManager} from '@refinio/one.models/lib/models/IoM/IoMManager.js';
+// import {default as GroupModel} from '@refinio/one.models/lib/models/Leute/GroupModel.js'; // Unused
+import {default as Notifications} from '@refinio/one.models/lib/models/Notifications.js';
 import {existsSync, readdirSync} from 'fs';
 import {rimraf} from 'rimraf';
 import {Filer} from './filer/Filer';
 import {fillMissingWithDefaults} from './misc/configHelper';
-import {DefaultConnectionsModelConfig} from './misc/ConnectionsModelConfig';
+// import {DefaultConnectionsModelConfig} from './misc/ConnectionsModelConfig'; // Unused
 import {
     initOneCoreInstance,
     oneCoreInstanceExists,
@@ -59,16 +59,10 @@ export default class Replicant {
 
         this.config = fillMissingWithDefaults(config, DefaultReplicantConfig);
 
-        this.leuteModel = new LeuteModel(
-            this.config.commServerUrl,
-            this.config.createEveryoneGroup
-        );
+        this.leuteModel = new LeuteModel(this.config.commServerUrl, this.config.createEveryoneGroup);
         this.iomManager = new IoMManager(this.leuteModel, this.config.commServerUrl);
         this.channelManager = new ChannelManager(this.leuteModel);
-        this.connections = new ConnectionsModel(
-            this.leuteModel,
-            fillMissingWithDefaults(this.config.connectionsConfig, DefaultConnectionsModelConfig)
-        );
+        this.connections = new ConnectionsModel(this.leuteModel, this.config.connectionsConfig);
         this.consentFile = new ConsentModel();
         this.filerAccessRightsManager = new AccessRightsManager(
             this.connections,
@@ -113,13 +107,19 @@ export default class Replicant {
         await this.channelManager.init();
         await this.consentFile.init(this.channelManager);
         await this.questionnaires.init();
+        
+        // Get Everyone group - it should be created by leuteModel.init() if createEveryoneGroup is true
+        let everyoneGroup;
+        try {
+            everyoneGroup = await LeuteModel.everyoneGroup();
+        } catch (error) {
+            console.error('Error: Everyone group does not exist. Make sure createEveryoneGroup is set to true in config.');
+            throw error;
+        }
+        
         await this.filerAccessRightsManager.init({
             iom: (await this.iomManager.iomGroup()).groupIdHash,
-            everyone: (
-                await GroupModel.constructFromLatestProfileVersionByGroupName(
-                    LeuteModel.EVERYONE_GROUP_NAME
-                )
-            ).groupIdHash
+            everyone: everyoneGroup.groupIdHash
         });
         await this.documents.init();
         await this.topicModel.init();
@@ -251,7 +251,7 @@ export default class Replicant {
             const person = await getIdObject(myMainProfile.personId);
             myMainProfile.personDescriptions.push({
                 $type$: 'PersonName',
-                name: `Initial Replicant Identity ${person.email.slice(0, 8)}`
+                name: `Initial Replicant Identity ${(person as any).email?.slice(0, 8) || 'unknown'}`
             });
             await myMainProfile.saveAndLoad();
         }

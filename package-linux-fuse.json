@@ -1,0 +1,35 @@
+{
+  "name": "fuse-native-linux",
+  "version": "3.0.0",
+  "description": "Linux-only FUSE bindings for Node.js (WSL2 optimized)",
+  "main": "index.js",
+  "dependencies": {
+    "fuse-shared-library-linux": "^1.0.4"
+  },
+  "optionalDependencies": {},
+  "devDependencies": {
+    "standard": "^16.0.3"
+  },
+  "gypfile": true,
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "test": "standard && node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/refinio/fuse-native.git"
+  },
+  "keywords": [
+    "fuse",
+    "linux",
+    "wsl2",
+    "filesystem"
+  ],
+  "author": "REFINIO GmbH",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "os": ["linux"],
+  "cpu": ["x64", "arm64"]
+} 

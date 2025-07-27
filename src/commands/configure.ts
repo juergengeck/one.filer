@@ -1,5 +1,5 @@
 import {Command} from '@commander-js/extra-typings';
-import {COLOR} from '@refinio/one.core/lib/logger';
+import {COLOR} from '@refinio/one.core/lib/logger.js';
 import {FuseFrontend} from '../filer/FuseFrontend';
 
 export const configureCommand = new Command('configure');

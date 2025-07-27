@@ -4,17 +4,17 @@
  * @license SEE LICENSE IN LICENSE.md
  */
 
-// CRITICAL: Load Node.js platform modules for one.core before any other imports
-import '@refinio/one.core/lib/system/load-nodejs.js';
-
 import {program} from '@commander-js/extra-typings';
-import {configureCommand} from './commands/configure';
-import {deleteCommand} from './commands/delete';
-import {initCommand} from './commands/init';
-import {startCommand} from './commands/start';
-import {writeDefaultConfigCommand} from './commands/write-default-config';
+import {configureCommand} from './commands/configure.js';
+import {deleteCommand} from './commands/delete.js';
+import {initCommand} from './commands/init.js';
+import {startCommand} from './commands/start.js';
+import {writeDefaultConfigCommand} from './commands/write-default-config.js';
 
 async function main(): Promise<void> {
+    // CRITICAL: Load Node.js platform modules for one.core before any other imports
+    await import('@refinio/one.core/lib/system/load-nodejs.js');
+
     process.on('uncaughtException', (err, origin) => {
         console.log(`Uncaught ${err.name}, Origin: ${origin}`);
         console.error(err.message);

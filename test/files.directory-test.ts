@@ -2,10 +2,10 @@
 
 import * as fs from 'fs';
 
-import {getInstanceIdHash} from '@refinio/one.core/lib/instance';
-import {deleteStorage, setBaseDirOrName} from '@refinio/one.core/lib/system/storage-base';
+import {getInstanceIdHash} from '@refinio/one.core/lib/instance.js';
+import {deleteStorage, setBaseDirOrName} from '@refinio/one.core/lib/system/storage-base.js';
 
-import {Filer} from '../lib/Filer';
+import {Filer} from '../lib/index.js';
 
 const testConfig = {
     directory: 'test/data',

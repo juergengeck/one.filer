@@ -1,0 +1,27 @@
+{
+    "directory": "data",
+    "commServerUrl": "wss://comm10.dev.refinio.one",
+    "createEveryoneGroup": true,
+    "useFiler": true,
+    "filerConfig": {
+        "mountPoint": "/home/gecko/one-files",
+        "pairingUrl": "https://leute.dev.refinio.one/invites/invitePartner/?invited=true/",
+        "iomMode": "light",
+        "logCalls": false,
+        "fuseOptions": {
+            "allow_other": true,
+            "default_permissions": false,
+            "uid": -1,
+            "gid": -1
+        }
+    },
+    "connectionsConfig": {
+        "commServerUrl": "wss://comm10.dev.refinio.one",
+        "acceptIncomingConnections": true,
+        "acceptUnknownInstances": false,
+        "acceptUnknownPersons": false,
+        "allowPairing": true,
+        "pairingTokenExpirationDuration": 2147483647,
+        "establishOutgoingConnections": true
+    }
+}

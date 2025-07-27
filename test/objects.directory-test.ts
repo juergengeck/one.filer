@@ -1,10 +1,11 @@
 import {expect} from 'chai';
 import {exec} from 'child_process';
 
-import {getInstanceIdHash} from '@refinio/one.core/lib/instance';
-import {deleteStorage, listAllObjectHashes} from '@refinio/one.core/lib/system/storage-base';
+import {getInstanceIdHash} from '@refinio/one.core/lib/instance.js';
+import {deleteStorage, } from '@refinio/one.core/lib/system/storage-base.js';
+// TODO: Find correct import for listAllObjectHashes;
 
-import {Filer} from '../lib/Filer';
+import {Filer} from '../lib/index.js';
 
 const filer = new Filer({
     directory: 'test/data',

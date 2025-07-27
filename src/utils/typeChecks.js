@@ -1,0 +1,36 @@
+/**
+ * Local type checking utilities to replace missing exports from one.core
+ */
+/**
+ * Checks if a value is a non-null object
+ * @param thing - The value to check
+ * @returns true if the value is a non-null object
+ */
+export function isObject(thing) {
+    return typeof thing === 'object' && thing !== null;
+}
+/**
+ * Checks if a value is a string
+ * @param thing - The value to check
+ * @returns true if the value is a string
+ */
+export function isString(thing) {
+    return typeof thing === 'string';
+}
+/**
+ * Checks if a value is a function
+ * @param thing - The value to check
+ * @returns true if the value is a function
+ */
+export function isFunction(thing) {
+    return typeof thing === 'function';
+}
+/**
+ * String constants for SetAccessParam's mode parameter
+ * Replaces missing SET_ACCESS_MODE export from one.core
+ */
+export const SET_ACCESS_MODE = {
+    REPLACE: 'replace',
+    ADD: 'add'
+};
+//# sourceMappingURL=typeChecks.js.map

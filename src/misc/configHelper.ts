@@ -1,4 +1,4 @@
-import {isObject} from '@refinio/one.core/lib/util/type-checks-basic';
+import {isObject} from '../utils/typeChecks';
 import {readFile} from 'fs/promises';
 
 export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<T>;

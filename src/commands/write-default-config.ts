@@ -1,5 +1,5 @@
 import {Command} from '@commander-js/extra-typings';
-import {COLOR} from '@refinio/one.core/lib/logger';
+import {COLOR} from '@refinio/one.core/lib/logger.js';
 import fs from 'fs';
 import {DefaultReplicantConfig} from '../ReplicantConfig';
 

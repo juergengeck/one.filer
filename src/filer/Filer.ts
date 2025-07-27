@@ -1,15 +1,15 @@
-import type {IFileSystem} from '@refinio/one.models/lib/fileSystems/IFileSystem';
-import type {ConnectionsModel} from '@refinio/one.models/lib/models';
-import type {ChannelManager, LeuteModel, TopicModel} from '@refinio/one.models/lib/models';
-import type IoMManager from '@refinio/one.models/lib/models/IoM/IoMManager';
-import type Notifications from '@refinio/one.models/lib/models/Notifications';
+import type {IFileSystem} from '@refinio/one.models/lib/fileSystems/IFileSystem.js';
+import type {ConnectionsModel} from '@refinio/one.models/lib/models/index.js';
+import type {ChannelManager, LeuteModel, TopicModel} from '@refinio/one.models/lib/models/index.js';
+import type IoMManager from '@refinio/one.models/lib/models/IoM/IoMManager.js';
+import type Notifications from '@refinio/one.models/lib/models/Notifications.js';
 
-import TemporaryFileSystem from '@refinio/one.models/lib/fileSystems/TemporaryFileSystem';
-import ObjectsFileSystem from '@refinio/one.models/lib/fileSystems/ObjectsFileSystem';
-import DebugFileSystem from '@refinio/one.models/lib/fileSystems/DebugFileSystem';
-import TypesFileSystem from '@refinio/one.models/lib/fileSystems/TypesFileSystem';
-import PairingFileSystem from '@refinio/one.models/lib/fileSystems/PairingFileSystem';
-import ChatFileSystem from '@refinio/one.models/lib/fileSystems/ChatFileSystem';
+import TemporaryFileSystem from '@refinio/one.models/lib/fileSystems/TemporaryFileSystem.js';
+import ObjectsFileSystem from '@refinio/one.models/lib/fileSystems/ObjectsFileSystem.js';
+import DebugFileSystem from '@refinio/one.models/lib/fileSystems/DebugFileSystem.js';
+import TypesFileSystem from '@refinio/one.models/lib/fileSystems/TypesFileSystem.js';
+import PairingFileSystem from '@refinio/one.models/lib/fileSystems/PairingFileSystem.js';
+import ChatFileSystem from '@refinio/one.models/lib/fileSystems/ChatFileSystem.js';
 
 import {COMMIT_HASH} from '../commit-hash';
 import {DefaultFilerConfig} from './FilerConfig';
@@ -53,13 +53,13 @@ export class Filer {
 
         const rootFileSystem = await this.setupRootFileSystem();
 
+        // Always use standard FUSE in WSL2
+        console.log('🐧 Starting FUSE in WSL2...');
         const fuseFrontend = new FuseFrontend();
-        await fuseFrontend.start(rootFileSystem, this.config.mountPoint, this.config.logCalls);
+        await fuseFrontend.start(rootFileSystem, this.config.mountPoint, this.config.logCalls, this.config.fuseOptions || {});
         this.shutdownFunctions.push(fuseFrontend.stop.bind(fuseFrontend));
-
-        console.log(
-            `[info]: Filer file system was mounted at ${this.config.mountPoint}`
-        );
+        
+        console.log(`[info]: Filer file system was mounted at ${this.config.mountPoint}`);
     }
 
     /**
@@ -111,6 +111,6 @@ export class Filer {
         await rootFileSystem.mountFileSystem('/objects', objectsFileSystem);
         await rootFileSystem.mountFileSystem('/types', typesFileSystem);
 
-        return rootFileSystem;
+        return rootFileSystem as unknown as IFileSystem;
     }
 }

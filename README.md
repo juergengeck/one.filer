@@ -1,87 +1,154 @@
-# OneFiler
+# ONE Filer
 
-**A Windows-WSL2 file system bridge for seamless ONE database integration through Windows Explorer**
+**Windows orchestrator for ONE Leute Replicant with native Windows ProjectedFS (ProjFS) support**
 
-> Implements a dual-pathway data ingestion system: structured data → ONE objects, unstructured data → BLOB/CLOB with metadata
+> ⚠️ **Important Update (July 2025)** – ONE Filer now ships with a *native* Windows ProjectedFS (ProjFS) virtual-filesystem layer that runs directly inside the Electron app. The previous *WSL + FUSE* path is retained only as a fallback. Sections of this README that still reference FUSE or WSL2 are in the process of being migrated.
 
 ## 🎯 Project Overview
 
-OneFiler creates a transparent bridge between Windows Explorer and the ONE database system via WSL2, enabling:
+ONE Filer provides:
 
-- **Native Windows Explorer integration** - Files appear as regular Windows folders
-- **Automatic data classification** - Smart routing to ONE objects or BLOB storage  
-- **WSL2-powered backend** - Leverages Linux-native ONE runtime performance
-- **Zero-setup user experience** - Works like any normal Windows directory
+- **Windows Orchestration** - Manages ONE Leute Replicant installation and execution in WSL2
+- **ProjFS Virtual Filesystem** - Native Windows ProjectedFS implementation for ONE database access (no WSL required)
+- **Windows Explorer Integration** - Access ONE data through standard Windows file operations
+- **Electron GUI** - User-friendly Windows application for managing the replicant
+- **Automated Installation** - PowerShell scripts for seamless WSL2 and Ubuntu setup
 
-## 📋 Project Management
+## 🏗️ Architecture
 
-This project uses **TaskMaster AI** for development planning and task management.
+### Core Components
 
-### Current Status: **50% Complete** (6/12 tasks)
-- ✅ WSL2 + Node.js Environment  
-- ✅ Windows File System Integration
-- ✅ Windows Explorer Integration  
-- ✅ Enhanced File System Recipes
-- ✅ Debian Package Creation
-- ✅ Windows Installer
-- 🔄 **Next:** Two-Tier Data Ingestion Pipeline (Task 8)
+1. **ONE Leute Replicant** (This Project)
+   - Complete replicant implementation with FUSE filesystem support
+   - Runs in WSL2 Ubuntu environment
+   - Provides CLI: `one-leute-replicant` with commands:
+     - `init` - Initialize new ONE instance
+     - `start` - Start replicant with FUSE filesystem
+     - `configure` - Manage configuration
+     - `delete` - Delete operations
 
-### TaskMaster Commands
-```bash
-# View all tasks
-npx task-master-ai list --with-subtasks
+2. **Windows Orchestration**
+   - PowerShell installer scripts for WSL2 setup
+   - Electron app for GUI management
+   - Automatic Ubuntu and dependency installation
 
-# Get next task to work on  
-npx task-master-ai next
+3. **ProjFS Integration**
+   - Native Linux FUSE3 bindings via N-API
+   - Multiple filesystem types:
+     - `/chats` - Chat conversations
+     - `/objects` - ONE database objects  
+     - `/types` - Type definitions
+     - `/debug` - Debug information
+     - `/invites` - Pairing/invitation system
 
-# Update task status
-npx task-master-ai set-status --id=8 --status=in-progress
+### How It Works
 
-# Break down complex tasks
-npx task-master-ai expand --id=8 --research
-```
+1. **Electron App (Primary Interface)**:
+   - Detects and automatically installs WSL2/Ubuntu if needed
+   - Manages ONE Leute Replicant lifecycle (install, init, start, stop)
+   - Provides real-time status monitoring and error handling
+   - Offers mount point management and file system access
+   - Runs in Windows system tray for always-available access
+
+2. **WSL2 Backend**:
+   - ONE Leute Replicant runs with full Linux capabilities
+   - FUSE filesystem provides native file operations
+   - Automatic sync with ONE communication servers
+   - Accessible from Windows via `\\wsl$\Ubuntu\path`
+
+3. **User Experience**:
+   ```
+   User clicks → Electron App → Manages WSL2 → Runs Replicant → FUSE Mount → Windows Explorer
+   ```
+
+All complexity is hidden - users just see files in Windows Explorer.
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- **Windows 10/11** with WSL2 enabled
-- **Node.js 16+** (installed in WSL2)
-- **Git** with SSH key access to ONE repositories
-- **WinFSP** for Windows FUSE support
-- **Ollama** (optional, for local AI assistance)
+- **Windows 10/11** with administrator privileges
+- **WSL2** with Ubuntu installed
+- **Node.js 20+** in WSL Ubuntu
+- **Internet connection** for downloading dependencies
+- **4GB+ RAM** recommended
 
 ### Installation
 
-#### 1. Windows Setup
-```bash
-# Install WinFSP
-# Download from: https://github.com/winfsp/winfsp/releases
-# Enable Core & Development Features during installation
+#### Option 1: From Source (Development)
 
-# Clone repository
-git clone https://github.com/juergengeck/one.filer.git
-cd one.filer
-```
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/refinio/one.filer.git
+   cd one.filer
+   ```
 
-#### 2. WSL2 Setup  
-```bash
-# Install dependencies
-npm install
+2. **Build ONE Filer in WSL**:
+   ```bash
+   # In WSL Ubuntu
+   cd /mnt/c/path/to/one.filer
+   npm install
+   npm run build
+   node fix-all-imports.js  # Fix ES module imports
+   ```
 
-# Build project
-npm run build
+3. **Build and run the Electron app**:
+   ```bash
+   # In Windows
+   cd electron-app
+   npm install
+   npm run build
+   npm start
+   ```
 
-# Start the filer
-npm run start-filer
-```
+#### Option 2: Pre-built Release
 
-#### 3. TaskMaster Setup (Optional)
-```bash
-# Initialize TaskMaster
-npx task-master-ai init
+1. **Download** the latest release from [Releases](https://github.com/refinio/one.filer/releases)
+2. **Run** `ONE Filer Login Setup 1.0.0.exe` as Administrator
+3. **Follow** the installation wizard
 
-# Configure with local Ollama (if available)
-npx task-master-ai models --set-main=gemma2:latest --ollama
+### Using ONE Filer
+
+#### Electron App (Primary Interface)
+
+Launch **ONE Filer Login** from your desktop or start menu, or run `npm start` in the electron-app directory.
+
+**Main Features:**
+- **Login Screen** - Enter your ONE instance secret/password
+- **Status Monitoring** - Real-time connection status to ONE Leute Replicant
+- **System Tray** - Minimizes to system tray for background operation
+- **Auto-start** - Can be configured to start with Windows
+- **Mount Management** - Automatically mounts FUSE filesystem when connected
+
+**First Run:**
+1. Launch the ONE Filer Login app
+2. Enter your ONE instance secret (password)
+3. Click "Connect" to start ONE Filer in WSL
+4. The app will show "Connected" when successfully running
+5. Access your files via the mount point (typically `./mnt` in the one.filer directory)
+
+**Typical Workflow:**
+1. Launch ONE Filer
+2. Click **"Setup WSL2"** if prompted (first time only)
+3. Click **"Initialize Instance"** to create your ONE database
+4. Enter your secret passphrase
+5. Click **"Start Replicant"** 
+6. Access your files at the mount point shown
+
+#### Admin Scripts (Secondary - For Advanced Users)
+
+For administrators who need command-line access:
+
+```powershell
+# PowerShell installer
+windows-installer\install-one-filer-standalone.ps1
+
+# Batch scripts
+windows-installer\init-one-filer.bat    # Initialize instance
+windows-installer\start-one-filer.bat   # Start replicant
+
+# Direct WSL2 command
+wsl -d Ubuntu -- one-leute-replicant start --secret "your-secret"
+
 ```
 
 ## 📁 Project Structure
@@ -89,101 +156,181 @@ npx task-master-ai models --set-main=gemma2:latest --ollama
 ```
 one.filer/
 ├── src/                    # TypeScript source code
-│   ├── filer/             # Core filer implementation  
-│   ├── fileSystems/       # File system adapters
-│   ├── commands/          # CLI commands
-│   └── misc/              # Utilities and helpers
-├── scripts/               # Setup and deployment scripts
-├── tasks/                 # TaskMaster task definitions
-├── configs/               # Configuration files
-├── debian/                # Debian packaging
-└── windows-installer/     # Windows installer
+│   ├── commands/          # CLI commands (init, start, configure)
+│   ├── filer/            # FUSE filesystem implementation
+│   ├── fuse/             # Native FUSE3 bindings
+│   └── misc/             # Utilities and helpers
+├── electron-app/          # Windows Electron GUI
+├── windows-installer/     # PowerShell installation scripts
+├── configs/              # Configuration examples
+├── vendor/               # Packaged dependencies
+└── lib/                  # Built JavaScript (generated)
 ```
 
 ## 🔧 Development
 
-### Using npm link for ONE Dependencies
+### Primary Focus: Electron App Enhancement
+
+The Electron app is the primary user interface and should handle all user operations:
+
+**Core Capabilities to Implement:**
+- **WSL2 Detection & Installation** - Automatically detect and install WSL2/Ubuntu
+- **Replicant Management** - Install, initialize, start, stop ONE Leute Replicant in WSL2
+- **Mount Point Management** - Configure and manage FUSE mount locations
+- **Real-time Monitoring** - Show replicant status, sync progress, error states
+- **Configuration GUI** - User-friendly interface for all settings
+- **System Integration** - Windows notifications, system tray, file associations
+
+### Building the Project
+
 ```bash
-# Step 1: Clone and link ONE libraries
-git clone <one.core-repo> ../one.core
-git clone <one.models-repo> ../one.models
+# Build the replicant backend (in WSL2)
+cd ~/one.filer
+npm install && npm run build
 
-# Step 2: Link to this project
-npm link ../one.core ../one.models
-
-# Step 3: Link models to core
-cd ../one.models  
-npm link ../one.core
+# Build the Electron app (from Windows)
+cd electron-app
+npm install && npm run build
 ```
 
-### TaskMaster Workflow
-1. **Check current status:** `npx task-master-ai next`
-2. **Start working:** `npx task-master-ai set-status --id=X --status=in-progress`
-3. **Break down tasks:** `npx task-master-ai expand --id=X --research`
-4. **Update progress:** `npx task-master-ai update-subtask --id=X.Y --prompt="Progress update"`
-5. **Mark complete:** `npx task-master-ai set-status --id=X --status=done`
+### Electron App Architecture
 
-## 🏗️ Architecture
+```
+electron-app/
+├── src/main.ts          # Main process - WSL2 management
+├── src/renderer/        # UI components
+├── src/preload.js       # Security bridge
+└── assets/              # Icons, resources
+```
 
-### Two-Tier Data Ingestion Pipeline
-- **Structured Data Path:** JSON, XML, CSV → ONE Objects
-- **Unstructured Data Path:** Binary files → BLOB/CLOB + metadata
-- **Smart Detection:** Automatic file type classification  
-- **Windows Compatibility:** Full Explorer integration
+**Key Integration Points:**
+- Execute WSL2 commands via `child_process.spawn`
+- Monitor replicant status through WSL2 communication
+- Provide mount point access via Windows file explorer
+- Handle all error states with user-friendly messages
 
-### WSL2-Windows Bridge
-- **FUSE Frontend:** Windows Explorer compatibility
-- **WSL2 Backend:** Native ONE runtime performance  
-- **Service Management:** Auto-start integration
-- **Error Handling:** Robust cross-boundary operations
+### Creating Distribution Package
 
-## 📖 Documentation
+```bash
+# Package replicant for WSL2 deployment
+npm pack  # Creates vendor/refinio-one.leute.replicant-latest.tgz
 
-- **[Project PRD](scripts/prd.txt)** - Complete project requirements
-- **[TaskMaster Tasks](tasks/)** - Current development plan
-- **[Setup Scripts](scripts/)** - Automated installation helpers
+# Build Electron installer
+cd electron-app
+npm run dist  # Creates OneFiler-Setup.exe
+```
 
-## 🛠️ Platform-Specific Installation
+## ⚙️ Configuration
 
-### For Windows
-In case pthreads installation with vcpkg shows error about not finding visual studio instance, download `C++ CMake tools for Windows` individual component from https://visualstudio.microsoft.com/downloads/ community visual studio installer.
+### Replicant Configuration (`configs/replicant.json`)
+```json
+{
+  "commServerUrl": "wss://comm.example.com",
+  "useFiler": true,
+  "filerConfig": {
+    "mountPoint": "/home/user/one-files",
+    "windowsIntegration": {
+      "enabled": true,
+      "wsl2Mode": true
+    }
+  }
+}
+```
 
-Python is required. Tested with version 3.*
+### Key Options
+- `commServerUrl` - Communication server for syncing
+- `useFiler` - Enable FUSE filesystem
+- `mountPoint` - Where to mount the filesystem
+- `windowsIntegration` - Enable Windows-specific features
 
-- Get WinFSP from [here](https://github.com/winfsp/winfsp/releases/tag/v1.8) (the .msi file) and 
-  install it. In the installation prompt, enable Core & Development Features
-- `npm install` (in one.filer)
-- `npm run build`
-- `npm run start-filer`
+## 🐛 Troubleshooting
 
-### For Linux
-- `npm install -g fuse-native`
-- make node, npm and fuse-native available for sudo
-    - `sudo ln -s /home/ubuntu/.nvm/versions/node/v16.18.0/bin/node /usr/local/bin/node`
-    - `sudo ln -s /home/ubuntu/.nvm/versions/node/v16.18.0/bin/npm /usr/local/bin/npm`
-    - `sudo ln -s /home/ubuntu/.nvm/versions/node/v16.18.0/bin/fuse-native /usr/local/bin/fuse-native`
-- `fuse-native is-configured` # checks if the kernel extension is already configured
-- `sudo fuse-native configure` # configures the kernel extension
-- `npm install`
-- `npm run build`
-- `npm run start`
+### Common Issues
 
-### For macOS
-- `npm install`
-- `npm run build`
-- `npm run start`
+#### "Another instance is already running"
+```bash
+# Kill all electron processes
+powershell -Command "Get-Process electron | Stop-Process -Force"
 
-## 🔍 Debugging
+# Or find process on port 17890
+netstat -an | findstr 17890
+```
 
-I added a lsone.sh file. It lists the contents of the one datbase in human-readable format.
-Requirements: bash, sed and tidy and a console that understands ansi colors.
+#### ES Module Import Errors
+```bash
+# In WSL, run the import fix script
+cd /mnt/c/path/to/one.filer
+node fix-all-imports.js
+# Or
+node scripts/fix-all-imports.js
+```
+
+#### "Cannot find module" errors
+1. Ensure you've built the project: `npm run build`
+2. Fix ES module imports: `node fix-all-imports.js`
+3. Check that `lib/` directory exists with compiled JS files
+
+#### WSL/Ubuntu Issues
+- Ensure WSL2 is installed: `wsl --install`
+- Check WSL is running: `wsl --list --running`
+- Install Ubuntu: `wsl --install -d Ubuntu`
+- Update WSL: `wsl --update`
+
+#### Electron App Won't Start
+1. Check Node.js version: `node --version` (should be 20+)
+2. Reinstall dependencies:
+   ```bash
+   cd electron-app
+   rm -rf node_modules package-lock.json
+   npm install
+   npm run build
+   ```
+
+#### ONE Filer Won't Connect
+- Verify your secret/password is correct
+- Check the config file path is valid
+- Ensure ONE Leute Replicant service is accessible
+- Check firewall settings for WSL2
+
+### Development Issues
+
+1. **Permission Denied on FUSE Mount**
+   ```bash
+   sudo usermod -a -G fuse $USER
+   # Log out and back in
+   ```
+
+2. **TypeScript Build Errors**
+   - Version mismatch between one.core and one.models
+   - Solution: Use the vendor packages provided
+
+3. **WSL2 Not Found**
+   - Enable WSL2 in Windows Features
+   - Install Ubuntu from Microsoft Store
+
+4. **FUSE Not Working**
+   ```bash
+   # Check FUSE is installed
+   fusermount3 --version
+   
+   # Install if missing
+   sudo apt install fuse3 libfuse3-dev
+   ```
 
 ## 🤝 Contributing
 
-1. Check TaskMaster for current priorities: `npx task-master-ai next`
-2. Follow the development workflow outlined above
-3. Update task status as you progress
-4. Create PRs against the main branch
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes in WSL2 environment
+4. Test with `npm test`
+5. Submit a pull request
+
+## 📚 Additional Resources
+
+- [FUSE Documentation](https://www.kernel.org/doc/html/latest/filesystems/fuse.html)
+- [WSL2 Documentation](https://docs.microsoft.com/en-us/windows/wsl/)
+- [ONE Core Documentation](https://github.com/refinio/one.core)
+- [Electron Documentation](https://www.electronjs.org/)
 
 ## 📄 License
 

@@ -1,0 +1,18 @@
+{
+    "filer": {
+        "enabled": true,
+        "mountDirectory": "/mnt/one-files",
+        "fuseMountOptions": {
+            "allow_other": true,
+            "default_permissions": true,
+            "uid": 1000,
+            "gid": 1000,
+            "umask": "0000"
+        }
+    },
+    "replicant": {
+        "enabled": false
+    },
+    "debug": true,
+    "logLevel": "info"
+} 

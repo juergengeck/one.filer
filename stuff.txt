@@ -1,0 +1,8 @@
+please read
+
+one.core/src/recipes.ts,
+one.core/src/instance.ts,
+one.core/src/util/object.ts,
+one.core/src/object-recipes.ts,
+
+especially the comments

@@ -1,18 +1,18 @@
 {
     "compilerOptions": {
-        "noEmit": true,
+        "noEmit": false,
         "alwaysStrict": true,
         "outDir": "lib",
         "isolatedModules": false,
         "moduleResolution": "node",
-        "sourceMap": false,
+        "sourceMap": true,
         "emitDeclarationOnly": false,
-        "declaration": false,
+        "declaration": true,
         "declarationMap": false,
         "downlevelIteration": false,
         "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
         "importHelpers": false,
-        "importsNotUsedAsValues": "error",
         "lib": ["esnext", "dom"],
         "module": "esnext",
         "target": "esnext",
@@ -25,23 +25,22 @@
         "preserveConstEnums": true,
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
-        "types": ["@OneCoreTypes", "@types/mocha", "node"]
+        "skipLibCheck": true,
+        "types": ["mocha", "node"],
+        "typeRoots": ["./src/types", "./node_modules/@types"]
     },
     "include": [
-        "node_modules/one.core/@OneCoreTypes.d.ts",
-        "node_modules/one.models/src/recipes/*.ts",
-        "src/*.ts",
-        "src/*/*.ts",
-        "src/types/*.d.ts",
-        "test/*/*.ts",
-        "test/*.ts"
+        "src/**/*.ts",
+        "src/types/*.d.ts"
     ],
     "exclude": [
-        "src/clients",
-        "node_modules/one.core/src/",
-        "node_modules/one.core/src/**",
-        "node_modules/one.models/src/",
-        "node_modules/one.models/src/**",
-        ".*.js"
+        "node_modules",
+        "lib",
+        "scripts",
+        "test",
+        "windows-installer",
+        "electron-app",
+        "**/*.test.ts",
+        "**/*.spec.ts"
     ]
 }

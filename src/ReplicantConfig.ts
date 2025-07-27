@@ -1,5 +1,5 @@
-import {isObject} from '@refinio/one.core/lib/util/type-checks-basic';
-import type {ConnectionsModelConfiguration} from '@refinio/one.models/lib/models/ConnectionsModel';
+import {isObject} from './utils/typeChecks';
+import type {ConnectionsModelConfiguration} from '@refinio/one.models/lib/models/ConnectionsModel.js';
 import type {FilerConfig} from './filer/FilerConfig';
 import {checkFilerConfig, DefaultFilerConfig} from './filer/FilerConfig';
 import {DefaultConnectionsModelConfig} from './misc/ConnectionsModelConfig';

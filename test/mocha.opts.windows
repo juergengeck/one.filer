@@ -1,0 +1,5 @@
+--require ts-node/register
+--timeout 60000
+--exit
+test/functional/fuse-windows-native.test.ts
+test/functional/fuse-cross-platform.test.ts

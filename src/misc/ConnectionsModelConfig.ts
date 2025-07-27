@@ -2,8 +2,8 @@
  * This stuff should probably be moved to one.models.
  */
 
-import {isObject} from '@refinio/one.core/lib/util/type-checks-basic';
-import type {ConnectionsModelConfiguration} from '@refinio/one.models/lib/models/ConnectionsModel';
+import {isObject} from '../utils/typeChecks';
+import type {ConnectionsModelConfiguration} from '@refinio/one.models/lib/models/ConnectionsModel.js';
 
 export const DefaultConnectionsModelConfig: ConnectionsModelConfiguration = {
     commServerUrl: 'wss://comm10.dev.refinio.one',
@@ -11,8 +11,11 @@ export const DefaultConnectionsModelConfig: ConnectionsModelConfiguration = {
     acceptUnknownInstances: false,
     acceptUnknownPersons: false,
     allowPairing: true,
+    allowDebugRequests: true,
     pairingTokenExpirationDuration: 2147483647,
-    establishOutgoingConnections: true
+    establishOutgoingConnections: true,
+    noImport: false,
+    noExport: false
 };
 
 export function checkConnectionsModelConfig(

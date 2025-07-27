@@ -1,5 +1,5 @@
 import {Command} from '@commander-js/extra-typings';
-import {COLOR} from '@refinio/one.core/lib/logger';
+import {COLOR} from '@refinio/one.core/lib/logger.js';
 import {DefaultConfigLocation} from '../misc/commandsHelper';
 import {assignConfigOption, readJsonFileOrEmpty} from '../misc/configHelper';
 import {DefaultFilerConfig} from '../filer/FilerConfig';

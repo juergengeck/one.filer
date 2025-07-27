@@ -15,7 +15,7 @@ import type {
     FileSystemFile,
     IFileSystem
 } from '@refinio/one.models/lib/fileSystems/IFileSystem.js';
-import type {SHA256Hash} from '@refinio/one.core/lib/util/type-checks.js';
+import type {SHA256Hash} from '../types/compatibility.js';
 import type {BLOB} from '@refinio/one.core/lib/recipes.js';
 import {createError} from '@refinio/one.core/lib/errors.js';
 import {FS_ERRORS} from '@refinio/one.models/lib/fileSystems/FileSystemErrors.js';

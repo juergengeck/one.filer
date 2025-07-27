@@ -7,20 +7,19 @@
  * @version 0.0.1
  */
 
-import {createError} from '@refinio/one.core/lib/errors';
+import {createError} from '@refinio/one.core/lib/errors.js';
 import * as path from 'path';
 import type {Stats} from 'fs';
 import * as fs from 'fs';
 import {stat, rename, unlink} from 'fs/promises';
-import {getInstanceIdHash} from '@refinio/one.core/lib/instance';
+import {getInstanceIdHash} from '@refinio/one.core/lib/instance.js';
 import {createHash} from 'crypto';
-import type {IFileSystem} from '@refinio/one.models/lib/fileSystems/IFileSystem';
-import {FS_ERRORS} from '@refinio/one.models/lib/fileSystems/FileSystemErrors';
-import type {SHA256Hash} from '@refinio/one.core/lib/util/type-checks';
-import type {BLOB} from '@refinio/one.core/lib/recipes';
-import type {FileCreationStatus} from '@refinio/one.core/lib/storage-base-common';
-import {createTempFileName, CREATION_STATUS} from '@refinio/one.core/lib/storage-base-common';
-import {handleError, logFuseError} from '../misc/fuseHelper';
+import {FS_ERRORS} from '@refinio/one.models/lib/fileSystems/FileSystemErrors.js';
+import type {SHA256Hash} from '../types/compatibility.js';
+import type {BLOB} from '@refinio/one.core/lib/recipes.js';
+import type {FileCreationStatus} from '@refinio/one.core/lib/storage-base-common.js';
+import {createTempFileName, CREATION_STATUS} from '@refinio/one.core/lib/storage-base-common.js';
+import {logFuseError} from '../misc/fuseHelper';
 
 type FileName = string;
 
@@ -35,8 +34,6 @@ export default class FuseTemporaryFilesManager {
      */
     private readonly platform = process.platform;
 
-    private readonly vfs: IFileSystem;
-
     /**
      * Maps the final file name to the temporary file name and his file descriptor
      * @private
@@ -46,9 +43,8 @@ export default class FuseTemporaryFilesManager {
         {temporaryFilePath: string; temporaryFileDescriptor: number}
     > = new Map<FileName, {temporaryFilePath: string; temporaryFileDescriptor: number}>();
 
-    constructor(storageName: string = 'data', vfs: IFileSystem) {
+    constructor(storageName: string = 'data') {
         this.oneStoragePath = path.join(storageName);
-        this.vfs = vfs;
     }
 
     /**
@@ -61,8 +57,7 @@ export default class FuseTemporaryFilesManager {
 
         if (instanceIdHash === undefined) {
             throw createError('FSE-EINVAL', {
-                message: FS_ERRORS['FSE-EINVAL'].message,
-                details: 'Instance ID hash is not set'
+                message: 'Instance ID hash is not set'
             });
         }
 
@@ -235,8 +230,8 @@ export default class FuseTemporaryFilesManager {
                                             logFuseError(closeErr, 'persistTemporaryFileAsBlob');
                                             reject(
                                                 createError('SST-MV3', {
-                                                    name: 'FileNotFoundError',
-                                                    filename: temporaryFileName
+                                                    message: `File not found: ${temporaryFileName}`,
+                                                    path: temporaryFileName
                                                 })
                                             );
                                         } else {
@@ -254,8 +249,8 @@ export default class FuseTemporaryFilesManager {
                                 // exists so that it seems we've got what we wanted the
                                 // disappearance of the file is unexpected.
                                 throw createError('SST-MV2', {
-                                    name: 'FileNotFoundError',
-                                    filename: temporaryFileName
+                                    message: `File not found: ${temporaryFileName}`,
+                                    path: temporaryFileName
                                 });
                             }
 
@@ -265,8 +260,8 @@ export default class FuseTemporaryFilesManager {
 
                 // This is an "impossible" error, but you never know
                 throw createError('SST-MV7', {
-                    old: temporaryFile.temporaryFilePath,
-                    new: persistedFilePath
+                    message: `Move operation failed from ${temporaryFile.temporaryFilePath} to ${persistedFilePath}`,
+                    path: temporaryFile.temporaryFilePath
                 });
             })
             .catch((err: NodeJS.ErrnoException) => {
@@ -281,8 +276,8 @@ export default class FuseTemporaryFilesManager {
                                         logFuseError(closeErr, 'persistTemporaryFileAsBlob');
                                         reject(
                                             createError('SST-MV3', {
-                                                name: 'FileNotFoundError',
-                                                filename: temporaryFileName
+                                                message: `File not found: ${temporaryFileName}`,
+                                                path: temporaryFileName
                                             })
                                         );
                                     } else {
@@ -295,8 +290,8 @@ export default class FuseTemporaryFilesManager {
                         .catch((renameErr: NodeJS.ErrnoException) => {
                             if (renameErr.code === 'ENOENT') {
                                 throw createError('SST-MV3', {
-                                    name: 'FileNotFoundError',
-                                    filename: temporaryFileName
+                                    message: `File not found: ${temporaryFileName}`,
+                                    path: temporaryFileName
                                 });
                             }
 

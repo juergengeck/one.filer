@@ -8,15 +8,12 @@
  * @version 0.0.1
  */
 
-import {join} from 'path';
-import os from 'os';
 import type {Stats as FuseStats} from '../fuse/native-fuse3.js';
 import {Fuse} from '../fuse/native-fuse3.js';
-import type {IFileSystem} from '@refinio/one.models/lib/fileSystems/IFileSystem';
-import {OEvent} from '@refinio/one.models/lib/misc/OEvent';
-import {isFunction} from '@refinio/one.core/lib/util/type-checks-basic';
-import {FS_ERRORS} from '@refinio/one.models/lib/fileSystems/FileSystemErrors';
-import {createError} from '@refinio/one.core/lib/errors';
+import type {IFileSystem, FileDescription, FileSystemFile, FileSystemDirectory} from '@refinio/one.models/lib/fileSystems/IFileSystem.js';
+import {OEvent} from '@refinio/one.models/lib/misc/OEvent.js';
+import {FS_ERRORS} from '@refinio/one.models/lib/fileSystems/FileSystemErrors.js';
+import {createError} from '@refinio/one.core/lib/errors.js';
 import {handleError} from '../misc/fuseHelper';
 import FuseTemporaryFilesManager from './FuseTemporaryFilesManager';
 
@@ -64,7 +61,7 @@ export default class FuseApiToIFileSystemAdapter {
     constructor(fs: IFileSystem, oneStoragePath: string, logCalls: boolean = false) {
         this.fs = fs;
         this.logCalls = logCalls;
-        this.tmpFilesMgr = new FuseTemporaryFilesManager(oneStoragePath, fs);
+        this.tmpFilesMgr = new FuseTemporaryFilesManager(oneStoragePath);
     }
 
     public fuseInit(cb: (err: number) => void): void {
@@ -106,13 +103,16 @@ export default class FuseApiToIFileSystemAdapter {
             } catch (_e) {
                 new Promise<FuseStats>((resolve, reject) => {
                     // we create a promise and wait for the event to happen (e.g. saving in one)
+                    let disconnect: (() => void) | null = null;
                     const handler = (state: {path: string}) => {
                         // if the path matches, resolve the promise
                         if (state.path === path) {
-                            this.onFilePersisted.off(handler);
+                            if (disconnect) {
+                                disconnect();
+                            }
                             this.fs
                                 .stat(path)
-                                .then((res: {size: number; mode: number}) => {
+                                .then((res: FileDescription) => {
                                     resolve({
                                         mtime: this.constTimes,
                                         atime: this.constTimes,
@@ -126,15 +126,17 @@ export default class FuseApiToIFileSystemAdapter {
                                 .catch((err: Error) => reject(err));
                         }
                     };
-                    this.onFilePersisted.on(handler);
-                    // don't let a floating promise, reject it if it doesn't arrive in 20 seconds
+                    disconnect = this.onFilePersisted.listen(handler);
+                    // don't let a floating promise, reject it if it doesn't arrive in 10 seconds (increased for Windows compatibility)
                     setTimeout(() => {
-                        this.onFilePersisted.off(handler);
+                        if (disconnect) {
+                            disconnect();
+                        }
                         reject(createError('FSE-ENOENT', {
                             message: FS_ERRORS['FSE-ENOENT'].message,
                             path
                         }));
-                    }, 20000);
+                    }, 10000);
                 })
                     .then(res => cb(0, res))
                     .catch(err => cb(handleError(err, this.logCalls, 'getattr')));
@@ -143,7 +145,7 @@ export default class FuseApiToIFileSystemAdapter {
             // if getAttr was called on a persisted file
             this.fs
                 .stat(path)
-                .then((res: {size: number; mode: number}) => {
+                .then((res: FileDescription) => {
                     cb(0, {
                         mtime: this.constTimes,
                         atime: this.constTimes,
@@ -195,7 +197,7 @@ export default class FuseApiToIFileSystemAdapter {
     ): void {
         this.fs
             .readDir(path)
-            .then((res: {children: string[]}) => cb(0, res.children))
+            .then((res: FileSystemDirectory) => cb(0, res.children))
             .catch((err: Error) => cb(handleError(err, this.logCalls)));
     }
 
@@ -243,7 +245,7 @@ export default class FuseApiToIFileSystemAdapter {
         if (this.fs.supportsChunkedReading(givenPath)) {
             this.fs
                 .readFileInChunks(givenPath, length, position)
-                .then((res: {content: Buffer}) => {
+                .then((res: FileSystemFile) => {
                     const bufferR = Buffer.from(res.content);
                     bufferR.copy(buffer);
                     cb(0, bufferR.length);
@@ -261,7 +263,7 @@ export default class FuseApiToIFileSystemAdapter {
     public fuseMkdir(dirPath: string, _mode: number, cb: (err: number) => void): void {
         this.fs
             .createDir(dirPath, 0o0040777)
-            .then((_: void) => cb(0))
+            .then(() => cb(0))
             .catch((err: Error) => cb(handleError(err, this.logCalls)));
     }
 
@@ -318,9 +320,9 @@ export default class FuseApiToIFileSystemAdapter {
             const fileName = fileDescription.fileName;
 
             this.tmpFilesMgr
-                .releaseTemporaryFile(join(path, '..'), fileDescription.fileName)
+                .releaseTemporaryFile(path.substring(0, path.lastIndexOf('/')), fileDescription.fileName)
                 .then(blobHash =>
-                    this.fs.createFile(join(path, '..'), blobHash, fileName, this.regularFileMode)
+                    this.fs.createFile(path.substring(0, path.lastIndexOf('/')), blobHash, fileName, this.regularFileMode)
                 )
                 .then(() => {
                     this.temporaryFileDescriptorToFileMap.delete(fd);
@@ -347,7 +349,7 @@ export default class FuseApiToIFileSystemAdapter {
     public fuseUnlink(path: string, cb: (err: number) => void): void {
         this.fs
             .unlink(path)
-            .then((_: void) => cb(0))
+            .then((result: number) => cb(result))
             .catch((err: Error) => cb(handleError(err, this.logCalls)));
     }
 
@@ -355,7 +357,7 @@ export default class FuseApiToIFileSystemAdapter {
     public fuseRename(src: string, dest: string, cb: (err: number) => void): void {
         this.fs
             .rename(src, dest)
-            .then((_: void) => cb(0))
+            .then((result: number) => cb(result))
             .catch((err: Error) => cb(handleError(err, this.logCalls)));
     }
 
@@ -363,7 +365,7 @@ export default class FuseApiToIFileSystemAdapter {
     public fuseRmdir(path: string, cb: (err: number) => void): void {
         this.fs
             .rmdir(path)
-            .then((_: void) => cb(0))
+            .then((result: number) => cb(result))
             .catch((err: Error) => cb(handleError(err, this.logCalls)));
     }
 
@@ -371,7 +373,7 @@ export default class FuseApiToIFileSystemAdapter {
     public fuseChmod(path: string, mode: number, cb: (err: number) => void): void {
         this.fs
             .chmod(path, mode)
-            .then((_: void) => cb(0))
+            .then((result: number) => cb(result))
             .catch((err: Error) => cb(handleError(err, this.logCalls)));
     }
 
@@ -547,14 +549,14 @@ export default class FuseApiToIFileSystemAdapter {
     public fuseSymlink(src: string, dest: string, cb: (err: number) => void): void {
         this.fs
             .symlink(src, dest)
-            .then((_: void) => cb(0))
+            .then(() => cb(0))
             .catch((err: Error) => cb(handleError(err, this.logCalls)));
     }
 
     public fuseReadlink(path: string, cb: (err: number, linkName?: string) => void): void {
         this.fs
             .readlink(path)
-            .then((res: {content: Buffer}) => cb(0, Buffer.from(res.content).toString()))
+            .then((res: FileSystemFile) => cb(0, Buffer.from(res.content).toString()))
             .catch((err: Error) => cb(handleError(err, this.logCalls)));
     }
 

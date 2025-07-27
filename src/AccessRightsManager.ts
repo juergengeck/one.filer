@@ -1,17 +1,16 @@
-import type ChannelManager from '@refinio/one.models/lib/models/ChannelManager';
-import {calculateIdHashOfObj} from '@refinio/one.core/lib/util/object';
-import type {LeuteModel} from '@refinio/one.models/lib/models';
-import type {SHA256IdHash} from '@refinio/one.core/lib/util/type-checks';
-import type {Group, Instance, Person} from '@refinio/one.core/lib/recipes';
-import {serializeWithType} from '@refinio/one.core/lib/util/promise';
-import {isObject} from '@refinio/one.core/lib/util/type-checks-basic';
-import type {ConnectionsModel} from '@refinio/one.models/lib/models';
-import {getAllEntries} from '@refinio/one.core/lib/reverse-map-query';
-import {sign} from '@refinio/one.models/lib/misc/Signature';
-import type {VersionedObjectResult} from '@refinio/one.core/lib/storage-versioned-objects';
-import {getObjectByIdHash, onVersionedObj} from '@refinio/one.core/lib/storage-versioned-objects';
-import {SET_ACCESS_MODE} from '@refinio/one.core/lib/storage-base-common';
-import {createAccess} from '@refinio/one.core/lib/access';
+import type {ChannelManager} from '@refinio/one.models/lib/models/index.js';
+import {calculateIdHashOfObj} from '@refinio/one.core/lib/util/object.js';
+import type {LeuteModel} from '@refinio/one.models/lib/models/index.js';
+import type {SHA256IdHash} from './types/compatibility.js';
+import type {Group, Instance, Person} from '@refinio/one.core/lib/recipes.js';
+import {serializeWithType} from '@refinio/one.core/lib/util/promise.js';
+import {isObject, SET_ACCESS_MODE} from './utils/typeChecks';
+import type {ConnectionsModel} from '@refinio/one.models/lib/models/index.js';
+import {getAllEntries} from '@refinio/one.core/lib/reverse-map-query.js';
+import {sign} from '@refinio/one.models/lib/misc/Signature.js';
+import type {VersionedObjectResult} from '@refinio/one.core/lib/storage-versioned-objects.js';
+import {getObjectByIdHash, onVersionedObj} from '@refinio/one.core/lib/storage-versioned-objects.js';
+import {createAccess} from '@refinio/one.core/lib/access.js';
 
 /**
  * This type defines how access rights for channels are specified
@@ -173,7 +172,8 @@ export default class AccessRightsManager {
      * @returns {Promise<void>}
      */
     private async giveAccessToChannels(): Promise<void> {
-        const mainId = await (await this.leuteModel.me()).mainIdentity();
+        const me = await this.leuteModel.me();
+        const mainId = await me.mainIdentity();
 
         // Build list of access rights for our own channels
         const channelAccessRights = [
