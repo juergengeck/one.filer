@@ -9,6 +9,9 @@ lib/
 
 # ONE dependencies (using npm link for development)
 one.*
+one.core
+one.models
+one.leute.replicant
 
 # Test artifacts
 test/*.js
