@@ -75,7 +75,7 @@ export class FilerWithProjFS {
         
         try {
             // Dynamically import to avoid loading on non-Windows platforms
-            const { ProjFSProvider } = await import('../../projfs.one/dist/src/index.js');
+            const { ProjFSProvider } = await import('../../one.projfs/dist/src/index.js');
             
             // Create ProjFS provider
             this.projfsProvider = new ProjFSProvider(this.rootFileSystem!, {

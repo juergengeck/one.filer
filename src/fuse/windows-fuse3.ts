@@ -79,7 +79,7 @@ export class WindowsFuse extends EventEmitter {
         
         try {
             // Dynamically load ProjFS wrapper
-            const { ProjFSWrapper } = await import('../../projfs.one/src/native/index.js');
+            const { ProjFSWrapper } = await import('../../one.projfs/src/native/index.js');
             
             // Create ProjFS instance
             this.projfsInstance = new ProjFSWrapper(this.virtualRoot);
