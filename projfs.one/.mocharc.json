@@ -1,8 +1,0 @@
-{
-  "extensions": ["ts"],
-  "spec": ["test/unit/**/*.test.ts"],
-  "timeout": 5000,
-  "bail": false,
-  "colors": true,
-  "reporter": "spec"
-}

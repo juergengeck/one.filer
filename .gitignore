@@ -156,6 +156,81 @@ tasks/
 scripts/task-complexity-report.json
 scripts/*-report.json
 
+# Generated JavaScript and TypeScript files
+src/**/*.js
+src/**/*.js.map
+src/**/*.d.ts
+src/**/*.d.ts.map
+!src/@OneObjectInterfaces.d.ts
+!src/tsconfig.json
+
+# Windows specific files
+nul
+*.bat
+*.ps1
+*.cmd
+
+# Documentation files (temporary)
+*.md
+!README.md
+!LICENSE.md
+!GETTING_STARTED.md
+!MANUAL_SETUP.md
+!CLAUDE.md
+
+# Package files
+package-*.json
+!package.json
+!package-lock.json
+
+# Temporary and test files
+simple-mount.mjs
+start.js
+stuff.txt
+paul_reading.png
+access-wsl-fuse.*
+diagnose-wsl-access.*
+map-wsl-fuse-simple.*
+run-windows-test.*
+one-filer.bat
+start-fuse-for-windows.sh
+start-one-filer.sh
+wsl-fuse-alternative.bat
+
+# Build files
+build.cjs
+*.cjs
+!test/**/*.cjs
+
+# Windows installer and package directories
+windows-package/
+electron-app/
+projfs.one/
+
+# Configuration files (except main ones)
+configs/*
+!configs/filer.json
+!configs/glue.json
+!configs/replicant.json
+
+# Cursor and IDE specific
+.cursor/
+.roo/
+.roomodes
+.windsurfrules
+.mocharc.json
+.nycrc.json
+
+# Scripts archive and test directories
+scripts/archive/
+scripts/fixes/
+scripts/setup/
+scripts/testing/
+test/functional/
+test/integration/
+test/scripts/
+test/unit/
+
 # OS specific files
 .DS_Store
 Thumbs.db
