@@ -1,76 +1,82 @@
 # ONE Filer
 
-**Windows orchestrator for ONE Leute Replicant with native Windows ProjectedFS (ProjFS) support**
+**Native Windows filesystem integration for ONE database using ProjectedFS (ProjFS)**
 
-> ⚠️ **Important Update (July 2025)** – ONE Filer now ships with a *native* Windows ProjectedFS (ProjFS) virtual-filesystem layer that runs directly inside the Electron app. The previous *WSL + FUSE* path is retained only as a fallback. Sections of this README that still reference FUSE or WSL2 are in the process of being migrated.
+> ✨ **ONE Filer 4.0** – Features native Windows ProjectedFS (ProjFS) support for seamless Windows Explorer integration. FUSE support is retained for Linux/WSL2 environments.
 
 ## 🎯 Project Overview
 
 ONE Filer provides:
 
-- **Windows Orchestration** - Manages ONE Leute Replicant installation and execution in WSL2
-- **ProjFS Virtual Filesystem** - Native Windows ProjectedFS implementation for ONE database access (no WSL required)
+- **Native Windows Support** - Uses Windows ProjectedFS (ProjFS) for direct filesystem integration
+- **Cross-Platform** - FUSE support for Linux/WSL2 environments
 - **Windows Explorer Integration** - Access ONE data through standard Windows file operations
-- **Electron GUI** - User-friendly Windows application for managing the replicant
-- **Automated Installation** - PowerShell scripts for seamless WSL2 and Ubuntu setup
+- **Virtual Filesystem** - Multiple filesystem types for different data views
+- **High Performance** - Native filesystem operations with caching and optimization
 
 ## 🏗️ Architecture
 
 ### Core Components
 
-1. **ONE Leute Replicant** (This Project)
-   - Complete replicant implementation with FUSE filesystem support
-   - Runs in WSL2 Ubuntu environment
-   - Provides CLI: `one-leute-replicant` with commands:
+1. **ONE Filer Core**
+   - TypeScript/Node.js application
+   - Manages ONE database connections and data access
+   - Provides CLI: `one-filer` with commands:
      - `init` - Initialize new ONE instance
-     - `start` - Start replicant with FUSE filesystem
+     - `start` - Start with filesystem mount
      - `configure` - Manage configuration
      - `delete` - Delete operations
 
-2. **Windows Orchestration**
-   - PowerShell installer scripts for WSL2 setup
-   - Electron app for GUI management
-   - Automatic Ubuntu and dependency installation
+2. **Filesystem Backends**
+   - **Windows**: Native ProjectedFS (ProjFS) integration
+   - **Linux/WSL2**: FUSE3 filesystem support
+   - Automatic backend selection based on platform
 
-3. **ProjFS Integration**
-   - Native Linux FUSE3 bindings via N-API
-   - Multiple filesystem types:
-     - `/chats` - Chat conversations
-     - `/objects` - ONE database objects  
-     - `/types` - Type definitions
-     - `/debug` - Debug information
-     - `/invites` - Pairing/invitation system
+3. **Virtual Filesystem Structure**
+   - `/chats` - Chat conversations
+   - `/objects` - ONE database objects  
+   - `/types` - Type definitions
+   - `/debug` - Debug information
+   - `/invites` - Pairing/invitation system
 
 ### How It Works
 
-1. **Electron App (Primary Interface)**:
-   - Detects and automatically installs WSL2/Ubuntu if needed
-   - Manages ONE Leute Replicant lifecycle (install, init, start, stop)
-   - Provides real-time status monitoring and error handling
-   - Offers mount point management and file system access
-   - Runs in Windows system tray for always-available access
+#### Windows (ProjFS Mode)
+1. **Application Start**: ONE Filer detects Windows platform
+2. **ProjFS Provider**: Initializes Windows ProjectedFS provider
+3. **Virtual Directory**: Creates virtual directory (e.g., `C:\OneFiler`)
+4. **On-Demand Loading**: Files are loaded from ONE database as accessed
+5. **Windows Explorer**: Native integration with all Windows applications
 
-2. **WSL2 Backend**:
-   - ONE Leute Replicant runs with full Linux capabilities
-   - FUSE filesystem provides native file operations
-   - Automatic sync with ONE communication servers
-   - Accessible from Windows via `\\wsl$\Ubuntu\path`
+#### Linux/WSL2 (FUSE Mode)
+1. **Application Start**: ONE Filer detects Linux environment
+2. **FUSE Mount**: Creates FUSE filesystem mount point
+3. **File Access**: Provides POSIX-compliant file operations
+4. **Cross-Platform**: Accessible from Windows via `\\wsl$\` path
 
-3. **User Experience**:
-   ```
-   User clicks → Electron App → Manages WSL2 → Runs Replicant → FUSE Mount → Windows Explorer
-   ```
+### Technical Details
 
-All complexity is hidden - users just see files in Windows Explorer.
+- **ProjFS**: Windows Projected File System API for virtual filesystems
+- **Performance**: Lazy loading with intelligent caching
+- **Compatibility**: Works with all Windows applications
+- **Security**: Respects ONE database access permissions
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- **Windows 10/11** with administrator privileges
-- **WSL2** with Ubuntu installed
-- **Node.js 20+** in WSL Ubuntu
-- **Internet connection** for downloading dependencies
-- **4GB+ RAM** recommended
+
+#### For Windows (ProjFS)
+- **Windows 10 version 1809+** or **Windows 11**
+- **Visual Studio 2022** or Build Tools with C++ support
+- **Windows SDK** (10.0.19041.0 or later)
+- **Node.js 20+**
+- **Python 3.x** (for node-gyp)
+
+#### For Linux/WSL2 (FUSE)
+- **WSL2** with Ubuntu 20.04+
+- **Node.js 20+**
+- **FUSE3** development libraries
+- **Build essentials** (gcc, make, etc.)
 
 ### Installation
 
@@ -82,22 +88,31 @@ All complexity is hidden - users just see files in Windows Explorer.
    cd one.filer
    ```
 
-2. **Build ONE Filer in WSL**:
+2. **Install dependencies**:
    ```bash
-   # In WSL Ubuntu
-   cd /mnt/c/path/to/one.filer
    npm install
-   npm run build
-   node fix-all-imports.js  # Fix ES module imports
    ```
 
-3. **Build and run the Electron app**:
+3. **Build ProjFS native module (Windows only)**:
    ```bash
-   # In Windows
-   cd electron-app
+   cd one.projfs
    npm install
    npm run build
-   npm start
+   cd ..
+   ```
+
+4. **Build ONE Filer**:
+   ```bash
+   npm run build
+   ```
+
+5. **Run ONE Filer**:
+   ```bash
+   # Windows (uses ProjFS automatically)
+   node lib/src/index.js start --config configs/windows-native.json --secret YOUR_SECRET
+   
+   # Linux/WSL2 (uses FUSE)
+   node lib/src/index.js start --config configs/demo-config.json --secret YOUR_SECRET
    ```
 
 #### Option 2: Pre-built Release
@@ -151,17 +166,50 @@ wsl -d Ubuntu -- one-leute-replicant start --secret "your-secret"
 
 ```
 
+## ⚙️ Configuration
+
+### ProjFS Configuration (Windows)
+
+```json
+{
+  "filerConfig": {
+    "useProjFS": true,              // Enable ProjFS mode
+    "projfsRoot": "C:\\OneFiler",   // Virtual directory location
+    "projfsCacheSize": 104857600,   // Cache size in bytes (100MB)
+    "mountPoint": "C:\\OneFiler",   // Same as projfsRoot for compatibility
+    "logCalls": true                // Enable debug logging
+  }
+}
+```
+
+### FUSE Configuration (Linux/WSL2)
+
+```json
+{
+  "filerConfig": {
+    "mountPoint": "/home/user/one-files",
+    "fuseOptions": {
+      "force": true,    // Force mount even if directory exists
+      "mkdir": true     // Create mount directory if missing
+    }
+  }
+}
+```
+
 ## 📁 Project Structure
 
 ```
 one.filer/
 ├── src/                    # TypeScript source code
 │   ├── commands/          # CLI commands (init, start, configure)
-│   ├── filer/            # FUSE filesystem implementation
-│   ├── fuse/             # Native FUSE3 bindings
+│   ├── filer/            # Filesystem implementations
+│   │   ├── Filer.ts      # FUSE implementation
+│   │   └── FilerWithProjFS.ts  # ProjFS implementation
 │   └── misc/             # Utilities and helpers
-├── electron-app/          # Windows Electron GUI
-├── windows-installer/     # PowerShell installation scripts
+├── one.projfs/           # ProjFS native module
+│   ├── src/native/       # C++ native bindings
+│   ├── src/provider/     # ProjFS provider implementation
+│   └── binding.gyp       # Native build configuration
 ├── configs/              # Configuration examples
 ├── vendor/               # Packaged dependencies
 └── lib/                  # Built JavaScript (generated)
@@ -291,6 +339,24 @@ node scripts/fix-all-imports.js
 - Check the config file path is valid
 - Ensure ONE Leute Replicant service is accessible
 - Check firewall settings for WSL2
+
+### ProjFS Issues (Windows)
+
+1. **ProjFS Native Module Build Fails**
+   - Install Visual Studio 2022 with "Desktop development with C++"
+   - Install Windows SDK 10.0.19041.0 or later
+   - Run from "Developer Command Prompt for VS 2022"
+   - Check Python is installed: `python --version`
+
+2. **"ProjectedFSLib.lib not found"**
+   - Ensure Windows SDK is properly installed
+   - ProjFS requires Windows 10 version 1809 or later
+   - Check if ProjFS is enabled: `Get-WindowsOptionalFeature -Online -FeatureName Client-ProjFS`
+
+3. **Virtual Directory Not Accessible**
+   - Run as Administrator for first-time setup
+   - Check if directory exists: `dir C:\OneFiler`
+   - Ensure no antivirus is blocking virtual filesystem
 
 ### Development Issues
 

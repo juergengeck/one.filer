@@ -7,7 +7,10 @@
         "mountPoint": "/home/gecko/one-files",
         "pairingUrl": "https://leute.dev.refinio.one/invites/invitePartner/?invited=true/",
         "iomMode": "light",
-        "logCalls": true
+        "logCalls": true,
+        "useProjFS": true,
+        "projfsRoot": "C:\\OneFiler",
+        "projfsCacheSize": 104857600
     },
     "connectionsConfig": {
         "commServerUrl": "wss://comm10.dev.refinio.one",

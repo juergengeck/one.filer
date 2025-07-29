@@ -21,7 +21,7 @@ export default class Replicant {
     private readonly documents;
     private readonly topicModel;
     private readonly notifications;
-    private readonly filer?;
+    private filer?;
     constructor(config: Partial<ReplicantConfig>);
     /**
      * Start the replicant.

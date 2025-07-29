@@ -28,17 +28,9 @@ export async function getFuse() {
 // For synchronous imports, we need to detect platform at module load time
 let Fuse: any;
 
-if (isLinux) {
-    // Dynamic import for Linux
-    import('./native-fuse3.js').then(module => {
-        Fuse = module.Fuse;
-    });
-} else if (isWindows) {
-    // Dynamic import for Windows
-    import('./windows-fuse3.js').then(module => {
-        Fuse = module.Fuse;
-    });
-}
+// IMPORTANT: Do NOT eagerly load FUSE implementations
+// This allows ProjFS to be used on Windows without loading FUSE
+// Only load when explicitly requested via getFuse()
 
 // Export a proxy that will use the correct implementation
 export default new Proxy({}, {

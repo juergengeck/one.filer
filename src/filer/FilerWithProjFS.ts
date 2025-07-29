@@ -15,7 +15,6 @@ import {COMMIT_HASH} from '../commit-hash.js';
 import {DefaultFilerConfig} from './FilerConfig.js';
 import type {FilerConfig} from './FilerConfig.js';
 
-import {FuseFrontend} from './FuseFrontend.js';
 import {fillMissingWithDefaults} from '../misc/configHelper.js';
 
 export interface FilerModels {
@@ -58,11 +57,12 @@ export class FilerWithProjFS {
         // Set up the root filesystem
         this.rootFileSystem = await this.setupRootFileSystem();
 
-        // Check if we should use ProjFS (Windows native mode)
-        if (this.config.useProjFS && process.platform === 'win32') {
+        // Always use ProjFS when configured, regardless of platform
+        // This allows running from WSL while targeting Windows filesystem
+        if (this.config.useProjFS) {
             await this.initProjFS();
         } else {
-            // Use standard FUSE mode (WSL2/Linux)
+            // Use standard FUSE mode only when ProjFS is not requested
             await this.initFUSE();
         }
     }
@@ -74,8 +74,15 @@ export class FilerWithProjFS {
         console.log('🪟 Starting ProjFS (Windows native mode)...');
         
         try {
-            // Dynamically import to avoid loading on non-Windows platforms
-            const { ProjFSProvider } = await import('../../one.projfs/dist/src/index.js');
+            // Dynamically resolve the path relative to this module
+            const path = await import('path');
+            const { fileURLToPath, pathToFileURL } = await import('url');
+            const __dirname = path.dirname(fileURLToPath(import.meta.url));
+            const projfsPath = path.resolve(__dirname, '../../../one.projfs/dist/src/index.js');
+            
+            // Convert to file URL for ESM import
+            const projfsUrl = pathToFileURL(projfsPath).href;
+            const { ProjFSProvider } = await import(projfsUrl);
             
             // Create ProjFS provider
             this.projfsProvider = new ProjFSProvider(this.rootFileSystem!, {
@@ -114,6 +121,8 @@ export class FilerWithProjFS {
         }
 
         console.log('🐧 Starting FUSE in WSL2...');
+        // Dynamically import to avoid loading FUSE on Windows when using ProjFS
+        const { FuseFrontend } = await import('./FuseFrontend.js');
         const fuseFrontend = new FuseFrontend();
         await fuseFrontend.start(this.rootFileSystem!, this.config.mountPoint, this.config.logCalls, this.config.fuseOptions || {});
         this.shutdownFunctions.push(fuseFrontend.stop.bind(fuseFrontend));

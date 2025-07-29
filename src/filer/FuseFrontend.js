@@ -3,12 +3,13 @@ import path from 'path';
 import FuseApiToIFileSystemAdapter from './FuseApiToIFileSystemAdapter';
 import { splitRoutePath } from '../misc/fuseHelper';
 import { isFunction } from '../utils/typeChecks';
-import { Fuse } from '../fuse/native-fuse3.js';
+import { getFuse } from '../fuse/index.js';
 /**
  *  This is a fuse frontend.
  */
 export class FuseFrontend {
     fuseInstance = null;
+    Fuse;
     /** Start the fuse frontend.
      *
      *  @param rootFileSystem - The file system implementation that should be mounted
@@ -20,6 +21,8 @@ export class FuseFrontend {
         if (this.fuseInstance) {
             throw Error('Fuse frontend already started');
         }
+        // Get the platform-appropriate FUSE implementation
+        this.Fuse = await getFuse();
         // Resolve mount point to absolute path
         const absoluteMountPoint = path.resolve(mountPoint);
         console.log(`🔧 Resolved mount point: ${mountPoint} -> ${absoluteMountPoint}`);
@@ -111,13 +114,13 @@ export class FuseFrontend {
             ...fuseOptions
         };
         console.log('🔧 FUSE mount options:', mountOptions);
-        this.fuseInstance = new Fuse(absoluteMountPoint, fuseHandlers, mountOptions);
+        this.fuseInstance = new this.Fuse(absoluteMountPoint, fuseHandlers, mountOptions);
         await new Promise((resolve, reject) => {
             if (this.fuseInstance === null) {
                 reject(Error('Fuse frontend not yet started'));
             }
             else {
-                this.fuseInstance.mount(err => (err === null ? resolve() : reject(err)));
+                this.fuseInstance.mount((err) => (err === null ? resolve() : reject(err)));
             }
         });
     }
@@ -129,12 +132,13 @@ export class FuseFrontend {
                     reject(Error('Fuse frontend not yet started'));
                 }
                 else {
-                    this.fuseInstance.unmount(err => (err === null ? resolve() : reject(err)));
+                    this.fuseInstance.unmount((err) => (err === null ? resolve() : reject(err)));
                 }
             });
         }
     }
     static async isFuseNativeConfigured() {
+        const Fuse = await getFuse();
         return new Promise((resolve, reject) => {
             Fuse.isConfigured((err, isConfigured) => {
                 if (err !== null) {
@@ -145,6 +149,7 @@ export class FuseFrontend {
         });
     }
     static async configureFuseNative() {
+        const Fuse = await getFuse();
         return new Promise((resolve, reject) => {
             Fuse.configure(errConfigure => {
                 if (errConfigure) {

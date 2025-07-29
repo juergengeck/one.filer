@@ -6,7 +6,6 @@ import { default as IoMManager } from '@refinio/one.models/lib/models/IoM/IoMMan
 import { default as Notifications } from '@refinio/one.models/lib/models/Notifications.js';
 import { existsSync, readdirSync } from 'fs';
 import { rimraf } from 'rimraf';
-import { Filer } from './filer/Filer';
 import { fillMissingWithDefaults } from './misc/configHelper';
 // import {DefaultConnectionsModelConfig} from './misc/ConnectionsModelConfig'; // Unused
 import { initOneCoreInstance, oneCoreInstanceExists, oneCoreInstanceInformation, shutdownOneCoreInstance } from './misc/OneCoreInit';
@@ -49,16 +48,7 @@ export default class Replicant {
         this.documents = new DocumentModel(this.channelManager);
         this.topicModel = new TopicModel(this.channelManager, this.leuteModel);
         this.notifications = new Notifications(this.channelManager);
-        if (this.config.useFiler) {
-            this.filer = new Filer({
-                channelManager: this.channelManager,
-                connections: this.connections,
-                leuteModel: this.leuteModel,
-                notifications: this.notifications,
-                topicModel: this.topicModel,
-                iomManager: this.iomManager
-            }, this.config.filerConfig);
-        }
+        // Filer initialization moved to start() method to allow dynamic imports
     }
     /**
      * Start the replicant.
@@ -92,7 +82,29 @@ export default class Replicant {
         await this.documents.init();
         await this.topicModel.init();
         await this.connections.init();
-        if (this.filer) {
+        // Initialize filer if configured
+        if (this.config.useFiler) {
+            const models = {
+                channelManager: this.channelManager,
+                connections: this.connections,
+                leuteModel: this.leuteModel,
+                notifications: this.notifications,
+                topicModel: this.topicModel,
+                iomManager: this.iomManager
+            };
+            // Check if we should use ProjFS
+            const filerConfig = this.config.filerConfig;
+            if (filerConfig?.useProjFS) {
+                // Always use ProjFS when configured, regardless of platform
+                // This allows running from WSL while using Windows ProjFS
+                const { FilerWithProjFS } = await import('./filer/FilerWithProjFS.js');
+                this.filer = new FilerWithProjFS(models, filerConfig);
+            }
+            else {
+                // Only use FUSE when ProjFS is not requested
+                const { Filer } = await import('./filer/Filer.js');
+                this.filer = new Filer(models, this.config.filerConfig);
+            }
             await this.filer.init();
         }
         await this.setPersonNameToInitialIdentityIfNone();

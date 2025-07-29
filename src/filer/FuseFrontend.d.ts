@@ -4,6 +4,7 @@ import type { IFileSystem } from '@refinio/one.models/lib/fileSystems/IFileSyste
  */
 export declare class FuseFrontend {
     private fuseInstance;
+    private Fuse;
     /** Start the fuse frontend.
      *
      *  @param rootFileSystem - The file system implementation that should be mounted
