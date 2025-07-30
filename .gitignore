@@ -207,7 +207,6 @@ build.cjs
 
 # Windows installer and package directories
 windows-package/
-electron-app/
 projfs.one/
 
 # Configuration files (except main ones)

@@ -1,0 +1,22 @@
+{
+  "startMinimized": false,
+  "showInSystemTray": true,
+  "autoConnect": false,
+  "dataDirectory": "./one-data",
+  "projfsRoot": "C:\\OneFiler",
+  "mountPoint": "/mnt/onefiler",
+  "replicantConfig": {
+    "directory": "./one-data",
+    "useFiler": true,
+    "createEveryoneGroup": true,
+    "commServerUrl": "wss://comm.refinio.net",
+    "filerConfig": {
+      "useProjFS": true,
+      "projfsRoot": "C:\\OneFiler",
+      "projfsCacheSize": 104857600,
+      "logCalls": false,
+      "pairingUrl": "https://leute.refinio.one",
+      "iomMode": "full"
+    }
+  }
+}
