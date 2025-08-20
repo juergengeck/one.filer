@@ -16,6 +16,21 @@ ONE Filer provides:
 
 ## 🏗️ Architecture
 
+### Package Structure
+
+```
+one.filer/                    # Main project (Windows focus)
+├── src/                      # Core implementation
+│   ├── filer/               # Filesystem implementations
+│   │   ├── Filer.ts        # Linux/FUSE implementation
+│   │   └── FilerWithProjFS.ts  # Windows ProjFS
+│   └── Replicant.ts        # Orchestrator
+├── linux/                   # Linux-specific packages
+│   ├── refinio-fuse3/      # Pure FUSE3 N-API bindings
+│   └── one-filer-fuse3/    # Complete Linux implementation
+└── one.leute.replicant/    # Standard orchestrator (updated)
+```
+
 ### Core Components
 
 1. **ONE Filer Core**
@@ -29,7 +44,7 @@ ONE Filer provides:
 
 2. **Filesystem Backends**
    - **Windows**: Native ProjectedFS (ProjFS) integration
-   - **Linux/WSL2**: FUSE3 filesystem support
+   - **Linux/WSL2**: Modern FUSE3 via @refinio/fuse3
    - Automatic backend selection based on platform
 
 3. **Virtual Filesystem Structure**
@@ -38,6 +53,13 @@ ONE Filer provides:
    - `/types` - Type definitions
    - `/debug` - Debug information
    - `/invites` - Pairing/invitation system
+
+### Related Repositories
+
+- **[one.leute.replicant](https://github.com/juergengeck/one.leute.replicant)** - Standard orchestrator with Filer support, now using @refinio/fuse3
+- **Linux Packages** (in `linux/` directory):
+  - `@refinio/fuse3` - Modern FUSE3 N-API bindings replacing fuse-native
+  - `@refinio/one.filer.fuse3` - Complete Linux implementation
 
 ### How It Works
 
@@ -60,6 +82,50 @@ ONE Filer provides:
 - **Performance**: Lazy loading with intelligent caching
 - **Compatibility**: Works with all Windows applications
 - **Security**: Respects ONE database access permissions
+
+### ProjFS Integration & Caching Architecture
+
+This project uses a layered architecture where JavaScript is the single source of truth (SoT) for directory listings, with native components focused on fast delivery and TTL-based memory caching.
+
+Components
+- **Native (C++)**
+  - `ContentCache` (`package/src/content_cache.cpp`): In-memory TTL caches for file info, directory listings, and small file content; provides hit/miss stats and invalidation.
+  - `AsyncBridge` (`package/src/async_bridge.cpp`): Bridges async JS callbacks (getFileInfo, readDirectory, readFile). Directory caching in the native layer is disabled to avoid double-caching conflicts; JS owns directory caching.
+- **JavaScript/TypeScript**
+  - `CachedProjFSProvider` (`src/filer/CachedProjFSProvider.ts`): Wires the native ProjFS provider to ONE’s `IFileSystem`, normalizes paths, sets up file-content callbacks, boot-time persistent cache preload, and optional pre-mount directory prefetch.
+  - `PersistentCache` (`src/cache/PersistentCache.ts`): Hybrid cache with in-memory LRU for file content and on-disk JSON metadata/`.bin` blobs. Validates entries (non-empty `name`) and persists/restores directory listings and files.
+  - `SmartCacheManager` (`src/cache/SmartCacheManager.ts`): Strategy-driven sync that reads directories, validates entries, writes to `PersistentCache`, and is the sole component that publishes directory listings to the native provider via `setCachedDirectory`.
+
+Caching Policy (Directory Listings)
+- **Single SoT: JavaScript**
+  - Directory listings are discovered and validated in JS.
+  - `AsyncBridge::FetchDirectoryListing` no longer writes to the native `ContentCache` to prevent conflicting formats or empty-name items.
+  - All `setCachedDirectory` calls are validated (skip entries without a `name`).
+
+File Content Path
+- Native file-content callbacks route to `fileSystem.readFile`.
+- On successful reads, content can be pushed to the native cache (`setCachedContent`) to fulfill pending requests quickly.
+- `PersistentCache` optionally stores small file content on disk to improve future access latency.
+
+Startup/Prefetch
+- On mount, `CachedProjFSProvider` preloads persisted directory listings to warm in-memory structures.
+- Optional: pre-mount directory prefetch and native cache population is controlled by `preMountNativeDirectoryCache` (default: disabled) to avoid competing with runtime sync.
+
+High-level Flow (Directory Enumeration)
+```text
+Windows Explorer
+  → ProjFS Provider (native)
+    → JS IFileSystem.readDir/stat (via provider)
+      → Build validated entries (ensure non-empty names)
+      → PersistentCache.cacheDirectory(entries)
+      → SmartCacheManager may publish to native via setCachedDirectory(entries)
+      → ProjFS returns entries to Explorer
+```
+
+Operational Notes
+- Validation prevents the “empty name” issue that caused missing files (e.g., PNGs in `/invites`).
+- Only one component should publish directory listings to native cache to avoid conflicts.
+- Persistent cache is append-friendly and validated at write time; stale entries are refreshed by periodic/scheduled syncs.
 
 ## 🚀 Quick Start
 
