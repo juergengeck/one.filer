@@ -1,0 +1,149 @@
+# ONE.filer Linux Packages
+
+This directory contains the Linux-specific packages for ONE.filer, providing modern FUSE3 support for mounting ONE.models filesystems on Linux.
+
+## Package Structure
+
+### 1. `@refinio/fuse3` (refinio-fuse3/)
+**Pure FUSE3 N-API bindings**
+- Low-level native bindings for FUSE3
+- No business logic, just the native layer
+- Replaces outdated `fuse-native`
+- Modern Node.js 18+ support
+
+### 2. `@refinio/one.filer.fuse3` (one-filer-fuse3/)
+**Complete ONE.filer implementation**
+- Full Replicant orchestrator
+- Filer with all filesystem types
+- Uses @refinio/fuse3 for mounting
+- Based on current project's implementation
+
+## Architecture Overview
+
+```
+┌────────────────────────────────────────────────────────┐
+│                    Applications                        │
+│          (User applications, file managers)            │
+├────────────────────────────────────────────────────────┤
+│                 Linux Kernel FUSE                      │
+├────────────────────────────────────────────────────────┤
+│              @refinio/one.filer.fuse3                  │
+│         (Business logic, filesystem impl)              │
+├────────────────────────────────────────────────────────┤
+│                 @refinio/fuse3                         │
+│            (Pure FUSE3 N-API bindings)                 │
+└────────────────────────────────────────────────────────┘
+```
+
+## Relationship to Other Projects
+
+### one.filer (Parent Project)
+The main project provides:
+- Windows support via ProjFS
+- Core implementation (Filer, FuseFrontend, etc.)
+- Electron app for Windows
+
+These Linux packages adapt the core implementation to work with FUSE3.
+
+### one.leute.replicant
+The standard orchestrator package that:
+- Has been updated to use @refinio/fuse3
+- Provides the Replicant class
+- Manages all ONE.models
+
+Repository: https://github.com/juergengeck/one.leute.replicant
+
+## Installation & Usage
+
+### For Development
+
+```bash
+# Install dependencies for both packages
+cd linux/refinio-fuse3
+npm install
+npm run build
+
+cd ../one-filer-fuse3
+npm install
+npm run build
+```
+
+### For Production Use
+
+The packages can be published to npm or used locally:
+
+```bash
+# In your project
+npm install @refinio/fuse3
+npm install @refinio/one.filer.fuse3
+
+# Or use one.leute.replicant directly
+npm install github:juergengeck/one.leute.replicant
+```
+
+## Key Improvements Over Legacy System
+
+1. **Modern FUSE3 Support**
+   - Replaces outdated fuse-native
+   - Works with current Node.js versions
+   - Better performance and stability
+
+2. **Unified Codebase**
+   - Uses same implementation as Windows version
+   - Easier maintenance
+   - Consistent behavior across platforms
+
+3. **Clean Architecture**
+   - Clear separation of concerns
+   - Pure bindings vs business logic
+   - Reusable components
+
+## Development Workflow
+
+1. **@refinio/fuse3** - Provides the native layer
+2. **Current project's code** - Provides implementation
+3. **@refinio/one.filer.fuse3** - Adapts implementation for Linux
+4. **one.leute.replicant** - Uses everything together
+
+## Testing
+
+```bash
+# Test FUSE3 bindings
+cd linux/refinio-fuse3
+npm test
+
+# Test full implementation
+cd linux/one-filer-fuse3
+npm test
+
+# Run integration tests
+npm run test:integration
+```
+
+## Platform Requirements
+
+- Linux kernel with FUSE3 support
+- Node.js 18 or higher
+- FUSE3 development headers (`libfuse3-dev`)
+- Build tools (gcc, make, python3)
+
+## Future Improvements
+
+- [ ] Publish packages to npm registry
+- [ ] Add automated CI/CD for Linux builds
+- [ ] Create Debian/Ubuntu packages
+- [ ] Add systemd service files
+- [ ] Performance benchmarks
+
+## Support
+
+For issues specific to Linux packages:
+- https://github.com/juergengeck/refinio-fuse3
+- https://github.com/juergengeck/one-filer-fuse3
+
+For general ONE.filer issues:
+- Use the main project's issue tracker
+
+## License
+
+SEE LICENSE IN LICENSE.md

@@ -1,0 +1,13 @@
+node_modules/
+build/
+*.log
+.DS_Store
+*.swp
+*.swo
+.vscode/
+.idea/
+dist/
+lib/
+*.node
+prebuilds/
+.npm/
