@@ -1,7 +1,7 @@
 {
-    "name": "one.filer",
+    "name": "one.filer.windows",
     "version": "4.0.0-beta-1",
-    "description": "ONE File System Bridge for Windows Explorer via WSL2",
+    "description": "ONE File System Bridge for Windows Explorer using ProjectedFS",
     "type": "module",
     "main": "lib/index.js",
     "bin": {
@@ -24,12 +24,17 @@
         "test:wsl": "bash test-wsl.sh",
         "test:windows": "powershell -ExecutionPolicy Bypass -File ./test/scripts/run-windows-tests.ps1",
         "test:minimal": "node --enable-source-maps test/integration/02-minimal-fuse-example.test.js",
-        "test:watch": "mocha --require ts-node/register 'test/**/*.test.ts' --watch --watch-extensions ts"
+        "test:watch": "mocha --require ts-node/register 'test/**/*.test.ts' --watch --watch-extensions ts",
+        "test:cache": "mocha 'test/unit/*.simple.test.ts' 'test/integration/CachedProjFSProvider.test.ts' --require ts-node/register --timeout 10000",
+        "test:cache:unit": "mocha 'test/unit/*.simple.test.ts' --require ts-node/register --timeout 10000",
+        "test:cache:integration": "mocha 'test/integration/CachedProjFSProvider.test.ts' --require ts-node/register --timeout 10000",
+        "cleanup:projfs": "node cleanup-projfs.js"
     },
     "repository": "https://github.com/refinio/one.filer",
     "dependencies": {
         "@commander-js/extra-typings": "^10.0.3",
         "@refinio/one.core": "file:./vendor/refinio-one.core-0.6.1-beta-1.tgz",
+        "@refinio/one.ifsprojfs": "file:./vendor/refinio-one.ifsprojfs-1.0.1.tgz",
         "@refinio/one.models": "file:./vendor/refinio-one.models-14.1.0-beta-1-fixed.tgz",
         "commander": "^10.0.0",
         "fuse-shared-library-linux": "1.0.0",
@@ -43,11 +48,13 @@
         "@types/sinon": "^17.0.2",
         "chai": "^4.3.10",
         "chai-as-promised": "^7.1.1",
+        "html-webpack-plugin": "^5.6.3",
         "mocha": "^10.2.0",
         "nyc": "^15.1.0",
         "sinon": "^17.0.1",
         "ts-node": "^10.9.2",
-        "typescript": "^4.9.5"
+        "typescript": "^4.9.5",
+        "webpack-cli": "^6.0.1"
     },
     "engines": {
         "node": ">=20.0.0"

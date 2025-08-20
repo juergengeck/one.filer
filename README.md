@@ -1,8 +1,8 @@
-# ONE Filer
+# ONE Filer Windows
 
 **Native Windows filesystem integration for ONE database using ProjectedFS (ProjFS)**
 
-> ✨ **ONE Filer 4.0** – Features native Windows ProjectedFS (ProjFS) support for seamless Windows Explorer integration. FUSE support is retained for Linux/WSL2 environments.
+> ✨ **one.filer.windows** – Native Windows ProjectedFS (ProjFS) support for seamless Windows Explorer integration. For Linux support, see `one.filer.linux` in the `linux/` directory.
 
 ## 🎯 Project Overview
 
@@ -19,15 +19,15 @@ ONE Filer provides:
 ### Package Structure
 
 ```
-one.filer/                    # Main project (Windows focus)
+one.filer.windows/            # This project - Windows implementation
 ├── src/                      # Core implementation
 │   ├── filer/               # Filesystem implementations
-│   │   ├── Filer.ts        # Linux/FUSE implementation
+│   │   ├── Filer.ts        # Base/FUSE implementation
 │   │   └── FilerWithProjFS.ts  # Windows ProjFS
 │   └── Replicant.ts        # Orchestrator
-├── linux/                   # Linux-specific packages
+├── linux/                   # Linux packages
 │   ├── refinio-fuse3/      # Pure FUSE3 N-API bindings
-│   └── one-filer-fuse3/    # Complete Linux implementation
+│   └── one.filer.linux/    # Complete Linux implementation
 └── one.leute.replicant/    # Standard orchestrator (updated)
 ```
 
@@ -54,12 +54,19 @@ one.filer/                    # Main project (Windows focus)
    - `/debug` - Debug information
    - `/invites` - Pairing/invitation system
 
-### Related Repositories
+### Related Packages
 
 - **[one.leute.replicant](https://github.com/juergengeck/one.leute.replicant)** - Standard orchestrator with Filer support, now using @refinio/fuse3
-- **Linux Packages** (in `linux/` directory):
-  - `@refinio/fuse3` - Modern FUSE3 N-API bindings replacing fuse-native
-  - `@refinio/one.filer.fuse3` - Complete Linux implementation
+- **one.filer.linux** (in `linux/` directory) - Complete Linux implementation using FUSE3
+- **@refinio/fuse3** (in `linux/refinio-fuse3/`) - Modern FUSE3 N-API bindings replacing fuse-native
+
+### Platform-Specific Packages
+
+| Platform | Package | Technology | Location |
+|----------|---------|------------|----------|
+| Windows | `one.filer.windows` | ProjectedFS (ProjFS) | This project |
+| Linux | `one.filer.linux` | FUSE3 via @refinio/fuse3 | `linux/one.filer.linux/` |
+| Cross-platform | `one.leute.replicant` | Both ProjFS and FUSE3 | Separate repo |
 
 ### How It Works
 

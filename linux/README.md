@@ -1,6 +1,6 @@
-# ONE.filer Linux Packages
+# Linux Packages for ONE Filer
 
-This directory contains the Linux-specific packages for ONE.filer, providing modern FUSE3 support for mounting ONE.models filesystems on Linux.
+This directory contains the Linux-specific packages for the ONE filesystem bridge, providing modern FUSE3 support for mounting ONE databases as filesystems on Linux.
 
 ## Package Structure
 
@@ -11,12 +11,13 @@ This directory contains the Linux-specific packages for ONE.filer, providing mod
 - Replaces outdated `fuse-native`
 - Modern Node.js 18+ support
 
-### 2. `@refinio/one.filer.fuse3` (one-filer-fuse3/)
-**Complete ONE.filer implementation**
+### 2. `one.filer.linux` (one.filer.linux/)
+**Complete Linux implementation**
+- Linux counterpart to `one.filer.windows`
 - Full Replicant orchestrator
 - Filer with all filesystem types
 - Uses @refinio/fuse3 for mounting
-- Based on current project's implementation
+- Shares core code with Windows implementation
 
 ## Architecture Overview
 
@@ -27,7 +28,7 @@ This directory contains the Linux-specific packages for ONE.filer, providing mod
 ├────────────────────────────────────────────────────────┤
 │                 Linux Kernel FUSE                      │
 ├────────────────────────────────────────────────────────┤
-│              @refinio/one.filer.fuse3                  │
+│                one.filer.linux                         │
 │         (Business logic, filesystem impl)              │
 ├────────────────────────────────────────────────────────┤
 │                 @refinio/fuse3                         │
@@ -37,13 +38,17 @@ This directory contains the Linux-specific packages for ONE.filer, providing mod
 
 ## Relationship to Other Projects
 
-### one.filer (Parent Project)
-The main project provides:
-- Windows support via ProjFS
-- Core implementation (Filer, FuseFrontend, etc.)
+### one.filer.windows (Parent Project)
+The Windows implementation provides:
+- Windows support via ProjectedFS (ProjFS)
+- Core implementation shared with Linux
 - Electron app for Windows
 
-These Linux packages adapt the core implementation to work with FUSE3.
+### one.filer.linux
+The Linux implementation:
+- Uses the same core codebase
+- Replaces ProjFS with FUSE3
+- Platform-specific adaptations
 
 ### one.leute.replicant
 The standard orchestrator package that:
