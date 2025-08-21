@@ -50,6 +50,11 @@ export class Filer {
         if (typeof process === 'undefined' || !process.versions || !process.versions.node) {
             throw new Error('Fuse can only be mounted in Node.js environment');
         }
+        
+        // Don't allow FUSE on Windows
+        if (process.platform === 'win32') {
+            throw new Error('FUSE not supported on Windows - use ProjFS mode instead');
+        }
 
         const rootFileSystem = await this.setupRootFileSystem();
 

@@ -6,8 +6,7 @@ import { App } from './App';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 // Render the app
+// Disable StrictMode to prevent double execution of effects
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <App />
 );

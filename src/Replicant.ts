@@ -117,6 +117,7 @@ export default class Replicant {
 
         // Initialize filer if configured
         if (this.config.useFiler) {
+            console.log('[REPLICANT] useFiler is true, initializing filer...');
             const models = {
                 channelManager: this.channelManager,
                 connections: this.connections,
@@ -128,18 +129,30 @@ export default class Replicant {
             
             // Check if we should use ProjFS
             const filerConfig = this.config.filerConfig as any;
+            console.log('[REPLICANT] Filer config:', JSON.stringify(filerConfig, null, 2));
+            
             if (filerConfig?.useProjFS) {
+                console.log('[REPLICANT] Using ProjFS mode - importing FilerWithProjFS...');
                 // Always use ProjFS when configured, regardless of platform
                 // This allows running from WSL while using Windows ProjFS
                 const { FilerWithProjFS } = await import('./filer/FilerWithProjFS.js');
+                console.log('[REPLICANT] FilerWithProjFS imported, creating instance...');
                 this.filer = new FilerWithProjFS(models, filerConfig);
+                console.log('[REPLICANT] FilerWithProjFS instance created');
             } else {
+                console.log('[REPLICANT] Using FUSE mode - importing Filer...');
                 // Only use FUSE when ProjFS is not requested
                 const { Filer } = await import('./filer/Filer.js');
+                console.log('[REPLICANT] Filer imported, creating instance...');
                 this.filer = new Filer(models, this.config.filerConfig);
+                console.log('[REPLICANT] Filer instance created');
             }
             
+            console.log('[REPLICANT] About to call filer.init()...');
             await this.filer.init();
+            console.log('[REPLICANT] filer.init() completed successfully');
+        } else {
+            console.log('[REPLICANT] useFiler is false, skipping filer initialization');
         }
 
         await this.setPersonNameToInitialIdentityIfNone();

@@ -1,0 +1,5 @@
+
+[SingletonManager] Electron lock failed - another instance exists
+[2025-08-15T14:19:53.756Z] Another instance of ONE Filer is already running
+[SingletonManager] Connected to main instance via named pipe
+Successfully notified the main instance

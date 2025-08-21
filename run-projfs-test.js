@@ -10,7 +10,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 const TEST_DIR = 'test-projfs-data';
-const MOUNT_POINT = 'C:\\TestProjFS';
+const MOUNT_POINT = 'C:\\TestProjFS_' + Date.now();
 const SECRET = 'test-projfs-' + Date.now();
 
 console.log('🧪 ProjFS Test Script');
@@ -44,6 +44,11 @@ async function runProjFSTest() {
         // 1. Setup
         console.log('1️⃣ Setting up test environment...');
         fs.mkdirSync(TEST_DIR, { recursive: true });
+        
+        // Create objects directory structure that ONE.core expects
+        const objectsDir = path.join(TEST_DIR, 'objects');
+        fs.mkdirSync(objectsDir, { recursive: true });
+        console.log('   Created objects directory:', objectsDir);
         
         console.log('2️⃣ Initializing ONE.core...');
         await initOneCoreInstance(TEST_DIR, SECRET);

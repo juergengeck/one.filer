@@ -1,0 +1,14 @@
+{
+  "useFiler": true,
+  "filerConfig": {
+    "useProjFS": true,
+    "projfsRoot": "C:\\OneFiler",
+    "mountPoint": "C:\\OneFiler",
+    "logCalls": false
+  },
+  "disableCowCache": true,
+  "disableInMemoryCache": true,
+  "verboseLogging": true,
+  "traceAllOperations": false,
+  "// Note": "This configuration disables all caching for debugging purposes"
+}

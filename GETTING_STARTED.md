@@ -1,86 +1,93 @@
-# Getting Started with ONE.filer WSL2 Integration
+# Getting Started with ONE.filer
 
-This guide will help you set up ONE.filer to run in WSL2 and integrate with Windows Explorer.
+This guide will help you set up ONE.filer to run natively on Windows using ProjFS (Projected File System).
 
 ## 🎯 Project Overview
 
-**Goal**: Make ONE objects accessible through Windows Explorer by running ONE packages in WSL2 Debian.
+**Goal**: Make ONE objects accessible through Windows Explorer using native Windows filesystem APIs.
 
 **Architecture**:
-- **WSL2 Debian**: Runs the ONE packages (one.core, one.models, one.leute.replicant)
-- **FUSE Mount**: Presents ONE objects as a filesystem at `/mnt/c/one-files/`
-- **Windows Explorer**: Sees `C:\one-files\` as a normal directory
+- **Windows Native**: Runs directly on Windows using Node.js
+- **ProjFS**: Windows Projected File System provides virtual filesystem functionality
+- **Windows Explorer**: Direct integration at `C:\OneFiler` (configurable)
 - **Data Ingestion**: Two-tier approach for structured vs unstructured data
 
 ## 🚀 Quick Start
 
-### Step 1: Set Up WSL2 Environment
+### Step 1: Enable ProjFS on Windows
 
-Run the setup script:
+Run PowerShell as Administrator:
 ```powershell
-.\scripts\setup-wsl2.ps1
+# Enable Windows Projected File System feature
+Enable-WindowsOptionalFeature -Online -FeatureName Client-ProjFS -NoRestart
+
+# Restart your computer after enabling
 ```
 
-Or manually:
-```powershell
-# Verify WSL2 is running
-wsl --list --verbose
+### Step 2: Install Prerequisites
 
-# Access WSL2 Debian
-wsl -d Debian
+1. **Node.js** (Windows version 20.0.0+):
+   ```powershell
+   # Using winget
+   winget install OpenJS.NodeJS.LTS
+   ```
 
-# Install Node.js (in WSL2)
-sudo apt update
-sudo apt install -y curl build-essential
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-sudo apt-get install -y nodejs
+2. **Visual Studio Build Tools** (for native modules):
+   ```powershell
+   # Install build tools
+   winget install Microsoft.VisualStudio.2022.BuildTools
+   # Select "Desktop development with C++" workload during installation
+   ```
 
-# Verify installation
-node --version
-npm --version
-```
+### Step 3: Install Dependencies
 
-### Step 2: Install Dependencies
+```cmd
+# Clone the repository if needed
+git clone https://github.com/refinio/one.filer.git
+cd one.filer
 
-In WSL2 Debian:
-```bash
-cd /mnt/c/Users/juerg/source/one.filer
-
-# Install one.leute.replicant dependencies
-cd one.leute.replicant
+# Install dependencies
 npm install
 
-# Install one.filer dependencies
-cd ../
-npm install
+# Build the project (including native modules)
+npm run build
 ```
 
-### Step 3: Test the Setup
+### Step 4: Configure ONE.filer
 
-Run the test script:
-```bash
-# In WSL2
-bash /mnt/c/Users/juerg/source/one.filer/scripts/test-one-packages.sh
+Create or modify a configuration file (`configs/my-config.json`):
+```json
+{
+    "directory": "data",
+    "commServerUrl": "wss://comm10.dev.refinio.one",
+    "createEveryoneGroup": true,
+    "useFiler": true,
+    "filerConfig": {
+        "useProjFS": true,
+        "projfsRoot": "C:\\OneFiler",
+        "projfsCacheSize": 104857600,
+        "pairingUrl": "https://leute.dev.refinio.one/invites/invitePartner/?invited=true/",
+        "iomMode": "light",
+        "logCalls": true
+    }
+}
 ```
 
-### Step 4: Configure and Start ONE.leute.replicant
+### Step 5: Start ONE.filer
 
-```bash
-# In WSL2, navigate to one.leute.replicant
-cd /mnt/c/Users/juerg/source/one.filer/one.leute.replicant
+```cmd
+# Using command prompt
+npm start -- start -s YOUR_SECRET -c configs/my-config.json
 
-# Copy WSL2 configuration
-cp ../scripts/wsl2-config.json ./configs/
-
-# Start the server
-npm start -- --config=configs/wsl2-config.json
+# Or use the provided PowerShell script
+.\start-projfs.ps1
 ```
 
 ## 🏗️ Architecture Details
 
 ### Data Flow
 ```
-Windows Explorer → C:\one-files\ → WSL2 FUSE Mount → ONE.leute.replicant → ONE Objects
+Windows Explorer → C:\OneFiler → ProjFS Driver → one.filer → one.projfs → ONE Objects
 ```
 
 ### Two-Tier Data Ingestion
@@ -97,8 +104,8 @@ Windows Explorer → C:\one-files\ → WSL2 FUSE Mount → ONE.leute.replicant �
 
 - **one.core**: Core ONE database functionality
 - **one.models**: File system models and recipes
-- **one.leute.replicant**: Server implementation with REST API and FUSE integration
-- **one.filer**: FUSE filesystem implementation
+- **one.projfs**: Windows Projected File System integration
+- **one.filer**: Main filesystem implementation with ProjFS support
 
 ## 📋 Current Task Status
 
@@ -114,28 +121,28 @@ task-master next
 
 ## 🔧 Development Workflow
 
-1. **Start with WSL2 setup** (Task #1)
-2. **Configure one.leute.replicant** (Task #2)
-3. **Set up FUSE mount point** (Task #3)
-4. **Implement data ingestion** (Task #8)
-5. **Test Windows Explorer integration**
+1. **Enable ProjFS on Windows**
+2. **Install build dependencies**
+3. **Configure ONE.filer with ProjFS**
+4. **Start the virtual filesystem**
+5. **Access via Windows Explorer**
 
 ## 🐛 Troubleshooting
 
-### WSL2 Issues
-- Ensure WSL2 is enabled: `wsl --set-default-version 2`
-- Check Debian is running: `wsl --list --verbose`
-- Restart WSL: `wsl --shutdown` then `wsl -d Debian`
+### ProjFS Issues
+- **"ProjFS not available"**: Enable the Windows feature (see Step 1)
+- **Virtual drive not appearing**: Check if path exists and is empty
+- **Access denied**: Run as administrator or check folder permissions
 
-### Node.js Issues
-- Verify Node.js version: `node --version` (should be LTS)
-- Check npm permissions: `npm config get prefix`
-- Install build tools: `sudo apt install build-essential`
+### Build Issues
+- **node-gyp errors**: Install Visual Studio with C++ workload
+- **Module not found**: Run `npm run build` to compile native modules
+- **TypeScript errors**: Ensure TypeScript 4.9+ is installed
 
-### FUSE Issues
-- Install FUSE: `sudo apt install fuse`
-- Check FUSE module: `lsmod | grep fuse`
-- Verify mount permissions: `ls -la /mnt/c/`
+### Runtime Issues
+- **"Secret required"**: Provide the -s parameter when starting
+- **Configuration not found**: Use absolute path or check working directory
+- **Memory issues**: Adjust `projfsCacheSize` in configuration
 
 ## 📚 Resources
 
@@ -145,8 +152,31 @@ task-master next
 
 ## 🎯 Next Steps
 
-1. Run the setup script
-2. Test the environment
-3. Configure one.leute.replicant
-4. Implement the FUSE mount
-5. Test Windows Explorer integration 
+1. Enable ProjFS feature on Windows
+2. Install Node.js and build tools
+3. Build and configure ONE.filer
+4. Start the virtual filesystem
+5. Open `C:\OneFiler` in Windows Explorer
+
+## 📋 Advanced Configuration
+
+### Performance Tuning
+```json
+{
+    "filerConfig": {
+        "projfsCacheSize": 209715200,  // 200MB cache
+        "poolThreadCount": 8,          // Increase thread pool
+        "concurrentThreadCount": 0      // Auto-detect
+    }
+}
+```
+
+### Multiple Virtual Drives
+You can run multiple instances with different mount points:
+```cmd
+# Instance 1
+npm start -- start -s SECRET1 -c config1.json
+
+# Instance 2 (different projfsRoot)
+npm start -- start -s SECRET2 -c config2.json
+``` 

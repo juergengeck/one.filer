@@ -45,6 +45,27 @@ export interface WSLMetrics {
     memory: number;
     processes: number;
 }
+export interface LogEntry {
+    timestamp: string;
+    level: 'debug' | 'info' | 'warn' | 'error';
+    source: string;
+    message: string;
+}
+export interface TestResult {
+    suite: string;
+    test: string;
+    status: 'pass' | 'fail' | 'skip';
+    error?: string;
+    duration?: number;
+}
+export interface TestSuiteResult {
+    name: string;
+    tests: TestResult[];
+    passed: number;
+    failed: number;
+    skipped: number;
+    duration: number;
+}
 export interface ElectronAPI {
     login: (credentials: {
         secret: string;
@@ -81,6 +102,23 @@ export interface ElectronAPI {
         wsl: WSLMetrics;
     }>;
     runDiagnostics: () => Promise<Record<string, any>>;
+    onDebugLog: (callback: (log: LogEntry) => void) => void;
+    removeDebugLogListener: (callback: (log: LogEntry) => void) => void;
+    runTests: () => Promise<{
+        success: boolean;
+        results?: TestSuiteResult[];
+        error?: string;
+    }>;
+    runTestSuite: (suiteName: string) => Promise<{
+        success: boolean;
+        result?: TestSuiteResult;
+        error?: string;
+    }>;
+    getTestDiagnostics: () => Promise<{
+        success: boolean;
+        diagnostics?: any;
+        error?: string;
+    }>;
 }
 declare global {
     interface Window {

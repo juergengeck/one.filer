@@ -1,0 +1,12 @@
+{
+    "directory": "./one-filer-data",
+    "useFiler": true,
+    "createEveryoneGroup": true,
+    "filerConfig": {
+        "useProjFS": true,
+        "projfsRoot": "C:\\OneFiler",
+        "mountPoint": "C:\\OneFiler",
+        "logCalls": true,
+        "iomMode": "light"
+    }
+}

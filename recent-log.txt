@@ -1,0 +1,228 @@
+
+> one-filer-login@1.0.0 start:native
+> npm run build:native && electron .
+
+
+> one-filer-login@1.0.0 build:native
+> webpack --config webpack.config.native.js && npm run build-css
+
+asset [1m[32mmain.js[39m[22m 2.52 MiB [1m[33m[compared for emit][39m[22m (name: main)
+asset [1m[32mlib_filer_Filer_js.main.js[39m[22m 366 KiB [1m[33m[compared for emit][39m[22m
+asset [1m[32mlib_filer_FilerWithProjFS_js.main.js[39m[22m 364 KiB [1m[33m[compared for emit][39m[22m
+asset [1m[32mnode_modules_refinio_one_models_lib_recipes_recipes-experimental_js.main.js[39m[22m 72.6 KiB [1m[33m[compared for emit][39m[22m
+asset [1m[32mlib_filer_FuseFrontend_js.main.js[39m[22m 58.3 KiB [1m[33m[compared for emit][39m[22m
+asset [1m[32mnode_modules_refinio_one_models_lib_recipes_recipes-stable_js.main.js[39m[22m 29.3 KiB [1m[33m[compared for emit][39m[22m
+asset [1m[32mlib_fuse_native-fuse3_js.main.js[39m[22m 7.16 KiB [1m[33m[compared for emit][39m[22m
+runtime modules 3.46 KiB 8 modules
+modules by path [1m../node_modules/[39m[22m 2.19 MiB 353 modules
+modules by path [1m../lib/[39m[22m 113 KiB
+  modules by path [1m../lib/filer/*.js[39m[22m 65.1 KiB 8 modules
+  modules by path [1m../lib/*.js[39m[22m 13.7 KiB 4 modules
+  modules by path [1m../lib/misc/*.js[39m[22m 9.32 KiB 4 modules
+  modules by path [1m../lib/fuse/*.js[39m[22m 5.95 KiB 3 modules
+  modules by path [1m../lib/cache/*.js[39m[22m 18.4 KiB 2 modules
+  + 1 module
+modules by path [1m./src/[39m[22m 62.6 KiB
+  [1m./src/main-native.ts[39m[22m 30.2 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m./src/simple-test-runner.ts[39m[22m 6.09 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m./src/real-test-runner.ts[39m[22m 13.8 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m./src/services/SingletonManager.ts[39m[22m 12.5 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
++ 27 modules
+
+[1m[33mWARNING[39m[22m in [1m../node_modules/ws/lib/buffer-util.js[39m[22m [1m[32m117:23-44[39m[22m
+[1mModule [1m[31mnot found[39m[22m[1m: [1m[31mError[39m[22m[1m: Can't resolve 'bufferutil' in 'C:\Users\juerg\source\one.filer\node_modules\ws\lib'[39m[22m
+ @ ../node_modules/ws/lib/receiver.js 12:42-66
+ @ ../node_modules/ws/wrapper.mjs 2:0-41 7:0-79
+ @ ../node_modules/@refinio/one.core/lib/system/nodejs/websocket.js 11:0-37 21:15-17
+ @ ../node_modules/@refinio/one.core/lib/system/load-nodejs.js 28:0-44 37:17-19
+ @ ./src/main-native.ts 278:27-81
+
+[1m[33mWARNING[39m[22m in [1m../node_modules/ws/lib/validation.js[39m[22m [1m[32m144:24-49[39m[22m
+[1mModule [1m[31mnot found[39m[22m[1m: [1m[31mError[39m[22m[1m: Can't resolve 'utf-8-validate' in 'C:\Users\juerg\source\one.filer\node_modules\ws\lib'[39m[22m
+ @ ../node_modules/ws/lib/receiver.js 13:43-66
+ @ ../node_modules/ws/wrapper.mjs 2:0-41 7:0-79
+ @ ../node_modules/@refinio/one.core/lib/system/nodejs/websocket.js 11:0-37 21:15-17
+ @ ../node_modules/@refinio/one.core/lib/system/load-nodejs.js 28:0-44 37:17-19
+ @ ./src/main-native.ts 278:27-81
+
+2 warnings have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.101.0 compiled with [1m[33m2 warnings[39m[22m in 10091 ms
+
+asset [1m[32mpreload.js[39m[22m 6.03 KiB [1m[33m[compared for emit][39m[22m (name: main)
+runtime modules 937 bytes 4 modules
+built modules 1.24 KiB [1m[33m[built][39m[22m
+  [1m./src/preload.ts[39m[22m 1.2 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1mexternal "electron"[39m[22m 42 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+webpack 5.101.0 compiled [1m[32msuccessfully[39m[22m in 1959 ms
+
+asset [1m[32mrenderer-react.js[39m[22m 3.1 MiB [1m[33m[compared for emit][39m[22m (name: main) 1 related asset
+orphan modules 2.13 MiB [1m[33m[orphan][39m[22m 2157 modules
+runtime modules 2.63 KiB 8 modules
+cacheable modules 2.44 MiB
+  modules by path [1m./node_modules/[39m[22m 2.32 MiB 501 modules
+  modules by path [1m./src/[39m[22m 115 KiB
+    modules by path [1m./src/components/[39m[22m 56.5 KiB 7 modules
+    modules by path [1m./src/*.tsx[39m[22m 15 KiB 2 modules
+    modules by path [1m./src/*.css[39m[22m 43.4 KiB 2 modules
+    [1m./src/lib/utils.ts[39m[22m 139 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  asset modules 1.02 KiB
+    [1mdata:image/svg+xml,%3csvg xmlns=%27..[39m[22m 284 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1mdata:image/svg+xml,%3csvg viewBox=%..[39m[22m 312 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1mdata:image/svg+xml,%3csvg viewBox=%..[39m[22m 181 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1mdata:image/svg+xml,%3csvg xmlns=%27..[39m[22m 271 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+webpack 5.101.0 compiled [1m[32msuccessfully[39m[22m in 12419 ms
+
+> one-filer-login@1.0.0 build-css
+> tailwindcss -i ./src/globals.css -o ./dist/globals.css --watch=false
+
+
+[SingletonManager] Invalid ProjFS lock file, removing...
+[SingletonManager] Stale lock file found (PID 44740 not running), removing...
+[SingletonManager] Lock acquired successfully (PID: 25704)
+[2025-08-10T09:37:50.640Z] This is the main instance (PID: 25704)
+[SingletonManager] Named pipe server listening on \\.\pipe\one-filer-singleton
+[SingletonManager] TCP server listening on 127.0.0.1:17890
+ONE Core modules loaded successfully
+[TestAPI] Test server listening on http://127.0.0.1:17891
+[TestAPI] Use POST http://127.0.0.1:17891/test-login to trigger login
+Page loaded successfully
+[25704:0810/113752.191:ERROR:CONSOLE:1] "Request Autofill.enable failed. {"code":-32601,"message":"'Autofill.enable' wasn't found"}", source: devtools://devtools/bundled/core/protocol_client/protocol_client.js (1)
+[25704:0810/113752.192:ERROR:CONSOLE:1] "Request Autofill.setAddresses failed. {"code":-32601,"message":"'Autofill.setAddresses' wasn't found"}", source: devtools://devtools/bundled/core/protocol_client/protocol_client.js (1)
+[TestAPI] Login request received
+[Login] Login request received with data: { secret: '***', configPath: undefined }
+Creating Replicant with config: {
+  "directory": "C:\\Users\\juerg\\AppData\\Roaming\\one-filer-login\\one-data",
+  "useFiler": true,
+  "filerConfig": {
+    "useProjFS": true,
+    "projfsRoot": "C:\\OneFiler",
+    "mountPoint": "C:\\OneFiler",
+    "logCalls": false,
+    "pairingUrl": "https://leute.refinio.one",
+    "iomMode": "full",
+    "disableCowCache": false,
+    "disableInMemoryCache": false,
+    "verboseLogging": false,
+    "traceAllOperations": false
+  }
+}
+Starting Replicant with secret...
+[REPLICANT] useFiler is true, initializing filer...
+[REPLICANT] Filer config: {
+  "useProjFS": true,
+  "projfsRoot": "C:\\OneFiler",
+  "mountPoint": "C:\\OneFiler",
+  "logCalls": false,
+  "pairingUrl": "https://leute.refinio.one",
+  "iomMode": "full",
+  "disableCowCache": false,
+  "disableInMemoryCache": false,
+  "verboseLogging": false,
+  "traceAllOperations": false
+}
+[REPLICANT] Using ProjFS mode - importing FilerWithProjFS...
+[REPLICANT] FilerWithProjFS imported, creating instance...
+[REPLICANT] FilerWithProjFS instance created
+[REPLICANT] About to call filer.init()...
+[FilerWithProjFS] Starting initialization...
+[FilerWithProjFS] Config useProjFS: true
+[FilerWithProjFS] Setting up root filesystem...
+[FilerWithProjFS] Root filesystem created
+[FilerWithProjFS] Initializing ProjFS...
+🪟 Starting ProjFS with COW cache provider...
+[ProjFS] Instance directory: C:\Users\juerg\AppData\Roaming\one-filer-login\one-data
+[ProjFS] Creating CachedProjFSProvider instance with COW cache...
+\n========================================
+CachedProjFSProvider Constructor Called
+Virtual Root: C:\OneFiler
+Instance Path: C:\Users\juerg\AppData\Roaming\one-filer-login\one-data
+Cache TTL: 30000ms
+Persistent cache initialized
+========================================
+IFSProjFSProvider module loaded
+Module exports: ["IFSProjFSProvider"]
+IFSProjFSProvider type: function
+
+========================================
+IFSProjFSProvider Constructor Called
+Virtual Root: C:\OneFiler
+Instance Path: C:\Users\juerg\AppData\Roaming\one-filer-login\one-data
+========================================
+IFSProjFSProvider instance created
+Native provider created successfully
+Native provider methods: constructor,onDebugMessage,normalizePath,getFileInfo,readFile,readDirectory,createFile,getCacheStats,mount,unmount
+About to call setupCallbacks()...
+Available provider methods: _events,_eventsCount,_maxListeners,instancePath,virtualRoot,fileSystem,debug,provider
+Available provider prototype methods: constructor,onDebugMessage,normalizePath,getFileInfo,readFile,readDirectory,createFile,getCacheStats,mount,unmount
+Setting up event-based file content handler...
+init() completed successfully
+SmartCacheManager initialized with models
+[ProjFS] Acquired exclusive lock for ProjFS mount
+[ProjFS] About to call mount()...
+
+=== MOUNT CALLED ===
+Mounting at: C:\OneFiler
+Loading persistent cache...
+Loaded 5 cached directories from disk
+Pre-populating root directory...
+Pre-populated root with 5 entries: chats, debug, invites, objects, types
+Virtual root directory already exists: C:\OneFiler
+Calling provider.mount()...
+
+=== MOUNT CALLED ===
+Mounting at: C:\OneFiler
+Mount completed
+provider.mount() returned: undefined
+Mount completed successfully via mount() method
+Starting generic directory prefetch...
+[Prefetch] Failed to fetch /: TypeError: this.fileSystem.readDirectory is not a function
+[Prefetch] Failed to fetch /invites: TypeError: this.fileSystem.readDirectory is not a function
+[Prefetch] Failed to fetch /chats: TypeError: this.fileSystem.readDirectory is not a function
+[Prefetch] Failed to fetch /debug: TypeError: this.fileSystem.readDirectory is not a function
+[Prefetch] Failed to fetch /objects: TypeError: this.fileSystem.readDirectory is not a function
+[Prefetch] Failed to fetch /types: TypeError: this.fileSystem.readDirectory is not a function
+WARNING: setCachedDirectory method not found on provider
+Generic prefetch completed successfully
+IFSProjFSProvider mounted - file system callbacks are active
+[SmartCache] Starting intelligent cache manager...
+[SmartCache] Model listeners not implemented - using periodic sync
+[SmartCache] Performing initial cache population...
+FileSystem.readFile called for: /invites/iom_invite.png
+FileSystem.readFile returning content, size: 5369 bytes
+FileSystem.readFile called for: /invites/iom_invite.txt
+FileSystem.readFile returning content, size: 262 bytes
+FileSystem.readFile called for: /invites/iop_invite.png
+FileSystem.readFile returning content, size: 5420 bytes
+FileSystem.readFile called for: /invites/iop_invite.txt
+FileSystem.readFile returning content, size: 262 bytes
+[SmartCache] Initial cache population complete
+[SmartCache] Started with intelligent caching strategies
+SmartCacheManager started
+[ProjFS] mount() returned successfully
+[info]: ONE content mounted at C:\OneFiler using ProjFS with COW cache
+[info]: Direct BLOB/CLOB access enabled from C:\Users\juerg\AppData\Roaming\one-filer-login\one-data
+[FilerWithProjFS] ProjFS initialization completed
+[FilerWithProjFS] Init method completed successfully
+[REPLICANT] filer.init() completed successfully
+Replicant started successfully
+Successfully subscribed to ONE message bus for debug messages
+[TestAPI] Login result: {
+  success: true,
+  message: 'Successfully started ONE Filer Service',
+  mountPoint: 'C:\\OneFiler'
+}
+[SingletonManager] Unhandled rejection: Error: Timeout fetching /
+    at Timeout.eval [as _onTimeout] (webpack://one-filer-login/../lib/filer/AsyncPrefetchManager.js?:32:87)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+Unhandled Rejection at: Promise {
+  <rejected> Error: Timeout fetching /
+      at Timeout.eval [as _onTimeout] (webpack://one-filer-login/../lib/filer/AsyncPrefetchManager.js?:32:87)
+      at listOnTimeout (node:internal/timers:588:17)
+      at process.processTimers (node:internal/timers:523:7)
+} reason: Error: Timeout fetching /
+    at Timeout.eval [as _onTimeout] (webpack://one-filer-login/../lib/filer/AsyncPrefetchManager.js?:32:87)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)

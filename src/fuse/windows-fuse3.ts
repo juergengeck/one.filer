@@ -6,13 +6,8 @@
  */
 
 import { EventEmitter } from 'events';
-import type { Stats, FuseOperations } from './native-fuse3.js';
+import type { Stats, FuseOperations } from './types.js';
 import path from 'path';
-
-interface FuseError extends Error {
-    code: string;
-    path?: string;
-}
 
 // Store active FUSE operations for each mount
 const activeMounts = new Map<string, WindowsFuse>();
@@ -27,7 +22,8 @@ export class WindowsFuse extends EventEmitter {
     private projfsInstance: any;
     private readonly mountPath: string;
     private operations: FuseOperations;
-    private options: any;
+    // @ts-ignore - unused parameter, kept for interface compatibility
+    private _options: any;
     private mounted = false;
     private virtualRoot: string;
 
@@ -54,7 +50,7 @@ export class WindowsFuse extends EventEmitter {
 
         this.mountPath = _mountPath;
         this.operations = operations;
-        this.options = options;
+        this._options = options;
         
         // Convert Unix-style mount path to Windows path
         this.virtualRoot = this.convertToWindowsPath(this.mountPath);
@@ -78,30 +74,18 @@ export class WindowsFuse extends EventEmitter {
         console.log(`📂 Available FUSE operations: ${Object.keys(this.operations).join(', ')}`);
         
         try {
-            // Dynamically load ProjFS wrapper
-            const { ProjFSWrapper } = await import('../../one.projfs/src/native/index.js');
+            // Dynamically load projfs-fuse.one
+            // const { ProjFSFuse } = await import('projfs-fuse.one');
+            throw new Error('projfs-fuse.one disabled - use ProjFS mode instead');
             
-            // Create ProjFS instance
-            this.projfsInstance = new ProjFSWrapper(this.virtualRoot);
+            // Convert callback-based FUSE operations to projfs-fuse.one's synchronous API
+            // const adaptedOperations = this.adaptFuseOperations(this.operations);
             
-            // Create callbacks that bridge to FUSE operations
-            const projfsCallbacks = {
-                onGetPlaceholderInfo: this.handleGetPlaceholderInfo.bind(this),
-                onGetFileData: this.handleGetFileData.bind(this),
-                onGetDirectoryEnumeration: this.handleGetDirectoryEnumeration.bind(this),
-                onNotification: this.handleNotification.bind(this)
-            };
+            // Create ProjFS instance - projfs-fuse.one handles all the FUSE operations internally
+            // this.projfsInstance = new ProjFSFuse(this.virtualRoot, adaptedOperations, this.options);
             
-            // ProjFS options
-            const projfsOptions = {
-                virtualizationRootPath: this.virtualRoot,
-                poolThreadCount: this.options.threadCount || 4,
-                enableNegativePathCache: true,
-                ...this.options.projfs
-            };
-            
-            // Start ProjFS
-            await this.projfsInstance.start(projfsCallbacks, projfsOptions);
+            // Mount the filesystem
+            // await this.projfsInstance.mount();
             
             this.mounted = true;
             this.emit('mount');
@@ -111,7 +95,7 @@ export class WindowsFuse extends EventEmitter {
             
             // Call init if provided
             if (this.operations.init) {
-                this.operations.init((err) => {
+                this.operations.init?.((err) => {
                     if (err) {
                         console.error('FUSE init failed:', err);
                     }
@@ -136,7 +120,7 @@ export class WindowsFuse extends EventEmitter {
         
         try {
             if (this.projfsInstance) {
-                await this.projfsInstance.stop();
+                await this.projfsInstance.unmount();
             }
             
             activeMounts.delete(this.virtualRoot);
@@ -151,221 +135,151 @@ export class WindowsFuse extends EventEmitter {
         }
     }
 
-    // ProjFS callback handlers that translate to FUSE operations
-
-    private async handleGetPlaceholderInfo(relativePath: string): Promise<any> {
-        return new Promise((resolve, reject) => {
-            if (!this.operations.getattr) {
-                reject(new Error('FUSE getattr not implemented'));
-                return;
-            }
-
-            // Convert Windows path separators to Unix style for FUSE
-            const fusePath = '/' + relativePath.replace(/\\/g, '/');
-
-            this.operations.getattr(fusePath, (err: number, stat?: Stats) => {
-                if (err || !stat) {
-                    reject(this.createFuseError(err || WindowsFuse.ENOENT, fusePath));
-                    return;
-                }
-
-                // Convert FUSE stat to ProjFS PlaceholderInfo
-                resolve({
-                    fileSize: BigInt(stat.size),
-                    isDirectory: (stat.mode & 0o040000) !== 0,
-                    creationTime: stat.ctime || new Date(),
-                    lastWriteTime: stat.mtime || new Date(),
-                    lastAccessTime: stat.atime || new Date(),
-                    changeTime: stat.ctime || new Date(),
-                    fileAttributes: this.convertModeToWindowsAttributes(stat.mode)
-                });
-            });
-        });
-    }
-
-    private async handleGetFileData(
-        relativePath: string,
-        byteOffset: bigint,
-        length: number
-    ): Promise<Buffer> {
-        return new Promise((resolve, reject) => {
-            if (!this.operations.open || !this.operations.read) {
-                reject(new Error('FUSE open/read not implemented'));
-                return;
-            }
-
-            const fusePath = '/' + relativePath.replace(/\\/g, '/');
-            
-            // Open file
-            this.operations.open(fusePath, 0, (openErr: number, fd?: number) => {
-                if (openErr || fd === undefined) {
-                    reject(this.createFuseError(openErr || WindowsFuse.EIO, fusePath));
-                    return;
-                }
-
-                // Read data
-                const buffer = Buffer.alloc(length);
-                this.operations.read!(
-                    fusePath,
-                    fd,
-                    buffer,
-                    length,
-                    Number(byteOffset),
-                    (readErr: number, bytesRead?: number) => {
-                        // Close file
-                        if (this.operations.release) {
-                            this.operations.release(fusePath, fd, () => {});
-                        }
-
-                        if (readErr) {
-                            reject(this.createFuseError(readErr, fusePath));
-                            return;
-                        }
-
-                        resolve(buffer.slice(0, bytesRead || 0));
+    // projfs-fuse.one handles all the ProjFS callbacks and error handling internally
+    
+    /**
+     * Adapt callback-based FUSE operations to projfs-fuse.one's synchronous API
+     */
+    // @ts-ignore - unused method, kept for potential future use
+    private _adaptFuseOperations(operations: FuseOperations): any {
+        const adapted: any = {};
+        
+        // Convert init from callback to synchronous
+        if (operations.init) {
+            adapted.init = () => {
+                // Call original init with dummy callback
+                operations.init!((err) => {
+                    if (err) {
+                        console.error('FUSE init error:', err);
                     }
-                );
-            });
-        });
-    }
-
-    private async handleGetDirectoryEnumeration(
-        relativePath: string,
-        searchPattern?: string
-    ): Promise<any[]> {
-        return new Promise((resolve, reject) => {
-            if (!this.operations.readdir) {
-                reject(new Error('FUSE readdir not implemented'));
-                return;
-            }
-
-            const fusePath = '/' + relativePath.replace(/\\/g, '/');
-
-            this.operations.readdir(fusePath, (err: number, files?: string[], stats?: Stats[]) => {
-                if (err) {
-                    reject(this.createFuseError(err, fusePath));
-                    return;
-                }
-
-                const entries: any[] = [];
-                
-                if (files) {
-                    files.forEach((name, index) => {
-                        // Skip . and ..
-                        if (name === '.' || name === '..') return;
-
-                        // Apply search pattern if provided
-                        if (searchPattern && !this.matchWildcard(name, searchPattern)) {
-                            return;
-                        }
-
-                        entries.push({
-                            fileName: name,
-                            isDirectory: stats && stats[index] ? 
-                                (stats[index].mode & 0o040000) !== 0 : false,
-                            fileSize: stats && stats[index] ? 
-                                BigInt(stats[index].size) : BigInt(0)
-                        });
-                    });
-                }
-
-                resolve(entries);
-            });
-        });
-    }
-
-    private async handleNotification(
-        relativePath: string,
-        isDirectory: boolean,
-        notificationType: number,
-        newPath?: string
-    ): Promise<void> {
-        // Handle ProjFS notifications by calling appropriate FUSE operations
-        // const fusePath = '/' + relativePath.replace(/\\/g, '/');
-        
-        // Most notifications don't need handling as FUSE operations
-        // are called directly when files are accessed
-        if (this.operations.error) {
-            // Could emit errors for debugging
+                });
+            };
         }
-    }
-
-    // Utility methods
-
-    private convertModeToWindowsAttributes(mode: number): number {
-        let attrs = 0;
         
-        if (mode & 0o040000) attrs |= 0x10; // FILE_ATTRIBUTE_DIRECTORY
-        if (!(mode & 0o200)) attrs |= 0x01; // FILE_ATTRIBUTE_READONLY
-        if (attrs === 0) attrs = 0x80; // FILE_ATTRIBUTE_NORMAL
+        // Convert getattr from callback to synchronous return
+        if (operations.getattr) {
+            adapted.getattr = (path: string) => {
+                let result: Stats | null = null;
+                let syncComplete = false;
+                
+                operations.getattr!(path, (err: number, stat?: Stats) => {
+                    if (!err && stat) {
+                        result = stat;
+                    }
+                    syncComplete = true;
+                });
+                
+                // Spin until callback completes (not ideal but works for now)
+                while (!syncComplete) {
+                    // Wait
+                }
+                
+                return result;
+            };
+        }
         
-        return attrs;
-    }
-
-    private matchWildcard(filename: string, pattern: string): boolean {
-        const regex = pattern
-            .replace(/[.+^${}()|[\]\\]/g, '\\$&')
-            .replace(/\*/g, '.*')
-            .replace(/\?/g, '.');
+        // Convert readdir from callback to synchronous return
+        if (operations.readdir) {
+            adapted.readdir = (path: string) => {
+                let result: string[] = [];
+                let syncComplete = false;
+                
+                operations.readdir!(path, (err: number, files?: string[]) => {
+                    if (!err && files) {
+                        result = files;
+                    }
+                    syncComplete = true;
+                });
+                
+                while (!syncComplete) {
+                    // Wait
+                }
+                
+                return result;
+            };
+        }
         
-        return new RegExp(`^${regex}$`, 'i').test(filename);
-    }
-
-    private createFuseError(code: number, path?: string): Error {
-        const error = new Error(this.getErrorMessage(code)) as FuseError;
-        error.code = this.getErrorCode(code);
-        if (path) error.path = path;
-        return error;
-    }
-
-    private getErrorCode(code: number): string {
-        const codes: Record<number, string> = {
-            1: 'EPERM',
-            2: 'ENOENT',
-            5: 'EIO',
-            13: 'EACCES',
-            17: 'EEXIST',
-            20: 'ENOTDIR',
-            21: 'EISDIR',
-            22: 'EINVAL',
-            28: 'ENOSPC',
-            30: 'EROFS',
-            16: 'EBUSY',
-            39: 'ENOTEMPTY'
-        };
-        return codes[code] || 'UNKNOWN';
-    }
-
-    private getErrorMessage(code: number): string {
-        const messages: Record<number, string> = {
-            1: 'Operation not permitted',
-            2: 'No such file or directory',
-            5: 'I/O error',
-            13: 'Permission denied',
-            17: 'File exists',
-            20: 'Not a directory',
-            21: 'Is a directory',
-            22: 'Invalid argument',
-            28: 'No space left on device',
-            30: 'Read-only file system',
-            16: 'Device or resource busy',
-            39: 'Directory not empty'
-        };
-        return messages[code] || `Error ${code}`;
+        // Convert read from callback to synchronous return
+        if (operations.read && operations.open && operations.release) {
+            adapted.read = (path: string, size: number, offset: number) => {
+                let result: Buffer | null = null;
+                let syncComplete = false;
+                
+                // First open the file
+                operations.open!(path, 0, (openErr: number, fd?: number) => {
+                    if (openErr || fd === undefined) {
+                        syncComplete = true;
+                        return;
+                    }
+                    
+                    // Read data
+                    const buffer = Buffer.alloc(size);
+                    operations.read!(path, fd, buffer, size, offset, (readErr: number, bytesRead?: number) => {
+                        // Close file
+                        if (operations.release) {
+                            operations.release(path, fd, () => {});
+                        }
+                        
+                        if (!readErr && bytesRead !== undefined) {
+                            result = buffer.slice(0, bytesRead);
+                        }
+                        syncComplete = true;
+                    });
+                });
+                
+                while (!syncComplete) {
+                    // Wait
+                }
+                
+                return result;
+            };
+        }
+        
+        // Add other operations as needed
+        if (operations.mkdir) {
+            adapted.mkdir = (path: string, mode: number) => {
+                operations.mkdir!(path, mode, () => {});
+            };
+        }
+        
+        if (operations.unlink) {
+            adapted.unlink = (path: string) => {
+                operations.unlink!(path, () => {});
+            };
+        }
+        
+        if (operations.rmdir) {
+            adapted.rmdir = (path: string) => {
+                operations.rmdir!(path, () => {});
+            };
+        }
+        
+        if (operations.rename) {
+            adapted.rename = (oldPath: string, newPath: string) => {
+                operations.rename!(oldPath, newPath, () => {});
+            };
+        }
+        
+        return adapted;
     }
 
     get mnt(): string {
+        // Return the mount path - projfs-fuse.one might have a getMountPath method
+        if (this.projfsInstance && this.projfsInstance.getMountPath) {
+            return this.projfsInstance.getMountPath();
+        }
         return this.virtualRoot;
     }
 
     static unmount(mountPath: string, callback: (err?: Error | null) => void): void {
-        // Convert path and find mount
+        // Convert path if needed
         const windowsPath = mountPath.includes(':\\') ? 
             mountPath : `C:\\Fuse\\${path.basename(mountPath)}`;
         
+        // Try to find and unmount through active mounts
         const mount = activeMounts.get(windowsPath);
         if (mount) {
-            mount.unmount((err?: Error | null) => callback(err || undefined));
+            mount.unmount(callback);
         } else {
             callback(new Error('Mount not found'));
         }
@@ -378,12 +292,12 @@ export class WindowsFuse extends EventEmitter {
             return;
         }
 
-        // TODO: Check if ProjFS driver is installed
-        callback(null, true);
+        // We no longer use FUSE3 on Windows - using ProjFS directly
+        callback(null, false);
     }
 
     static configure(callback: (err?: Error) => void): void {
-        // No configuration needed - ProjFS should be available on Windows 10+
+        // No configuration needed - projfs-fuse.one should work if installed
         callback();
     }
 }

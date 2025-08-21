@@ -36,7 +36,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/refinio/fuse3.git"
+    "url": "https://github.com/juergengeck/refinio-fuse3.git"
   },
   "files": [
     "lib/**/*",

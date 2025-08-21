@@ -1,125 +1,139 @@
-# Manual Setup Guide for ONE.filer WSL2
+# Manual Setup Guide for ONE.filer
 
-Since PowerShell is having display issues, here's a manual step-by-step guide:
+Step-by-step guide for setting up ONE.filer on Windows with ProjFS support.
 
 ## 🔧 Manual Setup Steps
 
-### Step 1: Test Current WSL2 Status
+### Step 1: Enable Windows ProjFS Feature
 
-Open a **new Command Prompt** (not PowerShell) and run:
+Open **PowerShell as Administrator** and run:
+```powershell
+# Enable Projected File System
+Enable-WindowsOptionalFeature -Online -FeatureName Client-ProjFS -NoRestart
+
+# Restart your computer to apply changes
+Restart-Computer
+```
+
+### Step 2: Install Prerequisites
+
+#### Install Node.js for Windows
 ```cmd
-wsl --list --verbose
+# Using winget (recommended)
+winget install OpenJS.NodeJS.LTS
+
+# Or download from https://nodejs.org/
+# Choose the LTS version for Windows
 ```
 
-You should see Debian listed. If it shows version 1, upgrade it:
+#### Install Visual Studio Build Tools
 ```cmd
-wsl --set-version Debian 2
+# Install build tools for native modules
+winget install Microsoft.VisualStudio.2022.BuildTools
+
+# During installation, select:
+# - "Desktop development with C++" workload
+# - Windows 10/11 SDK
 ```
 
-### Step 2: Access WSL2 and Install Node.js
+### Step 3: Clone and Build Project
 
 ```cmd
-wsl -d Debian
-```
+# Clone the repository
+git clone https://github.com/refinio/one.filer.git
+cd one.filer
 
-Once in WSL2 Debian, run these commands:
-```bash
-# Update package lists
-sudo apt update
-
-# Install curl and build tools
-sudo apt install -y curl build-essential
-
-# Install Node.js LTS
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# Verify installation
-node --version
-npm --version
-```
-
-### Step 3: Test Project Access
-
-Still in WSL2, check if you can access the project:
-```bash
-cd /mnt/c/Users/juerg/source/one.filer
-pwd
-ls -la
-```
-
-### Step 4: Run Our Test Script
-
-```bash
-bash scripts/test-one-packages.sh
-```
-
-### Step 5: Install Dependencies
-
-```bash
-# Install one.leute.replicant dependencies
-cd one.leute.replicant
+# Install dependencies
 npm install
 
-# Go back and install one.filer dependencies
-cd ..
-npm install
+# Build the project (including native ProjFS module)
+npm run build
 ```
 
-### Step 6: Test one.leute.replicant
+### Step 4: Configure ONE.filer
 
-```bash
-cd one.leute.replicant
+Create a configuration file `configs/my-config.json`:
+```json
+{
+    "directory": "data",
+    "commServerUrl": "wss://comm10.dev.refinio.one",
+    "createEveryoneGroup": true,
+    "useFiler": true,
+    "filerConfig": {
+        "useProjFS": true,
+        "projfsRoot": "C:\\OneFiler",
+        "projfsCacheSize": 104857600,
+        "pairingUrl": "https://leute.dev.refinio.one/invites/invitePartner/?invited=true/",
+        "iomMode": "light",
+        "logCalls": true
+    }
+}
+```
 
-# Copy our WSL2 config
-cp ../scripts/wsl2-config.json ./configs/
+### Step 5: Initialize ONE Instance
 
-# Check if it can start (Ctrl+C to stop)
-npm start -- --config=configs/wsl2-config.json
+```cmd
+# Create a new ONE instance
+npm start -- init -s YOUR_SECRET -d data
+```
+
+### Step 6: Start ONE.filer with ProjFS
+
+```cmd
+# Start the service
+npm start -- start -s YOUR_SECRET -c configs/my-config.json
+
+# Or use the demo configuration
+npm start -- start -s YOUR_SECRET -c configs/demo-config.json
 ```
 
 ## 🎯 Expected Results
 
-- ✅ WSL2 Debian running version 2
-- ✅ Node.js LTS installed (v18+ or v20+)
-- ✅ Project files accessible from `/mnt/c/Users/juerg/source/one.filer`
-- ✅ Dependencies installed successfully
-- ✅ one.leute.replicant starts without errors
+- ✅ ProjFS feature enabled on Windows
+- ✅ Node.js LTS installed (v20+)
+- ✅ Visual Studio Build Tools installed
+- ✅ Project built successfully
+- ✅ Virtual filesystem mounted at `C:\OneFiler`
+- ✅ Files accessible via Windows Explorer
 
 ## 🐛 If Something Goes Wrong
 
-### Node.js Installation Issues
-```bash
-# Alternative Node.js installation via snap
-sudo apt install snapd
-sudo snap install node --classic
+### ProjFS Not Available
+```powershell
+# Check if ProjFS is enabled
+Get-WindowsOptionalFeature -Online -FeatureName Client-ProjFS
+
+# If not enabled, run as Administrator:
+Enable-WindowsOptionalFeature -Online -FeatureName Client-ProjFS -NoRestart
+```
+
+### Build Errors
+```cmd
+# Clean and rebuild
+npm run clean
+cd one.projfs
+npm install
+npm run build:native
+cd ..
+npm run build
 ```
 
 ### Permission Issues
-```bash
-# Fix npm permissions
-mkdir ~/.npm-global
-npm config set prefix '~/.npm-global'
-echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
-source ~/.bashrc
-```
-
-### WSL2 Issues
 ```cmd
-# Restart WSL2 (run in Windows Command Prompt)
-wsl --shutdown
-wsl -d Debian
+# Run as Administrator or check folder permissions
+icacls "C:\OneFiler" /grant "%USERNAME%:F"
 ```
 
 ## 🚀 Next Steps After Setup
 
-1. Configure FUSE support
-2. Set up the mount point
-3. Test Windows Explorer integration
-4. Implement data ingestion pipeline
+1. Open Windows Explorer and navigate to `C:\OneFiler`
+2. Create and modify files through Windows Explorer
+3. Test different file operations (copy, move, delete)
+4. Monitor performance and logs
 
 ## 📝 Notes
 
-- Use Command Prompt instead of PowerShell if you encounter display issues
-- The setup creates a development environment - production deployment will be different
-- All ONE packages run natively in Linux (WSL2) for optimal performance 
+- ProjFS provides native Windows filesystem integration
+- The virtual filesystem is created on-demand
+- All operations are performed through standard Windows APIs
+- For Linux/WSL2, the system automatically falls back to FUSE mode 

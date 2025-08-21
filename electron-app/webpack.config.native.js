@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = [
   // Main process config for native integration
@@ -7,25 +8,30 @@ module.exports = [
     mode: process.env.NODE_ENV || 'development',
     entry: './src/main-native.ts',
     target: 'electron-main',
+    optimization: {
+      splitChunks: false
+    },
     module: {
-      rules: [{
-        test: /\.(ts|js)$/,
-        include: [
-          /src/,
-          /..\/src/,  // Include one.filer source
-        ],
-        exclude: /__tests__/,
-        use: [{ 
-          loader: 'ts-loader', 
-          options: { 
-            transpileOnly: true,
-            compilerOptions: {
-              module: 'esnext',
-              target: 'es2022'
-            }
-          } 
-        }]
-      }]
+      rules: [
+        {
+          test: /\.(ts|js)$/,
+          include: [
+            /src/,
+            /..\/src/,  // Include one.filer source
+          ],
+          exclude: /__tests__/,
+          use: [{ 
+            loader: 'ts-loader', 
+            options: { 
+              transpileOnly: true,
+              compilerOptions: {
+                module: 'esnext',
+                target: 'es2022'
+              }
+            } 
+          }]
+        }
+      ]
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -46,8 +52,13 @@ module.exports = [
       'node:url': 'commonjs url',
       'node:util': 'commonjs util',
       'node:crypto': 'commonjs crypto',
-      'node:child_process': 'commonjs child_process'
-    }
+      'node:child_process': 'commonjs child_process',
+      '@refinio/one.ifsprojfs/build/Release/ifsprojfs.node': 'commonjs @refinio/one.ifsprojfs/build/Release/ifsprojfs.node',
+      '@refinio/one.ifsprojfs': 'commonjs @refinio/one.ifsprojfs'
+    },
+    plugins: [
+      // Removed IgnorePlugin for .node files
+    ]
   },
   // Preload script config
   {

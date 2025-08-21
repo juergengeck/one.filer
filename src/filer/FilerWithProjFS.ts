@@ -1,9 +1,4 @@
-import type {IFileSystem} from '@refinio/one.models/lib/fileSystems/IFileSystem.js';
-import type {ConnectionsModel} from '@refinio/one.models/lib/models/index.js';
-import type {ChannelManager, LeuteModel, TopicModel} from '@refinio/one.models/lib/models/index.js';
-import type IoMManager from '@refinio/one.models/lib/models/IoM/IoMManager.js';
-import type Notifications from '@refinio/one.models/lib/models/Notifications.js';
-
+import type { IFileSystem } from '@refinio/one.models/lib/fileSystems/IFileSystem.js';
 import TemporaryFileSystem from '@refinio/one.models/lib/fileSystems/TemporaryFileSystem.js';
 import ObjectsFileSystem from '@refinio/one.models/lib/fileSystems/ObjectsFileSystem.js';
 import DebugFileSystem from '@refinio/one.models/lib/fileSystems/DebugFileSystem.js';
@@ -11,149 +6,284 @@ import TypesFileSystem from '@refinio/one.models/lib/fileSystems/TypesFileSystem
 import PairingFileSystem from '@refinio/one.models/lib/fileSystems/PairingFileSystem.js';
 import ChatFileSystem from '@refinio/one.models/lib/fileSystems/ChatFileSystem.js';
 
+// Import our CachedProjFSProvider which wraps IFSProjFSProvider with proper file content handling
+import { CachedProjFSProvider } from './CachedProjFSProvider.js';
+
 import {COMMIT_HASH} from '../commit-hash.js';
 import {DefaultFilerConfig} from './FilerConfig.js';
 import type {FilerConfig} from './FilerConfig.js';
-
 import {fillMissingWithDefaults} from '../misc/configHelper.js';
+import { join } from 'path';
 
-export interface FilerModels {
-    channelManager: ChannelManager;
-    connections: ConnectionsModel;
-    leuteModel: LeuteModel;
-    notifications: Notifications;
-    topicModel: TopicModel;
-    iomManager: IoMManager;
-}
-
+// Extend FilerConfig to support ProjFS-specific settings
 export interface FilerConfigWithProjFS extends FilerConfig {
     useProjFS?: boolean;
     projfsRoot?: string;
-    projfsCacheSize?: number;
+    cacheTTL?: number;  // Cache TTL in seconds
+    disableCowCache?: boolean;  // Disable COW cache for debugging
+    disableInMemoryCache?: boolean;  // Disable in-memory cache
+    verboseLogging?: boolean;  // Enable verbose logging
+    traceAllOperations?: boolean;  // Trace all operations
+}
+
+// Models interface for dependency injection
+export interface FilerModels {
+    leuteModel: any;
+    topicModel: any;
+    channelManager: any;
+    notifications: any;
+    connections: any;
+    iomManager: any;
 }
 
 /**
- * Enhanced Filer class that supports both FUSE (WSL2) and ProjFS (Windows native)
- * 
- * This class extends the original Filer functionality to provide native Windows
- * filesystem integration through ProjectedFS when running on Windows.
+ * Filer implementation that uses Windows Projected File System (ProjFS)
+ * instead of FUSE for better Windows integration
  */
 export class FilerWithProjFS {
     private readonly models: FilerModels;
     private readonly config: FilerConfigWithProjFS;
     private shutdownFunctions: Array<() => Promise<void>> = [];
     private rootFileSystem: IFileSystem | null = null;
-    private projfsProvider: any = null;
+    private projfsProvider: CachedProjFSProvider | null = null;  // CachedProjFSProvider instance
+    private instanceDirectory: string = '';
 
     constructor(models: FilerModels, config: Partial<FilerConfigWithProjFS>) {
         this.config = fillMissingWithDefaults(config, DefaultFilerConfig) as FilerConfigWithProjFS;
         this.models = models;
     }
 
-    /**
-     * Init the filer by setting up file systems and mounting either FUSE or ProjFS.
-     */
     async init(): Promise<void> {
-        // Set up the root filesystem
+        console.log('[FilerWithProjFS] Starting initialization...');
+        console.log('[FilerWithProjFS] Config useProjFS:', this.config.useProjFS);
+        
+        // Setup the root file system first - MUST be complete before mounting
+        console.log('[FilerWithProjFS] Setting up root filesystem with all subsystems...');
         this.rootFileSystem = await this.setupRootFileSystem();
-
-        // Always use ProjFS when configured, regardless of platform
-        // This allows running from WSL while targeting Windows filesystem
-        if (this.config.useProjFS) {
-            await this.initProjFS();
-        } else {
-            // Use standard FUSE mode only when ProjFS is not requested
-            await this.initFUSE();
+        
+        // Verify the filesystem is ready by checking root entries
+        console.log('[FilerWithProjFS] Verifying filesystem is ready...');
+        const rootCheck = await this.rootFileSystem.readDir('/');
+        if (!rootCheck || !rootCheck.children || rootCheck.children.length === 0) {
+            throw new Error('Root filesystem not properly initialized - no mount points found');
         }
+        console.log(`[FilerWithProjFS] Root filesystem ready with ${rootCheck.children.length} mount points: ${rootCheck.children.join(', ')}`);
+        
+        if (this.config.useProjFS) {
+            console.log('[FilerWithProjFS] Initializing ProjFS...');
+            await this.initProjFS();
+            console.log('[FilerWithProjFS] ProjFS initialization completed');
+        } else {
+            console.log('[FilerWithProjFS] Initializing FUSE...');
+            await this.initFUSE();
+            console.log('[FilerWithProjFS] FUSE initialization completed');
+        }
+        
+        console.log('[FilerWithProjFS] Init method completed successfully');
     }
 
     /**
-     * Initialize using Windows ProjectedFS
+     * Initialize using Windows ProjectedFS with COW cache
      */
     private async initProjFS(): Promise<void> {
-        console.log('🪟 Starting ProjFS (Windows native mode)...');
+        console.log('🪟 Starting ProjFS with COW cache provider...');
         
         try {
-            // Dynamically resolve the path relative to this module
-            const path = await import('path');
-            const { fileURLToPath, pathToFileURL } = await import('url');
-            const __dirname = path.dirname(fileURLToPath(import.meta.url));
-            const projfsPath = path.resolve(__dirname, '../../../one.projfs/dist/src/index.js');
+            // Get instance directory from ONE core
+            const instanceModule = await import('@refinio/one.core/lib/instance.js');
+            this.instanceDirectory = (instanceModule as any).getInstanceDirectory();
+            console.log('[ProjFS] Instance directory:', this.instanceDirectory);
             
-            // Convert to file URL for ESM import
-            const projfsUrl = pathToFileURL(projfsPath).href;
-            const { ProjFSProvider } = await import(projfsUrl);
+            // Create message bus for ProjFS debug messages
+            const { createMessageBus } = await import('@refinio/one.core/lib/message-bus.js');
+            const messageBus = createMessageBus('projfs-provider');
             
-            // Create ProjFS provider
-            this.projfsProvider = new ProjFSProvider(this.rootFileSystem!, {
-                logLevel: 'info',
-                cacheSize: this.config.projfsCacheSize || 100 * 1024 * 1024 // 100MB default
+            // Create our CachedProjFSProvider with COW cache and file content handling
+            console.log('[ProjFS] Creating CachedProjFSProvider instance with COW cache...');
+            this.projfsProvider = new CachedProjFSProvider({
+                instancePath: this.instanceDirectory,
+                virtualRoot: this.config.projfsRoot || 'C:\\OneFiler',
+                fileSystem: this.rootFileSystem!,
+                debug: this.config.verboseLogging || false,
+                disableCowCache: this.config.disableCowCache || false,
+                disableInMemoryCache: this.config.disableInMemoryCache || false,
+                verboseLogging: this.config.verboseLogging || false,
+                traceAllOperations: this.config.traceAllOperations || false
             });
             
-            // Start ProjFS
-            const projfsRoot = this.config.projfsRoot || 'C:\\OneFiler';
-            await this.projfsProvider.start(null, {
-                virtualizationRootPath: projfsRoot,
-                poolThreadCount: 4,
-                enableNegativePathCache: true
+            // Initialize the provider
+            await this.projfsProvider.init();
+            
+            // Set up models for smart caching
+            this.projfsProvider.setModels({
+                leuteModel: this.models.leuteModel,
+                topicModel: this.models.topicModel,
+                channelManager: this.models.channelManager
             });
             
+            // Log configuration
+            if (this.config.verboseLogging) {
+                console.log('[ProjFS] Debug configuration:', {
+                    disableCowCache: this.config.disableCowCache || false,
+                    disableInMemoryCache: this.config.disableInMemoryCache || false,
+                    verboseLogging: this.config.verboseLogging || false,
+                    traceAllOperations: this.config.traceAllOperations || false
+                });
+            }
+            
+            // Listen for debug messages (if supported by provider)
+            if (this.projfsProvider && typeof (this.projfsProvider as any).on === 'function') {
+                (this.projfsProvider as any).on('debug', (msg: string) => {
+                    messageBus.send('debug', msg);
+                });
+            }
+            
+            // Check if another instance is already using ProjFS
+            const lockFile = join(this.instanceDirectory, 'projfs.lock');
+            try {
+                // Try to create an exclusive lock file
+                const fs = await import('fs');
+                const lockFd = fs.openSync(lockFile, 'wx');
+                console.log('[ProjFS] Acquired exclusive lock for ProjFS mount');
+                
+                // Register cleanup to remove lock file
+                this.shutdownFunctions.push(async () => {
+                    try {
+                        fs.closeSync(lockFd);
+                        fs.unlinkSync(lockFile);
+                        console.log('[ProjFS] Released ProjFS lock');
+                    } catch (e) {
+                        console.error('[ProjFS] Error releasing lock:', e);
+                    }
+                });
+            } catch (error: any) {
+                if (error.code === 'EEXIST') {
+                    // Lock file exists - check if it's stale
+                    console.log('[ProjFS] Lock file exists, checking if it is stale...');
+                    try {
+                        const fs = await import('fs');
+                        const stats = fs.statSync(lockFile);
+                        const lockAge = Date.now() - stats.mtime.getTime();
+                        const lockAgeMinutes = Math.floor(lockAge / (1000 * 60));
+                        
+                        console.log(`[ProjFS] Lock file age: ${lockAgeMinutes} minutes`);
+                        
+                        // If lock file is older than 5 minutes, consider it stale
+                        if (lockAge > 5 * 60 * 1000) { // 5 minutes
+                            console.log('[ProjFS] Lock file appears stale (>5min old), removing...');
+                            fs.unlinkSync(lockFile);
+                            console.log('[ProjFS] Stale lock file removed, retrying lock acquisition...');
+                            
+                            // Retry creating the lock file
+                            const lockFd = fs.openSync(lockFile, 'wx');
+                            console.log('[ProjFS] Acquired exclusive lock after removing stale lock');
+                            
+                            // Register cleanup to remove lock file
+                            this.shutdownFunctions.push(async () => {
+                                try {
+                                    fs.closeSync(lockFd);
+                                    fs.unlinkSync(lockFile);
+                                    console.log('[ProjFS] Released ProjFS lock');
+                                } catch (e) {
+                                    console.error('[ProjFS] Error releasing lock:', e);
+                                }
+                            });
+                        } else {
+                            throw new Error(`Another instance of ONE Filer is running with ProjFS (lock created ${lockAgeMinutes} minutes ago). Only one instance can mount ProjFS at a time.`);
+                        }
+                    } catch (retryError: any) {
+                        if (retryError.code === 'EEXIST') {
+                            throw new Error('Another instance of ONE Filer started while cleaning up stale lock. Only one instance can mount ProjFS at a time.');
+                        }
+                        throw retryError;
+                    }
+                } else {
+                    throw error;
+                }
+            }
+            
+            // Mount the provider
+            console.log('[ProjFS] About to call mount()...');
+            try {
+                await this.projfsProvider.mount();
+                console.log('[ProjFS] mount() returned successfully');
+            } catch (mountError) {
+                console.error('[ProjFS] Mount failed:', mountError);
+                console.error('[ProjFS] Mount error stack:', (mountError as Error).stack);
+                throw mountError;
+            }
+            
+            // Send success message to message bus
+            messageBus.send('debug', '[ProjFS] Mounted successfully at ' + (this.config.projfsRoot || 'C\\OneFiler'));
+            
+            // Add shutdown function
             this.shutdownFunctions.push(async () => {
                 if (this.projfsProvider) {
-                    await this.projfsProvider.stop();
+                    await this.projfsProvider.unmount();
                 }
             });
             
-            console.log(`[info]: Filer file system was mounted at ${projfsRoot} using ProjFS`);
+            console.log(`[info]: ONE content mounted at ${this.config.projfsRoot || 'C\\OneFiler'} using ProjFS with COW cache`);
+            console.log(`[info]: Direct BLOB/CLOB access enabled from ${this.instanceDirectory}`);
+            
+            if (this.config.disableCowCache) {
+                console.log('[info]: ⚠️ COW cache is DISABLED for debugging');
+            }
+            if (this.config.disableInMemoryCache) {
+                console.log('[info]: ⚠️ In-memory cache is DISABLED for debugging');
+            }
+            
         } catch (error) {
-            console.error('Failed to initialize ProjFS, falling back to FUSE:', error);
-            await this.initFUSE();
+            console.error('Failed to initialize ProjFS provider with COW cache:', error);
+            console.error('Error stack:', (error as Error).stack);
+            
+            const errorMessage = (error as Error).message || '';
+            if (errorMessage.includes('Cannot find module')) {
+                throw new Error('ProjFS native module not found. Make sure one.ifsprojfs is built properly');
+            } else if (errorMessage.includes('not enabled') || errorMessage.includes('not available')) {
+                // Only throw ProjFS not enabled error for specific messages
+                throw new Error('Windows Projected File System (ProjFS) error: ' + errorMessage);
+            }
+            
+            throw error;
         }
     }
 
     /**
-     * Initialize using FUSE (original mode)
+     * Initialize using FUSE for WSL2
      */
     private async initFUSE(): Promise<void> {
-        // Ensure we're running in Node.js environment (WSL2 Debian with Node.js)
         if (typeof process === 'undefined' || !process.versions || !process.versions.node) {
             throw new Error('Fuse can only be mounted in Node.js environment');
         }
 
         console.log('🐧 Starting FUSE in WSL2...');
-        // Dynamically import to avoid loading FUSE on Windows when using ProjFS
+        
         const { FuseFrontend } = await import('./FuseFrontend.js');
         const fuseFrontend = new FuseFrontend();
-        await fuseFrontend.start(this.rootFileSystem!, this.config.mountPoint, this.config.logCalls, this.config.fuseOptions || {});
+        await fuseFrontend.start(
+            this.rootFileSystem!,
+            this.config.mountPoint!,
+            this.config.logCalls!,
+            this.config.fuseOptions || {}
+        );
+
         this.shutdownFunctions.push(fuseFrontend.stop.bind(fuseFrontend));
-        
         console.log(`[info]: Filer file system was mounted at ${this.config.mountPoint}`);
     }
 
-    /**
-     * Get the root filesystem (useful for external integrations)
-     */
     getRootFileSystem(): IFileSystem | null {
         return this.rootFileSystem;
     }
 
-    /**
-     * Get the objects filesystem directly
-     */
-    getObjectsFileSystem(): IFileSystem {
+    getObjectsFileSystem(): ObjectsFileSystem {
         return new ObjectsFileSystem();
     }
 
-    /**
-     * Check if running in ProjFS mode
-     */
     isProjFSMode(): boolean {
         return this.config.useProjFS === true && this.projfsProvider !== null;
     }
 
-    /**
-     * Get statistics (ProjFS mode only)
-     */
     getStats(): any {
         if (this.projfsProvider && this.projfsProvider.getStats) {
             return this.projfsProvider.getStats();
@@ -161,9 +291,6 @@ export class FilerWithProjFS {
         return null;
     }
 
-    /**
-     * Shutdown filer.
-     */
     async shutdown(): Promise<void> {
         for await (const fn of this.shutdownFunctions) {
             try {
@@ -172,15 +299,14 @@ export class FilerWithProjFS {
                 console.error('Failed to execute shutdown routine', e);
             }
         }
+
         this.shutdownFunctions = [];
         this.rootFileSystem = null;
         this.projfsProvider = null;
     }
 
-    /**
-     * Set up the root filesystem by mounting all wanted filesystems.
-     */
     private async setupRootFileSystem(): Promise<IFileSystem> {
+        // Create specialized file systems
         const chatFileSystem = new ChatFileSystem(
             this.models.leuteModel,
             this.models.topicModel,
@@ -188,23 +314,28 @@ export class FilerWithProjFS {
             this.models.notifications,
             '/objects'
         );
+
         const debugFileSystem = new DebugFileSystem(
             this.models.leuteModel,
             this.models.topicModel,
             this.models.connections,
             this.models.channelManager
         );
+
         const pairingFileSystem = new PairingFileSystem(
             this.models.connections,
             this.models.iomManager,
-            this.config.pairingUrl,
-            this.config.iomMode
+            this.config.pairingUrl!,
+            this.config.iomMode!
         );
+
         const objectsFileSystem = new ObjectsFileSystem();
         const typesFileSystem = new TypesFileSystem();
 
-        debugFileSystem.commitHash = COMMIT_HASH;
+        // Set commit hash for debug filesystem
+        (debugFileSystem as any).commitHash = COMMIT_HASH;
 
+        // Create root filesystem and mount all subsystems
         const rootFileSystem = new TemporaryFileSystem();
         await rootFileSystem.mountFileSystem('/chats', chatFileSystem);
         await rootFileSystem.mountFileSystem('/debug', debugFileSystem);
@@ -212,6 +343,6 @@ export class FilerWithProjFS {
         await rootFileSystem.mountFileSystem('/objects', objectsFileSystem);
         await rootFileSystem.mountFileSystem('/types', typesFileSystem);
 
-        return rootFileSystem as unknown as IFileSystem;
+        return rootFileSystem;
     }
 }

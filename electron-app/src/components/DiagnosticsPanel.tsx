@@ -141,7 +141,7 @@ export function DiagnosticsPanel() {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {Object.entries(diagnostics.services).map(([name, service]) => (
+            {diagnostics?.services && Object.entries(diagnostics.services).map(([name, service]) => (
               <div key={name} className="border rounded-lg p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">

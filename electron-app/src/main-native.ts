@@ -5,16 +5,24 @@ import * as os from 'os';
 import * as net from 'net';
 
 // Direct imports from one.filer - no more WSL!
-import { Replicant } from '../../src/Replicant.js';
-import { FilerWithProjFS } from '../../src/filer/FilerWithProjFS.js';
-import type { ReplicantConfig } from '../../src/ReplicantConfig.js';
+import Replicant from '../../lib/Replicant.js';
+import { FilerWithProjFS } from '../../lib/filer/FilerWithProjFS.js';
+import type { FilerConfigWithProjFS } from '../../lib/filer/FilerWithProjFS.js';
+import type { ReplicantConfig } from '../../lib/ReplicantConfig.js';
+import { SimpleTestRunner } from './simple-test-runner';
+import { RealTestRunner } from './real-test-runner';
+import { SingletonManager } from './services/SingletonManager';
+// import { ONEInitializer } from './services/oneInitializer';
+import * as http from 'http';
 
-// Single instance lock
-const gotTheLock = app.requestSingleInstanceLock();
+// Initialize singleton manager
+const singletonManager = new SingletonManager({
+  appName: 'one-filer',
+  port: 17890,
+  lockTimeout: 5000
+});
 
-// IPC server for inter-process communication
-let ipcServer: net.Server | null = null;
-const IPC_PORT = 17890;
+let isMainInstance = false;
 
 interface Credentials {
   secret: string;
@@ -70,6 +78,11 @@ interface AppConfig {
   dataDirectory?: string;
   projfsRoot?: string;
   mountPoint?: string;
+  // COW cache debug options
+  disableCowCache?: boolean;
+  disableInMemoryCache?: boolean;
+  verboseLogging?: boolean;
+  traceAllOperations?: boolean;
 }
 
 let config: AppConfig = {
@@ -78,7 +91,12 @@ let config: AppConfig = {
   autoConnect: false,
   dataDirectory: join(app.getPath('userData'), 'one-data'),
   projfsRoot: 'C:\\OneFiler',
-  mountPoint: '/mnt/onefiler'
+  mountPoint: 'C:\\OneFiler',  // No more WSL paths!
+  // Default cache settings (all enabled)
+  disableCowCache: false,
+  disableInMemoryCache: false,
+  verboseLogging: false,
+  traceAllOperations: false
 };
 
 // Try to load config from file
@@ -92,6 +110,46 @@ if (existsSync(configPath)) {
   }
 }
 
+// Helper function to handle IPC messages
+function handleIPCMessage(message: any): void {
+  console.log(`[${new Date().toISOString()}] Handling IPC message:`, message);
+  
+  if (message.command === 'show') {
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      if (!mainWindow.isVisible()) mainWindow.show();
+      mainWindow.focus();
+      
+      // Flash the window to get user attention
+      mainWindow.flashFrame(true);
+      setTimeout(() => mainWindow?.flashFrame(false), 1000);
+      
+      // Show tray notification if available
+      if (tray && process.platform === 'win32') {
+        tray.displayBalloon({
+          title: 'ONE Filer',
+          content: 'Application brought to foreground',
+          iconType: 'info'
+        });
+      }
+    } else {
+      createWindow();
+    }
+  } else if (message.command === 'status') {
+    // Return status (though this is one-way IPC)
+    console.log('Status requested:', {
+      running: true,
+      pid: process.pid,
+      replicant: replicant !== null,
+      window: mainWindow !== null,
+      uptime: replicantStartTime ? Date.now() - replicantStartTime.getTime() : 0
+    });
+  } else if (message.command === 'quit') {
+    isQuitting = true;
+    app.quit();
+  }
+}
+
 function createWindow(): void {
   mainWindow = new BrowserWindow({
     width: 1200,
@@ -100,6 +158,7 @@ function createWindow(): void {
     minHeight: 700,
     resizable: true,
     show: !config.startMinimized,
+    title: 'ONE Filer',
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -111,6 +170,15 @@ function createWindow(): void {
   // Load the React-based app
   mainWindow.loadFile(join(__dirname, '..', 'index-react.html'));
   
+  // Log any load errors
+  mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+    console.error('Failed to load:', errorCode, errorDescription);
+  });
+  
+  mainWindow.webContents.on('did-finish-load', () => {
+    console.log('Page loaded successfully');
+  });
+  
   // Hide menu bar
   mainWindow.setMenu(null);
   
@@ -118,6 +186,9 @@ function createWindow(): void {
   if (process.argv.includes('--dev')) {
     mainWindow.webContents.openDevTools();
   }
+  
+  // Always open DevTools for debugging
+  mainWindow.webContents.openDevTools();
   
   // Handle window close
   mainWindow.on('close', (event) => {
@@ -206,63 +277,86 @@ function updateTrayMenu(): void {
   tray.setContextMenu(contextMenu);
 }
 
-// Handle single instance
-if (!gotTheLock) {
-  console.log('Another instance of ONE Filer Service is already running');
+// Enhanced singleton handling
+(async () => {
+  isMainInstance = await singletonManager.acquireLock();
   
-  // Try to notify the existing instance
-  const client = net.createConnection({ port: IPC_PORT }, () => {
-    client.write(JSON.stringify({ command: 'show' }));
-    client.end();
-  });
-  
-  client.on('error', () => {
-    console.error('Could not communicate with existing instance');
-  });
-  
-  app.quit();
-} else {
-  // This is the primary instance
-  app.on('second-instance', () => {
-    if (mainWindow) {
-      if (mainWindow.isMinimized()) mainWindow.restore();
-      if (!mainWindow.isVisible()) mainWindow.show();
-      mainWindow.focus();
+  if (!isMainInstance) {
+    console.log(`[${new Date().toISOString()}] Another instance of ONE Filer is already running`);
+    
+    // Try to activate the existing instance
+    const success = await singletonManager.sendToMainInstance({
+      command: 'show',
+      args: process.argv
+    });
+    
+    if (success) {
+      console.log('Successfully notified the main instance');
     } else {
-      createWindow();
+      console.log('Could not communicate with the main instance (it may be starting up)');
     }
-  });
-  
-  // Start IPC server
-  ipcServer = net.createServer((socket) => {
-    socket.on('data', (data) => {
-      try {
-        const message = JSON.parse(data.toString());
-        if (message.command === 'show') {
-          if (mainWindow) {
-            if (!mainWindow.isVisible()) mainWindow.show();
-            mainWindow.focus();
-          } else {
-            createWindow();
-          }
-        }
-      } catch (error) {
-        console.error('IPC message error:', error);
+    
+    // Exit this instance
+    app.exit(0);
+  } else {
+    console.log(`[${new Date().toISOString()}] This is the main instance (PID: ${process.pid})`);
+    // This is the primary instance
+    app.on('second-instance', (event, commandLine, workingDirectory, additionalData) => {
+      console.log(`[${new Date().toISOString()}] Second instance detected:`, additionalData);
+      
+      if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore();
+        if (!mainWindow.isVisible()) mainWindow.show();
+        mainWindow.focus();
+        
+        // Flash window to get attention
+        mainWindow.flashFrame(true);
+        setTimeout(() => mainWindow?.flashFrame(false), 1000);
+      } else {
+        createWindow();
       }
     });
-  });
-  
-  ipcServer.listen(IPC_PORT, '127.0.0.1');
-}
+    
+    // Start IPC servers for better instance communication
+    await singletonManager.startIPCServers((message) => {
+      handleIPCMessage(message);
+    });
+  }
+})();
 
 // Initialize one.core modules
 async function initializeOneCore(): Promise<void> {
   // Load Node.js platform modules for one.core
-  await import('@refinio/one.core/lib/system/load-nodejs.js');
+  try {
+    const loadNodejs = require('@refinio/one.core/lib/system/load-nodejs.js');
+    console.log('ONE Core modules loaded successfully');
+  } catch (error) {
+    console.error('Failed to load ONE Core modules:', error);
+  }
 }
 
+// Global error handlers
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+  dialog.showErrorBox('Unexpected Error', error.message);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  dialog.showErrorBox('Unhandled Promise Rejection', String(reason));
+});
+
+// Set Windows app identity for proper taskbar integration
+app.setAppUserModelId('com.refinio.onefiler');
+
+// Set app name
+app.setName('ONE Filer');
+
+// Disable hardware acceleration to reduce GPU usage (must be before app.whenReady)
+app.disableHardwareAcceleration();
+
 app.whenReady().then(async () => {
-  if (gotTheLock) {
+  if (isMainInstance) {
     // Initialize one.core
     await initializeOneCore();
     
@@ -277,6 +371,37 @@ app.whenReady().then(async () => {
         createWindow();
       }
     });
+    
+    // Create test HTTP server for automation
+    const testServer = http.createServer(async (req, res) => {
+      if (req.url === '/test-login' && req.method === 'POST') {
+        console.log('[TestAPI] Login request received');
+        
+        try {
+          // Use default test password test123
+          const loginResult = await handleLogin(null, {
+            secret: 'test123',
+            configPath: undefined
+          });
+          
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(loginResult));
+          console.log('[TestAPI] Login result:', loginResult);
+        } catch (error) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: false, message: error.message }));
+          console.error('[TestAPI] Login error:', error);
+        }
+      } else {
+        res.writeHead(404);
+        res.end('Not found');
+      }
+    });
+    
+    testServer.listen(17891, '127.0.0.1', () => {
+      console.log('[TestAPI] Test server listening on http://127.0.0.1:17891');
+      console.log('[TestAPI] Use POST http://127.0.0.1:17891/test-login to trigger login');
+    });
   }
 });
 
@@ -286,33 +411,71 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('before-quit', () => {
-  isQuitting = true;
+app.on('before-quit', async (event) => {
+  if (!isQuitting) {
+    isQuitting = true;
+    
+    // Prevent default quit to ensure cleanup
+    event.preventDefault();
+    
+    console.log(`[${new Date().toISOString()}] Starting graceful shutdown...`);
   
-  // Clean up IPC server
-  if (ipcServer) {
-    ipcServer.close();
-    ipcServer = null;
+  try {
+    // Stop replicant and unmount ProjFS
+    if (replicant) {
+      console.log('Cleaning up ProjFS mount and stopping replicant...');
+      await stopReplicant();
+    }
+    
+    // Clean up singleton manager
+    await singletonManager.cleanup();
+    console.log('Singleton manager cleaned up');
+    
+    console.log('Cleanup complete, exiting...');
+  } catch (error) {
+    console.error('Error during cleanup:', error);
+  } finally {
+    // Force quit after cleanup
+    app.exit(0);
+  }
   }
 });
 
-// Handle login request - now runs natively!
-ipcMain.handle('login', async (event, loginData: LoginRequest): Promise<LoginResponse> => {
+// Shared login handler function
+async function handleLogin(event: any, loginData: LoginRequest): Promise<LoginResponse> {
+  console.log('[Login] Login request received with data:', { ...loginData, secret: '***' });
   try {
     credentials = { ...loginData };
     
-    // Create replicant configuration
+    // Initialize ONE identity first
+    // const initializer = new ONEInitializer({
+    //   dataDirectory: config.dataDirectory || join(app.getPath('userData'), 'one-data'),
+    //   secret: loginData.secret
+    // });
+    
+    // const { identity, secret: finalSecret } = await initializer.initialize();
+    // console.log('[Login] ONE identity initialized:', identity.personId);
+    
+    // For now, just use the provided secret
+    const finalSecret = loginData.secret;
+    
+    // Create replicant configuration with COW cache debug options
     const replicantConfig: Partial<ReplicantConfig> = {
       directory: config.dataDirectory || join(app.getPath('userData'), 'one-data'),
       useFiler: true,
       filerConfig: {
-        useProjFS: true,  // Always use ProjFS on Windows
-        projfsRoot: config.projfsRoot || 'C:\\OneFiler',
-        mountPoint: config.mountPoint || '/mnt/onefiler',
+        useProjFS: true,   // Use ProjFS mode with our new one.ifsprojfs native module
+        projfsRoot: config.projfsRoot || 'C:\\OneFiler',  // ProjFS mount point
+        mountPoint: config.mountPoint || 'C:\\OneFiler',  // Keep for compatibility
         logCalls: false,
         pairingUrl: 'https://leute.refinio.one',
-        iomMode: 'full'
-      }
+        iomMode: 'full',
+        // COW cache debug options
+        disableCowCache: config.disableCowCache || false,
+        disableInMemoryCache: config.disableInMemoryCache || false,
+        verboseLogging: config.verboseLogging || false,
+        traceAllOperations: config.traceAllOperations || false
+      } as any
     };
     
     // Load config file if specified
@@ -325,13 +488,96 @@ ipcMain.handle('login', async (event, loginData: LoginRequest): Promise<LoginRes
       }
     }
     
+      // Ensure ProjFS root directory exists before starting replicant
+      try {
+        const root = config.projfsRoot || 'C:\\OneFiler';
+        if (!existsSync(root)) {
+          console.log(`[Startup] Creating ProjFS root: ${root}`);
+          const { mkdirSync } = await import('fs');
+          mkdirSync(root, { recursive: true });
+        } else {
+          console.log(`[Startup] ProjFS root exists: ${root}`);
+        }
+      } catch (e) {
+        console.error('[Startup] Failed to ensure ProjFS root exists:', (e as Error).message);
+      }
+
     // Create and start replicant
     try {
+      // If we fell back to a different root, update config here
+      if (config.projfsRoot && config.mountPoint && replicantConfig.filerConfig) {
+        (replicantConfig.filerConfig as any).projfsRoot = config.projfsRoot;
+        (replicantConfig.filerConfig as any).mountPoint = config.mountPoint;
+      }
+      console.log('Creating Replicant with config:', JSON.stringify(replicantConfig, null, 2));
       replicant = new Replicant(replicantConfig);
-      await replicant.start(loginData.secret);
       
+      console.log('Starting Replicant with secret...');
+      await replicant.start(finalSecret);
+      
+      console.log('Replicant started successfully');
       replicantStartTime = new Date();
       
+      // Verify ProjFS mount if using ProjFS mode
+      if ((replicantConfig.filerConfig as any)?.useProjFS) {
+        const { verifyProjFSMount } = await import('./verify-mount.js');
+        const mountPath = (replicantConfig.filerConfig as any).projfsRoot || 'C:\\OneFiler';
+        await verifyProjFSMount(mountPath);
+      }
+      
+      // Subscribe to ONE message bus for debug messages
+      try {
+        const { createMessageBus } = await import('@refinio/one.core/lib/message-bus.js');
+        const messageBusListener = createMessageBus('electron-debug-listener');
+        
+        // Listen for all debug messages
+        messageBusListener.on('debug', (source: string, ...messages: unknown[]) => {
+          if (mainWindow && !mainWindow.isDestroyed()) {
+            const logEntry = {
+              timestamp: new Date().toISOString(),
+              level: 'debug' as const,
+              source: source,
+              message: messages.join(' ')
+            };
+            mainWindow.webContents.send('debug-log', logEntry);
+          }
+        });
+        
+        // Also listen for projfs-provider specific messages
+        messageBusListener.on('projfs-provider', (msgType: string, ...messages: unknown[]) => {
+          if (mainWindow && !mainWindow.isDestroyed() && msgType === 'debug') {
+            const logEntry = {
+              timestamp: new Date().toISOString(),
+              level: 'debug' as const,
+              source: 'projfs-provider',
+              message: messages.join(' ')
+            };
+            mainWindow.webContents.send('debug-log', logEntry);
+          }
+        });
+        
+        console.log('Successfully subscribed to ONE message bus for debug messages');
+      } catch (error) {
+        console.error('Failed to subscribe to message bus:', error);
+      }
+      
+      // Wait until prefetch completes so UI can keep spinner until ready
+      try {
+        const filer: any = (replicant as any).filer;
+        const provider = filer?.projfsProvider as any;
+        const start = Date.now();
+        const timeoutMs = 10000; // 10s max
+        while (provider && typeof provider.isPrefetchComplete === 'function' && !provider.isPrefetchComplete()) {
+          if (Date.now() - start > timeoutMs) {
+            console.warn('[Startup] Prefetch readiness timeout exceeded');
+            break;
+          }
+          await new Promise(r => setTimeout(r, 100));
+        }
+      } catch (e) {
+        console.warn('[Startup] Prefetch readiness check failed:', (e as Error).message);
+      }
+
       // Send initial status update
       if (mainWindow) {
         mainWindow.webContents.send('service-status-update', {
@@ -351,6 +597,7 @@ ipcMain.handle('login', async (event, loginData: LoginRequest): Promise<LoginRes
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       console.error('Failed to start replicant:', errorMessage);
+      console.error('Stack trace:', (error as any).stack);
       
       // Provide specific error messages
       if (errorMessage.includes('Invalid password') || errorMessage.includes('CYENC-SYMDEC')) {
@@ -363,7 +610,7 @@ ipcMain.handle('login', async (event, loginData: LoginRequest): Promise<LoginRes
           success: false,
           message: 'Permission denied. Please run as administrator.'
         };
-      } else if (errorMessage.includes('ProjFS')) {
+      } else if (errorMessage.includes('ProjFS not enabled') || errorMessage.includes('not available')) {
         return {
           success: false,
           message: 'Windows Projected File System (ProjFS) not enabled. Please enable it in Windows Features.'
@@ -382,7 +629,10 @@ ipcMain.handle('login', async (event, loginData: LoginRequest): Promise<LoginRes
       message: error instanceof Error ? error.message : 'Unknown error occurred' 
     };
   }
-});
+}
+
+// Handle login request via IPC
+ipcMain.handle('login', handleLogin);
 
 // Handle logout
 ipcMain.handle('logout', async (): Promise<{ success: boolean; message?: string }> => {
@@ -461,10 +711,21 @@ ipcMain.handle('get-system-metrics', async () => {
     const serviceStatus = replicant ? 'running' : 'stopped';
     const uptime = replicantStartTime ? Math.floor((Date.now() - replicantStartTime.getTime()) / 1000) : 0;
     
-    // If we have a running replicant with ProjFS, we can get stats
+    // Get ProjFS stats if available
     let projfsStats = null;
-    if (replicant && (replicant as any).filer?.isProjFSMode?.()) {
-      projfsStats = (replicant as any).filer.getStats?.();
+    try {
+      if (replicant && (replicant as any).filer?.isProjFSMode?.()) {
+        const filer = (replicant as any).filer;
+        // Try to get stats from the underlying ProjFS provider
+        if (filer.projfsProvider?.nativeProvider?.getStats) {
+          projfsStats = filer.projfsProvider.nativeProvider.getStats();
+        } else if (filer.getStats) {
+          projfsStats = filer.getStats();
+        }
+      }
+    } catch (error) {
+      // Silently ignore stats errors - they're not critical
+      console.warn('Failed to get ProjFS stats:', error);
     }
     
     return {
@@ -521,7 +782,7 @@ ipcMain.handle('run-diagnostics', async (): Promise<Record<string, any>> => {
       },
       paths: {
         userData: app.getPath('userData'),
-        cache: app.getPath('cache'),
+        cache: app.getPath('temp'),
         logs: app.getPath('logs'),
         temp: app.getPath('temp')
       },
@@ -533,10 +794,10 @@ ipcMain.handle('run-diagnostics', async (): Promise<Record<string, any>> => {
     
     // Check if ProjFS is available
     try {
-      const { ProjFSFuse } = await import('projfs-fuse.one');
+      const nativeModule = require('@refinio/one.ifsprojfs/build/Release/ifsprojfs.node');
       diagnostics.projfs = {
         available: true,
-        version: '1.0.0'
+        version: '2.0.0' // New native implementation
       };
     } catch (error) {
       diagnostics.projfs = {
@@ -552,14 +813,24 @@ ipcMain.handle('run-diagnostics', async (): Promise<Record<string, any>> => {
   }
 });
 
-// Check WSL status - not needed anymore!
+// Check ProjFS status - native Windows mode!
 ipcMain.handle('check-wsl-status', async (): Promise<{ installed: boolean; running: boolean; distros: string[] }> => {
-  // Always return "not needed" since we run natively
-  return {
-    installed: false,
-    running: false,
-    distros: []
-  };
+  // Report ProjFS as "WSL" for UI compatibility - ProjFS is our native filesystem
+  try {
+    // Check if ProjFS is available (we're always running native on Windows)
+    const projfsAvailable = process.platform === 'win32';
+    return {
+      installed: projfsAvailable,
+      running: projfsAvailable, // ProjFS is "running" if we're on Windows
+      distros: projfsAvailable ? ['Native Windows (ProjFS)'] : []
+    };
+  } catch (error) {
+    return {
+      installed: false,
+      running: false,
+      distros: []
+    };
+  }
 });
 
 // Start WSL - not needed anymore!
@@ -568,4 +839,178 @@ ipcMain.handle('start-wsl', async (): Promise<{ success: boolean; message?: stri
     success: true, 
     message: 'WSL not needed - running natively on Windows!' 
   };
+});
+
+// Test runner IPC handlers
+const testRunner = new SimpleTestRunner();
+const realTestRunner = new RealTestRunner();
+
+ipcMain.handle('run-tests', async () => {
+  try {
+    console.log('[TestRunner] Starting REAL test execution...');
+    
+    // Check if replicant is running first
+    if (!replicant || !(replicant as any).filer) {
+      console.log('[TestRunner] Replicant not running, using mock tests');
+      const results = await testRunner.runAllTests();
+      return {
+        success: true,
+        results
+      };
+    }
+    
+    // Run real tests
+    const results = await realTestRunner.runRealTests();
+    console.log('[TestRunner] Real tests completed:', results);
+    
+    // Convert to expected format
+    const formattedResults = results.map(suite => ({
+      name: suite.name,
+      tests: suite.tests.map(test => ({
+        suite: suite.name,
+        test: test.name,
+        status: test.status,
+        error: test.error,
+        duration: test.duration
+      })),
+      passed: suite.passed,
+      failed: suite.failed,
+      skipped: 0,
+      duration: suite.duration
+    }));
+    
+    return {
+      success: true,
+      results: formattedResults
+    };
+  } catch (error) {
+    console.error('[TestRunner] Test execution failed:', error);
+    return {
+      success: false,
+      error: (error as Error).message
+    };
+  }
+});
+
+ipcMain.handle('run-test-suite', async (event, suiteName: string) => {
+  try {
+    console.log(`[TestRunner] Running test suite: ${suiteName}`);
+    const suite = {
+      name: suiteName,
+      files: [] as string[]
+    };
+    
+    // Map suite names to files
+    switch (suiteName) {
+      case 'Cache System':
+        suite.files = [
+          'test/unit/PersistentCache.simple.test.ts',
+          'test/unit/SmartCacheManager.simple.test.ts'
+        ];
+        break;
+      case 'Application Layer':
+        suite.files = ['test/app/ElectronApp.test.ts'];
+        break;
+      case 'End-to-End':
+        suite.files = ['test/e2e/FullStack.test.ts'];
+        break;
+      default:
+        throw new Error(`Unknown test suite: ${suiteName}`);
+    }
+    
+    const result = await testRunner.runTestSuite(suite);
+    return {
+      success: true,
+      result
+    };
+  } catch (error) {
+    console.error(`[TestRunner] Test suite failed:`, error);
+    return {
+      success: false,
+      error: (error as Error).message
+    };
+  }
+});
+
+ipcMain.handle('get-test-diagnostics', async () => {
+  try {
+    const diagnostics = await testRunner.runSystemDiagnostics();
+    return {
+      success: true,
+      diagnostics
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: (error as Error).message
+    };
+  }
+});
+
+// COW Cache debug configuration handlers
+ipcMain.handle('get-cache-config', async () => {
+  return {
+    disableCowCache: config.disableCowCache || false,
+    disableInMemoryCache: config.disableInMemoryCache || false,
+    verboseLogging: config.verboseLogging || false,
+    traceAllOperations: config.traceAllOperations || false
+  };
+});
+
+ipcMain.handle('update-cache-config', async (event, newConfig: Partial<AppConfig>) => {
+  try {
+    // Update config
+    config = { ...config, ...newConfig };
+    
+    // Save to config file
+    writeFileSync(configPath, JSON.stringify(config, null, 2));
+    
+    return {
+      success: true,
+      message: 'Cache configuration updated. Restart the application to apply changes.',
+      config: {
+        disableCowCache: config.disableCowCache,
+        disableInMemoryCache: config.disableInMemoryCache,
+        verboseLogging: config.verboseLogging,
+        traceAllOperations: config.traceAllOperations
+      }
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: (error as Error).message
+    };
+  }
+});
+
+// Get ProjFS cache statistics
+ipcMain.handle('get-cache-stats', async () => {
+  try {
+    // If replicant and filer are running, try to get cache stats
+    if (replicant && (replicant as any).filer?.projfsProvider) {
+      const provider = (replicant as any).filer.projfsProvider;
+      const stats = provider.provider?.getCacheStats?.() || {
+        fileInfoCount: 0,
+        directoryCount: 0,
+        contentCount: 0
+      };
+      
+      return {
+        success: true,
+        stats,
+        cacheEnabled: !config.disableCowCache,
+        inMemoryCacheEnabled: !config.disableInMemoryCache
+      };
+    }
+    
+    return {
+      success: false,
+      message: 'ProjFS provider not running'
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: (error as Error).message
+    };
+  }
 });

@@ -8,8 +8,8 @@
  * @version 0.0.1
  */
 
-import type {Stats as FuseStats} from '../fuse/native-fuse3.js';
-import {Fuse} from '../fuse/native-fuse3.js';
+import type {Stats as FuseStats} from '../fuse/types.js';
+import {ENOENT} from '../fuse/types.js';
 import type {IFileSystem, FileDescription, FileSystemFile, FileSystemDirectory} from '@refinio/one.models/lib/fileSystems/IFileSystem.js';
 import {OEvent} from '@refinio/one.models/lib/misc/OEvent.js';
 import {FS_ERRORS} from '@refinio/one.models/lib/fileSystems/FileSystemErrors.js';
@@ -331,7 +331,7 @@ export default class FuseApiToIFileSystemAdapter {
                 })
                 .catch(err => cb(handleError(err, this.logCalls)));
         } else {
-            cb(Fuse.ENOENT);
+            cb(ENOENT);
         }
     }
 

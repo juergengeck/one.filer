@@ -50,6 +50,30 @@ export interface WSLMetrics {
   processes: number;
 }
 
+export interface LogEntry {
+  timestamp: string;
+  level: 'debug' | 'info' | 'warn' | 'error';
+  source: string;
+  message: string;
+}
+
+export interface TestResult {
+  suite: string;
+  test: string;
+  status: 'pass' | 'fail' | 'skip';
+  error?: string;
+  duration?: number;
+}
+
+export interface TestSuiteResult {
+  name: string;
+  tests: TestResult[];
+  passed: number;
+  failed: number;
+  skipped: number;
+  duration: number;
+}
+
 export interface ElectronAPI {
   login: (credentials: {
     secret: string;
@@ -86,6 +110,23 @@ export interface ElectronAPI {
     wsl: WSLMetrics;
   }>;
   runDiagnostics: () => Promise<Record<string, any>>;
+  onDebugLog: (callback: (log: LogEntry) => void) => void;
+  removeDebugLogListener: (callback: (log: LogEntry) => void) => void;
+  runTests: () => Promise<{
+    success: boolean;
+    results?: TestSuiteResult[];
+    error?: string;
+  }>;
+  runTestSuite: (suiteName: string) => Promise<{
+    success: boolean;
+    result?: TestSuiteResult;
+    error?: string;
+  }>;
+  getTestDiagnostics: () => Promise<{
+    success: boolean;
+    diagnostics?: any;
+    error?: string;
+  }>;
 }
 
 declare global {
@@ -102,7 +143,19 @@ const electronAPI: ElectronAPI = {
   startWsl: () => ipcRenderer.invoke('start-wsl'),
   stopReplicant: () => ipcRenderer.invoke('stop-replicant'),
   getSystemMetrics: () => ipcRenderer.invoke('get-system-metrics'),
-  runDiagnostics: () => ipcRenderer.invoke('run-diagnostics')
+  runDiagnostics: () => ipcRenderer.invoke('run-diagnostics'),
+  onDebugLog: (callback) => {
+    const handler = (_event: Electron.IpcRendererEvent, log: LogEntry) => callback(log);
+    ipcRenderer.on('debug-log', handler);
+  },
+  removeDebugLogListener: (callback) => {
+    // Note: We need to store the handler reference to remove it properly
+    // For now, we'll remove all listeners
+    ipcRenderer.removeAllListeners('debug-log');
+  },
+  runTests: () => ipcRenderer.invoke('run-tests'),
+  runTestSuite: (suiteName) => ipcRenderer.invoke('run-test-suite', suiteName),
+  getTestDiagnostics: () => ipcRenderer.invoke('get-test-diagnostics')
 };
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI);

@@ -1,3 +1,3 @@
 import React from 'react';
-export declare function MonitoringDashboard(): React.JSX.Element;
+export declare const MonitoringDashboard: React.NamedExoticComponent<object>;
 //# sourceMappingURL=MonitoringDashboard.d.ts.map

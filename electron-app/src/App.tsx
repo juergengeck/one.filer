@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { MonitoringDashboard } from './components/MonitoringDashboard';
 import { DiagnosticsPanel } from './components/DiagnosticsPanel';
+import { TestRunnerSafe } from './components/TestRunnerSafe';
+// import { DebugLogs } from './components/DebugLogs';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/ui/card';
 import { 
@@ -13,7 +15,8 @@ import {
   Loader2,
   Eye,
   EyeOff,
-  Stethoscope
+  Stethoscope,
+  Terminal
 } from 'lucide-react';
 import './globals.css';
 
@@ -47,6 +50,11 @@ export function App() {
   const [configPath, setConfigPath] = useState('');
   const [showSecret, setShowSecret] = useState(false);
   const [activeTab, setActiveTab] = useState('connect');
+  
+  // Debug tab changes
+  React.useEffect(() => {
+    console.log('[App] Active tab changed to:', activeTab);
+  }, [activeTab]);
 
   // Update status periodically
   useEffect(() => {
@@ -63,19 +71,23 @@ export function App() {
           replicantStatus: replicant
         }));
 
-        // If replicant is running, switch to monitoring tab
-        if (replicant.running && activeTab === 'connect') {
-          setActiveTab('monitoring');
-        }
+        // Only auto-switch to monitoring tab once after connecting
+        // Don't switch if user is on a different tab
+        // Comment out for now as it's interfering with other tabs
+        // if (replicant.running && activeTab === 'connect') {
+        //   setActiveTab('monitoring');
+        // }
       } catch (error) {
         console.error('Failed to update status:', error);
       }
     };
 
     updateStatus();
-    const interval = setInterval(updateStatus, 2000);
+    // Reduce update frequency to lower CPU usage
+    const interval = setInterval(updateStatus, 5000); // Changed from 2000ms to 5000ms
     return () => clearInterval(interval);
-  }, [activeTab]);
+  }, []); // Remove activeTab dependency to prevent multiple intervals
+  
 
   const handleConnect = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,13 +105,7 @@ export function App() {
     }));
 
     try {
-      // Check WSL first
-      if (!state.wslStatus.running) {
-        const startResult = await window.electronAPI.startWsl();
-        if (!startResult.success) {
-          throw new Error(startResult.message || 'Failed to start WSL');
-        }
-      }
+      // No WSL needed - running natively!
 
       // Start replicant
       const result = await window.electronAPI.login({
@@ -174,28 +180,12 @@ export function App() {
         <div className="mb-6 grid grid-cols-2 gap-4">
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">WSL Status</CardTitle>
+              <CardTitle className="text-sm font-medium">Native Mode</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-2">
-                {state.wslStatus.installed ? (
-                  state.wslStatus.running ? (
-                    <>
-                      <CheckCircle className="h-5 w-5 text-green-500" />
-                      <span className="text-sm font-medium">Running</span>
-                    </>
-                  ) : (
-                    <>
-                      <AlertCircle className="h-5 w-5 text-yellow-500" />
-                      <span className="text-sm font-medium">Stopped</span>
-                    </>
-                  )
-                ) : (
-                  <>
-                    <XCircle className="h-5 w-5 text-red-500" />
-                    <span className="text-sm font-medium">Not Installed</span>
-                  </>
-                )}
+                <CheckCircle className="h-5 w-5 text-green-500" />
+                <span className="text-sm font-medium">ProjFS Ready</span>
               </div>
             </CardContent>
           </Card>
@@ -226,7 +216,7 @@ export function App() {
 
         {/* Main Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="connect" className="flex items-center gap-2">
               <Shield className="h-4 w-4" />
               Connect
@@ -235,6 +225,10 @@ export function App() {
               <Activity className="h-4 w-4" />
               Monitoring
             </TabsTrigger>
+            <TabsTrigger value="tests" className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4" />
+              Tests
+            </TabsTrigger>
             <TabsTrigger value="settings" className="flex items-center gap-2">
               <Settings className="h-4 w-4" />
               Settings
@@ -242,6 +236,10 @@ export function App() {
             <TabsTrigger value="diagnostics" className="flex items-center gap-2">
               <Stethoscope className="h-4 w-4" />
               Diagnostics
+            </TabsTrigger>
+            <TabsTrigger value="debug" className="flex items-center gap-2">
+              <Terminal className="h-4 w-4" />
+              Debug
             </TabsTrigger>
           </TabsList>
 
@@ -324,7 +322,7 @@ export function App() {
                     ) : (
                       <button
                         type="submit"
-                        disabled={state.isConnecting || !state.wslStatus.installed}
+                        disabled={state.isConnecting}
                         className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                       >
                         {state.isConnecting ? (
@@ -344,9 +342,9 @@ export function App() {
           </TabsContent>
 
           <TabsContent value="monitoring" className="mt-6">
-            {state.replicantStatus.running ? (
+            {state.replicantStatus.running && activeTab === 'monitoring' ? (
               <MonitoringDashboard />
-            ) : (
+            ) : state.replicantStatus.running ? null : (
               <Card>
                 <CardContent className="pt-6">
                   <div className="text-center py-8">
@@ -372,9 +370,9 @@ export function App() {
               <CardContent>
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-sm font-medium mb-2">WSL Distribution</h3>
+                    <h3 className="text-sm font-medium mb-2">Filesystem Mode</h3>
                     <p className="text-sm text-gray-600">
-                      {state.wslStatus.distros.length > 0 ? state.wslStatus.distros.join(', ') : 'None'}
+                      Native Windows (ProjFS)
                     </p>
                   </div>
                   <div>
@@ -392,8 +390,19 @@ export function App() {
             </Card>
           </TabsContent>
 
+          <TabsContent value="tests" className="mt-6">
+            <TestRunnerSafe />
+          </TabsContent>
+
           <TabsContent value="diagnostics" className="mt-6">
             <DiagnosticsPanel />
+          </TabsContent>
+
+
+          <TabsContent value="debug" className="mt-6">
+            <div className="h-[600px]">
+              {/* <DebugLogs /> */}
+            </div>
           </TabsContent>
         </Tabs>
       </div>

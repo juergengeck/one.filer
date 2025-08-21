@@ -1,0 +1,86 @@
+
+> one-filer-login@1.0.0 start:native
+> npm run build:native && electron . 2
+
+
+> one-filer-login@1.0.0 build:native
+> webpack --config webpack.config.native.js && npm run build-css
+
+asset [1m[32mmain.js[39m[22m 2.52 MiB [1m[33m[compared for emit][39m[22m (name: main)
+asset [1m[32mlib_filer_Filer_js.main.js[39m[22m 366 KiB [1m[33m[compared for emit][39m[22m
+asset [1m[32mlib_filer_FilerWithProjFS_js.main.js[39m[22m 351 KiB [1m[33m[compared for emit][39m[22m
+asset [1m[32mnode_modules_refinio_one_models_lib_recipes_recipes-experimental_js.main.js[39m[22m 72.6 KiB [1m[33m[compared for emit][39m[22m
+asset [1m[32mlib_filer_FuseFrontend_js.main.js[39m[22m 58.3 KiB [1m[33m[compared for emit][39m[22m
+asset [1m[32mnode_modules_refinio_one_models_lib_recipes_recipes-stable_js.main.js[39m[22m 29.3 KiB [1m[33m[compared for emit][39m[22m
+asset [1m[32mlib_fuse_native-fuse3_js.main.js[39m[22m 7.16 KiB [1m[33m[compared for emit][39m[22m
+runtime modules 3.46 KiB 8 modules
+modules by path [1m../node_modules/[39m[22m 2.19 MiB 353 modules
+modules by path [1m../lib/[39m[22m 100 KiB
+  modules by path [1m../lib/filer/*.js[39m[22m 53.6 KiB 7 modules
+  modules by path [1m../lib/*.js[39m[22m 12.8 KiB 4 modules
+  modules by path [1m../lib/misc/*.js[39m[22m 9.32 KiB 4 modules
+  modules by path [1m../lib/fuse/*.js[39m[22m 5.95 KiB 3 modules
+  modules by path [1m../lib/cache/*.js[39m[22m 18.4 KiB 2 modules
+  + 1 module
+modules by path [1m./src/[39m[22m 58.6 KiB
+  [1m./src/main-native.ts[39m[22m 26.2 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m./src/simple-test-runner.ts[39m[22m 6.09 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m./src/real-test-runner.ts[39m[22m 13.8 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m./src/services/SingletonManager.ts[39m[22m 12.5 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
++ 27 modules
+
+[1m[33mWARNING[39m[22m in [1m../node_modules/ws/lib/buffer-util.js[39m[22m [1m[32m117:23-44[39m[22m
+[1mModule [1m[31mnot found[39m[22m[1m: [1m[31mError[39m[22m[1m: Can't resolve 'bufferutil' in 'C:\Users\juerg\source\one.filer\node_modules\ws\lib'[39m[22m
+ @ ../node_modules/ws/lib/sender.js 11:38-62
+ @ ../node_modules/ws/wrapper.mjs 3:0-37 7:0-79
+ @ ../node_modules/@refinio/one.core/lib/system/nodejs/websocket.js 11:0-37 21:15-17
+ @ ../node_modules/@refinio/one.core/lib/system/load-nodejs.js 28:0-44 37:17-19
+ @ ./src/main-native.ts 272:27-81
+
+[1m[33mWARNING[39m[22m in [1m../node_modules/ws/lib/validation.js[39m[22m [1m[32m144:24-49[39m[22m
+[1mModule [1m[31mnot found[39m[22m[1m: [1m[31mError[39m[22m[1m: Can't resolve 'utf-8-validate' in 'C:\Users\juerg\source\one.filer\node_modules\ws\lib'[39m[22m
+ @ ../node_modules/ws/lib/sender.js 10:38-61
+ @ ../node_modules/ws/wrapper.mjs 3:0-37 7:0-79
+ @ ../node_modules/@refinio/one.core/lib/system/nodejs/websocket.js 11:0-37 21:15-17
+ @ ../node_modules/@refinio/one.core/lib/system/load-nodejs.js 28:0-44 37:17-19
+ @ ./src/main-native.ts 272:27-81
+
+2 warnings have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.101.0 compiled with [1m[33m2 warnings[39m[22m in 6357 ms
+
+asset [1m[32mpreload.js[39m[22m 6.03 KiB [1m[33m[compared for emit][39m[22m (name: main)
+runtime modules 937 bytes 4 modules
+built modules 1.24 KiB [1m[33m[built][39m[22m
+  [1m./src/preload.ts[39m[22m 1.2 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1mexternal "electron"[39m[22m 42 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+webpack 5.101.0 compiled [1m[32msuccessfully[39m[22m in 943 ms
+
+asset [1m[32mrenderer-react.js[39m[22m 3.1 MiB [1m[33m[compared for emit][39m[22m (name: main) 1 related asset
+orphan modules 2.13 MiB [1m[33m[orphan][39m[22m 2157 modules
+runtime modules 2.63 KiB 8 modules
+cacheable modules 2.44 MiB
+  modules by path [1m./node_modules/[39m[22m 2.32 MiB 501 modules
+  modules by path [1m./src/[39m[22m 115 KiB
+    modules by path [1m./src/components/[39m[22m 56.5 KiB 7 modules
+    modules by path [1m./src/*.tsx[39m[22m 15 KiB 2 modules
+    modules by path [1m./src/*.css[39m[22m 43.4 KiB 2 modules
+    [1m./src/lib/utils.ts[39m[22m 139 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  asset modules 1.02 KiB
+    [1mdata:image/svg+xml,%3csvg xmlns=%27..[39m[22m 284 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1mdata:image/svg+xml,%3csvg viewBox=%..[39m[22m 312 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1mdata:image/svg+xml,%3csvg viewBox=%..[39m[22m 181 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1mdata:image/svg+xml,%3csvg xmlns=%27..[39m[22m 271 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+webpack 5.101.0 compiled [1m[32msuccessfully[39m[22m in 8255 ms
+
+> one-filer-login@1.0.0 build-css
+> tailwindcss -i ./src/globals.css -o ./dist/globals.css --watch=false
+
+
+[SingletonManager] Lock acquired successfully (PID: 32872)
+[2025-08-08T08:14:28.877Z] This is the main instance (PID: 32872)
+[SingletonManager] Named pipe server listening on \\.\pipe\one-filer-singleton
+[SingletonManager] TCP server listening on 127.0.0.1:17890
+ONE Core modules loaded successfully
+Page loaded successfully

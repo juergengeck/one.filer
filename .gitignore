@@ -245,6 +245,7 @@ tmp/
 
 # Build artifacts and packages
 dist/
+!electron-app/dist/
 build/
 *.tgz
 *.deb

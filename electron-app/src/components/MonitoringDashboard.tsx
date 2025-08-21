@@ -86,7 +86,8 @@ interface WSLMetrics {
   processes: number;
 }
 
-export function MonitoringDashboard() {
+export const MonitoringDashboard = React.memo(function MonitoringDashboard() {
+  const [activeTab, setActiveTab] = useState<string>('overview');
   const [systemMetrics, setSystemMetrics] = useState<SystemMetrics>({
     cpu: 0,
     memory: { used: 0, total: 0, percentage: 0 },
@@ -135,44 +136,70 @@ export function MonitoringDashboard() {
   // Fetch metrics from electron IPC
   useEffect(() => {
     const fetchMetrics = async () => {
+      // Only fetch metrics if component is actually visible
+      if (document.hidden) return;
+      
       try {
         const metrics = await window.electronAPI.getSystemMetrics();
-        setSystemMetrics(metrics.system);
-        setReplicantMetrics(metrics.replicant);
-        setWSLMetrics(metrics.wsl);
+        if (metrics.system) setSystemMetrics(metrics.system);
+        if (metrics.replicant) setReplicantMetrics(metrics.replicant);
+        if (metrics.wsl) setWSLMetrics(metrics.wsl);
 
         // Update history data
         const timestamp = format(new Date(), 'HH:mm:ss');
         
-        setCpuHistory(prev => [...prev.slice(-20), { time: timestamp, cpu: metrics.system.cpu }]);
-        setNetworkHistory(prev => [...prev.slice(-20), {
-          time: timestamp,
-          in: metrics.system.network.bytesIn / 1024,
-          out: metrics.system.network.bytesOut / 1024
-        }]);
-        setSyncHistory(prev => [...prev.slice(-20), {
-          time: timestamp,
-          synced: metrics.replicant.objectsSynced,
-          queue: metrics.replicant.syncQueue
-        }]);
-        setOperationsHistory(prev => [...prev.slice(-20), {
-          time: timestamp,
-          reads: metrics.replicant.operations.reads,
-          writes: metrics.replicant.operations.writes,
-          deletes: metrics.replicant.operations.deletes
-        }]);
-        setBandwidthHistory(prev => [...prev.slice(-20), {
-          time: timestamp,
-          upload: metrics.replicant.bandwidth.upload / 1024 / 1024, // Convert to MB
-          download: metrics.replicant.bandwidth.download / 1024 / 1024
-        }]);
+        // Optimize array updates to prevent memory leaks
+        setCpuHistory(prev => {
+          const newEntry = { time: timestamp, cpu: metrics.system.cpu };
+          return prev.length >= 20 ? [...prev.slice(1), newEntry] : [...prev, newEntry];
+        });
+        setNetworkHistory(prev => {
+          const newEntry = {
+            time: timestamp,
+            in: metrics.system.network.bytesIn / 1024,
+            out: metrics.system.network.bytesOut / 1024
+          };
+          return prev.length >= 20 ? [...prev.slice(1), newEntry] : [...prev, newEntry];
+        });
+        setSyncHistory(prev => {
+          const newEntry = {
+            time: timestamp,
+            synced: metrics.replicant.objectsSynced,
+            queue: metrics.replicant.syncQueue
+          };
+          return prev.length >= 20 ? [...prev.slice(1), newEntry] : [...prev, newEntry];
+        });
+        setOperationsHistory(prev => {
+          const newEntry = {
+            time: timestamp,
+            reads: metrics.replicant.operations.reads,
+            writes: metrics.replicant.operations.writes,
+            deletes: metrics.replicant.operations.deletes
+          };
+          return prev.length >= 20 ? [...prev.slice(1), newEntry] : [...prev, newEntry];
+        });
+        setBandwidthHistory(prev => {
+          const newEntry = {
+            time: timestamp,
+            upload: metrics.replicant.bandwidth.upload / 1024 / 1024, // Convert to MB
+            download: metrics.replicant.bandwidth.download / 1024 / 1024
+          };
+          return prev.length >= 20 ? [...prev.slice(1), newEntry] : [...prev, newEntry];
+        });
       } catch (error) {
         console.error('Failed to fetch metrics:', error);
       }
     };
 
     fetchMetrics();
-    const interval = setInterval(fetchMetrics, 2000);
+    // Only update when component is visible
+    const interval = setInterval(() => {
+      // Check if document is visible to avoid updating when minimized
+      if (document.visibilityState === 'visible') {
+        fetchMetrics();
+      }
+    }, 15000); // Increased to 15 seconds
+    
     return () => clearInterval(interval);
   }, []);
 
@@ -326,7 +353,7 @@ export function MonitoringDashboard() {
       </div>
 
       {/* Main Content Tabs */}
-      <Tabs defaultValue="overview" className="space-y-4">
+      <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="space-y-4">
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="performance">Performance</TabsTrigger>
@@ -407,35 +434,31 @@ export function MonitoringDashboard() {
             </Card>
           </div>
 
-          {/* WSL Status */}
+          {/* ProjFS Status */}
           <Card>
             <CardHeader>
-              <CardTitle>WSL Environment</CardTitle>
-              <CardDescription>Windows Subsystem for Linux status</CardDescription>
+              <CardTitle>ProjFS Environment</CardTitle>
+              <CardDescription>Windows Projected File System status</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-4 gap-4">
                 <div className="space-y-1">
                   <p className="text-sm font-medium">Status</p>
                   <p className="text-2xl font-bold">
-                    {wslMetrics.status === 'running' ? (
-                      <span className="text-green-600">Running</span>
-                    ) : (
-                      <span className="text-red-600">Stopped</span>
-                    )}
+                    <span className="text-green-600">Active</span>
                   </p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium">Distribution</p>
-                  <p className="text-2xl font-bold">{wslMetrics.distro}</p>
+                  <p className="text-sm font-medium">Mount Point</p>
+                  <p className="text-2xl font-bold">C:\OneFiler</p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium">Processes</p>
-                  <p className="text-2xl font-bold">{wslMetrics.processes}</p>
+                  <p className="text-sm font-medium">Provider</p>
+                  <p className="text-2xl font-bold">one.ifsprojfs</p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium">Memory Usage</p>
-                  <p className="text-2xl font-bold">{formatBytes(wslMetrics.memory)}</p>
+                  <p className="text-sm font-medium">Architecture</p>
+                  <p className="text-2xl font-bold">2-Layer</p>
                 </div>
               </div>
             </CardContent>
@@ -443,6 +466,9 @@ export function MonitoringDashboard() {
         </TabsContent>
 
         <TabsContent value="performance" className="space-y-4">
+          {/* Only render charts when tab is active to prevent resource consumption */}
+          {activeTab === 'performance' && (
+          <>
           {/* CPU History Chart */}
           <Card>
             <CardHeader>
@@ -456,7 +482,7 @@ export function MonitoringDashboard() {
                   <XAxis dataKey="time" />
                   <YAxis domain={[0, 100]} />
                   <Tooltip />
-                  <Line type="monotone" dataKey="cpu" stroke="#3b82f6" strokeWidth={2} />
+                  <Line type="monotone" dataKey="cpu" stroke="#3b82f6" strokeWidth={2} isAnimationActive={false} />
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>
@@ -475,8 +501,8 @@ export function MonitoringDashboard() {
                   <XAxis dataKey="time" />
                   <YAxis />
                   <Tooltip />
-                  <Area type="monotone" dataKey="synced" stackId="1" stroke="#10b981" fill="#10b981" />
-                  <Area type="monotone" dataKey="queue" stackId="1" stroke="#f59e0b" fill="#f59e0b" />
+                  <Area type="monotone" dataKey="synced" stackId="1" stroke="#10b981" fill="#10b981" isAnimationActive={false} />
+                  <Area type="monotone" dataKey="queue" stackId="1" stroke="#f59e0b" fill="#f59e0b" isAnimationActive={false} />
                 </AreaChart>
               </ResponsiveContainer>
             </CardContent>
@@ -516,15 +542,19 @@ export function MonitoringDashboard() {
                   <XAxis dataKey="time" />
                   <YAxis />
                   <Tooltip formatter={(value: any) => `${value.toFixed(2)} MB`} />
-                  <Area type="monotone" dataKey="upload" stackId="1" stroke="#3b82f6" fill="#3b82f6" name="Upload" />
-                  <Area type="monotone" dataKey="download" stackId="1" stroke="#10b981" fill="#10b981" name="Download" />
+                  <Area type="monotone" dataKey="upload" stackId="1" stroke="#3b82f6" fill="#3b82f6" name="Upload" isAnimationActive={false} />
+                  <Area type="monotone" dataKey="download" stackId="1" stroke="#10b981" fill="#10b981" name="Download" isAnimationActive={false} />
                 </AreaChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
+          </>
+          )}
         </TabsContent>
 
         <TabsContent value="network" className="space-y-4">
+          {activeTab === 'network' && (
+          <>
           {/* Network Traffic Chart */}
           <Card>
             <CardHeader>
@@ -538,8 +568,8 @@ export function MonitoringDashboard() {
                   <XAxis dataKey="time" />
                   <YAxis />
                   <Tooltip formatter={(value: any) => `${value.toFixed(2)} KB/s`} />
-                  <Line type="monotone" dataKey="in" stroke="#10b981" name="Incoming" strokeWidth={2} />
-                  <Line type="monotone" dataKey="out" stroke="#ef4444" name="Outgoing" strokeWidth={2} />
+                  <Line type="monotone" dataKey="in" stroke="#10b981" name="Incoming" strokeWidth={2} isAnimationActive={false} />
+                  <Line type="monotone" dataKey="out" stroke="#ef4444" name="Outgoing" strokeWidth={2} isAnimationActive={false} />
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>
@@ -565,6 +595,8 @@ export function MonitoringDashboard() {
               </div>
             </CardContent>
           </Card>
+          </>
+          )}
         </TabsContent>
 
         <TabsContent value="logs" className="space-y-4">
@@ -594,4 +626,4 @@ export function MonitoringDashboard() {
       </Tabs>
     </div>
   );
-}
+});

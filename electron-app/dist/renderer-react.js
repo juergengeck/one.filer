@@ -5103,6 +5103,12 @@ select {
     max-width: 1536px;
   }
 }
+.visible {
+  visibility: visible;
+}
+.static {
+  position: static;
+}
 .absolute {
   position: absolute;
 }
@@ -5125,6 +5131,9 @@ select {
 .mb-2 {
   margin-bottom: 0.5rem;
 }
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -5136,6 +5145,9 @@ select {
 }
 .mt-2 {
   margin-top: 0.5rem;
+}
+.mt-4 {
+  margin-top: 1rem;
 }
 .mt-6 {
   margin-top: 1.5rem;
@@ -5152,11 +5164,20 @@ select {
 .grid {
   display: grid;
 }
+.contents {
+  display: contents;
+}
+.hidden {
+  display: none;
+}
 .h-10 {
   height: 2.5rem;
 }
 .h-12 {
   height: 3rem;
+}
+.h-3 {
+  height: 0.75rem;
 }
 .h-4 {
   height: 1rem;
@@ -5167,6 +5188,9 @@ select {
 .h-6 {
   height: 1.5rem;
 }
+.h-\\[600px\\] {
+  height: 600px;
+}
 .h-full {
   height: 100%;
 }
@@ -5175,6 +5199,9 @@ select {
 }
 .w-12 {
   width: 3rem;
+}
+.w-3 {
+  width: 0.75rem;
 }
 .w-4 {
   width: 1rem;
@@ -5187,6 +5214,9 @@ select {
 }
 .w-full {
   width: 100%;
+}
+.max-w-xs {
+  max-width: 20rem;
 }
 .flex-1 {
   flex: 1 1 0%;
@@ -5203,14 +5233,23 @@ select {
 .animate-spin {
   animation: spin 1s linear infinite;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 .resize {
   resize: both;
 }
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 .grid-cols-4 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 .flex-row {
   flex-direction: row;
@@ -5266,17 +5305,30 @@ select {
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
+.space-y-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
 .overflow-auto {
   overflow: auto;
 }
 .overflow-hidden {
   overflow: hidden;
 }
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .whitespace-nowrap {
   white-space: nowrap;
 }
 .break-all {
   word-break: break-all;
+}
+.rounded {
+  border-radius: 0.25rem;
 }
 .rounded-full {
   border-radius: 9999px;
@@ -5293,6 +5345,13 @@ select {
 .border {
   border-width: 1px;
 }
+.border-t {
+  border-top-width: 1px;
+}
+.border-red-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(254 202 202 / var(--tw-border-opacity, 1));
+}
 .bg-blue-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(37 99 235 / var(--tw-bg-opacity, 1));
@@ -5304,6 +5363,14 @@ select {
 .bg-gray-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+}
+.bg-gray-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+}
+.bg-gray-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity, 1));
 }
 .bg-green-50 {
   --tw-bg-opacity: 1;
@@ -5350,6 +5417,9 @@ select {
 .p-1 {
   padding: 0.25rem;
 }
+.p-2 {
+  padding: 0.5rem;
+}
 .p-3 {
   padding: 0.75rem;
 }
@@ -5359,6 +5429,10 @@ select {
 .p-6 {
   padding: 1.5rem;
 }
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -5366,6 +5440,14 @@ select {
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 .py-1\\.5 {
   padding-top: 0.375rem;
@@ -5449,6 +5531,10 @@ select {
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity, 1));
 }
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+}
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity, 1));
@@ -5476,6 +5562,10 @@ select {
 .text-red-600 {
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity, 1));
+}
+.text-red-700 {
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity, 1));
 }
 .text-red-800 {
   --tw-text-opacity: 1;
@@ -5524,6 +5614,18 @@ select {
 .hover\\:bg-blue-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(29 78 216 / var(--tw-bg-opacity, 1));
+}
+.hover\\:bg-gray-300:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1));
+}
+.hover\\:bg-gray-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+}
+.hover\\:bg-gray-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity, 1));
 }
 .hover\\:bg-red-700:hover {
   --tw-bg-opacity: 1;
@@ -5587,7 +5689,7 @@ select {
     --tw-text-opacity: 1;
     color: rgb(148 163 184 / var(--tw-text-opacity, 1));
   }
-}`, "",{"version":3,"sources":["webpack://./src/globals.css"],"names":[],"mappings":"AAAA;EAAA,wBAAc;EAAd,wBAAc;EAAd,mBAAc;EAAd,mBAAc;EAAd,cAAc;EAAd,cAAc;EAAd,cAAc;EAAd,eAAc;EAAd,eAAc;EAAd,aAAc;EAAd,aAAc;EAAd,kBAAc;EAAd,sCAAc;EAAd,8BAAc;EAAd,6BAAc;EAAd,4BAAc;EAAd,eAAc;EAAd,oBAAc;EAAd,sBAAc;EAAd,uBAAc;EAAd,wBAAc;EAAd,kBAAc;EAAd,2BAAc;EAAd,4BAAc;EAAd,sCAAc;EAAd,kCAAc;EAAd,2BAAc;EAAd,sBAAc;EAAd,8BAAc;EAAd,YAAc;EAAd,kBAAc;EAAd,gBAAc;EAAd,iBAAc;EAAd,kBAAc;EAAd,cAAc;EAAd,gBAAc;EAAd,aAAc;EAAd,mBAAc;EAAd,qBAAc;EAAd,2BAAc;EAAd,yBAAc;EAAd,0BAAc;EAAd,2BAAc;EAAd,uBAAc;EAAd,wBAAc;EAAd,yBAAc;EAAd,sBAAc;EAAd,oBAAc;EAAd,sBAAc;EAAd,qBAAc;EAAd;AAAc;;AAAd;EAAA,wBAAc;EAAd,wBAAc;EAAd,mBAAc;EAAd,mBAAc;EAAd,cAAc;EAAd,cAAc;EAAd,cAAc;EAAd,eAAc;EAAd,eAAc;EAAd,aAAc;EAAd,aAAc;EAAd,kBAAc;EAAd,sCAAc;EAAd,8BAAc;EAAd,6BAAc;EAAd,4BAAc;EAAd,eAAc;EAAd,oBAAc;EAAd,sBAAc;EAAd,uBAAc;EAAd,wBAAc;EAAd,kBAAc;EAAd,2BAAc;EAAd,4BAAc;EAAd,sCAAc;EAAd,kCAAc;EAAd,2BAAc;EAAd,sBAAc;EAAd,8BAAc;EAAd,YAAc;EAAd,kBAAc;EAAd,gBAAc;EAAd,iBAAc;EAAd,kBAAc;EAAd,cAAc;EAAd,gBAAc;EAAd,aAAc;EAAd,mBAAc;EAAd,qBAAc;EAAd,2BAAc;EAAd,yBAAc;EAAd,0BAAc;EAAd,2BAAc;EAAd,uBAAc;EAAd,wBAAc;EAAd,yBAAc;EAAd,sBAAc;EAAd,oBAAc;EAAd,sBAAc;EAAd,qBAAc;EAAd;AAAc,CAAd;;CAAc,CAAd;;;CAAc;;AAAd;;;EAAA,sBAAc,EAAd,MAAc;EAAd,eAAc,EAAd,MAAc;EAAd,mBAAc,EAAd,MAAc;EAAd,qBAAc,EAAd,MAAc;AAAA;;AAAd;;EAAA,gBAAc;AAAA;;AAAd;;;;;;;;CAAc;;AAAd;;EAAA,gBAAc,EAAd,MAAc;EAAd,8BAAc,EAAd,MAAc;EAAd,gBAAc,EAAd,MAAc;EAAd,cAAc;KAAd,WAAc,EAAd,MAAc;EAAd,+HAAc,EAAd,MAAc;EAAd,6BAAc,EAAd,MAAc;EAAd,+BAAc,EAAd,MAAc;EAAd,wCAAc,EAAd,MAAc;AAAA;;AAAd;;;CAAc;;AAAd;EAAA,SAAc,EAAd,MAAc;EAAd,oBAAc,EAAd,MAAc;AAAA;;AAAd;;;;CAAc;;AAAd;EAAA,SAAc,EAAd,MAAc;EAAd,cAAc,EAAd,MAAc;EAAd,qBAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,yCAAc;UAAd,iCAAc;AAAA;;AAAd;;CAAc;;AAAd;;;;;;EAAA,kBAAc;EAAd,oBAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,cAAc;EAAd,wBAAc;AAAA;;AAAd;;CAAc;;AAAd;;EAAA,mBAAc;AAAA;;AAAd;;;;;CAAc;;AAAd;;;;EAAA,+GAAc,EAAd,MAAc;EAAd,6BAAc,EAAd,MAAc;EAAd,+BAAc,EAAd,MAAc;EAAd,cAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,cAAc;AAAA;;AAAd;;CAAc;;AAAd;;EAAA,cAAc;EAAd,cAAc;EAAd,kBAAc;EAAd,wBAAc;AAAA;;AAAd;EAAA,eAAc;AAAA;;AAAd;EAAA,WAAc;AAAA;;AAAd;;;;CAAc;;AAAd;EAAA,cAAc,EAAd,MAAc;EAAd,qBAAc,EAAd,MAAc;EAAd,yBAAc,EAAd,MAAc;AAAA;;AAAd;;;;CAAc;;AAAd;;;;;EAAA,oBAAc,EAAd,MAAc;EAAd,8BAAc,EAAd,MAAc;EAAd,gCAAc,EAAd,MAAc;EAAd,eAAc,EAAd,MAAc;EAAd,oBAAc,EAAd,MAAc;EAAd,oBAAc,EAAd,MAAc;EAAd,uBAAc,EAAd,MAAc;EAAd,cAAc,EAAd,MAAc;EAAd,SAAc,EAAd,MAAc;EAAd,UAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;;EAAA,oBAAc;AAAA;;AAAd;;;CAAc;;AAAd;;;;EAAA,0BAAc,EAAd,MAAc;EAAd,6BAAc,EAAd,MAAc;EAAd,sBAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,aAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,gBAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,wBAAc;AAAA;;AAAd;;CAAc;;AAAd;;EAAA,YAAc;AAAA;;AAAd;;;CAAc;;AAAd;EAAA,6BAAc,EAAd,MAAc;EAAd,oBAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,wBAAc;AAAA;;AAAd;;;CAAc;;AAAd;EAAA,0BAAc,EAAd,MAAc;EAAd,aAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,kBAAc;AAAA;;AAAd;;CAAc;;AAAd;;;;;;;;;;;;;EAAA,SAAc;AAAA;;AAAd;EAAA,SAAc;EAAd,UAAc;AAAA;;AAAd;EAAA,UAAc;AAAA;;AAAd;;;EAAA,gBAAc;EAAd,SAAc;EAAd,UAAc;AAAA;;AAAd;;CAAc;AAAd;EAAA,UAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,gBAAc;AAAA;;AAAd;;;CAAc;;AAAd;EAAA,UAAc,EAAd,MAAc;EAAd,cAAc,EAAd,MAAc;AAAA;;AAAd;;EAAA,UAAc,EAAd,MAAc;EAAd,cAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;;EAAA,eAAc;AAAA;;AAAd;;CAAc;AAAd;EAAA,eAAc;AAAA;;AAAd;;;;CAAc;;AAAd;;;;;;;;EAAA,cAAc,EAAd,MAAc;EAAd,sBAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;;EAAA,eAAc;EAAd,YAAc;AAAA;;AAAd,wEAAc;AAAd;EAAA,aAAc;AAAA;;AAAd;EAAA,wBAAc;KAAd,qBAAc;UAAd,gBAAc;EAAd,sBAAc;EAAd,qBAAc;EAAd,iBAAc;EAAd,kBAAc;EAAd,mBAAc;EAAd,sBAAc;EAAd,sBAAc;EAAd,qBAAc;EAAd,eAAc;EAAd,mBAAc;EAAd,sBAAc;AAAA;;AAAd;EAAA,8BAAc;EAAd,mBAAc;EAAd,4CAAc;EAAd,2BAAc;EAAd,4BAAc;EAAd,wBAAc;EAAd,2GAAc;EAAd,yGAAc;EAAd,iFAAc;EAAd;AAAc;;AAAd;EAAA,cAAc;EAAd;AAAc;;AAAd;EAAA,cAAc;EAAd;AAAc;;AAAd;EAAA;AAAc;;AAAd;EAAA,iBAAc;EAAd;AAAc;;AAAd;EAAA;AAAc;;AAAd;EAAA,cAAc;EAAd;AAAc;;AAAd;EAAA,yDAAc;EAAd,wCAAc;EAAd,4BAAc;EAAd,4BAAc;EAAd,qBAAc;EAAd,iCAAc;UAAd;AAAc;;AAAd;EAAA,yBAAc;EAAd,4BAAc;EAAd,wBAAc;EAAd,wBAAc;EAAd,sBAAc;EAAd,iCAAc;UAAd;AAAc;;AAAd;EAAA,wBAAc;KAAd,qBAAc;UAAd,gBAAc;EAAd,UAAc;EAAd,iCAAc;UAAd,yBAAc;EAAd,qBAAc;EAAd,sBAAc;EAAd,6BAAc;EAAd,yBAAc;KAAd,sBAAc;UAAd,iBAAc;EAAd,cAAc;EAAd,YAAc;EAAd,WAAc;EAAd,cAAc;EAAd,sBAAc;EAAd,qBAAc;EAAd,iBAAc;EAAd;AAAc;;AAAd;EAAA;AAAc;;AAAd;EAAA;AAAc;;AAAd;EAAA,8BAAc;EAAd,mBAAc;EAAd,4CAAc;EAAd,2BAAc;EAAd,4BAAc;EAAd,wBAAc;EAAd,2GAAc;EAAd,yGAAc;EAAd;AAAc;;AAAd;EAAA,yBAAc;EAAd,8BAAc;EAAd,0BAAc;EAAd,2BAAc;EAAd;AAAc;;AAAd;EAAA,yDAAc;AAAA;;AAAd;;EAAA;IAAA,wBAAc;OAAd,qBAAc;YAAd;EAAc;AAAA;;AAAd;EAAA,yDAAc;AAAA;;AAAd;;EAAA;IAAA,wBAAc;OAAd,qBAAc;YAAd;EAAc;AAAA;;AAAd;EAAA,yBAAc;EAAd;AAAc;;AAAd;EAAA,yDAAc;EAAd,yBAAc;EAAd,8BAAc;EAAd,0BAAc;EAAd,2BAAc;EAAd,4BAAc;AAAA;;AAAd;;EAAA;IAAA,wBAAc;OAAd,qBAAc;YAAd;EAAc;AAAA;;AAAd;EAAA,yBAAc;EAAd;AAAc;;AAAd;EAAA,iBAAc;EAAd,qBAAc;EAAd,eAAc;EAAd,gBAAc;EAAd,UAAc;EAAd,gBAAc;EAAd;AAAc;;AAAd;EAAA,6BAAc;EAAd;AAAc;EAAd;IAAA,uBAAc;IAAd,4BAAc;IAAd,iBAAc;IAAd,iCAAc;IAAd,oBAAc;IAAd,oCAAc;IAAd,4BAAc;IAAd,iCAAc;IAAd,0BAAc;IAAd,yCAAc;IAAd,sBAAc;IAAd,qCAAc;IAAd,uBAAc;IAAd,sCAAc;IAAd,4BAAc;IAAd,qCAAc;IAAd,2BAAc;IAAd,0BAAc;IAAd,yBAAc;IAAd,gBAAc;EAAA;EAAd;EAAA,kBAAc;EAAd,4DAAc;EAAd,oBAAc;EAAd;AAAc;AACd;EAAA;AAAoB;AAApB;;EAAA;IAAA;EAAoB;AAAA;AAApB;;EAAA;IAAA;EAAoB;AAAA;AAApB;;EAAA;IAAA;EAAoB;AAAA;AAApB;;EAAA;IAAA;EAAoB;AAAA;AAApB;;EAAA;IAAA;EAAoB;AAAA;AACpB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,iBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;;EAAA;IAAA;EAAmB;AAAA;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,uBAAmB;EAAnB,2DAAmB;EAAnB;AAAmB;AAAnB;EAAA,uBAAmB;EAAnB,+DAAmB;EAAnB;AAAmB;AAAnB;EAAA,uBAAmB;EAAnB,gEAAmB;EAAnB;AAAmB;AAAnB;EAAA,uBAAmB;EAAnB,8DAAmB;EAAnB;AAAmB;AAAnB;EAAA,uBAAmB;EAAnB,+DAAmB;EAAnB;AAAmB;AAAnB;EAAA,uBAAmB;EAAnB,4DAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,4DAAmB;EAAnB,mEAAmB;EAAnB;AAAmB;AAAnB;EAAA,4DAAmB;EAAnB,qEAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,6BAAmB;UAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,qBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,qBAAmB;EAAnB;AAAmB;AAAnB;EAAA,mBAAmB;EAAnB;AAAmB;AAAnB;EAAA,iBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,iBAAmB;EAAnB;AAAmB;AAAnB;EAAA,mBAAmB;EAAnB;AAAmB;AAAnB;EAAA,mBAAmB;EAAnB;AAAmB;AAAnB;EAAA,mBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,0CAAmB;EAAnB,uDAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,wBAAmB;EAAnB,wDAAmB;EAAnB;AAAmB;AAAnB;EAAA,+FAAmB;EAAnB,wDAAmB;EAAnB;AAAmB;AAFnB;EAAA,kBAuDC;EAvDD;AAuDC;AAvDD;EAAA,kBAuDC;EAvDD;AAuDC;AAvDD;EAAA,oBAuDC;EAvDD;AAuDC;AAvDD;EAAA,8BAuDC;EAvDD;AAuDC;AAvDD;EAAA,2GAuDC;EAvDD,yGAuDC;EAvDD;AAuDC;AAvDD;EAAA,oBAuDC;EAvDD;AAuDC;AAvDD;EAAA;AAuDC;AAvDD;EAAA;AAuDC;AAvDD;EAAA;AAuDC;AAvDD;EAAA;AAuDC;AAvDD;EAAA,kBAuDC;EAvDD;AAuDC;AAvDD;EAAA,oBAuDC;EAvDD;AAuDC;AAvDD;EAAA,0CAuDC;EAvDD,uDAuDC;EAvDD;AAuDC;AAvDD;;EAAA;IAAA,4DAuDC;IAvDD,gEAuDC;IAvDD;EAuDC;;EAvDD;IAAA;EAuDC;;EAvDD;IAAA,oBAuDC;IAvDD;EAuDC;AAAA","sourcesContent":["@tailwind base;\r\n@tailwind components;\r\n@tailwind utilities;\r\n\r\n@layer base {\r\n  :root {\r\n    --background: 0 0% 100%;\r\n    --foreground: 222.2 84% 4.9%;\r\n    --card: 0 0% 100%;\r\n    --card-foreground: 222.2 84% 4.9%;\r\n    --popover: 0 0% 100%;\r\n    --popover-foreground: 222.2 84% 4.9%;\r\n    --primary: 221.2 83.2% 53.3%;\r\n    --primary-foreground: 210 40% 98%;\r\n    --secondary: 210 40% 96.1%;\r\n    --secondary-foreground: 222.2 47.4% 11.2%;\r\n    --muted: 210 40% 96.1%;\r\n    --muted-foreground: 215.4 16.3% 46.9%;\r\n    --accent: 210 40% 96.1%;\r\n    --accent-foreground: 222.2 47.4% 11.2%;\r\n    --destructive: 0 84.2% 60.2%;\r\n    --destructive-foreground: 210 40% 98%;\r\n    --border: 214.3 31.8% 91.4%;\r\n    --input: 214.3 31.8% 91.4%;\r\n    --ring: 221.2 83.2% 53.3%;\r\n    --radius: 0.5rem;\r\n  }\r\n\r\n  .dark {\r\n    --background: 222.2 84% 4.9%;\r\n    --foreground: 210 40% 98%;\r\n    --card: 222.2 84% 4.9%;\r\n    --card-foreground: 210 40% 98%;\r\n    --popover: 222.2 84% 4.9%;\r\n    --popover-foreground: 210 40% 98%;\r\n    --primary: 217.2 91.2% 59.8%;\r\n    --primary-foreground: 222.2 47.4% 11.2%;\r\n    --secondary: 217.2 32.6% 17.5%;\r\n    --secondary-foreground: 210 40% 98%;\r\n    --muted: 217.2 32.6% 17.5%;\r\n    --muted-foreground: 215 20.2% 65.1%;\r\n    --accent: 217.2 32.6% 17.5%;\r\n    --accent-foreground: 210 40% 98%;\r\n    --destructive: 0 62.8% 30.6%;\r\n    --destructive-foreground: 210 40% 98%;\r\n    --border: 217.2 32.6% 17.5%;\r\n    --input: 217.2 32.6% 17.5%;\r\n    --ring: 224.3 76.3% 48%;\r\n  }\r\n}\r\n\r\n@layer base {\r\n  body {\r\n    @apply bg-white text-gray-900;\r\n  }\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/globals.css"],"names":[],"mappings":"AAAA;EAAA,wBAAc;EAAd,wBAAc;EAAd,mBAAc;EAAd,mBAAc;EAAd,cAAc;EAAd,cAAc;EAAd,cAAc;EAAd,eAAc;EAAd,eAAc;EAAd,aAAc;EAAd,aAAc;EAAd,kBAAc;EAAd,sCAAc;EAAd,8BAAc;EAAd,6BAAc;EAAd,4BAAc;EAAd,eAAc;EAAd,oBAAc;EAAd,sBAAc;EAAd,uBAAc;EAAd,wBAAc;EAAd,kBAAc;EAAd,2BAAc;EAAd,4BAAc;EAAd,sCAAc;EAAd,kCAAc;EAAd,2BAAc;EAAd,sBAAc;EAAd,8BAAc;EAAd,YAAc;EAAd,kBAAc;EAAd,gBAAc;EAAd,iBAAc;EAAd,kBAAc;EAAd,cAAc;EAAd,gBAAc;EAAd,aAAc;EAAd,mBAAc;EAAd,qBAAc;EAAd,2BAAc;EAAd,yBAAc;EAAd,0BAAc;EAAd,2BAAc;EAAd,uBAAc;EAAd,wBAAc;EAAd,yBAAc;EAAd,sBAAc;EAAd,oBAAc;EAAd,sBAAc;EAAd,qBAAc;EAAd;AAAc;;AAAd;EAAA,wBAAc;EAAd,wBAAc;EAAd,mBAAc;EAAd,mBAAc;EAAd,cAAc;EAAd,cAAc;EAAd,cAAc;EAAd,eAAc;EAAd,eAAc;EAAd,aAAc;EAAd,aAAc;EAAd,kBAAc;EAAd,sCAAc;EAAd,8BAAc;EAAd,6BAAc;EAAd,4BAAc;EAAd,eAAc;EAAd,oBAAc;EAAd,sBAAc;EAAd,uBAAc;EAAd,wBAAc;EAAd,kBAAc;EAAd,2BAAc;EAAd,4BAAc;EAAd,sCAAc;EAAd,kCAAc;EAAd,2BAAc;EAAd,sBAAc;EAAd,8BAAc;EAAd,YAAc;EAAd,kBAAc;EAAd,gBAAc;EAAd,iBAAc;EAAd,kBAAc;EAAd,cAAc;EAAd,gBAAc;EAAd,aAAc;EAAd,mBAAc;EAAd,qBAAc;EAAd,2BAAc;EAAd,yBAAc;EAAd,0BAAc;EAAd,2BAAc;EAAd,uBAAc;EAAd,wBAAc;EAAd,yBAAc;EAAd,sBAAc;EAAd,oBAAc;EAAd,sBAAc;EAAd,qBAAc;EAAd;AAAc,CAAd;;CAAc,CAAd;;;CAAc;;AAAd;;;EAAA,sBAAc,EAAd,MAAc;EAAd,eAAc,EAAd,MAAc;EAAd,mBAAc,EAAd,MAAc;EAAd,qBAAc,EAAd,MAAc;AAAA;;AAAd;;EAAA,gBAAc;AAAA;;AAAd;;;;;;;;CAAc;;AAAd;;EAAA,gBAAc,EAAd,MAAc;EAAd,8BAAc,EAAd,MAAc;EAAd,gBAAc,EAAd,MAAc;EAAd,cAAc;KAAd,WAAc,EAAd,MAAc;EAAd,+HAAc,EAAd,MAAc;EAAd,6BAAc,EAAd,MAAc;EAAd,+BAAc,EAAd,MAAc;EAAd,wCAAc,EAAd,MAAc;AAAA;;AAAd;;;CAAc;;AAAd;EAAA,SAAc,EAAd,MAAc;EAAd,oBAAc,EAAd,MAAc;AAAA;;AAAd;;;;CAAc;;AAAd;EAAA,SAAc,EAAd,MAAc;EAAd,cAAc,EAAd,MAAc;EAAd,qBAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,yCAAc;UAAd,iCAAc;AAAA;;AAAd;;CAAc;;AAAd;;;;;;EAAA,kBAAc;EAAd,oBAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,cAAc;EAAd,wBAAc;AAAA;;AAAd;;CAAc;;AAAd;;EAAA,mBAAc;AAAA;;AAAd;;;;;CAAc;;AAAd;;;;EAAA,+GAAc,EAAd,MAAc;EAAd,6BAAc,EAAd,MAAc;EAAd,+BAAc,EAAd,MAAc;EAAd,cAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,cAAc;AAAA;;AAAd;;CAAc;;AAAd;;EAAA,cAAc;EAAd,cAAc;EAAd,kBAAc;EAAd,wBAAc;AAAA;;AAAd;EAAA,eAAc;AAAA;;AAAd;EAAA,WAAc;AAAA;;AAAd;;;;CAAc;;AAAd;EAAA,cAAc,EAAd,MAAc;EAAd,qBAAc,EAAd,MAAc;EAAd,yBAAc,EAAd,MAAc;AAAA;;AAAd;;;;CAAc;;AAAd;;;;;EAAA,oBAAc,EAAd,MAAc;EAAd,8BAAc,EAAd,MAAc;EAAd,gCAAc,EAAd,MAAc;EAAd,eAAc,EAAd,MAAc;EAAd,oBAAc,EAAd,MAAc;EAAd,oBAAc,EAAd,MAAc;EAAd,uBAAc,EAAd,MAAc;EAAd,cAAc,EAAd,MAAc;EAAd,SAAc,EAAd,MAAc;EAAd,UAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;;EAAA,oBAAc;AAAA;;AAAd;;;CAAc;;AAAd;;;;EAAA,0BAAc,EAAd,MAAc;EAAd,6BAAc,EAAd,MAAc;EAAd,sBAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,aAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,gBAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,wBAAc;AAAA;;AAAd;;CAAc;;AAAd;;EAAA,YAAc;AAAA;;AAAd;;;CAAc;;AAAd;EAAA,6BAAc,EAAd,MAAc;EAAd,oBAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,wBAAc;AAAA;;AAAd;;;CAAc;;AAAd;EAAA,0BAAc,EAAd,MAAc;EAAd,aAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,kBAAc;AAAA;;AAAd;;CAAc;;AAAd;;;;;;;;;;;;;EAAA,SAAc;AAAA;;AAAd;EAAA,SAAc;EAAd,UAAc;AAAA;;AAAd;EAAA,UAAc;AAAA;;AAAd;;;EAAA,gBAAc;EAAd,SAAc;EAAd,UAAc;AAAA;;AAAd;;CAAc;AAAd;EAAA,UAAc;AAAA;;AAAd;;CAAc;;AAAd;EAAA,gBAAc;AAAA;;AAAd;;;CAAc;;AAAd;EAAA,UAAc,EAAd,MAAc;EAAd,cAAc,EAAd,MAAc;AAAA;;AAAd;;EAAA,UAAc,EAAd,MAAc;EAAd,cAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;;EAAA,eAAc;AAAA;;AAAd;;CAAc;AAAd;EAAA,eAAc;AAAA;;AAAd;;;;CAAc;;AAAd;;;;;;;;EAAA,cAAc,EAAd,MAAc;EAAd,sBAAc,EAAd,MAAc;AAAA;;AAAd;;CAAc;;AAAd;;EAAA,eAAc;EAAd,YAAc;AAAA;;AAAd,wEAAc;AAAd;EAAA,aAAc;AAAA;;AAAd;EAAA,wBAAc;KAAd,qBAAc;UAAd,gBAAc;EAAd,sBAAc;EAAd,qBAAc;EAAd,iBAAc;EAAd,kBAAc;EAAd,mBAAc;EAAd,sBAAc;EAAd,sBAAc;EAAd,qBAAc;EAAd,eAAc;EAAd,mBAAc;EAAd,sBAAc;AAAA;;AAAd;EAAA,8BAAc;EAAd,mBAAc;EAAd,4CAAc;EAAd,2BAAc;EAAd,4BAAc;EAAd,wBAAc;EAAd,2GAAc;EAAd,yGAAc;EAAd,iFAAc;EAAd;AAAc;;AAAd;EAAA,cAAc;EAAd;AAAc;;AAAd;EAAA,cAAc;EAAd;AAAc;;AAAd;EAAA;AAAc;;AAAd;EAAA,iBAAc;EAAd;AAAc;;AAAd;EAAA;AAAc;;AAAd;EAAA,cAAc;EAAd;AAAc;;AAAd;EAAA,yDAAc;EAAd,wCAAc;EAAd,4BAAc;EAAd,4BAAc;EAAd,qBAAc;EAAd,iCAAc;UAAd;AAAc;;AAAd;EAAA,yBAAc;EAAd,4BAAc;EAAd,wBAAc;EAAd,wBAAc;EAAd,sBAAc;EAAd,iCAAc;UAAd;AAAc;;AAAd;EAAA,wBAAc;KAAd,qBAAc;UAAd,gBAAc;EAAd,UAAc;EAAd,iCAAc;UAAd,yBAAc;EAAd,qBAAc;EAAd,sBAAc;EAAd,6BAAc;EAAd,yBAAc;KAAd,sBAAc;UAAd,iBAAc;EAAd,cAAc;EAAd,YAAc;EAAd,WAAc;EAAd,cAAc;EAAd,sBAAc;EAAd,qBAAc;EAAd,iBAAc;EAAd;AAAc;;AAAd;EAAA;AAAc;;AAAd;EAAA;AAAc;;AAAd;EAAA,8BAAc;EAAd,mBAAc;EAAd,4CAAc;EAAd,2BAAc;EAAd,4BAAc;EAAd,wBAAc;EAAd,2GAAc;EAAd,yGAAc;EAAd;AAAc;;AAAd;EAAA,yBAAc;EAAd,8BAAc;EAAd,0BAAc;EAAd,2BAAc;EAAd;AAAc;;AAAd;EAAA,yDAAc;AAAA;;AAAd;;EAAA;IAAA,wBAAc;OAAd,qBAAc;YAAd;EAAc;AAAA;;AAAd;EAAA,yDAAc;AAAA;;AAAd;;EAAA;IAAA,wBAAc;OAAd,qBAAc;YAAd;EAAc;AAAA;;AAAd;EAAA,yBAAc;EAAd;AAAc;;AAAd;EAAA,yDAAc;EAAd,yBAAc;EAAd,8BAAc;EAAd,0BAAc;EAAd,2BAAc;EAAd,4BAAc;AAAA;;AAAd;;EAAA;IAAA,wBAAc;OAAd,qBAAc;YAAd;EAAc;AAAA;;AAAd;EAAA,yBAAc;EAAd;AAAc;;AAAd;EAAA,iBAAc;EAAd,qBAAc;EAAd,eAAc;EAAd,gBAAc;EAAd,UAAc;EAAd,gBAAc;EAAd;AAAc;;AAAd;EAAA,6BAAc;EAAd;AAAc;EAAd;IAAA,uBAAc;IAAd,4BAAc;IAAd,iBAAc;IAAd,iCAAc;IAAd,oBAAc;IAAd,oCAAc;IAAd,4BAAc;IAAd,iCAAc;IAAd,0BAAc;IAAd,yCAAc;IAAd,sBAAc;IAAd,qCAAc;IAAd,uBAAc;IAAd,sCAAc;IAAd,4BAAc;IAAd,qCAAc;IAAd,2BAAc;IAAd,0BAAc;IAAd,yBAAc;IAAd,gBAAc;EAAA;EAAd;EAAA,kBAAc;EAAd,4DAAc;EAAd,oBAAc;EAAd;AAAc;AACd;EAAA;AAAoB;AAApB;;EAAA;IAAA;EAAoB;AAAA;AAApB;;EAAA;IAAA;EAAoB;AAAA;AAApB;;EAAA;IAAA;EAAoB;AAAA;AAApB;;EAAA;IAAA;EAAoB;AAAA;AAApB;;EAAA;IAAA;EAAoB;AAAA;AACpB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,iBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;;EAAA;IAAA;EAAmB;AAAA;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,uBAAmB;EAAnB,2DAAmB;EAAnB;AAAmB;AAAnB;EAAA,uBAAmB;EAAnB,+DAAmB;EAAnB;AAAmB;AAAnB;EAAA,uBAAmB;EAAnB,gEAAmB;EAAnB;AAAmB;AAAnB;EAAA,uBAAmB;EAAnB,8DAAmB;EAAnB;AAAmB;AAAnB;EAAA,uBAAmB;EAAnB,+DAAmB;EAAnB;AAAmB;AAAnB;EAAA,uBAAmB;EAAnB,4DAAmB;EAAnB;AAAmB;AAAnB;EAAA,uBAAmB;EAAnB,8DAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,gBAAmB;EAAnB,uBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,sBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,4DAAmB;EAAnB,mEAAmB;EAAnB;AAAmB;AAAnB;EAAA,4DAAmB;EAAnB,qEAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,6BAAmB;UAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,qBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,qBAAmB;EAAnB;AAAmB;AAAnB;EAAA,mBAAmB;EAAnB;AAAmB;AAAnB;EAAA,iBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,iBAAmB;EAAnB;AAAmB;AAAnB;EAAA,mBAAmB;EAAnB;AAAmB;AAAnB;EAAA,mBAAmB;EAAnB;AAAmB;AAAnB;EAAA,mBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,0CAAmB;EAAnB,uDAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,wBAAmB;EAAnB,wDAAmB;EAAnB;AAAmB;AAAnB;EAAA,+FAAmB;EAAnB,wDAAmB;EAAnB;AAAmB;AAFnB;EAAA,kBAuDC;EAvDD;AAuDC;AAvDD;EAAA,kBAuDC;EAvDD;AAuDC;AAvDD;EAAA,kBAuDC;EAvDD;AAuDC;AAvDD;EAAA,kBAuDC;EAvDD;AAuDC;AAvDD;EAAA,kBAuDC;EAvDD;AAuDC;AAvDD;EAAA,oBAuDC;EAvDD;AAuDC;AAvDD;EAAA,8BAuDC;EAvDD;AAuDC;AAvDD;EAAA,2GAuDC;EAvDD,yGAuDC;EAvDD;AAuDC;AAvDD;EAAA,oBAuDC;EAvDD;AAuDC;AAvDD;EAAA;AAuDC;AAvDD;EAAA;AAuDC;AAvDD;EAAA;AAuDC;AAvDD;EAAA;AAuDC;AAvDD;EAAA,kBAuDC;EAvDD;AAuDC;AAvDD;EAAA,oBAuDC;EAvDD;AAuDC;AAvDD;EAAA,0CAuDC;EAvDD,uDAuDC;EAvDD;AAuDC;AAvDD;;EAAA;IAAA,4DAuDC;IAvDD,gEAuDC;IAvDD;EAuDC;;EAvDD;IAAA;EAuDC;;EAvDD;IAAA,oBAuDC;IAvDD;EAuDC;AAAA","sourcesContent":["@tailwind base;\r\n@tailwind components;\r\n@tailwind utilities;\r\n\r\n@layer base {\r\n  :root {\r\n    --background: 0 0% 100%;\r\n    --foreground: 222.2 84% 4.9%;\r\n    --card: 0 0% 100%;\r\n    --card-foreground: 222.2 84% 4.9%;\r\n    --popover: 0 0% 100%;\r\n    --popover-foreground: 222.2 84% 4.9%;\r\n    --primary: 221.2 83.2% 53.3%;\r\n    --primary-foreground: 210 40% 98%;\r\n    --secondary: 210 40% 96.1%;\r\n    --secondary-foreground: 222.2 47.4% 11.2%;\r\n    --muted: 210 40% 96.1%;\r\n    --muted-foreground: 215.4 16.3% 46.9%;\r\n    --accent: 210 40% 96.1%;\r\n    --accent-foreground: 222.2 47.4% 11.2%;\r\n    --destructive: 0 84.2% 60.2%;\r\n    --destructive-foreground: 210 40% 98%;\r\n    --border: 214.3 31.8% 91.4%;\r\n    --input: 214.3 31.8% 91.4%;\r\n    --ring: 221.2 83.2% 53.3%;\r\n    --radius: 0.5rem;\r\n  }\r\n\r\n  .dark {\r\n    --background: 222.2 84% 4.9%;\r\n    --foreground: 210 40% 98%;\r\n    --card: 222.2 84% 4.9%;\r\n    --card-foreground: 210 40% 98%;\r\n    --popover: 222.2 84% 4.9%;\r\n    --popover-foreground: 210 40% 98%;\r\n    --primary: 217.2 91.2% 59.8%;\r\n    --primary-foreground: 222.2 47.4% 11.2%;\r\n    --secondary: 217.2 32.6% 17.5%;\r\n    --secondary-foreground: 210 40% 98%;\r\n    --muted: 217.2 32.6% 17.5%;\r\n    --muted-foreground: 215 20.2% 65.1%;\r\n    --accent: 217.2 32.6% 17.5%;\r\n    --accent-foreground: 210 40% 98%;\r\n    --destructive: 0 62.8% 30.6%;\r\n    --destructive-foreground: 210 40% 98%;\r\n    --border: 217.2 32.6% 17.5%;\r\n    --input: 217.2 32.6% 17.5%;\r\n    --ring: 224.3 76.3% 48%;\r\n  }\r\n}\r\n\r\n@layer base {\r\n  body {\r\n    @apply bg-white text-gray-900;\r\n  }\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -21076,103 +21178,56 @@ exports.uniqBy = uniqBy;
 /*!******************************************************************!*\
   !*** ./node_modules/es-toolkit/dist/compat/function/debounce.js ***!
   \******************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
 Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 
-function debounce(func, wait = 0, options = {}) {
+const debounce$1 = __webpack_require__(/*! ../../function/debounce.js */ "./node_modules/es-toolkit/dist/function/debounce.js");
+
+function debounce(func, debounceMs = 0, options = {}) {
     if (typeof options !== 'object') {
         options = {};
     }
-    let pendingArgs = null;
-    let pendingThis = null;
-    let lastCallTime = null;
-    let debounceStartTime = 0;
-    let timeoutId = null;
-    let lastResult;
     const { leading = false, trailing = true, maxWait } = options;
-    const hasMaxWait = 'maxWait' in options;
-    const maxWaitMs = hasMaxWait ? Math.max(Number(maxWait) || 0, wait) : 0;
-    const invoke = (time) => {
-        if (pendingArgs !== null) {
-            lastResult = func.apply(pendingThis, pendingArgs);
-        }
-        pendingArgs = pendingThis = null;
-        debounceStartTime = time;
-        return lastResult;
-    };
-    const handleLeading = (time) => {
-        debounceStartTime = time;
-        timeoutId = setTimeout(handleTimeout, wait);
-        if (leading && pendingArgs !== null) {
-            return invoke(time);
-        }
-        return lastResult;
-    };
-    const handleTrailing = (time) => {
-        timeoutId = null;
-        if (trailing && pendingArgs !== null) {
-            return invoke(time);
-        }
-        return lastResult;
-    };
-    const checkCanInvoke = (time) => {
-        if (lastCallTime === null) {
-            return true;
-        }
-        const timeSinceLastCall = time - lastCallTime;
-        const hasDebounceDelayPassed = timeSinceLastCall >= wait || timeSinceLastCall < 0;
-        const hasMaxWaitPassed = hasMaxWait && time - debounceStartTime >= maxWaitMs;
-        return hasDebounceDelayPassed || hasMaxWaitPassed;
-    };
-    const calculateRemainingWait = (time) => {
-        const timeSinceLastCall = lastCallTime === null ? 0 : time - lastCallTime;
-        const remainingDebounceTime = wait - timeSinceLastCall;
-        const remainingMaxWaitTime = maxWaitMs - (time - debounceStartTime);
-        return hasMaxWait ? Math.min(remainingDebounceTime, remainingMaxWaitTime) : remainingDebounceTime;
-    };
-    const handleTimeout = () => {
-        const currentTime = Date.now();
-        if (checkCanInvoke(currentTime)) {
-            return handleTrailing(currentTime);
-        }
-        timeoutId = setTimeout(handleTimeout, calculateRemainingWait(currentTime));
-    };
-    const debouncedFunction = function (...args) {
-        const currentTime = Date.now();
-        const canInvoke = checkCanInvoke(currentTime);
-        pendingArgs = args;
-        pendingThis = this;
-        lastCallTime = currentTime;
-        if (canInvoke) {
-            if (timeoutId === null) {
-                return handleLeading(currentTime);
+    const edges = Array(2);
+    if (leading) {
+        edges[0] = 'leading';
+    }
+    if (trailing) {
+        edges[1] = 'trailing';
+    }
+    let result = undefined;
+    let pendingAt = null;
+    const _debounced = debounce$1.debounce(function (...args) {
+        result = func.apply(this, args);
+        pendingAt = null;
+    }, debounceMs, { edges });
+    const debounced = function (...args) {
+        if (maxWait != null) {
+            if (pendingAt === null) {
+                pendingAt = Date.now();
             }
-            if (hasMaxWait) {
-                clearTimeout(timeoutId);
-                timeoutId = setTimeout(handleTimeout, wait);
-                return invoke(currentTime);
+            if (Date.now() - pendingAt >= maxWait) {
+                result = func.apply(this, args);
+                pendingAt = Date.now();
+                _debounced.cancel();
+                _debounced.schedule();
+                return result;
             }
         }
-        if (timeoutId === null) {
-            timeoutId = setTimeout(handleTimeout, wait);
-        }
-        return lastResult;
+        _debounced.apply(this, args);
+        return result;
     };
-    debouncedFunction.cancel = () => {
-        if (timeoutId !== null) {
-            clearTimeout(timeoutId);
-        }
-        debounceStartTime = 0;
-        lastCallTime = pendingArgs = pendingThis = timeoutId = null;
+    const flush = () => {
+        _debounced.flush();
+        return result;
     };
-    debouncedFunction.flush = () => {
-        return timeoutId === null ? lastResult : handleTrailing(Date.now());
-    };
-    return debouncedFunction;
+    debounced.cancel = _debounced.cancel;
+    debounced.flush = flush;
+    return debounced;
 }
 
 exports.debounce = debounce;
@@ -22124,6 +22179,83 @@ exports.toPath = toPath;
 
 /***/ }),
 
+/***/ "./node_modules/es-toolkit/dist/function/debounce.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/es-toolkit/dist/function/debounce.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+
+function debounce(func, debounceMs, { signal, edges } = {}) {
+    let pendingThis = undefined;
+    let pendingArgs = null;
+    const leading = edges != null && edges.includes('leading');
+    const trailing = edges == null || edges.includes('trailing');
+    const invoke = () => {
+        if (pendingArgs !== null) {
+            func.apply(pendingThis, pendingArgs);
+            pendingThis = undefined;
+            pendingArgs = null;
+        }
+    };
+    const onTimerEnd = () => {
+        if (trailing) {
+            invoke();
+        }
+        cancel();
+    };
+    let timeoutId = null;
+    const schedule = () => {
+        if (timeoutId != null) {
+            clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(() => {
+            timeoutId = null;
+            onTimerEnd();
+        }, debounceMs);
+    };
+    const cancelTimer = () => {
+        if (timeoutId !== null) {
+            clearTimeout(timeoutId);
+            timeoutId = null;
+        }
+    };
+    const cancel = () => {
+        cancelTimer();
+        pendingThis = undefined;
+        pendingArgs = null;
+    };
+    const flush = () => {
+        invoke();
+    };
+    const debounced = function (...args) {
+        if (signal?.aborted) {
+            return;
+        }
+        pendingThis = this;
+        pendingArgs = args;
+        const isFirstCall = timeoutId == null;
+        schedule();
+        if (leading && isFirstCall) {
+            invoke();
+        }
+    };
+    debounced.schedule = schedule;
+    debounced.cancel = cancel;
+    debounced.flush = flush;
+    signal?.addEventListener('abort', cancel, { once: true });
+    return debounced;
+}
+
+exports.debounce = debounce;
+
+
+/***/ }),
+
 /***/ "./node_modules/es-toolkit/dist/function/identity.js":
 /*!***********************************************************!*\
   !*** ./node_modules/es-toolkit/dist/function/identity.js ***!
@@ -22158,6 +22290,24 @@ Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 function noop() { }
 
 exports.noop = noop;
+
+
+/***/ }),
+
+/***/ "./node_modules/es-toolkit/dist/function/noop.mjs":
+/*!********************************************************!*\
+  !*** ./node_modules/es-toolkit/dist/function/noop.mjs ***!
+  \********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   noop: () => (/* binding */ noop)
+/* harmony export */ });
+function noop() { }
+
+
 
 
 /***/ }),
@@ -24541,6 +24691,99 @@ const Activity = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"]
 
 /***/ }),
 
+/***/ "./node_modules/lucide-react/dist/esm/icons/check.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/check.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   __iconNode: () => (/* binding */ __iconNode),
+/* harmony export */   "default": () => (/* binding */ Check)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.525.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const __iconNode = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+const Check = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("check", __iconNode);
+
+
+//# sourceMappingURL=check.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/chevron-down.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/chevron-down.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   __iconNode: () => (/* binding */ __iconNode),
+/* harmony export */   "default": () => (/* binding */ ChevronDown)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.525.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const __iconNode = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
+const ChevronDown = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("chevron-down", __iconNode);
+
+
+//# sourceMappingURL=chevron-down.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/chevron-right.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/chevron-right.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   __iconNode: () => (/* binding */ __iconNode),
+/* harmony export */   "default": () => (/* binding */ ChevronRight)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.525.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const __iconNode = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
+const ChevronRight = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("chevron-right", __iconNode);
+
+
+//# sourceMappingURL=chevron-right.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-react/dist/esm/icons/circle-alert.js":
 /*!******************************************************************!*\
   !*** ./node_modules/lucide-react/dist/esm/icons/circle-alert.js ***!
@@ -24641,6 +24884,74 @@ const CircleX = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 
 
 //# sourceMappingURL=circle-x.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/clock.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/clock.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   __iconNode: () => (/* binding */ __iconNode),
+/* harmony export */   "default": () => (/* binding */ Clock)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.525.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const __iconNode = [
+  ["path", { d: "M12 6v6l4 2", key: "mmk7yg" }],
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }]
+];
+const Clock = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("clock", __iconNode);
+
+
+//# sourceMappingURL=clock.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/copy.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/copy.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   __iconNode: () => (/* binding */ __iconNode),
+/* harmony export */   "default": () => (/* binding */ Copy)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.525.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const __iconNode = [
+  ["rect", { width: "14", height: "14", x: "8", y: "8", rx: "2", ry: "2", key: "17jyea" }],
+  ["path", { d: "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2", key: "zix9uf" }]
+];
+const Copy = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("copy", __iconNode);
+
+
+//# sourceMappingURL=copy.js.map
 
 
 /***/ }),
@@ -25008,6 +25319,37 @@ const Network = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 
 /***/ }),
 
+/***/ "./node_modules/lucide-react/dist/esm/icons/play.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/play.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   __iconNode: () => (/* binding */ __iconNode),
+/* harmony export */   "default": () => (/* binding */ Play)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.525.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const __iconNode = [["polygon", { points: "6 3 20 12 6 21 6 3", key: "1oa8hb" }]];
+const Play = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("play", __iconNode);
+
+
+//# sourceMappingURL=play.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-react/dist/esm/icons/refresh-cw.js":
 /*!****************************************************************!*\
   !*** ./node_modules/lucide-react/dist/esm/icons/refresh-cw.js ***!
@@ -25192,6 +25534,40 @@ const Stethoscope = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["defaul
 
 
 //# sourceMappingURL=stethoscope.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/terminal.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/terminal.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   __iconNode: () => (/* binding */ __iconNode),
+/* harmony export */   "default": () => (/* binding */ Terminal)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.525.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const __iconNode = [
+  ["path", { d: "M12 19h8", key: "baeox8" }],
+  ["path", { d: "m4 17 6-6-6-6", key: "1yngyt" }]
+];
+const Terminal = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("terminal", __iconNode);
+
+
+//# sourceMappingURL=terminal.js.map
 
 
 /***/ }),
@@ -26748,7 +27124,7 @@ const hasA11yProp = (props) => {
       prevPrepareStackTrace = error.indexOf("\n");
       -1 !== prevPrepareStackTrace &&
         (error = error.slice(prevPrepareStackTrace + 1));
-      prevPrepareStackTrace = error.indexOf("react-stack-bottom-frame");
+      prevPrepareStackTrace = error.indexOf("react_stack_bottom_frame");
       -1 !== prevPrepareStackTrace &&
         (prevPrepareStackTrace = error.lastIndexOf(
           "\n",
@@ -49224,7 +49600,7 @@ const hasA11yProp = (props) => {
       }
     };
     var callComponent = {
-        "react-stack-bottom-frame": function (Component, props, secondArg) {
+        react_stack_bottom_frame: function (Component, props, secondArg) {
           var wasRendering = isRendering;
           isRendering = !0;
           try {
@@ -49235,9 +49611,9 @@ const hasA11yProp = (props) => {
         }
       },
       callComponentInDEV =
-        callComponent["react-stack-bottom-frame"].bind(callComponent),
+        callComponent.react_stack_bottom_frame.bind(callComponent),
       callRender = {
-        "react-stack-bottom-frame": function (instance) {
+        react_stack_bottom_frame: function (instance) {
           var wasRendering = isRendering;
           isRendering = !0;
           try {
@@ -49247,9 +49623,9 @@ const hasA11yProp = (props) => {
           }
         }
       },
-      callRenderInDEV = callRender["react-stack-bottom-frame"].bind(callRender),
+      callRenderInDEV = callRender.react_stack_bottom_frame.bind(callRender),
       callComponentDidMount = {
-        "react-stack-bottom-frame": function (finishedWork, instance) {
+        react_stack_bottom_frame: function (finishedWork, instance) {
           try {
             instance.componentDidMount();
           } catch (error) {
@@ -49257,11 +49633,12 @@ const hasA11yProp = (props) => {
           }
         }
       },
-      callComponentDidMountInDEV = callComponentDidMount[
-        "react-stack-bottom-frame"
-      ].bind(callComponentDidMount),
+      callComponentDidMountInDEV =
+        callComponentDidMount.react_stack_bottom_frame.bind(
+          callComponentDidMount
+        ),
       callComponentDidUpdate = {
-        "react-stack-bottom-frame": function (
+        react_stack_bottom_frame: function (
           finishedWork,
           instance,
           prevProps,
@@ -49275,22 +49652,24 @@ const hasA11yProp = (props) => {
           }
         }
       },
-      callComponentDidUpdateInDEV = callComponentDidUpdate[
-        "react-stack-bottom-frame"
-      ].bind(callComponentDidUpdate),
+      callComponentDidUpdateInDEV =
+        callComponentDidUpdate.react_stack_bottom_frame.bind(
+          callComponentDidUpdate
+        ),
       callComponentDidCatch = {
-        "react-stack-bottom-frame": function (instance, errorInfo) {
+        react_stack_bottom_frame: function (instance, errorInfo) {
           var stack = errorInfo.stack;
           instance.componentDidCatch(errorInfo.value, {
             componentStack: null !== stack ? stack : ""
           });
         }
       },
-      callComponentDidCatchInDEV = callComponentDidCatch[
-        "react-stack-bottom-frame"
-      ].bind(callComponentDidCatch),
+      callComponentDidCatchInDEV =
+        callComponentDidCatch.react_stack_bottom_frame.bind(
+          callComponentDidCatch
+        ),
       callComponentWillUnmount = {
-        "react-stack-bottom-frame": function (
+        react_stack_bottom_frame: function (
           current,
           nearestMountedAncestor,
           instance
@@ -49302,11 +49681,12 @@ const hasA11yProp = (props) => {
           }
         }
       },
-      callComponentWillUnmountInDEV = callComponentWillUnmount[
-        "react-stack-bottom-frame"
-      ].bind(callComponentWillUnmount),
+      callComponentWillUnmountInDEV =
+        callComponentWillUnmount.react_stack_bottom_frame.bind(
+          callComponentWillUnmount
+        ),
       callCreate = {
-        "react-stack-bottom-frame": function (effect) {
+        react_stack_bottom_frame: function (effect) {
           null != effect.resourceKind &&
             console.error(
               "Expected only SimpleEffects when enableUseEffectCRUDOverload is disabled, got %s",
@@ -49318,9 +49698,9 @@ const hasA11yProp = (props) => {
           return (effect.destroy = create);
         }
       },
-      callCreateInDEV = callCreate["react-stack-bottom-frame"].bind(callCreate),
+      callCreateInDEV = callCreate.react_stack_bottom_frame.bind(callCreate),
       callDestroy = {
-        "react-stack-bottom-frame": function (
+        react_stack_bottom_frame: function (
           current,
           nearestMountedAncestor,
           destroy
@@ -49332,16 +49712,15 @@ const hasA11yProp = (props) => {
           }
         }
       },
-      callDestroyInDEV =
-        callDestroy["react-stack-bottom-frame"].bind(callDestroy),
+      callDestroyInDEV = callDestroy.react_stack_bottom_frame.bind(callDestroy),
       callLazyInit = {
-        "react-stack-bottom-frame": function (lazy) {
+        react_stack_bottom_frame: function (lazy) {
           var init = lazy._init;
           return init(lazy._payload);
         }
       },
       callLazyInitInDEV =
-        callLazyInit["react-stack-bottom-frame"].bind(callLazyInit),
+        callLazyInit.react_stack_bottom_frame.bind(callLazyInit),
       thenableState = null,
       thenableIndexCounter = 0,
       currentDebugInfo = null,
@@ -50162,11 +50541,11 @@ const hasA11yProp = (props) => {
     };
     (function () {
       var isomorphicReactPackageVersion = React.version;
-      if ("19.1.0" !== isomorphicReactPackageVersion)
+      if ("19.1.1" !== isomorphicReactPackageVersion)
         throw Error(
           'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' +
             (isomorphicReactPackageVersion +
-              "\n  - react-dom:  19.1.0\nLearn more: https://react.dev/warnings/version-mismatch")
+              "\n  - react-dom:  19.1.1\nLearn more: https://react.dev/warnings/version-mismatch")
         );
     })();
     ("function" === typeof Map &&
@@ -50203,10 +50582,10 @@ const hasA11yProp = (props) => {
       !(function () {
         var internals = {
           bundleType: 1,
-          version: "19.1.0",
+          version: "19.1.1",
           rendererPackageName: "react-dom",
           currentDispatcherRef: ReactSharedInternals,
-          reconcilerVersion: "19.1.0"
+          reconcilerVersion: "19.1.1"
         };
         internals.overrideHookState = overrideHookState;
         internals.overrideHookStateDeletePath = overrideHookStateDeletePath;
@@ -50350,7 +50729,7 @@ const hasA11yProp = (props) => {
       listenToAllSupportedEvents(container);
       return new ReactDOMHydrationRoot(initialChildren);
     };
-    exports.version = "19.1.0";
+    exports.version = "19.1.1";
     "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ &&
       "function" ===
         typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop &&
@@ -50785,7 +51164,7 @@ const hasA11yProp = (props) => {
     exports.useFormStatus = function () {
       return resolveDispatcher().useHostTransitionStatus();
     };
-    exports.version = "19.1.0";
+    exports.version = "19.1.1";
     "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ &&
       "function" ===
         typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop &&
@@ -52418,13 +52797,13 @@ var batch = defaultNoopBatch;
             return null;
           };
     React = {
-      "react-stack-bottom-frame": function (callStackForError) {
+      react_stack_bottom_frame: function (callStackForError) {
         return callStackForError();
       }
     };
     var specialPropKeyWarningShown;
     var didWarnAboutElementRef = {};
-    var unknownOwnerDebugStack = React["react-stack-bottom-frame"].bind(
+    var unknownOwnerDebugStack = React.react_stack_bottom_frame.bind(
       React,
       UnknownOwner
     )();
@@ -53154,15 +53533,16 @@ var batch = defaultNoopBatch;
             return null;
           };
     deprecatedAPIs = {
-      "react-stack-bottom-frame": function (callStackForError) {
+      react_stack_bottom_frame: function (callStackForError) {
         return callStackForError();
       }
     };
     var specialPropKeyWarningShown, didWarnAboutOldJSXRuntime;
     var didWarnAboutElementRef = {};
-    var unknownOwnerDebugStack = deprecatedAPIs[
-      "react-stack-bottom-frame"
-    ].bind(deprecatedAPIs, UnknownOwner)();
+    var unknownOwnerDebugStack = deprecatedAPIs.react_stack_bottom_frame.bind(
+      deprecatedAPIs,
+      UnknownOwner
+    )();
     var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
     var didWarnAboutMaps = !1,
       userProvidedKeyEscapeRegex = /\/+/g,
@@ -53712,7 +54092,7 @@ var batch = defaultNoopBatch;
     exports.useTransition = function () {
       return resolveDispatcher().useTransition();
     };
-    exports.version = "19.1.0";
+    exports.version = "19.1.1";
     "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ &&
       "function" ===
         typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop &&
@@ -53765,18 +54145,16 @@ if (false) // removed by dead control flow
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Animate: () => (/* binding */ Animate),
-/* harmony export */   AnimationManagerContext: () => (/* binding */ AnimationManagerContext)
+/* harmony export */   Animate: () => (/* binding */ Animate)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var es_toolkit_compat_isEqual__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! es-toolkit/compat/isEqual */ "./node_modules/es-toolkit/compat/isEqual.js");
 /* harmony import */ var es_toolkit_compat_isEqual__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(es_toolkit_compat_isEqual__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _AnimationManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AnimationManager */ "./node_modules/recharts/es6/animation/AnimationManager.js");
-/* harmony import */ var _easing__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./easing */ "./node_modules/recharts/es6/animation/easing.js");
-/* harmony import */ var _configUpdate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./configUpdate */ "./node_modules/recharts/es6/animation/configUpdate.js");
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./util */ "./node_modules/recharts/es6/animation/util.js");
-/* harmony import */ var _timeoutController__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./timeoutController */ "./node_modules/recharts/es6/animation/timeoutController.js");
+/* harmony import */ var _easing__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./easing */ "./node_modules/recharts/es6/animation/easing.js");
+/* harmony import */ var _configUpdate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./configUpdate */ "./node_modules/recharts/es6/animation/configUpdate.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./util */ "./node_modules/recharts/es6/animation/util.js");
+/* harmony import */ var _useAnimationManager__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./useAnimationManager */ "./node_modules/recharts/es6/animation/useAnimationManager.js");
 var _excluded = ["children", "begin", "duration", "attributeName", "easing", "isActive", "from", "to", "canBegin", "onAnimationEnd", "shouldReAnimate", "onAnimationReStart", "animationManager"];
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
@@ -53793,15 +54171,11 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 
 
 
-
-function createDefaultAnimationManager() {
-  return (0,_AnimationManager__WEBPACK_IMPORTED_MODULE_2__.createAnimateManager)(new _timeoutController__WEBPACK_IMPORTED_MODULE_6__.RequestAnimationFrameTimeoutController());
-}
 class AnimateImpl extends react__WEBPACK_IMPORTED_MODULE_0__.PureComponent {
   constructor(props, context) {
     super(props, context);
     _defineProperty(this, "mounted", false);
-    _defineProperty(this, "manager", null);
+    _defineProperty(this, "manager", undefined);
     _defineProperty(this, "stopJSAnimation", null);
     _defineProperty(this, "unSubscribe", null);
     var {
@@ -53946,7 +54320,7 @@ class AnimateImpl extends react__WEBPACK_IMPORTED_MODULE_0__.PureComponent {
       onAnimationEnd,
       onAnimationStart
     } = props;
-    var startAnimation = (0,_configUpdate__WEBPACK_IMPORTED_MODULE_4__["default"])(from, to, (0,_easing__WEBPACK_IMPORTED_MODULE_3__.configEasing)(easing), duration, this.changeStyle, this.manager.getTimeoutController());
+    var startAnimation = (0,_configUpdate__WEBPACK_IMPORTED_MODULE_3__["default"])(from, to, (0,_easing__WEBPACK_IMPORTED_MODULE_2__.configEasing)(easing), duration, this.changeStyle, this.manager.getTimeoutController());
     var finalStartAnimation = () => {
       this.stopJSAnimation = startAnimation();
     };
@@ -53971,7 +54345,7 @@ class AnimateImpl extends react__WEBPACK_IMPORTED_MODULE_0__.PureComponent {
     var to = attributeName ? {
       [attributeName]: propsTo
     } : propsTo;
-    var transition = (0,_util__WEBPACK_IMPORTED_MODULE_5__.getTransitionVal)(Object.keys(to), duration, easing);
+    var transition = (0,_util__WEBPACK_IMPORTED_MODULE_4__.getTransitionVal)(Object.keys(to), duration, easing);
     this.manager.start([onAnimationStart, begin, _objectSpread(_objectSpread({}, to), {}, {
       transition
     }), duration, onAnimationEnd]);
@@ -54033,12 +54407,11 @@ _defineProperty(AnimateImpl, "defaultProps", {
   onAnimationEnd: () => {},
   onAnimationStart: () => {}
 });
-var AnimationManagerContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)(null);
 function Animate(props) {
-  var _ref, _props$animationManag;
-  var contextAnimationManager = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(AnimationManagerContext);
+  var _props$attributeName;
+  var animationManager = (0,_useAnimationManager__WEBPACK_IMPORTED_MODULE_5__.useAnimationManager)((_props$attributeName = props.attributeName) !== null && _props$attributeName !== void 0 ? _props$attributeName : Object.keys(props.to).join(','), props.animationManager);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AnimateImpl, _extends({}, props, {
-    animationManager: (_ref = (_props$animationManag = props.animationManager) !== null && _props$animationManag !== void 0 ? _props$animationManag : contextAnimationManager) !== null && _ref !== void 0 ? _ref : createDefaultAnimationManager()
+    animationManager: animationManager
   }));
 }
 
@@ -54066,7 +54439,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 function createAnimateManager(timeoutController) {
-  var currStyle = {};
+  var currStyle;
   var handleChange = () => null;
   var shouldStop = false;
   var cancelTimeout = null;
@@ -54087,6 +54460,10 @@ function createAnimateManager(timeoutController) {
       setStyle(curr);
       cancelTimeout = timeoutController.setTimeout(setStyle.bind(null, restStyles));
       return;
+    }
+    if (typeof _style === 'string') {
+      currStyle = _style;
+      handleChange(currStyle);
     }
     if (typeof _style === 'object') {
       currStyle = _style;
@@ -54116,6 +54493,87 @@ function createAnimateManager(timeoutController) {
     },
     getTimeoutController: () => timeoutController
   };
+}
+
+/***/ }),
+
+/***/ "./node_modules/recharts/es6/animation/JavascriptAnimate.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/recharts/es6/animation/JavascriptAnimate.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   JavascriptAnimate: () => (/* binding */ JavascriptAnimate)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var es_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! es-toolkit */ "./node_modules/es-toolkit/dist/function/noop.mjs");
+/* harmony import */ var _util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/resolveDefaultProps */ "./node_modules/recharts/es6/util/resolveDefaultProps.js");
+/* harmony import */ var _configUpdate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./configUpdate */ "./node_modules/recharts/es6/animation/configUpdate.js");
+/* harmony import */ var _easing__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./easing */ "./node_modules/recharts/es6/animation/easing.js");
+/* harmony import */ var _useAnimationManager__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./useAnimationManager */ "./node_modules/recharts/es6/animation/useAnimationManager.js");
+
+
+
+
+
+
+var defaultJavascriptAnimateProps = {
+  begin: 0,
+  duration: 1000,
+  easing: 'ease',
+  isActive: true,
+  canBegin: true,
+  onAnimationEnd: () => {},
+  onAnimationStart: () => {}
+};
+var from = {
+  t: 0
+};
+var to = {
+  t: 1
+};
+function JavascriptAnimate(outsideProps) {
+  var props = (0,_util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_2__.resolveDefaultProps)(outsideProps, defaultJavascriptAnimateProps);
+  var {
+    isActive,
+    canBegin,
+    duration,
+    easing,
+    begin,
+    onAnimationEnd,
+    onAnimationStart,
+    children
+  } = props;
+  var animationManager = (0,_useAnimationManager__WEBPACK_IMPORTED_MODULE_5__.useAnimationManager)('JavascriptAnimate', props.animationManager);
+  var [style, setStyle] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(isActive ? from : to);
+  var stopJSAnimation = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!isActive) {
+      setStyle(to);
+    }
+  }, [isActive]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!isActive || !canBegin) {
+      return es_toolkit__WEBPACK_IMPORTED_MODULE_1__.noop;
+    }
+    var startAnimation = (0,_configUpdate__WEBPACK_IMPORTED_MODULE_3__["default"])(from, to, (0,_easing__WEBPACK_IMPORTED_MODULE_4__.configEasing)(easing), duration, setStyle, animationManager.getTimeoutController());
+    var onAnimationActive = () => {
+      stopJSAnimation.current = startAnimation();
+    };
+    animationManager.start([onAnimationStart, begin, onAnimationActive, duration, onAnimationEnd]);
+    return () => {
+      animationManager.stop();
+      if (stopJSAnimation.current) {
+        stopJSAnimation.current();
+      }
+      onAnimationEnd();
+    };
+  }, [isActive, canBegin, duration, easing, begin, onAnimationStart, onAnimationEnd, animationManager]);
+  return children(style.t);
 }
 
 /***/ }),
@@ -54252,6 +54710,27 @@ function createTimingUpdate(from, to, easing, duration, interKeys, render, timeo
   var interKeys = (0,_util__WEBPACK_IMPORTED_MODULE_0__.getIntersectionKeys)(from, to);
   return easing.isStepper === true ? createStepperUpdate(from, to, easing, interKeys, render, timeoutController) : createTimingUpdate(from, to, easing, duration, interKeys, render, timeoutController);
 });
+
+/***/ }),
+
+/***/ "./node_modules/recharts/es6/animation/createDefaultAnimationManager.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/recharts/es6/animation/createDefaultAnimationManager.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createDefaultAnimationManager: () => (/* binding */ createDefaultAnimationManager)
+/* harmony export */ });
+/* harmony import */ var _AnimationManager__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AnimationManager */ "./node_modules/recharts/es6/animation/AnimationManager.js");
+/* harmony import */ var _timeoutController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./timeoutController */ "./node_modules/recharts/es6/animation/timeoutController.js");
+
+
+function createDefaultAnimationManager() {
+  return (0,_AnimationManager__WEBPACK_IMPORTED_MODULE_0__.createAnimateManager)(new _timeoutController__WEBPACK_IMPORTED_MODULE_1__.RequestAnimationFrameTimeoutController());
+}
 
 /***/ }),
 
@@ -54432,6 +54911,31 @@ class RequestAnimationFrameTimeoutController {
 
 /***/ }),
 
+/***/ "./node_modules/recharts/es6/animation/useAnimationManager.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/recharts/es6/animation/useAnimationManager.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AnimationManagerContext: () => (/* binding */ AnimationManagerContext),
+/* harmony export */   useAnimationManager: () => (/* binding */ useAnimationManager)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _createDefaultAnimationManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createDefaultAnimationManager */ "./node_modules/recharts/es6/animation/createDefaultAnimationManager.js");
+
+
+var AnimationManagerContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)(_createDefaultAnimationManager__WEBPACK_IMPORTED_MODULE_1__.createDefaultAnimationManager);
+function useAnimationManager(animationId, animationManagerFromProps) {
+  var contextAnimationManager = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(AnimationManagerContext);
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => animationManagerFromProps !== null && animationManagerFromProps !== void 0 ? animationManagerFromProps : contextAnimationManager(animationId), [animationId, animationManagerFromProps, contextAnimationManager]);
+}
+
+/***/ }),
+
 /***/ "./node_modules/recharts/es6/animation/util.js":
 /*!*****************************************************!*\
   !*** ./node_modules/recharts/es6/animation/util.js ***!
@@ -54504,20 +55008,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../util/ReactUtils */ "./node_modules/recharts/es6/util/ReactUtils.js");
 /* harmony import */ var _component_ActivePoints__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../component/ActivePoints */ "./node_modules/recharts/es6/component/ActivePoints.js");
 /* harmony import */ var _state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../state/SetTooltipEntrySettings */ "./node_modules/recharts/es6/state/SetTooltipEntrySettings.js");
-/* harmony import */ var _context_CartesianGraphicalItemContext__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../context/CartesianGraphicalItemContext */ "./node_modules/recharts/es6/context/CartesianGraphicalItemContext.js");
-/* harmony import */ var _GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./GraphicalItemClipPath */ "./node_modules/recharts/es6/cartesian/GraphicalItemClipPath.js");
-/* harmony import */ var _state_selectors_areaSelectors__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../state/selectors/areaSelectors */ "./node_modules/recharts/es6/state/selectors/areaSelectors.js");
-/* harmony import */ var _context_PanoramaContext__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../context/PanoramaContext */ "./node_modules/recharts/es6/context/PanoramaContext.js");
-/* harmony import */ var _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../context/chartLayoutContext */ "./node_modules/recharts/es6/context/chartLayoutContext.js");
-/* harmony import */ var _state_selectors_selectors__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../state/selectors/selectors */ "./node_modules/recharts/es6/state/selectors/selectors.js");
-/* harmony import */ var _state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../state/SetLegendPayload */ "./node_modules/recharts/es6/state/SetLegendPayload.js");
-/* harmony import */ var _state_hooks__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../state/hooks */ "./node_modules/recharts/es6/state/hooks.js");
-/* harmony import */ var _util_useAnimationId__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../util/useAnimationId */ "./node_modules/recharts/es6/util/useAnimationId.js");
-/* harmony import */ var _util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../util/resolveDefaultProps */ "./node_modules/recharts/es6/util/resolveDefaultProps.js");
-/* harmony import */ var _util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../util/isWellBehavedNumber */ "./node_modules/recharts/es6/util/isWellBehavedNumber.js");
-/* harmony import */ var _animation_Animate__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../animation/Animate */ "./node_modules/recharts/es6/animation/Animate.js");
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../hooks */ "./node_modules/recharts/es6/hooks.js");
-var _excluded = ["layout", "type", "stroke", "connectNulls", "isRange"],
+/* harmony import */ var _GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./GraphicalItemClipPath */ "./node_modules/recharts/es6/cartesian/GraphicalItemClipPath.js");
+/* harmony import */ var _state_selectors_areaSelectors__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../state/selectors/areaSelectors */ "./node_modules/recharts/es6/state/selectors/areaSelectors.js");
+/* harmony import */ var _context_PanoramaContext__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../context/PanoramaContext */ "./node_modules/recharts/es6/context/PanoramaContext.js");
+/* harmony import */ var _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../context/chartLayoutContext */ "./node_modules/recharts/es6/context/chartLayoutContext.js");
+/* harmony import */ var _state_selectors_selectors__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../state/selectors/selectors */ "./node_modules/recharts/es6/state/selectors/selectors.js");
+/* harmony import */ var _state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../state/SetLegendPayload */ "./node_modules/recharts/es6/state/SetLegendPayload.js");
+/* harmony import */ var _state_hooks__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../state/hooks */ "./node_modules/recharts/es6/state/hooks.js");
+/* harmony import */ var _util_useAnimationId__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../util/useAnimationId */ "./node_modules/recharts/es6/util/useAnimationId.js");
+/* harmony import */ var _util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../util/resolveDefaultProps */ "./node_modules/recharts/es6/util/resolveDefaultProps.js");
+/* harmony import */ var _util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../util/isWellBehavedNumber */ "./node_modules/recharts/es6/util/isWellBehavedNumber.js");
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../hooks */ "./node_modules/recharts/es6/hooks.js");
+/* harmony import */ var _context_RegisterGraphicalItemId__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../context/RegisterGraphicalItemId */ "./node_modules/recharts/es6/context/RegisterGraphicalItemId.js");
+/* harmony import */ var _state_SetGraphicalItem__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../state/SetGraphicalItem */ "./node_modules/recharts/es6/state/SetGraphicalItem.js");
+/* harmony import */ var _util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../util/svgPropertiesNoEvents */ "./node_modules/recharts/es6/util/svgPropertiesNoEvents.js");
+/* harmony import */ var _animation_JavascriptAnimate__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../animation/JavascriptAnimate */ "./node_modules/recharts/es6/animation/JavascriptAnimate.js");
+var _excluded = ["id"],
   _excluded2 = ["activeDot", "animationBegin", "animationDuration", "animationEasing", "connectNulls", "dot", "fill", "fillOpacity", "hide", "isAnimationActive", "legendType", "stroke", "xAxisId", "yAxisId"];
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
@@ -54527,7 +55033,8 @@ function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
-// eslint-disable-next-line max-classes-per-file
+
+
 
 
 
@@ -54654,7 +55161,7 @@ function Dots(_ref) {
     return null;
   }
   var clipDot = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__.isClipDot)(dot);
-  var areaProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__.filterProps)(props, false);
+  var areaProps = (0,_util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_25__.svgPropertiesNoEvents)(props);
   var customDotProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__.filterProps)(dot, true);
   var dots = points.map((entry, i) => {
     var dotProps = _objectSpread(_objectSpread(_objectSpread({
@@ -54688,16 +55195,21 @@ function StaticArea(_ref2) {
     showLabels
   } = _ref2;
   var {
-      layout,
-      type,
-      stroke,
-      connectNulls,
-      isRange
+    layout,
+    type,
+    stroke,
+    connectNulls,
+    isRange
+  } = props;
+  var {
+      id
     } = props,
-    others = _objectWithoutProperties(props, _excluded);
+    propsWithoutId = _objectWithoutProperties(props, _excluded);
+  var allOtherProps = (0,_util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_25__.svgPropertiesNoEvents)(propsWithoutId);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (points === null || points === void 0 ? void 0 : points.length) > 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_4__.Layer, {
     clipPath: needClip ? "url(#clipPath-".concat(clipPathId, ")") : undefined
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shape_Curve__WEBPACK_IMPORTED_MODULE_2__.Curve, _extends({}, (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__.filterProps)(others, true), {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shape_Curve__WEBPACK_IMPORTED_MODULE_2__.Curve, _extends({}, allOtherProps, {
+    id: id,
     points: points,
     connectNulls: connectNulls,
     type: type,
@@ -54705,14 +55217,14 @@ function StaticArea(_ref2) {
     layout: layout,
     stroke: "none",
     className: "recharts-area-area"
-  })), stroke !== 'none' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shape_Curve__WEBPACK_IMPORTED_MODULE_2__.Curve, _extends({}, (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__.filterProps)(props, false), {
+  })), stroke !== 'none' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shape_Curve__WEBPACK_IMPORTED_MODULE_2__.Curve, _extends({}, allOtherProps, {
     className: "recharts-area-curve",
     layout: layout,
     type: type,
     connectNulls: connectNulls,
     fill: "none",
     points: points
-  })), stroke !== 'none' && isRange && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shape_Curve__WEBPACK_IMPORTED_MODULE_2__.Curve, _extends({}, (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__.filterProps)(props, false), {
+  })), stroke !== 'none' && isRange && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shape_Curve__WEBPACK_IMPORTED_MODULE_2__.Curve, _extends({}, allOtherProps, {
     className: "recharts-area-curve",
     layout: layout,
     type: type,
@@ -54721,9 +55233,9 @@ function StaticArea(_ref2) {
     points: baseLine
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Dots, {
     points: points,
-    props: props,
+    props: propsWithoutId,
     clipPathId: clipPathId
-  }), showLabels && _component_LabelList__WEBPACK_IMPORTED_MODULE_5__.LabelList.renderCallByParent(props, points));
+  }), showLabels && _component_LabelList__WEBPACK_IMPORTED_MODULE_5__.LabelList.renderCallByParent(propsWithoutId, points));
 }
 function VerticalRect(_ref3) {
   var {
@@ -54734,7 +55246,7 @@ function VerticalRect(_ref3) {
   } = _ref3;
   var startY = points[0].y;
   var endY = points[points.length - 1].y;
-  if (!(0,_util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_22__.isWellBehavedNumber)(startY) || !(0,_util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_22__.isWellBehavedNumber)(endY)) {
+  if (!(0,_util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_21__.isWellBehavedNumber)(startY) || !(0,_util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_21__.isWellBehavedNumber)(endY)) {
     return null;
   }
   var height = alpha * Math.abs(startY - endY);
@@ -54763,7 +55275,7 @@ function HorizontalRect(_ref4) {
   } = _ref4;
   var startX = points[0].x;
   var endX = points[points.length - 1].x;
-  if (!(0,_util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_22__.isWellBehavedNumber)(startX) || !(0,_util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_22__.isWellBehavedNumber)(endX)) {
+  if (!(0,_util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_21__.isWellBehavedNumber)(startX) || !(0,_util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_21__.isWellBehavedNumber)(endX)) {
     return null;
   }
   var width = alpha * Math.abs(startX - endX);
@@ -54824,7 +55336,7 @@ function AreaWithAnimation(_ref6) {
     onAnimationStart,
     onAnimationEnd
   } = props;
-  var animationId = (0,_util_useAnimationId__WEBPACK_IMPORTED_MODULE_20__.useAnimationId)(props, 'recharts-area-');
+  var animationId = (0,_util_useAnimationId__WEBPACK_IMPORTED_MODULE_19__.useAnimationId)(props, 'recharts-area-');
   var [isAnimating, setIsAnimating] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   var handleAnimationEnd = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
     if (typeof onAnimationEnd === 'function') {
@@ -54840,24 +55352,15 @@ function AreaWithAnimation(_ref6) {
   }, [onAnimationStart]);
   var prevPoints = previousPointsRef.current;
   var prevBaseLine = previousBaselineRef.current;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_animation_Animate__WEBPACK_IMPORTED_MODULE_23__.Animate, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_animation_JavascriptAnimate__WEBPACK_IMPORTED_MODULE_26__.JavascriptAnimate, {
     begin: animationBegin,
     duration: animationDuration,
     isActive: isAnimationActive,
     easing: animationEasing,
-    from: {
-      t: 0
-    },
-    to: {
-      t: 1
-    },
     onAnimationEnd: handleAnimationEnd,
     onAnimationStart: handleAnimationStart,
     key: animationId
-  }, _ref7 => {
-    var {
-      t
-    } = _ref7;
+  }, t => {
     if (prevPoints) {
       var prevPointsDiffFactor = prevPoints.length / points.length;
       var stepPoints =
@@ -54950,12 +55453,12 @@ function AreaWithAnimation(_ref6) {
  * This components decides if the area should be animated or not.
  * It also holds the state of the animation.
  */
-function RenderArea(_ref8) {
+function RenderArea(_ref7) {
   var {
     needClip,
     clipPathId,
     props
-  } = _ref8;
+  } = _ref7;
   var {
     points,
     baseLine,
@@ -54999,10 +55502,6 @@ function RenderArea(_ref8) {
   });
 }
 class AreaWithState extends react__WEBPACK_IMPORTED_MODULE_0__.PureComponent {
-  constructor() {
-    super(...arguments);
-    _defineProperty(this, "id", (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_7__.uniqueId)('recharts-area-'));
-  }
   render() {
     var _filterProps;
     var {
@@ -55024,7 +55523,7 @@ class AreaWithState extends react__WEBPACK_IMPORTED_MODULE_0__.PureComponent {
       return null;
     }
     var layerClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__.clsx)('recharts-area', className);
-    var clipPathId = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_7__.isNullish)(id) ? this.id : id;
+    var clipPathId = id;
     var {
       r = 3,
       strokeWidth = 2
@@ -55036,7 +55535,7 @@ class AreaWithState extends react__WEBPACK_IMPORTED_MODULE_0__.PureComponent {
     var dotSize = r * 2 + strokeWidth;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_4__.Layer, {
       className: layerClass
-    }, needClip && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("defs", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_13__.GraphicalItemClipPath, {
+    }, needClip && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("defs", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_12__.GraphicalItemClipPath, {
       clipPathId: clipPathId,
       xAxisId: xAxisId,
       yAxisId: yAxisId
@@ -55082,7 +55581,7 @@ var defaultAreaProps = {
 };
 function AreaImpl(props) {
   var _useAppSelector;
-  var _resolveDefaultProps = (0,_util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_21__.resolveDefaultProps)(props, defaultAreaProps),
+  var _resolveDefaultProps = (0,_util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_20__.resolveDefaultProps)(props, defaultAreaProps),
     {
       activeDot,
       animationBegin,
@@ -55100,31 +55599,19 @@ function AreaImpl(props) {
       yAxisId
     } = _resolveDefaultProps,
     everythingElse = _objectWithoutProperties(_resolveDefaultProps, _excluded2);
-  var layout = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_16__.useChartLayout)();
-  var chartName = (0,_state_selectors_selectors__WEBPACK_IMPORTED_MODULE_17__.useChartName)();
+  var layout = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_15__.useChartLayout)();
+  var chartName = (0,_state_selectors_selectors__WEBPACK_IMPORTED_MODULE_16__.useChartName)();
   var {
     needClip
-  } = (0,_GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_13__.useNeedsClip)(xAxisId, yAxisId);
-  var isPanorama = (0,_context_PanoramaContext__WEBPACK_IMPORTED_MODULE_15__.useIsPanorama)();
-  var areaSettings = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => ({
-    baseValue: props.baseValue,
-    stackId: props.stackId,
-    connectNulls,
-    data: props.data,
-    dataKey: props.dataKey
-  }), [props.baseValue, props.stackId, connectNulls, props.data, props.dataKey]);
+  } = (0,_GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_12__.useNeedsClip)(xAxisId, yAxisId);
+  var isPanorama = (0,_context_PanoramaContext__WEBPACK_IMPORTED_MODULE_14__.useIsPanorama)();
   var {
     points,
     isRange,
     baseLine
-  } = (_useAppSelector = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_19__.useAppSelector)(state => (0,_state_selectors_areaSelectors__WEBPACK_IMPORTED_MODULE_14__.selectArea)(state, xAxisId, yAxisId, isPanorama, areaSettings))) !== null && _useAppSelector !== void 0 ? _useAppSelector : {};
-  var {
-    height,
-    width,
-    x: left,
-    y: top
-  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_24__.usePlotArea)();
-  if (layout !== 'horizontal' && layout !== 'vertical') {
+  } = (_useAppSelector = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_18__.useAppSelector)(state => (0,_state_selectors_areaSelectors__WEBPACK_IMPORTED_MODULE_13__.selectArea)(state, xAxisId, yAxisId, isPanorama, props.id))) !== null && _useAppSelector !== void 0 ? _useAppSelector : {};
+  var plotArea = (0,_hooks__WEBPACK_IMPORTED_MODULE_22__.usePlotArea)();
+  if (layout !== 'horizontal' && layout !== 'vertical' || plotArea == null) {
     // Can't render Area in an unsupported layout
     return null;
   }
@@ -55132,16 +55619,15 @@ function AreaImpl(props) {
     // There is nothing stopping us from rendering Area in other charts, except for historical reasons. Do we want to allow that?
     return null;
   }
-
-  /*
-   * It is important to NOT have this condition here,
-   * because we need the Animate inside to receive an empty state
-   * so that it can properly reset its internal state and start a new animation.
-   */
-  // if (!points || !points.length) {
-  //   return null;
-  // }
-
+  var {
+    height,
+    width,
+    x: left,
+    y: top
+  } = plotArea;
+  if (!points || !points.length) {
+    return null;
+  }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AreaWithState, _extends({}, everythingElse, {
     activeDot: activeDot,
     animationBegin: animationBegin,
@@ -55197,7 +55683,7 @@ var getBaseValue = (layout, chartBaseValue, itemBaseValue, xAxis, yAxis) => {
   }
   return domain[0];
 };
-function computeArea(_ref9) {
+function computeArea(_ref8) {
   var {
     areaSettings: {
       connectNulls,
@@ -55214,7 +55700,7 @@ function computeArea(_ref9) {
     xAxisTicks,
     yAxisTicks,
     bandSize
-  } = _ref9;
+  } = _ref8;
   var hasStack = stackedData && stackedData.length;
   var baseValue = getBaseValue(layout, chartBaseValue, itemBaseValue, xAxis, yAxis);
   var isHorizontalLayout = layout === 'horizontal';
@@ -55268,12 +55754,14 @@ function computeArea(_ref9) {
       if (isHorizontalLayout) {
         return {
           x: entry.x,
-          y: x != null && entry.y != null ? yAxis.scale(x) : null
+          y: x != null && entry.y != null ? yAxis.scale(x) : null,
+          payload: entry.payload
         };
       }
       return {
         x: x != null ? xAxis.scale(x) : null,
-        y: entry.y
+        y: entry.y,
+        payload: entry.payload
       };
     });
   } else {
@@ -55285,29 +55773,37 @@ function computeArea(_ref9) {
     isRange
   };
 }
-class Area extends react__WEBPACK_IMPORTED_MODULE_0__.PureComponent {
-  render() {
-    // Report all props to Redux store first, before calling any hooks, to avoid circular dependencies.
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_context_CartesianGraphicalItemContext__WEBPACK_IMPORTED_MODULE_12__.CartesianGraphicalItemContext, {
-      type: "area",
-      data: this.props.data,
-      dataKey: this.props.dataKey,
-      xAxisId: this.props.xAxisId,
-      yAxisId: this.props.yAxisId,
-      zAxisId: 0,
-      stackId: this.props.stackId,
-      hide: this.props.hide,
-      barSize: undefined
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_18__.SetLegendPayload, {
-      legendPayload: computeLegendPayloadFromAreaData(this.props)
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_11__.SetTooltipEntrySettings, {
-      fn: getTooltipEntrySettings,
-      args: this.props
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AreaImpl, this.props));
-  }
+function Area(outsideProps) {
+  var props = (0,_util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_20__.resolveDefaultProps)(outsideProps, defaultAreaProps);
+  var isPanorama = (0,_context_PanoramaContext__WEBPACK_IMPORTED_MODULE_14__.useIsPanorama)();
+  // Report all props to Redux store first, before calling any hooks, to avoid circular dependencies.
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_context_RegisterGraphicalItemId__WEBPACK_IMPORTED_MODULE_23__.RegisterGraphicalItemId, {
+    id: props.id,
+    type: "area"
+  }, id => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_17__.SetLegendPayload, {
+    legendPayload: computeLegendPayloadFromAreaData(props)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_11__.SetTooltipEntrySettings, {
+    fn: getTooltipEntrySettings,
+    args: props
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetGraphicalItem__WEBPACK_IMPORTED_MODULE_24__.SetCartesianGraphicalItem, {
+    type: "area",
+    id: id,
+    data: props.data,
+    dataKey: props.dataKey,
+    xAxisId: props.xAxisId,
+    yAxisId: props.yAxisId,
+    zAxisId: 0,
+    stackId: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_8__.getNormalizedStackId)(props.stackId),
+    hide: props.hide,
+    barSize: undefined,
+    baseValue: props.baseValue,
+    isPanorama: isPanorama,
+    connectNulls: props.connectNulls
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AreaImpl, _extends({}, props, {
+    id: id
+  }))));
 }
-_defineProperty(Area, "displayName", 'Area');
-_defineProperty(Area, "defaultProps", defaultAreaProps);
+Area.displayName = 'Area';
 
 /***/ }),
 
@@ -55327,32 +55823,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
 /* harmony import */ var _container_Layer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../container/Layer */ "./node_modules/recharts/es6/container/Layer.js");
-/* harmony import */ var _ErrorBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ErrorBar */ "./node_modules/recharts/es6/cartesian/ErrorBar.js");
-/* harmony import */ var _component_Cell__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../component/Cell */ "./node_modules/recharts/es6/component/Cell.js");
-/* harmony import */ var _component_LabelList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../component/LabelList */ "./node_modules/recharts/es6/component/LabelList.js");
-/* harmony import */ var _util_DataUtils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
-/* harmony import */ var _util_ReactUtils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../util/ReactUtils */ "./node_modules/recharts/es6/util/ReactUtils.js");
-/* harmony import */ var _util_Global__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../util/Global */ "./node_modules/recharts/es6/util/Global.js");
-/* harmony import */ var _util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../util/ChartUtils */ "./node_modules/recharts/es6/util/ChartUtils.js");
-/* harmony import */ var _util_types__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../util/types */ "./node_modules/recharts/es6/util/types.js");
-/* harmony import */ var _util_BarUtils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../util/BarUtils */ "./node_modules/recharts/es6/util/BarUtils.js");
-/* harmony import */ var _context_tooltipContext__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../context/tooltipContext */ "./node_modules/recharts/es6/context/tooltipContext.js");
-/* harmony import */ var _state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../state/SetTooltipEntrySettings */ "./node_modules/recharts/es6/state/SetTooltipEntrySettings.js");
-/* harmony import */ var _state_ReportBar__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../state/ReportBar */ "./node_modules/recharts/es6/state/ReportBar.js");
-/* harmony import */ var _context_CartesianGraphicalItemContext__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../context/CartesianGraphicalItemContext */ "./node_modules/recharts/es6/context/CartesianGraphicalItemContext.js");
-/* harmony import */ var _GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./GraphicalItemClipPath */ "./node_modules/recharts/es6/cartesian/GraphicalItemClipPath.js");
-/* harmony import */ var _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../context/chartLayoutContext */ "./node_modules/recharts/es6/context/chartLayoutContext.js");
-/* harmony import */ var _state_selectors_barSelectors__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../state/selectors/barSelectors */ "./node_modules/recharts/es6/state/selectors/barSelectors.js");
-/* harmony import */ var _state_hooks__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../state/hooks */ "./node_modules/recharts/es6/state/hooks.js");
-/* harmony import */ var _context_PanoramaContext__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../context/PanoramaContext */ "./node_modules/recharts/es6/context/PanoramaContext.js");
-/* harmony import */ var _state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../state/selectors/tooltipSelectors */ "./node_modules/recharts/es6/state/selectors/tooltipSelectors.js");
-/* harmony import */ var _state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../state/SetLegendPayload */ "./node_modules/recharts/es6/state/SetLegendPayload.js");
-/* harmony import */ var _util_useAnimationId__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../util/useAnimationId */ "./node_modules/recharts/es6/util/useAnimationId.js");
-/* harmony import */ var _util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../util/resolveDefaultProps */ "./node_modules/recharts/es6/util/resolveDefaultProps.js");
-/* harmony import */ var _animation_Animate__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../animation/Animate */ "./node_modules/recharts/es6/animation/Animate.js");
+/* harmony import */ var _component_Cell__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../component/Cell */ "./node_modules/recharts/es6/component/Cell.js");
+/* harmony import */ var _component_LabelList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../component/LabelList */ "./node_modules/recharts/es6/component/LabelList.js");
+/* harmony import */ var _util_DataUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
+/* harmony import */ var _util_ReactUtils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/ReactUtils */ "./node_modules/recharts/es6/util/ReactUtils.js");
+/* harmony import */ var _util_Global__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../util/Global */ "./node_modules/recharts/es6/util/Global.js");
+/* harmony import */ var _util_ChartUtils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../util/ChartUtils */ "./node_modules/recharts/es6/util/ChartUtils.js");
+/* harmony import */ var _util_types__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../util/types */ "./node_modules/recharts/es6/util/types.js");
+/* harmony import */ var _util_BarUtils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../util/BarUtils */ "./node_modules/recharts/es6/util/BarUtils.js");
+/* harmony import */ var _context_tooltipContext__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../context/tooltipContext */ "./node_modules/recharts/es6/context/tooltipContext.js");
+/* harmony import */ var _state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../state/SetTooltipEntrySettings */ "./node_modules/recharts/es6/state/SetTooltipEntrySettings.js");
+/* harmony import */ var _context_ErrorBarContext__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../context/ErrorBarContext */ "./node_modules/recharts/es6/context/ErrorBarContext.js");
+/* harmony import */ var _GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./GraphicalItemClipPath */ "./node_modules/recharts/es6/cartesian/GraphicalItemClipPath.js");
+/* harmony import */ var _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../context/chartLayoutContext */ "./node_modules/recharts/es6/context/chartLayoutContext.js");
+/* harmony import */ var _state_selectors_barSelectors__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../state/selectors/barSelectors */ "./node_modules/recharts/es6/state/selectors/barSelectors.js");
+/* harmony import */ var _state_hooks__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../state/hooks */ "./node_modules/recharts/es6/state/hooks.js");
+/* harmony import */ var _context_PanoramaContext__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../context/PanoramaContext */ "./node_modules/recharts/es6/context/PanoramaContext.js");
+/* harmony import */ var _state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../state/selectors/tooltipSelectors */ "./node_modules/recharts/es6/state/selectors/tooltipSelectors.js");
+/* harmony import */ var _state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../state/SetLegendPayload */ "./node_modules/recharts/es6/state/SetLegendPayload.js");
+/* harmony import */ var _util_useAnimationId__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../util/useAnimationId */ "./node_modules/recharts/es6/util/useAnimationId.js");
+/* harmony import */ var _util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../util/resolveDefaultProps */ "./node_modules/recharts/es6/util/resolveDefaultProps.js");
+/* harmony import */ var _context_RegisterGraphicalItemId__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../context/RegisterGraphicalItemId */ "./node_modules/recharts/es6/context/RegisterGraphicalItemId.js");
+/* harmony import */ var _state_SetGraphicalItem__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../state/SetGraphicalItem */ "./node_modules/recharts/es6/state/SetGraphicalItem.js");
+/* harmony import */ var _util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../util/svgPropertiesNoEvents */ "./node_modules/recharts/es6/util/svgPropertiesNoEvents.js");
+/* harmony import */ var _animation_JavascriptAnimate__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../animation/JavascriptAnimate */ "./node_modules/recharts/es6/animation/JavascriptAnimate.js");
 var _excluded = ["onMouseEnter", "onMouseLeave", "onClick"],
   _excluded2 = ["value", "background", "tooltipPosition"],
-  _excluded3 = ["onMouseEnter", "onClick", "onMouseLeave"];
+  _excluded3 = ["id"],
+  _excluded4 = ["onMouseEnter", "onClick", "onMouseLeave"];
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -55361,10 +55859,7 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
-/**
- * @fileOverview Render a group of bar
- */
-// eslint-disable-next-line max-classes-per-file
+
 
 
 
@@ -55405,7 +55900,7 @@ var computeLegendPayloadFromBarData = props => {
     dataKey,
     type: legendType,
     color: fill,
-    value: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.getTooltipNameProp)(name, dataKey),
+    value: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_8__.getTooltipNameProp)(name, dataKey),
     payload: props
   }];
 };
@@ -55428,7 +55923,7 @@ function getTooltipEntrySettings(props) {
       fill,
       dataKey,
       nameKey: undefined,
-      name: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.getTooltipNameProp)(name, dataKey),
+      name: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_8__.getTooltipNameProp)(name, dataKey),
       hide,
       type: props.tooltipType,
       color: props.fill,
@@ -55437,7 +55932,7 @@ function getTooltipEntrySettings(props) {
   };
 }
 function BarBackground(props) {
-  var activeIndex = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_19__.useAppSelector)(_state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_21__.selectActiveTooltipIndex);
+  var activeIndex = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_17__.useAppSelector)(_state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_19__.selectActiveTooltipIndex);
   var {
     data,
     dataKey,
@@ -55450,13 +55945,17 @@ function BarBackground(props) {
       onClick: onItemClickFromProps
     } = allOtherBarProps,
     restOfAllOtherProps = _objectWithoutProperties(allOtherBarProps, _excluded);
-  var onMouseEnterFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_12__.useMouseEnterItemDispatch)(onMouseEnterFromProps, dataKey);
-  var onMouseLeaveFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_12__.useMouseLeaveItemDispatch)(onMouseLeaveFromProps);
-  var onClickFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_12__.useMouseClickItemDispatch)(onItemClickFromProps, dataKey);
+
+  // @ts-expect-error bar mouse events are not compatible with recharts mouse events
+  var onMouseEnterFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_11__.useMouseEnterItemDispatch)(onMouseEnterFromProps, dataKey);
+  // @ts-expect-error bar mouse events are not compatible with recharts mouse events
+  var onMouseLeaveFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_11__.useMouseLeaveItemDispatch)(onMouseLeaveFromProps);
+  // @ts-expect-error bar mouse events are not compatible with recharts mouse events
+  var onClickFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_11__.useMouseClickItemDispatch)(onItemClickFromProps, dataKey);
   if (!backgroundFromProps || data == null) {
     return null;
   }
-  var backgroundProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_7__.filterProps)(backgroundFromProps, false);
+  var backgroundProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_6__.filterProps)(backgroundFromProps, false);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, data.map((entry, i) => {
     var {
         value,
@@ -55480,7 +55979,7 @@ function BarBackground(props) {
     }, rest), {}, {
       // @ts-expect-error BarRectangle props do not accept `fill` property.
       fill: '#eee'
-    }, backgroundFromDataEntry), backgroundProps), (0,_util_types__WEBPACK_IMPORTED_MODULE_10__.adaptEventsOfChild)(restOfAllOtherProps, entry, i)), {}, {
+    }, backgroundFromDataEntry), backgroundProps), (0,_util_types__WEBPACK_IMPORTED_MODULE_9__.adaptEventsOfChild)(restOfAllOtherProps, entry, i)), {}, {
       onMouseEnter,
       onMouseLeave,
       onClick,
@@ -55488,7 +55987,7 @@ function BarBackground(props) {
       index: i,
       className: 'recharts-bar-background-rectangle'
     });
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_BarUtils__WEBPACK_IMPORTED_MODULE_11__.BarRectangle, _extends({
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_BarUtils__WEBPACK_IMPORTED_MODULE_10__.BarRectangle, _extends({
       key: "background-bar-".concat(i)
     }, barRectangleProps));
   }));
@@ -55499,23 +55998,31 @@ function BarRectangles(_ref) {
     props,
     showLabels
   } = _ref;
-  var baseProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_7__.filterProps)(props, false);
+  var _svgPropertiesNoEvent = (0,_util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_25__.svgPropertiesNoEvents)(props),
+    {
+      id
+    } = _svgPropertiesNoEvent,
+    baseProps = _objectWithoutProperties(_svgPropertiesNoEvent, _excluded3);
   var {
     shape,
     dataKey,
     activeBar
   } = props;
-  var activeIndex = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_19__.useAppSelector)(_state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_21__.selectActiveTooltipIndex);
-  var activeDataKey = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_19__.useAppSelector)(_state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_21__.selectActiveTooltipDataKey);
+  var activeIndex = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_17__.useAppSelector)(_state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_19__.selectActiveTooltipIndex);
+  var activeDataKey = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_17__.useAppSelector)(_state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_19__.selectActiveTooltipDataKey);
   var {
       onMouseEnter: onMouseEnterFromProps,
       onClick: onItemClickFromProps,
       onMouseLeave: onMouseLeaveFromProps
     } = props,
-    restOfAllOtherProps = _objectWithoutProperties(props, _excluded3);
-  var onMouseEnterFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_12__.useMouseEnterItemDispatch)(onMouseEnterFromProps, dataKey);
-  var onMouseLeaveFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_12__.useMouseLeaveItemDispatch)(onMouseLeaveFromProps);
-  var onClickFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_12__.useMouseClickItemDispatch)(onItemClickFromProps, dataKey);
+    restOfAllOtherProps = _objectWithoutProperties(props, _excluded4);
+
+  // @ts-expect-error bar mouse events are not compatible with recharts mouse events
+  var onMouseEnterFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_11__.useMouseEnterItemDispatch)(onMouseEnterFromProps, dataKey);
+  // @ts-expect-error bar mouse events are not compatible with recharts mouse events
+  var onMouseLeaveFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_11__.useMouseLeaveItemDispatch)(onMouseLeaveFromProps);
+  // @ts-expect-error bar mouse events are not compatible with recharts mouse events
+  var onClickFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_11__.useMouseClickItemDispatch)(onItemClickFromProps, dataKey);
   if (!data) {
     return null;
   }
@@ -55531,6 +56038,7 @@ function BarRectangles(_ref) {
      */
     var isActive = activeBar && String(i) === activeIndex && (activeDataKey == null || dataKey === activeDataKey);
     var option = isActive ? activeBar : shape;
+    // ts-expect-error event types are not compatible - this only fires with strictNullChecks on
     var barRectangleProps = _objectSpread(_objectSpread(_objectSpread({}, baseProps), entry), {}, {
       isActive,
       option,
@@ -55539,7 +56047,7 @@ function BarRectangles(_ref) {
     });
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_2__.Layer, _extends({
       className: "recharts-bar-rectangle"
-    }, (0,_util_types__WEBPACK_IMPORTED_MODULE_10__.adaptEventsOfChild)(restOfAllOtherProps, entry, i), {
+    }, (0,_util_types__WEBPACK_IMPORTED_MODULE_9__.adaptEventsOfChild)(restOfAllOtherProps, entry, i), {
       // @ts-expect-error BarRectangleItem type definition says it's missing properties, but I can see them present in debugger!
       onMouseEnter: onMouseEnterFromContext(entry, i)
       // @ts-expect-error BarRectangleItem type definition says it's missing properties, but I can see them present in debugger!
@@ -55552,8 +56060,8 @@ function BarRectangles(_ref) {
       // eslint-disable-next-line react/no-array-index-key
       ,
       key: "rectangle-".concat(entry === null || entry === void 0 ? void 0 : entry.x, "-").concat(entry === null || entry === void 0 ? void 0 : entry.y, "-").concat(entry === null || entry === void 0 ? void 0 : entry.value, "-").concat(i)
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_BarUtils__WEBPACK_IMPORTED_MODULE_11__.BarRectangle, barRectangleProps));
-  }), showLabels && _component_LabelList__WEBPACK_IMPORTED_MODULE_5__.LabelList.renderCallByParent(props, data));
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_BarUtils__WEBPACK_IMPORTED_MODULE_10__.BarRectangle, barRectangleProps));
+  }), showLabels && _component_LabelList__WEBPACK_IMPORTED_MODULE_4__.LabelList.renderCallByParent(props, data));
 }
 function RectanglesWithAnimation(_ref2) {
   var {
@@ -55571,7 +56079,7 @@ function RectanglesWithAnimation(_ref2) {
     onAnimationStart
   } = props;
   var prevData = previousRectanglesRef.current;
-  var animationId = (0,_util_useAnimationId__WEBPACK_IMPORTED_MODULE_23__.useAnimationId)(props, 'recharts-bar-');
+  var animationId = (0,_util_useAnimationId__WEBPACK_IMPORTED_MODULE_21__.useAnimationId)(props, 'recharts-bar-');
   var [isAnimating, setIsAnimating] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   var handleAnimationEnd = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
     if (typeof onAnimationEnd === 'function') {
@@ -55585,55 +56093,43 @@ function RectanglesWithAnimation(_ref2) {
     }
     setIsAnimating(true);
   }, [onAnimationStart]);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_animation_Animate__WEBPACK_IMPORTED_MODULE_25__.Animate, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_animation_JavascriptAnimate__WEBPACK_IMPORTED_MODULE_26__.JavascriptAnimate, {
     begin: animationBegin,
     duration: animationDuration,
     isActive: isAnimationActive,
     easing: animationEasing,
-    from: {
-      t: 0
-    },
-    to: {
-      t: 1
-    },
     onAnimationEnd: handleAnimationEnd,
     onAnimationStart: handleAnimationStart,
     key: animationId
-  }, _ref3 => {
-    var {
-      t
-    } = _ref3;
-    var stepData = t === 1 ? data : data.map((entry, index) => {
+  }, t => {
+    var stepData = t === 1 ? data : data === null || data === void 0 ? void 0 : data.map((entry, index) => {
       var prev = prevData && prevData[index];
       if (prev) {
-        var interpolatorX = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.interpolateNumber)(prev.x, entry.x);
-        var interpolatorY = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.interpolateNumber)(prev.y, entry.y);
-        var interpolatorWidth = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.interpolateNumber)(prev.width, entry.width);
-        var interpolatorHeight = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.interpolateNumber)(prev.height, entry.height);
         return _objectSpread(_objectSpread({}, entry), {}, {
-          x: interpolatorX(t),
-          y: interpolatorY(t),
-          width: interpolatorWidth(t),
-          height: interpolatorHeight(t)
+          x: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_5__.interpolate)(prev.x, entry.x, t),
+          y: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_5__.interpolate)(prev.y, entry.y, t),
+          width: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_5__.interpolate)(prev.width, entry.width, t),
+          height: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_5__.interpolate)(prev.height, entry.height, t)
         });
       }
       if (layout === 'horizontal') {
-        var _interpolatorHeight = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.interpolateNumber)(0, entry.height);
-        var h = _interpolatorHeight(t);
+        var h = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_5__.interpolate)(0, entry.height, t);
         return _objectSpread(_objectSpread({}, entry), {}, {
           y: entry.y + entry.height - h,
           height: h
         });
       }
-      var interpolator = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.interpolateNumber)(0, entry.width);
-      var w = interpolator(t);
+      var w = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_5__.interpolate)(0, entry.width, t);
       return _objectSpread(_objectSpread({}, entry), {}, {
         width: w
       });
     });
     if (t > 0) {
       // eslint-disable-next-line no-param-reassign
-      previousRectanglesRef.current = stepData;
+      previousRectanglesRef.current = stepData !== null && stepData !== void 0 ? stepData : null;
+    }
+    if (stepData == null) {
+      return null;
     }
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_2__.Layer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BarRectangles, {
       props: props,
@@ -55672,14 +56168,10 @@ var errorBarDataPointFormatter = (dataPoint, dataKey) => {
     y: dataPoint.y,
     value,
     // @ts-expect-error getValueByDataKey does not validate the output type
-    errorVal: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.getValueByDataKey)(dataPoint, dataKey)
+    errorVal: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_8__.getValueByDataKey)(dataPoint, dataKey)
   };
 };
 class BarWithState extends react__WEBPACK_IMPORTED_MODULE_0__.PureComponent {
-  constructor() {
-    super(...arguments);
-    _defineProperty(this, "id", (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.uniqueId)('recharts-bar-'));
-  }
   render() {
     var {
       hide,
@@ -55690,31 +56182,29 @@ class BarWithState extends react__WEBPACK_IMPORTED_MODULE_0__.PureComponent {
       yAxisId,
       needClip,
       background,
-      id,
-      layout
+      id
     } = this.props;
     if (hide) {
       return null;
     }
     var layerClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__.clsx)('recharts-bar', className);
-    var clipPathId = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.isNullish)(id) ? this.id : id;
+    var clipPathId = id;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_2__.Layer, {
-      className: layerClass
-    }, needClip && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("defs", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_16__.GraphicalItemClipPath, {
+      className: layerClass,
+      id: id
+    }, needClip && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("defs", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_14__.GraphicalItemClipPath, {
       clipPathId: clipPathId,
       xAxisId: xAxisId,
       yAxisId: yAxisId
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_2__.Layer, {
       className: "recharts-bar-rectangles",
-      clipPath: needClip ? "url(#clipPath-".concat(clipPathId, ")") : null
+      clipPath: needClip ? "url(#clipPath-".concat(clipPathId, ")") : undefined
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BarBackground, {
       data: data,
       dataKey: dataKey,
       background: background,
       allOtherBarProps: this.props
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(RenderRectangles, this.props)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_ErrorBar__WEBPACK_IMPORTED_MODULE_3__.SetErrorBarPreferredDirection, {
-      direction: layout === 'horizontal' ? 'y' : 'x'
-    }, this.props.children));
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(RenderRectangles, this.props)), this.props.children);
   }
 }
 var defaultBarProps = {
@@ -55723,7 +56213,7 @@ var defaultBarProps = {
   animationDuration: 400,
   animationEasing: 'ease',
   hide: false,
-  isAnimationActive: !_util_Global__WEBPACK_IMPORTED_MODULE_8__.Global.isSsr,
+  isAnimationActive: !_util_Global__WEBPACK_IMPORTED_MODULE_7__.Global.isSsr,
   legendType: 'rect',
   minPointSize: defaultMinPointSize,
   xAxisId: 0,
@@ -55741,22 +56231,14 @@ function BarImpl(props) {
     animationDuration,
     animationEasing,
     isAnimationActive
-  } = (0,_util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_24__.resolveDefaultProps)(props, defaultBarProps);
+  } = props;
   var {
     needClip
-  } = (0,_GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_16__.useNeedsClip)(xAxisId, yAxisId);
-  var layout = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_17__.useChartLayout)();
-  var isPanorama = (0,_context_PanoramaContext__WEBPACK_IMPORTED_MODULE_20__.useIsPanorama)();
-  var barSettings = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => ({
-    barSize: props.barSize,
-    data: undefined,
-    dataKey: props.dataKey,
-    maxBarSize: props.maxBarSize,
-    minPointSize,
-    stackId: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.getNormalizedStackId)(props.stackId)
-  }), [props.barSize, props.dataKey, props.maxBarSize, minPointSize, props.stackId]);
-  var cells = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_7__.findAllByType)(props.children, _component_Cell__WEBPACK_IMPORTED_MODULE_4__.Cell);
-  var rects = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_19__.useAppSelector)(state => (0,_state_selectors_barSelectors__WEBPACK_IMPORTED_MODULE_18__.selectBarRectangles)(state, xAxisId, yAxisId, isPanorama, barSettings, cells));
+  } = (0,_GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_14__.useNeedsClip)(xAxisId, yAxisId);
+  var layout = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_15__.useChartLayout)();
+  var isPanorama = (0,_context_PanoramaContext__WEBPACK_IMPORTED_MODULE_18__.useIsPanorama)();
+  var cells = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_6__.findAllByType)(props.children, _component_Cell__WEBPACK_IMPORTED_MODULE_3__.Cell);
+  var rects = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_17__.useAppSelector)(state => (0,_state_selectors_barSelectors__WEBPACK_IMPORTED_MODULE_16__.selectBarRectangles)(state, xAxisId, yAxisId, isPanorama, props.id, cells));
   if (layout !== 'vertical' && layout !== 'horizontal') {
     return null;
   }
@@ -55767,7 +56249,7 @@ function BarImpl(props) {
   } else {
     errorBarOffset = layout === 'vertical' ? firstDataPoint.height / 2 : firstDataPoint.width / 2;
   }
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_context_CartesianGraphicalItemContext__WEBPACK_IMPORTED_MODULE_15__.SetErrorBarContext, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_context_ErrorBarContext__WEBPACK_IMPORTED_MODULE_13__.SetErrorBarContext, {
     xAxisId: xAxisId,
     yAxisId: yAxisId,
     data: rects,
@@ -55789,7 +56271,7 @@ function BarImpl(props) {
     isAnimationActive: isAnimationActive
   })));
 }
-function computeBarRectangles(_ref4) {
+function computeBarRectangles(_ref3) {
   var {
     layout,
     barSettings: {
@@ -55806,29 +56288,29 @@ function computeBarRectangles(_ref4) {
     displayedData,
     offset,
     cells
-  } = _ref4;
+  } = _ref3;
   var numericAxis = layout === 'horizontal' ? yAxis : xAxis;
   // @ts-expect-error this assumes that the domain is always numeric, but doesn't check for it
   var stackedDomain = stackedData ? numericAxis.scale.domain() : null;
-  var baseValue = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.getBaseValueOfBar)({
+  var baseValue = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_8__.getBaseValueOfBar)({
     numericAxis
   });
   return displayedData.map((entry, index) => {
     var value, x, y, width, height, background;
     if (stackedData) {
       // we don't need to use dataStartIndex here, because stackedData is already sliced from the selector
-      value = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.truncateByDomain)(stackedData[index], stackedDomain);
+      value = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_8__.truncateByDomain)(stackedData[index], stackedDomain);
     } else {
-      value = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.getValueByDataKey)(entry, dataKey);
+      value = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_8__.getValueByDataKey)(entry, dataKey);
       if (!Array.isArray(value)) {
         value = [baseValue, value];
       }
     }
-    var minPointSize = (0,_util_BarUtils__WEBPACK_IMPORTED_MODULE_11__.minPointSizeCallback)(minPointSizeProp, defaultMinPointSize)(value[1], index);
+    var minPointSize = (0,_util_BarUtils__WEBPACK_IMPORTED_MODULE_10__.minPointSizeCallback)(minPointSizeProp, defaultMinPointSize)(value[1], index);
     if (layout === 'horizontal') {
-      var _ref5;
+      var _ref4;
       var [baseValueScale, currentValueScale] = [yAxis.scale(value[0]), yAxis.scale(value[1])];
-      x = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.getCateCoordinateOfBar)({
+      x = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_8__.getCateCoordinateOfBar)({
         axis: xAxis,
         ticks: xAxisTicks,
         bandSize,
@@ -55836,10 +56318,10 @@ function computeBarRectangles(_ref4) {
         entry,
         index
       });
-      y = (_ref5 = currentValueScale !== null && currentValueScale !== void 0 ? currentValueScale : baseValueScale) !== null && _ref5 !== void 0 ? _ref5 : undefined;
+      y = (_ref4 = currentValueScale !== null && currentValueScale !== void 0 ? currentValueScale : baseValueScale) !== null && _ref4 !== void 0 ? _ref4 : undefined;
       width = pos.size;
       var computedHeight = baseValueScale - currentValueScale;
-      height = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.isNan)(computedHeight) ? 0 : computedHeight;
+      height = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_5__.isNan)(computedHeight) ? 0 : computedHeight;
       background = {
         x,
         y: offset.top,
@@ -55847,14 +56329,14 @@ function computeBarRectangles(_ref4) {
         height: offset.height
       };
       if (Math.abs(minPointSize) > 0 && Math.abs(height) < Math.abs(minPointSize)) {
-        var delta = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.mathSign)(height || minPointSize) * (Math.abs(minPointSize) - Math.abs(height));
+        var delta = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_5__.mathSign)(height || minPointSize) * (Math.abs(minPointSize) - Math.abs(height));
         y -= delta;
         height += delta;
       }
     } else {
       var [_baseValueScale, _currentValueScale] = [xAxis.scale(value[0]), xAxis.scale(value[1])];
       x = _baseValueScale;
-      y = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.getCateCoordinateOfBar)({
+      y = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_8__.getCateCoordinateOfBar)({
         axis: yAxis,
         ticks: yAxisTicks,
         bandSize,
@@ -55871,9 +56353,12 @@ function computeBarRectangles(_ref4) {
         height
       };
       if (Math.abs(minPointSize) > 0 && Math.abs(width) < Math.abs(minPointSize)) {
-        var _delta = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.mathSign)(width || minPointSize) * (Math.abs(minPointSize) - Math.abs(width));
+        var _delta = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_5__.mathSign)(width || minPointSize) * (Math.abs(minPointSize) - Math.abs(width));
         width += _delta;
       }
+    }
+    if (x == null || y == null || width == null || height == null) {
+      return null;
     }
     var barRectangleItem = _objectSpread(_objectSpread({}, entry), {}, {
       x,
@@ -55889,33 +56374,41 @@ function computeBarRectangles(_ref4) {
       }
     }, cells && cells[index] && cells[index].props);
     return barRectangleItem;
-  });
+  }).filter(Boolean);
 }
-class Bar extends react__WEBPACK_IMPORTED_MODULE_0__.PureComponent {
-  render() {
-    // Report all props to Redux store first, before calling any hooks, to avoid circular dependencies.
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_context_CartesianGraphicalItemContext__WEBPACK_IMPORTED_MODULE_15__.CartesianGraphicalItemContext, {
-      type: "bar"
-      // Bar does not allow setting data directly on the graphical item (why?)
-      ,
-      data: null,
-      xAxisId: this.props.xAxisId,
-      yAxisId: this.props.yAxisId,
-      zAxisId: 0,
-      dataKey: this.props.dataKey,
-      stackId: this.props.stackId,
-      hide: this.props.hide,
-      barSize: this.props.barSize
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_ReportBar__WEBPACK_IMPORTED_MODULE_14__.ReportBar, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_22__.SetLegendPayload, {
-      legendPayload: computeLegendPayloadFromBarData(this.props)
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_13__.SetTooltipEntrySettings, {
-      fn: getTooltipEntrySettings,
-      args: this.props
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BarImpl, this.props));
-  }
+function Bar(outsideProps) {
+  var props = (0,_util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_22__.resolveDefaultProps)(outsideProps, defaultBarProps);
+  var isPanorama = (0,_context_PanoramaContext__WEBPACK_IMPORTED_MODULE_18__.useIsPanorama)();
+  // Report all props to Redux store first, before calling any hooks, to avoid circular dependencies.
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_context_RegisterGraphicalItemId__WEBPACK_IMPORTED_MODULE_23__.RegisterGraphicalItemId, {
+    id: props.id,
+    type: "bar"
+  }, id => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_20__.SetLegendPayload, {
+    legendPayload: computeLegendPayloadFromBarData(props)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_12__.SetTooltipEntrySettings, {
+    fn: getTooltipEntrySettings,
+    args: props
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetGraphicalItem__WEBPACK_IMPORTED_MODULE_24__.SetCartesianGraphicalItem, {
+    type: "bar",
+    id: id
+    // Bar does not allow setting data directly on the graphical item (why?)
+    ,
+    data: undefined,
+    xAxisId: props.xAxisId,
+    yAxisId: props.yAxisId,
+    zAxisId: 0,
+    dataKey: props.dataKey,
+    stackId: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_8__.getNormalizedStackId)(props.stackId),
+    hide: props.hide,
+    barSize: props.barSize,
+    minPointSize: props.minPointSize,
+    maxBarSize: props.maxBarSize,
+    isPanorama: isPanorama
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BarImpl, _extends({}, props, {
+    id: id
+  }))));
 }
-_defineProperty(Bar, "displayName", 'Bar');
-_defineProperty(Bar, "defaultProps", defaultBarProps);
+Bar.displayName = 'Bar';
 
 /***/ }),
 
@@ -55943,6 +56436,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_types__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../util/types */ "./node_modules/recharts/es6/util/types.js");
 /* harmony import */ var _util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../util/ReactUtils */ "./node_modules/recharts/es6/util/ReactUtils.js");
 /* harmony import */ var _getTicks__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./getTicks */ "./node_modules/recharts/es6/cartesian/getTicks.js");
+/* harmony import */ var _util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../util/svgPropertiesNoEvents */ "./node_modules/recharts/es6/util/svgPropertiesNoEvents.js");
 var _excluded = ["viewBox"],
   _excluded2 = ["viewBox"];
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
@@ -55956,6 +56450,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 /**
  * @fileOverview Cartesian Axis
  */
+
 
 
 
@@ -56175,7 +56670,8 @@ class CartesianAxis extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       stroke,
       tick,
       tickFormatter,
-      unit
+      unit,
+      padding
     } = this.props;
     // @ts-expect-error some properties are optional in props but required in getTicks
     var finalTicks = (0,_getTicks__WEBPACK_IMPORTED_MODULE_10__.getTicks)(_objectSpread(_objectSpread({}, this.props), {}, {
@@ -56183,7 +56679,7 @@ class CartesianAxis extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     }), fontSize, letterSpacing);
     var textAnchor = this.getTickTextAnchor();
     var verticalAnchor = this.getTickVerticalAnchor();
-    var axisProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__.filterProps)(this.props, false);
+    var axisProps = (0,_util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_11__.svgPropertiesNoEvents)(this.props);
     var customTickProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__.filterProps)(tick, false);
     var tickLineProps = _objectSpread(_objectSpread({}, axisProps), {}, {
       fill: 'none'
@@ -56203,12 +56699,16 @@ class CartesianAxis extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         index: i,
         payload: entry,
         visibleTicksCount: finalTicks.length,
-        tickFormatter
+        tickFormatter,
+        padding
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_4__.Layer, _extends({
         className: "recharts-cartesian-axis-tick",
         key: "tick-".concat(entry.value, "-").concat(entry.coordinate, "-").concat(entry.tickCoord)
-      }, (0,_util_types__WEBPACK_IMPORTED_MODULE_8__.adaptEventsOfChild)(this.props, entry, i)), tickLine && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("line", _extends({}, tickLineProps, lineCoord, {
+      }, (0,_util_types__WEBPACK_IMPORTED_MODULE_8__.adaptEventsOfChild)(this.props, entry, i)), tickLine &&
+      /*#__PURE__*/
+      // @ts-expect-error recharts scale is not compatible with SVG scale
+      react__WEBPACK_IMPORTED_MODULE_0__.createElement("line", _extends({}, tickLineProps, lineCoord, {
         className: (0,clsx__WEBPACK_IMPORTED_MODULE_2__.clsx)('recharts-cartesian-axis-tick-line', es_toolkit_compat_get__WEBPACK_IMPORTED_MODULE_1___default()(tickLine, 'className'))
       })), tick && CartesianAxis.renderTickItem(tick, tickProps, "".concat(typeof tickFormatter === 'function' ? tickFormatter(entry.value, i) : entry.value).concat(unit || '')));
     });
@@ -56305,15 +56805,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _util_LogUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/LogUtils */ "./node_modules/recharts/es6/util/LogUtils.js");
 /* harmony import */ var _util_DataUtils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
-/* harmony import */ var _util_ReactUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/ReactUtils */ "./node_modules/recharts/es6/util/ReactUtils.js");
-/* harmony import */ var _util_ChartUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/ChartUtils */ "./node_modules/recharts/es6/util/ChartUtils.js");
-/* harmony import */ var _getTicks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./getTicks */ "./node_modules/recharts/es6/cartesian/getTicks.js");
-/* harmony import */ var _CartesianAxis__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CartesianAxis */ "./node_modules/recharts/es6/cartesian/CartesianAxis.js");
-/* harmony import */ var _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../context/chartLayoutContext */ "./node_modules/recharts/es6/context/chartLayoutContext.js");
-/* harmony import */ var _state_selectors_axisSelectors__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../state/selectors/axisSelectors */ "./node_modules/recharts/es6/state/selectors/axisSelectors.js");
-/* harmony import */ var _state_hooks__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../state/hooks */ "./node_modules/recharts/es6/state/hooks.js");
-/* harmony import */ var _context_PanoramaContext__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../context/PanoramaContext */ "./node_modules/recharts/es6/context/PanoramaContext.js");
-/* harmony import */ var _util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../util/resolveDefaultProps */ "./node_modules/recharts/es6/util/resolveDefaultProps.js");
+/* harmony import */ var _util_ChartUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/ChartUtils */ "./node_modules/recharts/es6/util/ChartUtils.js");
+/* harmony import */ var _getTicks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./getTicks */ "./node_modules/recharts/es6/cartesian/getTicks.js");
+/* harmony import */ var _CartesianAxis__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./CartesianAxis */ "./node_modules/recharts/es6/cartesian/CartesianAxis.js");
+/* harmony import */ var _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../context/chartLayoutContext */ "./node_modules/recharts/es6/context/chartLayoutContext.js");
+/* harmony import */ var _state_selectors_axisSelectors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../state/selectors/axisSelectors */ "./node_modules/recharts/es6/state/selectors/axisSelectors.js");
+/* harmony import */ var _state_hooks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../state/hooks */ "./node_modules/recharts/es6/state/hooks.js");
+/* harmony import */ var _context_PanoramaContext__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../context/PanoramaContext */ "./node_modules/recharts/es6/context/PanoramaContext.js");
+/* harmony import */ var _util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../util/resolveDefaultProps */ "./node_modules/recharts/es6/util/resolveDefaultProps.js");
+/* harmony import */ var _util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../util/svgPropertiesNoEvents */ "./node_modules/recharts/es6/util/svgPropertiesNoEvents.js");
 var _excluded = ["x1", "y1", "x2", "y2", "key"],
   _excluded2 = ["offset"],
   _excluded3 = ["xAxisId", "yAxisId"],
@@ -56389,11 +56889,11 @@ function renderLineItem(option, props) {
         key
       } = props,
       others = _objectWithoutProperties(props, _excluded);
-    var _filterProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_3__.filterProps)(others, false),
+    var _svgPropertiesNoEvent = (0,_util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_11__.svgPropertiesNoEvents)(others),
       {
         offset: __
-      } = _filterProps,
-      restOfFilteredProps = _objectWithoutProperties(_filterProps, _excluded2);
+      } = _svgPropertiesNoEvent,
+      restOfFilteredProps = _objectWithoutProperties(_svgPropertiesNoEvent, _excluded2);
     lineItem = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("line", _extends({}, restOfFilteredProps, {
       x1: x1,
       y1: y1,
@@ -56560,8 +57060,8 @@ var defaultVerticalCoordinatesGenerator = (_ref, syncWithTicks) => {
     height,
     offset
   } = _ref;
-  return (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_4__.getCoordinatesOfGrid)((0,_getTicks__WEBPACK_IMPORTED_MODULE_5__.getTicks)(_objectSpread(_objectSpread(_objectSpread({}, _CartesianAxis__WEBPACK_IMPORTED_MODULE_6__.CartesianAxis.defaultProps), xAxis), {}, {
-    ticks: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_4__.getTicksOfAxis)(xAxis, true),
+  return (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_3__.getCoordinatesOfGrid)((0,_getTicks__WEBPACK_IMPORTED_MODULE_4__.getTicks)(_objectSpread(_objectSpread(_objectSpread({}, _CartesianAxis__WEBPACK_IMPORTED_MODULE_5__.CartesianAxis.defaultProps), xAxis), {}, {
+    ticks: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_3__.getTicksOfAxis)(xAxis, true),
     viewBox: {
       x: 0,
       y: 0,
@@ -56577,8 +57077,8 @@ var defaultHorizontalCoordinatesGenerator = (_ref2, syncWithTicks) => {
     height,
     offset
   } = _ref2;
-  return (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_4__.getCoordinatesOfGrid)((0,_getTicks__WEBPACK_IMPORTED_MODULE_5__.getTicks)(_objectSpread(_objectSpread(_objectSpread({}, _CartesianAxis__WEBPACK_IMPORTED_MODULE_6__.CartesianAxis.defaultProps), yAxis), {}, {
-    ticks: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_4__.getTicksOfAxis)(yAxis, true),
+  return (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_3__.getCoordinatesOfGrid)((0,_getTicks__WEBPACK_IMPORTED_MODULE_4__.getTicks)(_objectSpread(_objectSpread(_objectSpread({}, _CartesianAxis__WEBPACK_IMPORTED_MODULE_5__.CartesianAxis.defaultProps), yAxis), {}, {
+    ticks: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_3__.getTicksOfAxis)(yAxis, true),
     viewBox: {
       x: 0,
       y: 0,
@@ -56603,10 +57103,10 @@ var defaultProps = {
   yAxisId: 0
 };
 function CartesianGrid(props) {
-  var chartWidth = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_7__.useChartWidth)();
-  var chartHeight = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_7__.useChartHeight)();
-  var offset = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_7__.useOffsetInternal)();
-  var propsIncludingDefaults = _objectSpread(_objectSpread({}, (0,_util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_11__.resolveDefaultProps)(props, defaultProps)), {}, {
+  var chartWidth = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_6__.useChartWidth)();
+  var chartHeight = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_6__.useChartHeight)();
+  var offset = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_6__.useOffsetInternal)();
+  var propsIncludingDefaults = _objectSpread(_objectSpread({}, (0,_util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_10__.resolveDefaultProps)(props, defaultProps)), {}, {
     x: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_2__.isNumber)(props.x) ? props.x : offset.left,
     y: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_2__.isNumber)(props.y) ? props.y : offset.top,
     width: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_2__.isNumber)(props.width) ? props.width : offset.width,
@@ -56623,9 +57123,9 @@ function CartesianGrid(props) {
     horizontalValues,
     verticalValues
   } = propsIncludingDefaults;
-  var isPanorama = (0,_context_PanoramaContext__WEBPACK_IMPORTED_MODULE_10__.useIsPanorama)();
-  var xAxis = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_9__.useAppSelector)(state => (0,_state_selectors_axisSelectors__WEBPACK_IMPORTED_MODULE_8__.selectAxisPropsNeededForCartesianGridTicksGenerator)(state, 'xAxis', xAxisId, isPanorama));
-  var yAxis = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_9__.useAppSelector)(state => (0,_state_selectors_axisSelectors__WEBPACK_IMPORTED_MODULE_8__.selectAxisPropsNeededForCartesianGridTicksGenerator)(state, 'yAxis', yAxisId, isPanorama));
+  var isPanorama = (0,_context_PanoramaContext__WEBPACK_IMPORTED_MODULE_9__.useIsPanorama)();
+  var xAxis = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_8__.useAppSelector)(state => (0,_state_selectors_axisSelectors__WEBPACK_IMPORTED_MODULE_7__.selectAxisPropsNeededForCartesianGridTicksGenerator)(state, 'xAxis', xAxisId, isPanorama));
+  var yAxis = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_8__.useAppSelector)(state => (0,_state_selectors_axisSelectors__WEBPACK_IMPORTED_MODULE_7__.selectAxisPropsNeededForCartesianGridTicksGenerator)(state, 'yAxis', yAxisId, isPanorama));
   if (!(0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_2__.isNumber)(width) || width <= 0 || !(0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_2__.isNumber)(height) || height <= 0 || !(0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_2__.isNumber)(x) || x !== +x || !(0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_2__.isNumber)(y) || y !== +y) {
     return null;
   }
@@ -56704,273 +57204,6 @@ function CartesianGrid(props) {
   })));
 }
 CartesianGrid.displayName = 'CartesianGrid';
-
-/***/ }),
-
-/***/ "./node_modules/recharts/es6/cartesian/ErrorBar.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/recharts/es6/cartesian/ErrorBar.js ***!
-  \*********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ErrorBar: () => (/* binding */ ErrorBar),
-/* harmony export */   SetErrorBarPreferredDirection: () => (/* binding */ SetErrorBarPreferredDirection)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _container_Layer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../container/Layer */ "./node_modules/recharts/es6/container/Layer.js");
-/* harmony import */ var _util_ReactUtils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/ReactUtils */ "./node_modules/recharts/es6/util/ReactUtils.js");
-/* harmony import */ var _context_CartesianGraphicalItemContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../context/CartesianGraphicalItemContext */ "./node_modules/recharts/es6/context/CartesianGraphicalItemContext.js");
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks */ "./node_modules/recharts/es6/hooks.js");
-/* harmony import */ var _util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/resolveDefaultProps */ "./node_modules/recharts/es6/util/resolveDefaultProps.js");
-/* harmony import */ var _animation_Animate__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../animation/Animate */ "./node_modules/recharts/es6/animation/Animate.js");
-var _excluded = ["direction", "width", "dataKey", "isAnimationActive", "animationBegin", "animationDuration", "animationEasing"];
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
-function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
-function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
-/**
- * @fileOverview Render a group of error bar
- */
-
-
-
-
-
-
-
-
-
-/**
- * So usually the direction is decided by the chart layout.
- * Horizontal layout means error bars are vertical means direction=y
- * Vertical layout means error bars are horizontal means direction=x
- *
- * Except! In Scatter chart, error bars can go both ways.
- *
- * So this property is only ever used in Scatter chart, and ignored elsewhere.
- */
-
-/**
- * External ErrorBar props, visible for users of the library
- */
-
-/**
- * Props after defaults, and required props have been applied.
- */
-
-function ErrorBarImpl(props) {
-  var {
-      direction,
-      width,
-      dataKey,
-      isAnimationActive,
-      animationBegin,
-      animationDuration,
-      animationEasing
-    } = props,
-    others = _objectWithoutProperties(props, _excluded);
-  var svgProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_2__.filterProps)(others, false);
-  var {
-    data,
-    dataPointFormatter,
-    xAxisId,
-    yAxisId,
-    errorBarOffset: offset
-  } = (0,_context_CartesianGraphicalItemContext__WEBPACK_IMPORTED_MODULE_3__.useErrorBarContext)();
-  var xAxis = (0,_hooks__WEBPACK_IMPORTED_MODULE_4__.useXAxis)(xAxisId);
-  var yAxis = (0,_hooks__WEBPACK_IMPORTED_MODULE_4__.useYAxis)(yAxisId);
-  if ((xAxis === null || xAxis === void 0 ? void 0 : xAxis.scale) == null || (yAxis === null || yAxis === void 0 ? void 0 : yAxis.scale) == null || data == null) {
-    return null;
-  }
-
-  // ErrorBar requires type number XAxis, why?
-  if (direction === 'x' && xAxis.type !== 'number') {
-    return null;
-  }
-  var errorBars = data.map(entry => {
-    var {
-      x,
-      y,
-      value,
-      errorVal
-    } = dataPointFormatter(entry, dataKey, direction);
-    if (!errorVal) {
-      return null;
-    }
-    var lineCoordinates = [];
-    var lowBound, highBound;
-    if (Array.isArray(errorVal)) {
-      [lowBound, highBound] = errorVal;
-    } else {
-      lowBound = highBound = errorVal;
-    }
-    if (direction === 'x') {
-      // error bar for horizontal charts, the y is fixed, x is a range value
-      var {
-        scale
-      } = xAxis;
-      var yMid = y + offset;
-      var yMin = yMid + width;
-      var yMax = yMid - width;
-      var xMin = scale(value - lowBound);
-      var xMax = scale(value + highBound);
-
-      // the right line of |--|
-      lineCoordinates.push({
-        x1: xMax,
-        y1: yMin,
-        x2: xMax,
-        y2: yMax
-      });
-      // the middle line of |--|
-      lineCoordinates.push({
-        x1: xMin,
-        y1: yMid,
-        x2: xMax,
-        y2: yMid
-      });
-      // the left line of |--|
-      lineCoordinates.push({
-        x1: xMin,
-        y1: yMin,
-        x2: xMin,
-        y2: yMax
-      });
-    } else if (direction === 'y') {
-      // error bar for horizontal charts, the x is fixed, y is a range value
-      var {
-        scale: _scale
-      } = yAxis;
-      var xMid = x + offset;
-      var _xMin = xMid - width;
-      var _xMax = xMid + width;
-      var _yMin = _scale(value - lowBound);
-      var _yMax = _scale(value + highBound);
-
-      // the top line
-      lineCoordinates.push({
-        x1: _xMin,
-        y1: _yMax,
-        x2: _xMax,
-        y2: _yMax
-      });
-      // the middle line
-      lineCoordinates.push({
-        x1: xMid,
-        y1: _yMin,
-        x2: xMid,
-        y2: _yMax
-      });
-      // the bottom line
-      lineCoordinates.push({
-        x1: _xMin,
-        y1: _yMin,
-        x2: _xMax,
-        y2: _yMin
-      });
-    }
-    var transformOrigin = "".concat(x + offset, "px ").concat(y + offset, "px");
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_1__.Layer, _extends({
-      className: "recharts-errorBar",
-      key: "bar-".concat(lineCoordinates.map(c => "".concat(c.x1, "-").concat(c.x2, "-").concat(c.y1, "-").concat(c.y2)))
-    }, svgProps), lineCoordinates.map(coordinates => {
-      var lineStyle = isAnimationActive ? {
-        transformOrigin: "".concat(coordinates.x1 - 5, "px")
-      } : undefined;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_animation_Animate__WEBPACK_IMPORTED_MODULE_6__.Animate, {
-        from: {
-          transform: 'scaleY(0)',
-          transformOrigin
-        },
-        to: {
-          transform: 'scaleY(1)',
-          transformOrigin
-        },
-        begin: animationBegin,
-        easing: animationEasing,
-        isActive: isAnimationActive,
-        duration: animationDuration,
-        key: "line-".concat(coordinates.x1, "-").concat(coordinates.x2, "-").concat(coordinates.y1, "-").concat(coordinates.y2)
-        // @ts-expect-error TODO - fix the type error
-        ,
-        style: {
-          transformOrigin
-        }
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("line", _extends({}, coordinates, {
-        style: lineStyle
-      })));
-    }));
-  });
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_1__.Layer, {
-    className: "recharts-errorBars"
-  }, errorBars);
-}
-var ErrorBarPreferredDirection = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)(undefined);
-function useErrorBarDirection(directionFromProps) {
-  var preferredDirection = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(ErrorBarPreferredDirection);
-  if (directionFromProps != null) {
-    return directionFromProps;
-  }
-  if (preferredDirection != null) {
-    return preferredDirection;
-  }
-  return 'x';
-}
-function SetErrorBarPreferredDirection(_ref) {
-  var {
-    direction,
-    children
-  } = _ref;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ErrorBarPreferredDirection.Provider, {
-    value: direction
-  }, children);
-}
-var errorBarDefaultProps = {
-  stroke: 'black',
-  strokeWidth: 1.5,
-  width: 5,
-  offset: 0,
-  isAnimationActive: true,
-  animationBegin: 0,
-  animationDuration: 400,
-  animationEasing: 'ease-in-out'
-};
-function ErrorBarInternal(props) {
-  var realDirection = useErrorBarDirection(props.direction);
-  var {
-    width,
-    isAnimationActive,
-    animationBegin,
-    animationDuration,
-    animationEasing
-  } = (0,_util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_5__.resolveDefaultProps)(props, errorBarDefaultProps);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_context_CartesianGraphicalItemContext__WEBPACK_IMPORTED_MODULE_3__.ReportErrorBarSettings, {
-    dataKey: props.dataKey,
-    direction: realDirection
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ErrorBarImpl, _extends({}, props, {
-    direction: realDirection,
-    width: width,
-    isAnimationActive: isAnimationActive,
-    animationBegin: animationBegin,
-    animationDuration: animationDuration,
-    animationEasing: animationEasing
-  })));
-}
-
-// eslint-disable-next-line react/prefer-stateless-function
-class ErrorBar extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
-  render() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ErrorBarInternal, this.props);
-  }
-}
-_defineProperty(ErrorBar, "defaultProps", errorBarDefaultProps);
-_defineProperty(ErrorBar, "displayName", 'ErrorBar');
 
 /***/ }),
 
@@ -57060,35 +57293,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shape_Dot__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shape/Dot */ "./node_modules/recharts/es6/shape/Dot.js");
 /* harmony import */ var _container_Layer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../container/Layer */ "./node_modules/recharts/es6/container/Layer.js");
 /* harmony import */ var _component_LabelList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../component/LabelList */ "./node_modules/recharts/es6/component/LabelList.js");
-/* harmony import */ var _ErrorBar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ErrorBar */ "./node_modules/recharts/es6/cartesian/ErrorBar.js");
-/* harmony import */ var _util_DataUtils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../util/DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
-/* harmony import */ var _util_ReactUtils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../util/ReactUtils */ "./node_modules/recharts/es6/util/ReactUtils.js");
-/* harmony import */ var _util_Global__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../util/Global */ "./node_modules/recharts/es6/util/Global.js");
-/* harmony import */ var _util_ChartUtils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../util/ChartUtils */ "./node_modules/recharts/es6/util/ChartUtils.js");
-/* harmony import */ var _component_ActivePoints__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../component/ActivePoints */ "./node_modules/recharts/es6/component/ActivePoints.js");
-/* harmony import */ var _state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../state/SetTooltipEntrySettings */ "./node_modules/recharts/es6/state/SetTooltipEntrySettings.js");
-/* harmony import */ var _context_CartesianGraphicalItemContext__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../context/CartesianGraphicalItemContext */ "./node_modules/recharts/es6/context/CartesianGraphicalItemContext.js");
-/* harmony import */ var _GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./GraphicalItemClipPath */ "./node_modules/recharts/es6/cartesian/GraphicalItemClipPath.js");
-/* harmony import */ var _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../context/chartLayoutContext */ "./node_modules/recharts/es6/context/chartLayoutContext.js");
-/* harmony import */ var _context_PanoramaContext__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../context/PanoramaContext */ "./node_modules/recharts/es6/context/PanoramaContext.js");
-/* harmony import */ var _state_selectors_lineSelectors__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../state/selectors/lineSelectors */ "./node_modules/recharts/es6/state/selectors/lineSelectors.js");
-/* harmony import */ var _state_hooks__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../state/hooks */ "./node_modules/recharts/es6/state/hooks.js");
-/* harmony import */ var _state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../state/SetLegendPayload */ "./node_modules/recharts/es6/state/SetLegendPayload.js");
-/* harmony import */ var _util_useAnimationId__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../util/useAnimationId */ "./node_modules/recharts/es6/util/useAnimationId.js");
-/* harmony import */ var _util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../util/resolveDefaultProps */ "./node_modules/recharts/es6/util/resolveDefaultProps.js");
-/* harmony import */ var _animation_Animate__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../animation/Animate */ "./node_modules/recharts/es6/animation/Animate.js");
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../hooks */ "./node_modules/recharts/es6/hooks.js");
-var _excluded = ["type", "layout", "connectNulls", "needClip"],
-  _excluded2 = ["activeDot", "animateNewValues", "animationBegin", "animationDuration", "animationEasing", "connectNulls", "dot", "hide", "isAnimationActive", "label", "legendType", "xAxisId", "yAxisId"];
-function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
-function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
+/* harmony import */ var _util_DataUtils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
+/* harmony import */ var _util_ReactUtils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../util/ReactUtils */ "./node_modules/recharts/es6/util/ReactUtils.js");
+/* harmony import */ var _util_Global__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../util/Global */ "./node_modules/recharts/es6/util/Global.js");
+/* harmony import */ var _util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../util/ChartUtils */ "./node_modules/recharts/es6/util/ChartUtils.js");
+/* harmony import */ var _component_ActivePoints__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../component/ActivePoints */ "./node_modules/recharts/es6/component/ActivePoints.js");
+/* harmony import */ var _state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../state/SetTooltipEntrySettings */ "./node_modules/recharts/es6/state/SetTooltipEntrySettings.js");
+/* harmony import */ var _context_ErrorBarContext__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../context/ErrorBarContext */ "./node_modules/recharts/es6/context/ErrorBarContext.js");
+/* harmony import */ var _GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./GraphicalItemClipPath */ "./node_modules/recharts/es6/cartesian/GraphicalItemClipPath.js");
+/* harmony import */ var _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../context/chartLayoutContext */ "./node_modules/recharts/es6/context/chartLayoutContext.js");
+/* harmony import */ var _context_PanoramaContext__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../context/PanoramaContext */ "./node_modules/recharts/es6/context/PanoramaContext.js");
+/* harmony import */ var _state_selectors_lineSelectors__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../state/selectors/lineSelectors */ "./node_modules/recharts/es6/state/selectors/lineSelectors.js");
+/* harmony import */ var _state_hooks__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../state/hooks */ "./node_modules/recharts/es6/state/hooks.js");
+/* harmony import */ var _state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../state/SetLegendPayload */ "./node_modules/recharts/es6/state/SetLegendPayload.js");
+/* harmony import */ var _util_useAnimationId__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../util/useAnimationId */ "./node_modules/recharts/es6/util/useAnimationId.js");
+/* harmony import */ var _util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../util/resolveDefaultProps */ "./node_modules/recharts/es6/util/resolveDefaultProps.js");
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../hooks */ "./node_modules/recharts/es6/hooks.js");
+/* harmony import */ var _context_RegisterGraphicalItemId__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../context/RegisterGraphicalItemId */ "./node_modules/recharts/es6/context/RegisterGraphicalItemId.js");
+/* harmony import */ var _state_SetGraphicalItem__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../state/SetGraphicalItem */ "./node_modules/recharts/es6/state/SetGraphicalItem.js");
+/* harmony import */ var _util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../util/svgPropertiesNoEvents */ "./node_modules/recharts/es6/util/svgPropertiesNoEvents.js");
+/* harmony import */ var _animation_JavascriptAnimate__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../animation/JavascriptAnimate */ "./node_modules/recharts/es6/animation/JavascriptAnimate.js");
+var _excluded = ["id"],
+  _excluded2 = ["type", "layout", "connectNulls", "needClip"],
+  _excluded3 = ["activeDot", "animateNewValues", "animationBegin", "animationDuration", "animationEasing", "connectNulls", "dot", "hide", "isAnimationActive", "label", "legendType", "xAxisId", "yAxisId", "id"];
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
+function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
-// eslint-disable-next-line max-classes-per-file
+
+
 
 
 
@@ -57140,7 +57377,7 @@ var computeLegendPayloadFromAreaData = props => {
     dataKey,
     type: legendType,
     color: stroke,
-    value: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_10__.getTooltipNameProp)(name, dataKey),
+    value: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.getTooltipNameProp)(name, dataKey),
     payload: props
   }];
 };
@@ -57164,7 +57401,7 @@ function getTooltipEntrySettings(props) {
       fill,
       dataKey,
       nameKey: undefined,
-      name: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_10__.getTooltipNameProp)(name, dataKey),
+      name: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.getTooltipNameProp)(name, dataKey),
       hide,
       type: props.tooltipType,
       color: props.stroke,
@@ -57240,9 +57477,18 @@ function Dots(_ref) {
   if (!shouldRenderDots(points, dot)) {
     return null;
   }
-  var clipDot = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_8__.isClipDot)(dot);
-  var lineProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_8__.filterProps)(props, false);
-  var customDotProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_8__.filterProps)(dot, true);
+
+  /*
+   * Exclude ID from the props passed to the Dots component
+   * because then the ID would be applied to multiple dots and it would no longer be unique.
+   */
+  var {
+      id
+    } = props,
+    propsWithoutId = _objectWithoutProperties(props, _excluded);
+  var clipDot = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_7__.isClipDot)(dot);
+  var lineProps = (0,_util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_24__.svgPropertiesNoEvents)(propsWithoutId);
+  var customDotProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_7__.filterProps)(dot, true);
   var dots = points.map((entry, i) => {
     var dotProps = _objectSpread(_objectSpread(_objectSpread({
       key: "dot-".concat(i),
@@ -57259,7 +57505,7 @@ function Dots(_ref) {
     return renderDotItem(dot, dotProps);
   });
   var dotsProps = {
-    clipPath: needClip ? "url(#clipPath-".concat(clipDot ? '' : 'dots-').concat(clipPathId, ")") : null
+    clipPath: needClip ? "url(#clipPath-".concat(clipDot ? '' : 'dots-').concat(clipPathId, ")") : undefined
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_4__.Layer, _extends({
     className: "recharts-line-dots",
@@ -57281,11 +57527,11 @@ function StaticCurve(_ref2) {
       connectNulls,
       needClip
     } = props,
-    others = _objectWithoutProperties(props, _excluded);
-  var curveProps = _objectSpread(_objectSpread({}, (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_8__.filterProps)(others, true)), {}, {
+    others = _objectWithoutProperties(props, _excluded2);
+  var curveProps = _objectSpread(_objectSpread({}, (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_7__.filterProps)(others, true)), {}, {
     fill: 'none',
     className: 'recharts-line-curve',
-    clipPath: needClip ? "url(#clipPath-".concat(clipPathId, ")") : null,
+    clipPath: needClip ? "url(#clipPath-".concat(clipPathId, ")") : undefined,
     points,
     type,
     layout,
@@ -57329,7 +57575,7 @@ function CurveWithAnimation(_ref3) {
     onAnimationStart
   } = props;
   var prevPoints = previousPointsRef.current;
-  var animationId = (0,_util_useAnimationId__WEBPACK_IMPORTED_MODULE_20__.useAnimationId)(props, 'recharts-line-');
+  var animationId = (0,_util_useAnimationId__WEBPACK_IMPORTED_MODULE_19__.useAnimationId)(props, 'recharts-line-');
   var [isAnimating, setIsAnimating] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   var handleAnimationEnd = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
     if (typeof onAnimationEnd === 'function') {
@@ -57362,26 +57608,17 @@ function CurveWithAnimation(_ref3) {
    * change the dataKey and the Line will continue growing from where it has grown so far.
    */
   var startingPoint = longestAnimatedLengthRef.current;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_animation_Animate__WEBPACK_IMPORTED_MODULE_22__.Animate, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_animation_JavascriptAnimate__WEBPACK_IMPORTED_MODULE_25__.JavascriptAnimate, {
     begin: animationBegin,
     duration: animationDuration,
     isActive: isAnimationActive,
     easing: animationEasing,
-    from: {
-      t: 0
-    },
-    to: {
-      t: 1
-    },
     onAnimationEnd: handleAnimationEnd,
     onAnimationStart: handleAnimationStart,
     key: animationId
-  }, _ref4 => {
-    var {
-      t
-    } = _ref4;
-    var interpolator = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_7__.interpolateNumber)(startingPoint, totalLength + startingPoint);
-    var curLength = Math.min(interpolator(t), totalLength);
+  }, t => {
+    var lengthInterpolated = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.interpolate)(startingPoint, totalLength + startingPoint, t);
+    var curLength = Math.min(lengthInterpolated, totalLength);
     var currentStrokeDasharray;
     if (strokeDasharray) {
       var lines = "".concat(strokeDasharray).split(/[,\s]+/gim).map(num => parseFloat(num));
@@ -57395,21 +57632,17 @@ function CurveWithAnimation(_ref3) {
         var prevPointIndex = Math.floor(index * prevPointsDiffFactor);
         if (prevPoints[prevPointIndex]) {
           var prev = prevPoints[prevPointIndex];
-          var interpolatorX = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_7__.interpolateNumber)(prev.x, entry.x);
-          var interpolatorY = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_7__.interpolateNumber)(prev.y, entry.y);
           return _objectSpread(_objectSpread({}, entry), {}, {
-            x: interpolatorX(t),
-            y: interpolatorY(t)
+            x: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.interpolate)(prev.x, entry.x, t),
+            y: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.interpolate)(prev.y, entry.y, t)
           });
         }
 
         // magic number of faking previous x and y location
         if (animateNewValues) {
-          var _interpolatorX = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_7__.interpolateNumber)(width * 2, entry.x);
-          var _interpolatorY = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_7__.interpolateNumber)(height / 2, entry.y);
           return _objectSpread(_objectSpread({}, entry), {}, {
-            x: _interpolatorX(t),
-            y: _interpolatorY(t)
+            x: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.interpolate)(width * 2, entry.x, t),
+            y: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.interpolate)(height / 2, entry.y, t)
           });
         }
         return _objectSpread(_objectSpread({}, entry), {}, {
@@ -57471,11 +57704,11 @@ function CurveWithAnimation(_ref3) {
     });
   });
 }
-function RenderCurve(_ref5) {
+function RenderCurve(_ref4) {
   var {
     clipPathId,
     props
-  } = _ref5;
+  } = _ref4;
   var {
     points,
     isAnimationActive
@@ -57507,14 +57740,12 @@ var errorBarDataPointFormatter = (dataPoint, dataKey) => {
     y: dataPoint.y,
     value: dataPoint.value,
     // @ts-expect-error getValueByDataKey does not validate the output type
-    errorVal: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_10__.getValueByDataKey)(dataPoint.payload, dataKey)
+    errorVal: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.getValueByDataKey)(dataPoint.payload, dataKey)
   };
 };
+
+// eslint-disable-next-line react/prefer-stateless-function
 class LineWithState extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
-  constructor() {
-    super(...arguments);
-    _defineProperty(this, "id", (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_7__.uniqueId)('recharts-line-'));
-  }
   render() {
     var _filterProps;
     var {
@@ -57529,26 +57760,25 @@ class LineWithState extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       width,
       height,
       id,
-      needClip,
-      layout
+      needClip
     } = this.props;
     if (hide) {
       return null;
     }
     var layerClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__.clsx)('recharts-line', className);
-    var clipPathId = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_7__.isNullish)(id) ? this.id : id;
+    var clipPathId = id;
     var {
       r = 3,
       strokeWidth = 2
-    } = (_filterProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_8__.filterProps)(dot, false)) !== null && _filterProps !== void 0 ? _filterProps : {
+    } = (_filterProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_7__.filterProps)(dot, false)) !== null && _filterProps !== void 0 ? _filterProps : {
       r: 3,
       strokeWidth: 2
     };
-    var clipDot = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_8__.isClipDot)(dot);
+    var clipDot = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_7__.isClipDot)(dot);
     var dotSize = r * 2 + strokeWidth;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_4__.Layer, {
       className: layerClass
-    }, needClip && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("defs", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_14__.GraphicalItemClipPath, {
+    }, needClip && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("defs", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_13__.GraphicalItemClipPath, {
       clipPathId: clipPathId,
       xAxisId: xAxisId,
       yAxisId: yAxisId
@@ -57562,15 +57792,13 @@ class LineWithState extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(RenderCurve, {
       props: this.props,
       clipPathId: clipPathId
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_ErrorBar__WEBPACK_IMPORTED_MODULE_6__.SetErrorBarPreferredDirection, {
-      direction: layout === 'horizontal' ? 'y' : 'x'
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_context_CartesianGraphicalItemContext__WEBPACK_IMPORTED_MODULE_13__.SetErrorBarContext, {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_context_ErrorBarContext__WEBPACK_IMPORTED_MODULE_12__.SetErrorBarContext, {
       xAxisId: xAxisId,
       yAxisId: yAxisId,
       data: points,
       dataPointFormatter: errorBarDataPointFormatter,
       errorBarOffset: 0
-    }, this.props.children))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_ActivePoints__WEBPACK_IMPORTED_MODULE_11__.ActivePoints, {
+    }, this.props.children)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_ActivePoints__WEBPACK_IMPORTED_MODULE_10__.ActivePoints, {
       activeDot: this.props.activeDot,
       points: points,
       mainColor: this.props.stroke,
@@ -57588,7 +57816,7 @@ var defaultLineProps = {
   dot: true,
   fill: '#fff',
   hide: false,
-  isAnimationActive: !_util_Global__WEBPACK_IMPORTED_MODULE_9__.Global.isSsr,
+  isAnimationActive: !_util_Global__WEBPACK_IMPORTED_MODULE_8__.Global.isSsr,
   label: false,
   legendType: 'line',
   stroke: '#3182bd',
@@ -57597,7 +57825,7 @@ var defaultLineProps = {
   yAxisId: 0
 };
 function LineImpl(props) {
-  var _resolveDefaultProps = (0,_util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_21__.resolveDefaultProps)(props, defaultLineProps),
+  var _resolveDefaultProps = (0,_util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_20__.resolveDefaultProps)(props, defaultLineProps),
     {
       activeDot,
       animateNewValues,
@@ -57611,30 +57839,29 @@ function LineImpl(props) {
       label,
       legendType,
       xAxisId,
-      yAxisId
+      yAxisId,
+      id
     } = _resolveDefaultProps,
-    everythingElse = _objectWithoutProperties(_resolveDefaultProps, _excluded2);
+    everythingElse = _objectWithoutProperties(_resolveDefaultProps, _excluded3);
   var {
     needClip
-  } = (0,_GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_14__.useNeedsClip)(xAxisId, yAxisId);
+  } = (0,_GraphicalItemClipPath__WEBPACK_IMPORTED_MODULE_13__.useNeedsClip)(xAxisId, yAxisId);
+  var plotArea = (0,_hooks__WEBPACK_IMPORTED_MODULE_21__.usePlotArea)();
+  var layout = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_14__.useChartLayout)();
+  var isPanorama = (0,_context_PanoramaContext__WEBPACK_IMPORTED_MODULE_15__.useIsPanorama)();
+  var points = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_17__.useAppSelector)(state => (0,_state_selectors_lineSelectors__WEBPACK_IMPORTED_MODULE_16__.selectLinePoints)(state, xAxisId, yAxisId, isPanorama, id));
+  if (layout !== 'horizontal' && layout !== 'vertical' || points == null || plotArea == null) {
+    // Cannot render Line in an unsupported layout
+    return null;
+  }
   var {
     height,
     width,
     x: left,
     y: top
-  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_23__.usePlotArea)();
-  var layout = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_15__.useChartLayout)();
-  var isPanorama = (0,_context_PanoramaContext__WEBPACK_IMPORTED_MODULE_16__.useIsPanorama)();
-  var lineSettings = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => ({
-    dataKey: props.dataKey,
-    data: props.data
-  }), [props.dataKey, props.data]);
-  var points = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_18__.useAppSelector)(state => (0,_state_selectors_lineSelectors__WEBPACK_IMPORTED_MODULE_17__.selectLinePoints)(state, xAxisId, yAxisId, isPanorama, lineSettings));
-  if (layout !== 'horizontal' && layout !== 'vertical') {
-    // Cannot render Line in an unsupported layout
-    return null;
-  }
+  } = plotArea;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(LineWithState, _extends({}, everythingElse, {
+    id: id,
     connectNulls: connectNulls,
     dot: dot,
     activeDot: activeDot,
@@ -57657,7 +57884,7 @@ function LineImpl(props) {
     needClip: needClip
   }));
 }
-function computeLinePoints(_ref6) {
+function computeLinePoints(_ref5) {
   var {
     layout,
     xAxis,
@@ -57667,63 +57894,71 @@ function computeLinePoints(_ref6) {
     dataKey,
     bandSize,
     displayedData
-  } = _ref6;
+  } = _ref5;
   return displayedData.map((entry, index) => {
     // @ts-expect-error getValueByDataKey does not validate the output type
-    var value = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_10__.getValueByDataKey)(entry, dataKey);
+    var value = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.getValueByDataKey)(entry, dataKey);
     if (layout === 'horizontal') {
+      var _x = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.getCateCoordinateOfLine)({
+        axis: xAxis,
+        ticks: xAxisTicks,
+        bandSize,
+        entry,
+        index
+      });
+      var _y = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.isNullish)(value) ? null : yAxis.scale(value);
       return {
-        x: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_10__.getCateCoordinateOfLine)({
-          axis: xAxis,
-          ticks: xAxisTicks,
-          bandSize,
-          entry,
-          index
-        }),
-        y: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_7__.isNullish)(value) ? null : yAxis.scale(value),
+        x: _x,
+        y: _y,
         value,
         payload: entry
       };
     }
+    var x = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_6__.isNullish)(value) ? null : xAxis.scale(value);
+    var y = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_9__.getCateCoordinateOfLine)({
+      axis: yAxis,
+      ticks: yAxisTicks,
+      bandSize,
+      entry,
+      index
+    });
+    if (x == null || y == null) {
+      return null;
+    }
     return {
-      x: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_7__.isNullish)(value) ? null : xAxis.scale(value),
-      y: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_10__.getCateCoordinateOfLine)({
-        axis: yAxis,
-        ticks: yAxisTicks,
-        bandSize,
-        entry,
-        index
-      }),
+      x,
+      y,
       value,
       payload: entry
     };
-  });
+  }).filter(Boolean);
 }
-class Line extends react__WEBPACK_IMPORTED_MODULE_0__.PureComponent {
-  render() {
-    // Report all props to Redux store first, before calling any hooks, to avoid circular dependencies.
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_context_CartesianGraphicalItemContext__WEBPACK_IMPORTED_MODULE_13__.CartesianGraphicalItemContext, {
-      type: "line",
-      data: this.props.data,
-      xAxisId: this.props.xAxisId,
-      yAxisId: this.props.yAxisId,
-      zAxisId: 0,
-      dataKey: this.props.dataKey
-      // line doesn't stack
-      ,
-      stackId: undefined,
-      hide: this.props.hide,
-      barSize: undefined
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_19__.SetLegendPayload, {
-      legendPayload: computeLegendPayloadFromAreaData(this.props)
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_12__.SetTooltipEntrySettings, {
-      fn: getTooltipEntrySettings,
-      args: this.props
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(LineImpl, this.props));
-  }
+function Line(outsideProps) {
+  var props = (0,_util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_20__.resolveDefaultProps)(outsideProps, defaultLineProps);
+  var isPanorama = (0,_context_PanoramaContext__WEBPACK_IMPORTED_MODULE_15__.useIsPanorama)();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_context_RegisterGraphicalItemId__WEBPACK_IMPORTED_MODULE_22__.RegisterGraphicalItemId, {
+    id: props.id,
+    type: "line"
+  }, id => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_18__.SetLegendPayload, {
+    legendPayload: computeLegendPayloadFromAreaData(props)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_11__.SetTooltipEntrySettings, {
+    fn: getTooltipEntrySettings,
+    args: props
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetGraphicalItem__WEBPACK_IMPORTED_MODULE_23__.SetCartesianGraphicalItem, {
+    type: "line",
+    id: id,
+    data: props.data,
+    xAxisId: props.xAxisId,
+    yAxisId: props.yAxisId,
+    zAxisId: 0,
+    dataKey: props.dataKey,
+    hide: props.hide,
+    isPanorama: isPanorama
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(LineImpl, _extends({}, props, {
+    id: id
+  }))));
 }
-_defineProperty(Line, "displayName", 'Line');
-_defineProperty(Line, "defaultProps", defaultLineProps);
+Line.displayName = 'Line';
 
 /***/ }),
 
@@ -58492,10 +58727,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _util_ReactUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ReactUtils */ "./node_modules/recharts/es6/util/ReactUtils.js");
-/* harmony import */ var _container_RootSurface__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../container/RootSurface */ "./node_modules/recharts/es6/container/RootSurface.js");
-/* harmony import */ var _RechartsWrapper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./RechartsWrapper */ "./node_modules/recharts/es6/chart/RechartsWrapper.js");
-/* harmony import */ var _container_ClipPathProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../container/ClipPathProvider */ "./node_modules/recharts/es6/container/ClipPathProvider.js");
+/* harmony import */ var _container_RootSurface__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../container/RootSurface */ "./node_modules/recharts/es6/container/RootSurface.js");
+/* harmony import */ var _RechartsWrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RechartsWrapper */ "./node_modules/recharts/es6/chart/RechartsWrapper.js");
+/* harmony import */ var _container_ClipPathProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../container/ClipPathProvider */ "./node_modules/recharts/es6/container/ClipPathProvider.js");
+/* harmony import */ var _util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/svgPropertiesNoEvents */ "./node_modules/recharts/es6/util/svgPropertiesNoEvents.js");
 var _excluded = ["children", "className", "width", "height", "style", "compact", "title", "desc"];
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
@@ -58517,17 +58752,17 @@ var CategoricalChart = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.forwar
       desc
     } = props,
     others = _objectWithoutProperties(props, _excluded);
-  var attrs = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_1__.filterProps)(others, false);
+  var attrs = (0,_util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_4__.svgPropertiesNoEvents)(others);
 
   // The "compact" mode is used as the panorama within Brush
   if (compact) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_RootSurface__WEBPACK_IMPORTED_MODULE_2__.RootSurface, {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_RootSurface__WEBPACK_IMPORTED_MODULE_1__.RootSurface, {
       otherAttributes: attrs,
       title: title,
       desc: desc
     }, children);
   }
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_RechartsWrapper__WEBPACK_IMPORTED_MODULE_3__.RechartsWrapper, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_RechartsWrapper__WEBPACK_IMPORTED_MODULE_2__.RechartsWrapper, {
     className: className,
     style: style,
     width: width,
@@ -58543,12 +58778,12 @@ var CategoricalChart = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.forwar
     onTouchStart: props.onTouchStart,
     onTouchMove: props.onTouchMove,
     onTouchEnd: props.onTouchEnd
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_RootSurface__WEBPACK_IMPORTED_MODULE_2__.RootSurface, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_RootSurface__WEBPACK_IMPORTED_MODULE_1__.RootSurface, {
     otherAttributes: attrs,
     title: title,
     desc: desc,
     ref: ref
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_ClipPathProvider__WEBPACK_IMPORTED_MODULE_4__.ClipPathProvider, null, children)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_ClipPathProvider__WEBPACK_IMPORTED_MODULE_3__.ClipPathProvider, null, children)));
 });
 
 /***/ }),
@@ -58975,10 +59210,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_ReactUtils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/ReactUtils */ "./node_modules/recharts/es6/util/ReactUtils.js");
 /* harmony import */ var _shape_Dot__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shape/Dot */ "./node_modules/recharts/es6/shape/Dot.js");
 /* harmony import */ var _container_Layer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../container/Layer */ "./node_modules/recharts/es6/container/Layer.js");
-/* harmony import */ var _util_DataUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
-/* harmony import */ var _state_hooks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../state/hooks */ "./node_modules/recharts/es6/state/hooks.js");
-/* harmony import */ var _state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../state/selectors/tooltipSelectors */ "./node_modules/recharts/es6/state/selectors/tooltipSelectors.js");
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../hooks */ "./node_modules/recharts/es6/hooks.js");
+/* harmony import */ var _state_hooks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../state/hooks */ "./node_modules/recharts/es6/state/hooks.js");
+/* harmony import */ var _state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../state/selectors/tooltipSelectors */ "./node_modules/recharts/es6/state/selectors/tooltipSelectors.js");
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../hooks */ "./node_modules/recharts/es6/hooks.js");
+/* harmony import */ var _util_DataUtils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../util/DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -59037,13 +59272,13 @@ function ActivePoints(_ref2) {
     activeDot,
     itemDataKey
   } = _ref2;
-  var activeTooltipIndex = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_6__.useAppSelector)(_state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_7__.selectActiveTooltipIndex);
-  var activeDataPoints = (0,_hooks__WEBPACK_IMPORTED_MODULE_8__.useActiveTooltipDataPoints)();
+  var activeTooltipIndex = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_5__.useAppSelector)(_state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_6__.selectActiveTooltipIndex);
+  var activeDataPoints = (0,_hooks__WEBPACK_IMPORTED_MODULE_7__.useActiveTooltipDataPoints)();
   if (points == null || activeDataPoints == null) {
     return null;
   }
   var activePoint = points.find(p => activeDataPoints.includes(p.payload));
-  if ((0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_5__.isNullish)(activePoint)) {
+  if ((0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_8__.isNullish)(activePoint)) {
     return null;
   }
   return renderActivePoint({
@@ -59378,6 +59613,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_DataUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
 /* harmony import */ var _util_PolarUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/PolarUtils */ "./node_modules/recharts/es6/util/PolarUtils.js");
 /* harmony import */ var _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../context/chartLayoutContext */ "./node_modules/recharts/es6/context/chartLayoutContext.js");
+/* harmony import */ var _state_hooks__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../state/hooks */ "./node_modules/recharts/es6/state/hooks.js");
+/* harmony import */ var _state_selectors_polarAxisSelectors__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../state/selectors/polarAxisSelectors */ "./node_modules/recharts/es6/state/selectors/polarAxisSelectors.js");
 var _excluded = ["offset"],
   _excluded2 = ["labelRef"];
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
@@ -59388,6 +59625,8 @@ function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+
+
 
 
 
@@ -59415,10 +59654,9 @@ var getDeltaAngle = (startAngle, endAngle) => {
   var deltaAngle = Math.min(Math.abs(endAngle - startAngle), 360);
   return sign * deltaAngle;
 };
-var renderRadialLabel = (labelProps, label, attrs) => {
+var renderRadialLabel = (labelProps, label, attrs, viewBox) => {
   var {
     position,
-    viewBox,
     offset,
     className
   } = labelProps;
@@ -59460,12 +59698,7 @@ var renderRadialLabel = (labelProps, label, attrs) => {
     xlinkHref: "#".concat(id)
   }, label));
 };
-var getAttrsOfPolarLabel = props => {
-  var {
-    viewBox,
-    offset,
-    position
-  } = props;
+var getAttrsOfPolarLabel = (viewBox, offset, position) => {
   var {
     cx,
     cy,
@@ -59697,21 +59930,32 @@ function Label(_ref) {
     textBreakAll,
     labelRef
   } = props;
-  var viewBoxFromContext = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_6__.useViewBox)();
-  var viewBox = viewBoxFromProps || viewBoxFromContext;
+  var polarViewBox = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_7__.useAppSelector)(_state_selectors_polarAxisSelectors__WEBPACK_IMPORTED_MODULE_8__.selectPolarViewBox);
+  var cartesianViewBox = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_6__.useViewBox)();
+
+  /*
+   * I am not proud about this solution but it's a quick fix for https://github.com/recharts/recharts/issues/6030#issuecomment-3155352460.
+   * What we should really do is split Label into two components: CartesianLabel and PolarLabel and then handle their respective viewBoxes separately.
+   * Also other components should set its own viewBox in a context so that we can fix https://github.com/recharts/recharts/issues/6156
+   */
+  var resolvedViewBox = position === 'center' ? cartesianViewBox : polarViewBox !== null && polarViewBox !== void 0 ? polarViewBox : cartesianViewBox;
+  var viewBox = viewBoxFromProps || resolvedViewBox;
   if (!viewBox || (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_4__.isNullish)(value) && (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_4__.isNullish)(children) && ! /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.isValidElement)(content) && typeof content !== 'function') {
     return null;
   }
+  var propsWithViewBox = _objectSpread(_objectSpread({}, props), {}, {
+    viewBox
+  });
   if (/*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.isValidElement)(content)) {
     var {
         labelRef: _
-      } = props,
-      propsWithoutLabelRef = _objectWithoutProperties(props, _excluded2);
+      } = propsWithViewBox,
+      propsWithoutLabelRef = _objectWithoutProperties(propsWithViewBox, _excluded2);
     return /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.cloneElement)(content, propsWithoutLabelRef);
   }
   var label;
   if (typeof content === 'function') {
-    label = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(content, props);
+    label = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(content, propsWithViewBox);
     if (/*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.isValidElement)(label)) {
       return label;
     }
@@ -59721,11 +59965,9 @@ function Label(_ref) {
   var isPolarLabel = isPolar(viewBox);
   var attrs = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_3__.filterProps)(props, true);
   if (isPolarLabel && (position === 'insideStart' || position === 'insideEnd' || position === 'end')) {
-    return renderRadialLabel(props, label, attrs);
+    return renderRadialLabel(props, label, attrs, viewBox);
   }
-
-  // TODO handle the polar viewBox case - Pie chart works with cartesian viewBox, what about the other charts?
-  var positionAttrs = isPolarLabel ? getAttrsOfPolarLabel(props) : getAttrsOfCartesianLabel(props, viewBox);
+  var positionAttrs = isPolarLabel ? getAttrsOfPolarLabel(viewBox, props.offset, props.position) : getAttrsOfCartesianLabel(props, viewBox);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Text__WEBPACK_IMPORTED_MODULE_2__.Text, _extends({
     ref: labelRef,
     className: (0,clsx__WEBPACK_IMPORTED_MODULE_1__.clsx)('recharts-label', className)
@@ -61018,24 +61260,24 @@ var Surface = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)((pr
 
 /***/ }),
 
-/***/ "./node_modules/recharts/es6/context/CartesianGraphicalItemContext.js":
-/*!****************************************************************************!*\
-  !*** ./node_modules/recharts/es6/context/CartesianGraphicalItemContext.js ***!
-  \****************************************************************************/
+/***/ "./node_modules/recharts/es6/context/ErrorBarContext.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/recharts/es6/context/ErrorBarContext.js ***!
+  \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   CartesianGraphicalItemContext: () => (/* binding */ CartesianGraphicalItemContext),
 /* harmony export */   ReportErrorBarSettings: () => (/* binding */ ReportErrorBarSettings),
 /* harmony export */   SetErrorBarContext: () => (/* binding */ SetErrorBarContext),
 /* harmony export */   useErrorBarContext: () => (/* binding */ useErrorBarContext)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _state_SetGraphicalItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../state/SetGraphicalItem */ "./node_modules/recharts/es6/state/SetGraphicalItem.js");
-/* harmony import */ var _PanoramaContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PanoramaContext */ "./node_modules/recharts/es6/context/PanoramaContext.js");
+/* harmony import */ var _state_errorBarSlice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../state/errorBarSlice */ "./node_modules/recharts/es6/state/errorBarSlice.js");
+/* harmony import */ var _state_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../state/hooks */ "./node_modules/recharts/es6/state/hooks.js");
+/* harmony import */ var _RegisterGraphicalItemId__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./RegisterGraphicalItemId */ "./node_modules/recharts/es6/context/RegisterGraphicalItemId.js");
 var _excluded = ["children"];
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
@@ -61043,11 +61285,8 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
+
 var noop = () => {};
-var ErrorBarDirectionDispatchContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)({
-  addErrorBar: noop,
-  removeErrorBar: noop
-});
 var initialContextState = {
   data: [],
   xAxisId: 'xAxis-0',
@@ -61070,58 +61309,23 @@ function SetErrorBarContext(props) {
   }, children);
 }
 var useErrorBarContext = () => (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(ErrorBarContext);
-var CartesianGraphicalItemContext = _ref => {
-  var {
-    children,
-    xAxisId,
-    yAxisId,
-    zAxisId,
-    dataKey,
-    data,
-    stackId,
-    hide,
-    type,
-    barSize
-  } = _ref;
-  var [errorBars, updateErrorBars] = react__WEBPACK_IMPORTED_MODULE_0__.useState([]);
-  // useCallback is necessary in these two because without it, the new function reference causes an infinite render loop
-  var addErrorBar = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(errorBar => {
-    updateErrorBars(prev => [...prev, errorBar]);
-  }, [updateErrorBars]);
-  var removeErrorBar = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(errorBar => {
-    updateErrorBars(prev => prev.filter(eb => eb !== errorBar));
-  }, [updateErrorBars]);
-  var isPanorama = (0,_PanoramaContext__WEBPACK_IMPORTED_MODULE_2__.useIsPanorama)();
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ErrorBarDirectionDispatchContext.Provider, {
-    value: {
-      addErrorBar,
-      removeErrorBar
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetGraphicalItem__WEBPACK_IMPORTED_MODULE_1__.SetCartesianGraphicalItem, {
-    type: type,
-    data: data,
-    xAxisId: xAxisId,
-    yAxisId: yAxisId,
-    zAxisId: zAxisId,
-    dataKey: dataKey,
-    errorBars: errorBars,
-    stackId: stackId,
-    hide: hide,
-    barSize: barSize,
-    isPanorama: isPanorama
-  }), children);
-};
 function ReportErrorBarSettings(props) {
-  var {
-    addErrorBar,
-    removeErrorBar
-  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(ErrorBarDirectionDispatchContext);
+  var dispatch = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_2__.useAppDispatch)();
+  var graphicalItemId = (0,_RegisterGraphicalItemId__WEBPACK_IMPORTED_MODULE_3__.useGraphicalItemId)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    addErrorBar(props);
-    return () => {
-      removeErrorBar(props);
+    if (graphicalItemId == null) {
+      // ErrorBar outside a graphical item context does not do anything.
+      return noop;
+    }
+    var payload = {
+      itemId: graphicalItemId,
+      errorBar: props
     };
-  }, [addErrorBar, removeErrorBar, props]);
+    dispatch((0,_state_errorBarSlice__WEBPACK_IMPORTED_MODULE_1__.addErrorBar)(payload));
+    return () => {
+      dispatch((0,_state_errorBarSlice__WEBPACK_IMPORTED_MODULE_1__.removeErrorBar)(payload));
+    };
+  }, [dispatch, graphicalItemId, props]);
   return null;
 }
 
@@ -61153,6 +61357,42 @@ var PanoramaContextProvider = _ref => {
     value: true
   }, children);
 };
+
+/***/ }),
+
+/***/ "./node_modules/recharts/es6/context/RegisterGraphicalItemId.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/recharts/es6/context/RegisterGraphicalItemId.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   RegisterGraphicalItemId: () => (/* binding */ RegisterGraphicalItemId),
+/* harmony export */   useGraphicalItemId: () => (/* binding */ useGraphicalItemId)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util_useUniqueId__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/useUniqueId */ "./node_modules/recharts/es6/util/useUniqueId.js");
+
+
+
+var GraphicalItemIdContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)(undefined);
+var RegisterGraphicalItemId = _ref => {
+  var {
+    id,
+    type,
+    children
+  } = _ref;
+  var resolvedId = (0,_util_useUniqueId__WEBPACK_IMPORTED_MODULE_1__.useUniqueId)("recharts-".concat(type), id);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(GraphicalItemIdContext.Provider, {
+    value: resolvedId
+  }, children(resolvedId));
+};
+function useGraphicalItemId() {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(GraphicalItemIdContext);
+}
 
 /***/ }),
 
@@ -61525,6 +61765,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _state_hooks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../state/hooks */ "./node_modules/recharts/es6/state/hooks.js");
 /* harmony import */ var _util_ChartUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ChartUtils */ "./node_modules/recharts/es6/util/ChartUtils.js");
 /* harmony import */ var _state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../state/selectors/tooltipSelectors */ "./node_modules/recharts/es6/state/selectors/tooltipSelectors.js");
+/* harmony import */ var _state_selectors_selectTooltipAxis__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../state/selectors/selectTooltipAxis */ "./node_modules/recharts/es6/state/selectors/selectTooltipAxis.js");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -61533,7 +61774,8 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 
 
 
-var useTooltipAxis = () => (0,_state_hooks__WEBPACK_IMPORTED_MODULE_0__.useAppSelector)(_state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_2__.selectTooltipAxis);
+
+var useTooltipAxis = () => (0,_state_hooks__WEBPACK_IMPORTED_MODULE_0__.useAppSelector)(_state_selectors_selectTooltipAxis__WEBPACK_IMPORTED_MODULE_3__.selectTooltipAxis);
 var useTooltipAxisBandSize = () => {
   var tooltipAxis = useTooltipAxis();
   var tooltipTicks = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_0__.useAppSelector)(_state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_2__.selectTooltipAxisTicks);
@@ -61658,27 +61900,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
 /* harmony import */ var _state_selectors_pieSelectors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../state/selectors/pieSelectors */ "./node_modules/recharts/es6/state/selectors/pieSelectors.js");
 /* harmony import */ var _state_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../state/hooks */ "./node_modules/recharts/es6/state/hooks.js");
-/* harmony import */ var _state_SetGraphicalItem__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../state/SetGraphicalItem */ "./node_modules/recharts/es6/state/SetGraphicalItem.js");
-/* harmony import */ var _container_Layer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../container/Layer */ "./node_modules/recharts/es6/container/Layer.js");
-/* harmony import */ var _shape_Curve__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../shape/Curve */ "./node_modules/recharts/es6/shape/Curve.js");
-/* harmony import */ var _component_Text__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../component/Text */ "./node_modules/recharts/es6/component/Text.js");
-/* harmony import */ var _component_Cell__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../component/Cell */ "./node_modules/recharts/es6/component/Cell.js");
-/* harmony import */ var _util_ReactUtils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../util/ReactUtils */ "./node_modules/recharts/es6/util/ReactUtils.js");
-/* harmony import */ var _util_Global__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../util/Global */ "./node_modules/recharts/es6/util/Global.js");
-/* harmony import */ var _util_PolarUtils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../util/PolarUtils */ "./node_modules/recharts/es6/util/PolarUtils.js");
-/* harmony import */ var _util_DataUtils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../util/DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
-/* harmony import */ var _util_ChartUtils__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../util/ChartUtils */ "./node_modules/recharts/es6/util/ChartUtils.js");
-/* harmony import */ var _util_types__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../util/types */ "./node_modules/recharts/es6/util/types.js");
-/* harmony import */ var _util_ActiveShapeUtils__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../util/ActiveShapeUtils */ "./node_modules/recharts/es6/util/ActiveShapeUtils.js");
-/* harmony import */ var _context_tooltipContext__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../context/tooltipContext */ "./node_modules/recharts/es6/context/tooltipContext.js");
-/* harmony import */ var _state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../state/SetTooltipEntrySettings */ "./node_modules/recharts/es6/state/SetTooltipEntrySettings.js");
-/* harmony import */ var _state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../state/selectors/tooltipSelectors */ "./node_modules/recharts/es6/state/selectors/tooltipSelectors.js");
-/* harmony import */ var _state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../state/SetLegendPayload */ "./node_modules/recharts/es6/state/SetLegendPayload.js");
-/* harmony import */ var _util_Constants__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../util/Constants */ "./node_modules/recharts/es6/util/Constants.js");
-/* harmony import */ var _util_useAnimationId__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../util/useAnimationId */ "./node_modules/recharts/es6/util/useAnimationId.js");
-/* harmony import */ var _util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../util/resolveDefaultProps */ "./node_modules/recharts/es6/util/resolveDefaultProps.js");
-/* harmony import */ var _animation_Animate__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../animation/Animate */ "./node_modules/recharts/es6/animation/Animate.js");
-var _excluded = ["onMouseEnter", "onClick", "onMouseLeave"];
+/* harmony import */ var _container_Layer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../container/Layer */ "./node_modules/recharts/es6/container/Layer.js");
+/* harmony import */ var _shape_Curve__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../shape/Curve */ "./node_modules/recharts/es6/shape/Curve.js");
+/* harmony import */ var _component_Text__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../component/Text */ "./node_modules/recharts/es6/component/Text.js");
+/* harmony import */ var _component_Cell__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../component/Cell */ "./node_modules/recharts/es6/component/Cell.js");
+/* harmony import */ var _util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../util/ReactUtils */ "./node_modules/recharts/es6/util/ReactUtils.js");
+/* harmony import */ var _util_Global__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../util/Global */ "./node_modules/recharts/es6/util/Global.js");
+/* harmony import */ var _util_PolarUtils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../util/PolarUtils */ "./node_modules/recharts/es6/util/PolarUtils.js");
+/* harmony import */ var _util_DataUtils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../util/DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
+/* harmony import */ var _util_ChartUtils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../util/ChartUtils */ "./node_modules/recharts/es6/util/ChartUtils.js");
+/* harmony import */ var _util_types__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../util/types */ "./node_modules/recharts/es6/util/types.js");
+/* harmony import */ var _util_ActiveShapeUtils__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../util/ActiveShapeUtils */ "./node_modules/recharts/es6/util/ActiveShapeUtils.js");
+/* harmony import */ var _context_tooltipContext__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../context/tooltipContext */ "./node_modules/recharts/es6/context/tooltipContext.js");
+/* harmony import */ var _state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../state/SetTooltipEntrySettings */ "./node_modules/recharts/es6/state/SetTooltipEntrySettings.js");
+/* harmony import */ var _state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../state/selectors/tooltipSelectors */ "./node_modules/recharts/es6/state/selectors/tooltipSelectors.js");
+/* harmony import */ var _state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../state/SetLegendPayload */ "./node_modules/recharts/es6/state/SetLegendPayload.js");
+/* harmony import */ var _util_Constants__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../util/Constants */ "./node_modules/recharts/es6/util/Constants.js");
+/* harmony import */ var _util_useAnimationId__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../util/useAnimationId */ "./node_modules/recharts/es6/util/useAnimationId.js");
+/* harmony import */ var _util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../util/resolveDefaultProps */ "./node_modules/recharts/es6/util/resolveDefaultProps.js");
+/* harmony import */ var _context_RegisterGraphicalItemId__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../context/RegisterGraphicalItemId */ "./node_modules/recharts/es6/context/RegisterGraphicalItemId.js");
+/* harmony import */ var _state_SetGraphicalItem__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../state/SetGraphicalItem */ "./node_modules/recharts/es6/state/SetGraphicalItem.js");
+/* harmony import */ var _util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../util/svgPropertiesNoEvents */ "./node_modules/recharts/es6/util/svgPropertiesNoEvents.js");
+/* harmony import */ var _animation_JavascriptAnimate__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../animation/JavascriptAnimate */ "./node_modules/recharts/es6/animation/JavascriptAnimate.js");
+var _excluded = ["onMouseEnter", "onClick", "onMouseLeave"],
+  _excluded2 = ["id"],
+  _excluded3 = ["id"];
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -61714,34 +61960,19 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 
 
 
+
+
 /**
  * Internal props, combination of external props + defaultProps + private Recharts state
  */
 
 function SetPiePayloadLegend(props) {
-  var presentationProps = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_10__.filterProps)(props, false), [props]);
-  var cells = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_10__.findAllByType)(props.children, _component_Cell__WEBPACK_IMPORTED_MODULE_9__.Cell), [props.children]);
-  var pieSettings = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => ({
-    name: props.name,
-    nameKey: props.nameKey,
-    tooltipType: props.tooltipType,
-    data: props.data,
-    dataKey: props.dataKey,
-    cx: props.cx,
-    cy: props.cy,
-    startAngle: props.startAngle,
-    endAngle: props.endAngle,
-    minAngle: props.minAngle,
-    paddingAngle: props.paddingAngle,
-    innerRadius: props.innerRadius,
-    outerRadius: props.outerRadius,
-    cornerRadius: props.cornerRadius,
-    legendType: props.legendType,
-    fill: props.fill,
-    presentationProps
-  }), [props.cornerRadius, props.cx, props.cy, props.data, props.dataKey, props.endAngle, props.innerRadius, props.minAngle, props.name, props.nameKey, props.outerRadius, props.paddingAngle, props.startAngle, props.tooltipType, props.legendType, props.fill, presentationProps]);
-  var legendPayload = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_4__.useAppSelector)(state => (0,_state_selectors_pieSelectors__WEBPACK_IMPORTED_MODULE_3__.selectPieLegend)(state, pieSettings, cells));
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_20__.SetPolarLegendPayload, {
+  var cells = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__.findAllByType)(props.children, _component_Cell__WEBPACK_IMPORTED_MODULE_8__.Cell), [props.children]);
+  var legendPayload = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_4__.useAppSelector)(state => (0,_state_selectors_pieSelectors__WEBPACK_IMPORTED_MODULE_3__.selectPieLegend)(state, props.id, cells));
+  if (legendPayload == null) {
+    return null;
+  }
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetLegendPayload__WEBPACK_IMPORTED_MODULE_19__.SetPolarLegendPayload, {
     legendPayload: legendPayload
   });
 }
@@ -61766,7 +61997,7 @@ function getTooltipEntrySettings(props) {
       fill,
       dataKey,
       nameKey,
-      name: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_14__.getTooltipNameProp)(name, dataKey),
+      name: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_13__.getTooltipNameProp)(name, dataKey),
       hide,
       type: tooltipType,
       color: fill,
@@ -61787,7 +62018,7 @@ var getOuterRadius = (dataPoint, outerRadius, maxPieRadius) => {
   if (typeof outerRadius === 'function') {
     return outerRadius(dataPoint);
   }
-  return (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_13__.getPercentValue)(outerRadius, maxPieRadius, maxPieRadius * 0.8);
+  return (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_12__.getPercentValue)(outerRadius, maxPieRadius, maxPieRadius * 0.8);
 };
 var parseCoordinateOfPie = (item, offset, dataPoint) => {
   var {
@@ -61796,10 +62027,10 @@ var parseCoordinateOfPie = (item, offset, dataPoint) => {
     width,
     height
   } = offset;
-  var maxPieRadius = (0,_util_PolarUtils__WEBPACK_IMPORTED_MODULE_12__.getMaxRadius)(width, height);
-  var cx = left + (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_13__.getPercentValue)(item.cx, width, width / 2);
-  var cy = top + (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_13__.getPercentValue)(item.cy, height, height / 2);
-  var innerRadius = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_13__.getPercentValue)(item.innerRadius, maxPieRadius, 0);
+  var maxPieRadius = (0,_util_PolarUtils__WEBPACK_IMPORTED_MODULE_11__.getMaxRadius)(width, height);
+  var cx = left + (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_12__.getPercentValue)(item.cx, width, width / 2);
+  var cy = top + (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_12__.getPercentValue)(item.cy, height, height / 2);
+  var innerRadius = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_12__.getPercentValue)(item.innerRadius, maxPieRadius, 0);
   var outerRadius = getOuterRadius(dataPoint, item.outerRadius, maxPieRadius);
   var maxRadius = item.maxRadius || Math.sqrt(width * width + height * height) / 2;
   return {
@@ -61811,7 +62042,7 @@ var parseCoordinateOfPie = (item, offset, dataPoint) => {
   };
 };
 var parseDeltaAngle = (startAngle, endAngle) => {
-  var sign = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_13__.mathSign)(endAngle - startAngle);
+  var sign = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_12__.mathSign)(endAngle - startAngle);
   var deltaAngle = Math.min(Math.abs(endAngle - startAngle), 360);
   return sign * deltaAngle;
 };
@@ -61823,7 +62054,7 @@ var renderLabelLineItem = (option, props) => {
     return option(props);
   }
   var className = (0,clsx__WEBPACK_IMPORTED_MODULE_2__.clsx)('recharts-pie-label-line', typeof option !== 'boolean' ? option.className : '');
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shape_Curve__WEBPACK_IMPORTED_MODULE_7__.Curve, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shape_Curve__WEBPACK_IMPORTED_MODULE_6__.Curve, _extends({}, props, {
     type: "linear",
     className: className
   }));
@@ -61840,7 +62071,7 @@ var renderLabelItem = (option, props, value) => {
     }
   }
   var className = (0,clsx__WEBPACK_IMPORTED_MODULE_2__.clsx)('recharts-pie-label-text', typeof option !== 'boolean' && typeof option !== 'function' ? option.className : '');
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Text__WEBPACK_IMPORTED_MODULE_8__.Text, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Text__WEBPACK_IMPORTED_MODULE_7__.Text, _extends({}, props, {
     alignmentBaseline: "middle",
     className: className
   }), label);
@@ -61859,13 +62090,13 @@ function PieLabels(_ref) {
   if (!showLabels || !label || !sectors) {
     return null;
   }
-  var pieProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_10__.filterProps)(props, false);
-  var customLabelProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_10__.filterProps)(label, false);
-  var customLabelLineProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_10__.filterProps)(labelLine, false);
+  var pieProps = (0,_util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_25__.svgPropertiesNoEvents)(props);
+  var customLabelProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__.filterProps)(label, false);
+  var customLabelLineProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__.filterProps)(labelLine, false);
   var offsetRadius = typeof label === 'object' && 'offsetRadius' in label && label.offsetRadius || 20;
   var labels = sectors.map((entry, i) => {
     var midAngle = (entry.startAngle + entry.endAngle) / 2;
-    var endPoint = (0,_util_PolarUtils__WEBPACK_IMPORTED_MODULE_12__.polarToCartesian)(entry.cx, entry.cy, entry.outerRadius + offsetRadius, midAngle);
+    var endPoint = (0,_util_PolarUtils__WEBPACK_IMPORTED_MODULE_11__.polarToCartesian)(entry.cx, entry.cy, entry.outerRadius + offsetRadius, midAngle);
     var labelProps = _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, pieProps), entry), {}, {
       stroke: 'none'
     }, customLabelProps), {}, {
@@ -61877,18 +62108,18 @@ function PieLabels(_ref) {
       stroke: entry.fill
     }, customLabelLineProps), {}, {
       index: i,
-      points: [(0,_util_PolarUtils__WEBPACK_IMPORTED_MODULE_12__.polarToCartesian)(entry.cx, entry.cy, entry.outerRadius, midAngle), endPoint],
+      points: [(0,_util_PolarUtils__WEBPACK_IMPORTED_MODULE_11__.polarToCartesian)(entry.cx, entry.cy, entry.outerRadius, midAngle), endPoint],
       key: 'line'
     });
     return (
       /*#__PURE__*/
       // eslint-disable-next-line react/no-array-index-key
-      react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_6__.Layer, {
+      react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_5__.Layer, {
         key: "label-".concat(entry.startAngle, "-").concat(entry.endAngle, "-").concat(entry.midAngle, "-").concat(i)
-      }, labelLine && renderLabelLineItem(labelLine, lineProps), renderLabelItem(label, labelProps, (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_14__.getValueByDataKey)(entry, dataKey)))
+      }, labelLine && renderLabelLineItem(labelLine, lineProps), renderLabelItem(label, labelProps, (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_13__.getValueByDataKey)(entry, dataKey)))
     );
   });
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_6__.Layer, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_5__.Layer, {
     className: "recharts-pie-labels"
   }, labels);
 }
@@ -61900,16 +62131,16 @@ function PieSectors(props) {
     allOtherPieProps,
     showLabels
   } = props;
-  var activeIndex = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_4__.useAppSelector)(_state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_19__.selectActiveTooltipIndex);
+  var activeIndex = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_4__.useAppSelector)(_state_selectors_tooltipSelectors__WEBPACK_IMPORTED_MODULE_18__.selectActiveTooltipIndex);
   var {
       onMouseEnter: onMouseEnterFromProps,
       onClick: onItemClickFromProps,
       onMouseLeave: onMouseLeaveFromProps
     } = allOtherPieProps,
     restOfAllOtherProps = _objectWithoutProperties(allOtherPieProps, _excluded);
-  var onMouseEnterFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_17__.useMouseEnterItemDispatch)(onMouseEnterFromProps, allOtherPieProps.dataKey);
-  var onMouseLeaveFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_17__.useMouseLeaveItemDispatch)(onMouseLeaveFromProps);
-  var onClickFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_17__.useMouseClickItemDispatch)(onItemClickFromProps, allOtherPieProps.dataKey);
+  var onMouseEnterFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_16__.useMouseEnterItemDispatch)(onMouseEnterFromProps, allOtherPieProps.dataKey);
+  var onMouseLeaveFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_16__.useMouseLeaveItemDispatch)(onMouseLeaveFromProps);
+  var onClickFromContext = (0,_context_tooltipContext__WEBPACK_IMPORTED_MODULE_16__.useMouseClickItemDispatch)(onItemClickFromProps, allOtherPieProps.dataKey);
   if (sectors == null) {
     return null;
   }
@@ -61921,13 +62152,13 @@ function PieSectors(props) {
     var sectorProps = _objectSpread(_objectSpread({}, entry), {}, {
       stroke: entry.stroke,
       tabIndex: -1,
-      [_util_Constants__WEBPACK_IMPORTED_MODULE_21__.DATA_ITEM_INDEX_ATTRIBUTE_NAME]: i,
-      [_util_Constants__WEBPACK_IMPORTED_MODULE_21__.DATA_ITEM_DATAKEY_ATTRIBUTE_NAME]: allOtherPieProps.dataKey
+      [_util_Constants__WEBPACK_IMPORTED_MODULE_20__.DATA_ITEM_INDEX_ATTRIBUTE_NAME]: i,
+      [_util_Constants__WEBPACK_IMPORTED_MODULE_20__.DATA_ITEM_DATAKEY_ATTRIBUTE_NAME]: allOtherPieProps.dataKey
     });
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_6__.Layer, _extends({
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_5__.Layer, _extends({
       tabIndex: -1,
       className: "recharts-pie-sector"
-    }, (0,_util_types__WEBPACK_IMPORTED_MODULE_15__.adaptEventsOfChild)(restOfAllOtherProps, entry, i), {
+    }, (0,_util_types__WEBPACK_IMPORTED_MODULE_14__.adaptEventsOfChild)(restOfAllOtherProps, entry, i), {
       // @ts-expect-error the types need a bit of attention
       onMouseEnter: onMouseEnterFromContext(entry, i)
       // @ts-expect-error the types need a bit of attention
@@ -61939,7 +62170,7 @@ function PieSectors(props) {
       // eslint-disable-next-line react/no-array-index-key
       ,
       key: "sector-".concat(entry === null || entry === void 0 ? void 0 : entry.startAngle, "-").concat(entry === null || entry === void 0 ? void 0 : entry.endAngle, "-").concat(entry.midAngle, "-").concat(i)
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_ActiveShapeUtils__WEBPACK_IMPORTED_MODULE_16__.Shape, _extends({
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_ActiveShapeUtils__WEBPACK_IMPORTED_MODULE_15__.Shape, _extends({
       option: sectorOptions,
       isActive: isSectorActive,
       shapeType: "sector"
@@ -61970,29 +62201,29 @@ function computePieSectors(_ref2) {
   var deltaAngle = parseDeltaAngle(startAngle, endAngle);
   var absDeltaAngle = Math.abs(deltaAngle);
   var paddingAngle = displayedData.length <= 1 ? 0 : (_pieSettings$paddingA = pieSettings.paddingAngle) !== null && _pieSettings$paddingA !== void 0 ? _pieSettings$paddingA : 0;
-  var notZeroItemCount = displayedData.filter(entry => (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_14__.getValueByDataKey)(entry, dataKey, 0) !== 0).length;
+  var notZeroItemCount = displayedData.filter(entry => (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_13__.getValueByDataKey)(entry, dataKey, 0) !== 0).length;
   var totalPaddingAngle = (absDeltaAngle >= 360 ? notZeroItemCount : notZeroItemCount - 1) * paddingAngle;
   var realTotalAngle = absDeltaAngle - notZeroItemCount * minAngle - totalPaddingAngle;
   var sum = displayedData.reduce((result, entry) => {
-    var val = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_14__.getValueByDataKey)(entry, dataKey, 0);
-    return result + ((0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_13__.isNumber)(val) ? val : 0);
+    var val = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_13__.getValueByDataKey)(entry, dataKey, 0);
+    return result + ((0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_12__.isNumber)(val) ? val : 0);
   }, 0);
   var sectors;
   if (sum > 0) {
     var prev;
     sectors = displayedData.map((entry, i) => {
-      var val = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_14__.getValueByDataKey)(entry, dataKey, 0);
-      var name = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_14__.getValueByDataKey)(entry, nameKey, i);
+      var val = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_13__.getValueByDataKey)(entry, dataKey, 0);
+      var name = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_13__.getValueByDataKey)(entry, nameKey, i);
       var coordinate = parseCoordinateOfPie(pieSettings, offset, entry);
-      var percent = ((0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_13__.isNumber)(val) ? val : 0) / sum;
+      var percent = ((0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_12__.isNumber)(val) ? val : 0) / sum;
       var tempStartAngle;
       var entryWithCellInfo = _objectSpread(_objectSpread({}, entry), cells && cells[i] && cells[i].props);
       if (i) {
-        tempStartAngle = prev.endAngle + (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_13__.mathSign)(deltaAngle) * paddingAngle * (val !== 0 ? 1 : 0);
+        tempStartAngle = prev.endAngle + (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_12__.mathSign)(deltaAngle) * paddingAngle * (val !== 0 ? 1 : 0);
       } else {
         tempStartAngle = startAngle;
       }
-      var tempEndAngle = tempStartAngle + (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_13__.mathSign)(deltaAngle) * ((val !== 0 ? minAngle : 0) + percent * realTotalAngle);
+      var tempEndAngle = tempStartAngle + (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_12__.mathSign)(deltaAngle) * ((val !== 0 ? minAngle : 0) + percent * realTotalAngle);
       var midAngle = (tempStartAngle + tempEndAngle) / 2;
       var middleRadius = (coordinate.innerRadius + coordinate.outerRadius) / 2;
       var tooltipPayload = [{
@@ -62004,7 +62235,7 @@ function computePieSectors(_ref2) {
         dataKey,
         type: tooltipType
       }];
-      var tooltipPosition = (0,_util_PolarUtils__WEBPACK_IMPORTED_MODULE_12__.polarToCartesian)(coordinate.cx, coordinate.cy, middleRadius, midAngle);
+      var tooltipPosition = (0,_util_PolarUtils__WEBPACK_IMPORTED_MODULE_11__.polarToCartesian)(coordinate.cx, coordinate.cy, middleRadius, midAngle);
       prev = _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, pieSettings.presentationProps), {}, {
         percent,
         cornerRadius,
@@ -62014,11 +62245,11 @@ function computePieSectors(_ref2) {
         middleRadius,
         tooltipPosition
       }, entryWithCellInfo), coordinate), {}, {
-        value: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_14__.getValueByDataKey)(entry, dataKey),
+        value: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_13__.getValueByDataKey)(entry, dataKey),
         startAngle: tempStartAngle,
         endAngle: tempEndAngle,
         payload: entryWithCellInfo,
-        paddingAngle: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_13__.mathSign)(deltaAngle) * paddingAngle
+        paddingAngle: (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_12__.mathSign)(deltaAngle) * paddingAngle
       });
       return prev;
     });
@@ -62041,7 +62272,7 @@ function SectorsWithAnimation(_ref3) {
     onAnimationStart,
     onAnimationEnd
   } = props;
-  var animationId = (0,_util_useAnimationId__WEBPACK_IMPORTED_MODULE_22__.useAnimationId)(props, 'recharts-pie-');
+  var animationId = (0,_util_useAnimationId__WEBPACK_IMPORTED_MODULE_21__.useAnimationId)(props, 'recharts-pie-');
   var prevSectors = previousSectorsRef.current;
   var [isAnimating, setIsAnimating] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   var handleAnimationEnd = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
@@ -62056,24 +62287,15 @@ function SectorsWithAnimation(_ref3) {
     }
     setIsAnimating(true);
   }, [onAnimationStart]);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_animation_Animate__WEBPACK_IMPORTED_MODULE_24__.Animate, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_animation_JavascriptAnimate__WEBPACK_IMPORTED_MODULE_26__.JavascriptAnimate, {
     begin: animationBegin,
     duration: animationDuration,
     isActive: isAnimationActive,
     easing: animationEasing,
-    from: {
-      t: 0
-    },
-    to: {
-      t: 1
-    },
     onAnimationStart: handleAnimationStart,
     onAnimationEnd: handleAnimationEnd,
     key: animationId
-  }, _ref4 => {
-    var {
-      t
-    } = _ref4;
+  }, t => {
     var stepData = [];
     var first = sectors && sectors[0];
     var curAngle = first.startAngle;
@@ -62081,7 +62303,7 @@ function SectorsWithAnimation(_ref3) {
       var prev = prevSectors && prevSectors[index];
       var paddingAngle = index > 0 ? es_toolkit_compat_get__WEBPACK_IMPORTED_MODULE_1___default()(entry, 'paddingAngle', 0) : 0;
       if (prev) {
-        var angleIp = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_13__.interpolateNumber)(prev.endAngle - prev.startAngle, entry.endAngle - entry.startAngle);
+        var angleIp = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_12__.interpolateNumber)(prev.endAngle - prev.startAngle, entry.endAngle - entry.startAngle);
         var latest = _objectSpread(_objectSpread({}, entry), {}, {
           startAngle: curAngle + paddingAngle,
           endAngle: curAngle + angleIp(t) + paddingAngle
@@ -62093,7 +62315,7 @@ function SectorsWithAnimation(_ref3) {
           endAngle,
           startAngle
         } = entry;
-        var interpolatorAngle = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_13__.interpolateNumber)(0, endAngle - startAngle);
+        var interpolatorAngle = (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_12__.interpolateNumber)(0, endAngle - startAngle);
         var deltaAngle = interpolatorAngle(t);
         var _latest = _objectSpread(_objectSpread({}, entry), {}, {
           startAngle: curAngle + paddingAngle,
@@ -62106,7 +62328,7 @@ function SectorsWithAnimation(_ref3) {
 
     // eslint-disable-next-line no-param-reassign
     previousSectorsRef.current = stepData;
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_6__.Layer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(PieSectors, {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_5__.Layer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(PieSectors, {
       sectors: stepData,
       activeShape: activeShape,
       inactiveShape: inactiveShape,
@@ -62148,7 +62370,7 @@ function PieWithTouchMove(props) {
   if (hide) {
     return null;
   }
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_6__.Layer, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_container_Layer__WEBPACK_IMPORTED_MODULE_5__.Layer, {
     tabIndex: rootTabIndex,
     className: layerClass
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(RenderSectors, props));
@@ -62164,7 +62386,7 @@ var defaultPieProps = {
   fill: '#808080',
   hide: false,
   innerRadius: 0,
-  isAnimationActive: !_util_Global__WEBPACK_IMPORTED_MODULE_11__.Global.isSsr,
+  isAnimationActive: !_util_Global__WEBPACK_IMPORTED_MODULE_10__.Global.isSsr,
   labelLine: true,
   legendType: 'rect',
   minAngle: 0,
@@ -62176,58 +62398,63 @@ var defaultPieProps = {
   stroke: '#fff'
 };
 function PieImpl(props) {
-  var propsWithDefaults = (0,_util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_23__.resolveDefaultProps)(props, defaultPieProps);
-  var cells = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_10__.findAllByType)(props.children, _component_Cell__WEBPACK_IMPORTED_MODULE_9__.Cell), [props.children]);
-  var presentationProps = (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_10__.filterProps)(propsWithDefaults, false);
-  var pieSettings = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => ({
-    name: propsWithDefaults.name,
-    nameKey: propsWithDefaults.nameKey,
-    tooltipType: propsWithDefaults.tooltipType,
-    data: propsWithDefaults.data,
-    dataKey: propsWithDefaults.dataKey,
-    cx: propsWithDefaults.cx,
-    cy: propsWithDefaults.cy,
-    startAngle: propsWithDefaults.startAngle,
-    endAngle: propsWithDefaults.endAngle,
-    minAngle: propsWithDefaults.minAngle,
-    paddingAngle: propsWithDefaults.paddingAngle,
-    innerRadius: propsWithDefaults.innerRadius,
-    outerRadius: propsWithDefaults.outerRadius,
-    cornerRadius: propsWithDefaults.cornerRadius,
-    legendType: propsWithDefaults.legendType,
-    fill: propsWithDefaults.fill,
-    presentationProps
-  }), [propsWithDefaults.cornerRadius, propsWithDefaults.cx, propsWithDefaults.cy, propsWithDefaults.data, propsWithDefaults.dataKey, propsWithDefaults.endAngle, propsWithDefaults.innerRadius, propsWithDefaults.minAngle, propsWithDefaults.name, propsWithDefaults.nameKey, propsWithDefaults.outerRadius, propsWithDefaults.paddingAngle, propsWithDefaults.startAngle, propsWithDefaults.tooltipType, propsWithDefaults.legendType, propsWithDefaults.fill, presentationProps]);
-  var sectors = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_4__.useAppSelector)(state => (0,_state_selectors_pieSelectors__WEBPACK_IMPORTED_MODULE_3__.selectPieSectors)(state, pieSettings, cells));
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_18__.SetTooltipEntrySettings, {
+  var {
+      id
+    } = props,
+    propsWithoutId = _objectWithoutProperties(props, _excluded2);
+  var cells = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_9__.findAllByType)(props.children, _component_Cell__WEBPACK_IMPORTED_MODULE_8__.Cell), [props.children]);
+  var sectors = (0,_state_hooks__WEBPACK_IMPORTED_MODULE_4__.useAppSelector)(state => (0,_state_selectors_pieSelectors__WEBPACK_IMPORTED_MODULE_3__.selectPieSectors)(state, id, cells));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetTooltipEntrySettings__WEBPACK_IMPORTED_MODULE_17__.SetTooltipEntrySettings, {
     fn: getTooltipEntrySettings,
-    args: _objectSpread(_objectSpread({}, propsWithDefaults), {}, {
+    args: _objectSpread(_objectSpread({}, props), {}, {
       sectors
     })
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(PieWithTouchMove, _extends({}, propsWithDefaults, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(PieWithTouchMove, _extends({}, propsWithoutId, {
     sectors: sectors
   })));
 }
-class Pie extends react__WEBPACK_IMPORTED_MODULE_0__.PureComponent {
-  constructor() {
-    super(...arguments);
-    _defineProperty(this, "id", (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_13__.uniqueId)('recharts-pie-'));
-  }
-  render() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetGraphicalItem__WEBPACK_IMPORTED_MODULE_5__.SetPolarGraphicalItem, {
-      data: this.props.data,
-      dataKey: this.props.dataKey,
-      hide: this.props.hide,
-      angleAxisId: 0,
-      radiusAxisId: 0,
-      stackId: undefined,
-      barSize: undefined,
-      type: "pie"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(SetPiePayloadLegend, this.props), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(PieImpl, this.props), this.props.children);
-  }
+function Pie(outsideProps) {
+  var _resolveDefaultProps = (0,_util_resolveDefaultProps__WEBPACK_IMPORTED_MODULE_22__.resolveDefaultProps)(outsideProps, defaultPieProps),
+    {
+      id: externalId
+    } = _resolveDefaultProps,
+    propsWithoutId = _objectWithoutProperties(_resolveDefaultProps, _excluded3);
+  var presentationProps = (0,_util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_25__.svgPropertiesNoEvents)(propsWithoutId);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_context_RegisterGraphicalItemId__WEBPACK_IMPORTED_MODULE_23__.RegisterGraphicalItemId, {
+    id: externalId,
+    type: "pie"
+  }, id => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_state_SetGraphicalItem__WEBPACK_IMPORTED_MODULE_24__.SetPolarGraphicalItem, {
+    type: "pie",
+    id: id,
+    data: propsWithoutId.data,
+    dataKey: propsWithoutId.dataKey,
+    hide: propsWithoutId.hide,
+    angleAxisId: 0,
+    radiusAxisId: 0,
+    name: propsWithoutId.name,
+    nameKey: propsWithoutId.nameKey,
+    tooltipType: propsWithoutId.tooltipType,
+    legendType: propsWithoutId.legendType,
+    fill: propsWithoutId.fill,
+    cx: propsWithoutId.cx,
+    cy: propsWithoutId.cy,
+    startAngle: propsWithoutId.startAngle,
+    endAngle: propsWithoutId.endAngle,
+    paddingAngle: propsWithoutId.paddingAngle,
+    minAngle: propsWithoutId.minAngle,
+    innerRadius: propsWithoutId.innerRadius,
+    outerRadius: propsWithoutId.outerRadius,
+    cornerRadius: propsWithoutId.cornerRadius
+    // @ts-expect-error we're passing DataKey and other internals as presentationProps
+    ,
+    presentationProps: presentationProps
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(SetPiePayloadLegend, _extends({}, propsWithoutId, {
+    id: id
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(PieImpl, _extends({}, propsWithoutId, {
+    id: id
+  })), propsWithoutId.children));
 }
-_defineProperty(Pie, "displayName", 'Pie');
-_defineProperty(Pie, "defaultProps", defaultPieProps);
+Pie.displayName = 'Pie';
 
 /***/ }),
 
@@ -62371,9 +62598,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var victory_vendor_d3_shape__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! victory-vendor/d3-shape */ "./node_modules/victory-vendor/es/d3-shape.js");
 /* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
 /* harmony import */ var _util_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/types */ "./node_modules/recharts/es6/util/types.js");
-/* harmony import */ var _util_ReactUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/ReactUtils */ "./node_modules/recharts/es6/util/ReactUtils.js");
-/* harmony import */ var _util_DataUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
-/* harmony import */ var _util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/isWellBehavedNumber */ "./node_modules/recharts/es6/util/isWellBehavedNumber.js");
+/* harmony import */ var _util_DataUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
+/* harmony import */ var _util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/isWellBehavedNumber */ "./node_modules/recharts/es6/util/isWellBehavedNumber.js");
+/* harmony import */ var _util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/svgPropertiesNoEvents */ "./node_modules/recharts/es6/util/svgPropertiesNoEvents.js");
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -62416,14 +62643,14 @@ var CURVE_FACTORIES = {
  * Duplicated with `NullableCoordinate` in `util/types.ts`
  */
 
-var defined = p => (0,_util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_6__.isWellBehavedNumber)(p.x) && (0,_util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_6__.isWellBehavedNumber)(p.y);
+var defined = p => (0,_util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_5__.isWellBehavedNumber)(p.x) && (0,_util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_5__.isWellBehavedNumber)(p.y);
 var getX = p => p.x;
 var getY = p => p.y;
 var getCurveFactory = (type, layout) => {
   if (typeof type === 'function') {
     return type;
   }
-  var name = "curve".concat((0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_5__.upperFirst)(type));
+  var name = "curve".concat((0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_4__.upperFirst)(type));
   if ((name === 'curveMonotone' || name === 'curveBump') && layout) {
     return CURVE_FACTORIES["".concat(name).concat(layout === 'vertical' ? 'Y' : 'X')];
   }
@@ -62457,9 +62684,9 @@ var getPath = _ref => {
     lineFunction.defined(defined).curve(curveFactory);
     return lineFunction(areaPoints);
   }
-  if (layout === 'vertical' && (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_5__.isNumber)(baseLine)) {
+  if (layout === 'vertical' && (0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_4__.isNumber)(baseLine)) {
     lineFunction = (0,victory_vendor_d3_shape__WEBPACK_IMPORTED_MODULE_1__.area)().y(getY).x1(getX).x0(baseLine);
-  } else if ((0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_5__.isNumber)(baseLine)) {
+  } else if ((0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_4__.isNumber)(baseLine)) {
     lineFunction = (0,victory_vendor_d3_shape__WEBPACK_IMPORTED_MODULE_1__.area)().x(getX).y1(getY).y0(baseLine);
   } else {
     lineFunction = (0,victory_vendor_d3_shape__WEBPACK_IMPORTED_MODULE_1__.line)().x(getX).y(getY);
@@ -62478,7 +62705,7 @@ var Curve = props => {
     return null;
   }
   var realPath = points && points.length ? getPath(props) : path;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", _extends({}, (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_4__.filterProps)(props, false), (0,_util_types__WEBPACK_IMPORTED_MODULE_3__.adaptEventHandlers)(props), {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", _extends({}, (0,_util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_6__.svgPropertiesNoEvents)(props), (0,_util_types__WEBPACK_IMPORTED_MODULE_3__.adaptEventHandlers)(props), {
     className: (0,clsx__WEBPACK_IMPORTED_MODULE_2__.clsx)('recharts-curve', className),
     d: realPath === null ? undefined : realPath,
     ref: pathRef
@@ -62502,7 +62729,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
 /* harmony import */ var _util_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/types */ "./node_modules/recharts/es6/util/types.js");
-/* harmony import */ var _util_ReactUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/ReactUtils */ "./node_modules/recharts/es6/util/ReactUtils.js");
+/* harmony import */ var _util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/svgPropertiesNoEvents */ "./node_modules/recharts/es6/util/svgPropertiesNoEvents.js");
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
  * @fileOverview Dot
@@ -62520,7 +62747,7 @@ var Dot = props => {
   } = props;
   var layerClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__.clsx)('recharts-dot', className);
   if (cx === +cx && cy === +cy && r === +r) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("circle", _extends({}, (0,_util_ReactUtils__WEBPACK_IMPORTED_MODULE_3__.filterProps)(props, false), (0,_util_types__WEBPACK_IMPORTED_MODULE_2__.adaptEventHandlers)(props), {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("circle", _extends({}, (0,_util_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_3__.svgPropertiesNoEvents)(props), (0,_util_types__WEBPACK_IMPORTED_MODULE_2__.adaptEventHandlers)(props), {
       className: layerClass,
       cx: cx,
       cy: cy,
@@ -62875,6 +63102,12 @@ var getSectorWithCorner = _ref3 => {
   }
   return path;
 };
+
+/**
+ * SVG cx, cy are `string | number | undefined`, but internally we use `number` so let's
+ * override the types here.
+ */
+
 var defaultProps = {
   cx: 0,
   cy: 0,
@@ -63292,37 +63525,6 @@ function RechartsStoreProvider(_ref) {
 
 /***/ }),
 
-/***/ "./node_modules/recharts/es6/state/ReportBar.js":
-/*!******************************************************!*\
-  !*** ./node_modules/recharts/es6/state/ReportBar.js ***!
-  \******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ReportBar: () => (/* binding */ ReportBar)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hooks */ "./node_modules/recharts/es6/state/hooks.js");
-/* harmony import */ var _graphicalItemsSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./graphicalItemsSlice */ "./node_modules/recharts/es6/state/graphicalItemsSlice.js");
-
-
-
-var ReportBar = () => {
-  var dispatch = (0,_hooks__WEBPACK_IMPORTED_MODULE_1__.useAppDispatch)();
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    dispatch((0,_graphicalItemsSlice__WEBPACK_IMPORTED_MODULE_2__.addBar)());
-    return () => {
-      dispatch((0,_graphicalItemsSlice__WEBPACK_IMPORTED_MODULE_2__.removeBar)());
-    };
-  });
-  return null;
-};
-
-/***/ }),
-
 /***/ "./node_modules/recharts/es6/state/ReportChartProps.js":
 /*!*************************************************************!*\
   !*** ./node_modules/recharts/es6/state/ReportChartProps.js ***!
@@ -63458,13 +63660,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hooks */ "./node_modules/recharts/es6/state/hooks.js");
 /* harmony import */ var _graphicalItemsSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./graphicalItemsSlice */ "./node_modules/recharts/es6/state/graphicalItemsSlice.js");
-/* harmony import */ var _util_ChartUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/ChartUtils */ "./node_modules/recharts/es6/util/ChartUtils.js");
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-
 
 
 
@@ -63472,18 +63667,15 @@ function SetCartesianGraphicalItem(props) {
   var dispatch = (0,_hooks__WEBPACK_IMPORTED_MODULE_1__.useAppDispatch)();
   var prevPropsRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var settings = _objectSpread(_objectSpread({}, props), {}, {
-      stackId: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_3__.getNormalizedStackId)(props.stackId)
-    });
     if (prevPropsRef.current === null) {
-      dispatch((0,_graphicalItemsSlice__WEBPACK_IMPORTED_MODULE_2__.addCartesianGraphicalItem)(settings));
-    } else if (prevPropsRef.current !== settings) {
+      dispatch((0,_graphicalItemsSlice__WEBPACK_IMPORTED_MODULE_2__.addCartesianGraphicalItem)(props));
+    } else if (prevPropsRef.current !== props) {
       dispatch((0,_graphicalItemsSlice__WEBPACK_IMPORTED_MODULE_2__.replaceCartesianGraphicalItem)({
         prev: prevPropsRef.current,
-        next: settings
+        next: props
       }));
     }
-    prevPropsRef.current = settings;
+    prevPropsRef.current = props;
   }, [dispatch, props]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     return () => {
@@ -63861,6 +64053,62 @@ var chartDataReducer = chartDataSlice.reducer;
 
 /***/ }),
 
+/***/ "./node_modules/recharts/es6/state/errorBarSlice.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/recharts/es6/state/errorBarSlice.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addErrorBar: () => (/* binding */ addErrorBar),
+/* harmony export */   errorBarReducer: () => (/* binding */ errorBarReducer),
+/* harmony export */   removeErrorBar: () => (/* binding */ removeErrorBar)
+/* harmony export */ });
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
+
+
+/**
+ * ErrorBars have lot more settings but all the others are scoped to the component itself.
+ * Only some of them required to be reported to the global store because XAxis and YAxis need to know
+ * if the error bar is contributing to extending the axis domain.
+ */
+
+var initialState = {};
+var errorBarSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
+  name: 'errorBars',
+  initialState,
+  reducers: {
+    addErrorBar: (state, action) => {
+      var {
+        itemId,
+        errorBar
+      } = action.payload;
+      if (!state[itemId]) {
+        state[itemId] = [];
+      }
+      state[itemId].push(errorBar);
+    },
+    removeErrorBar: (state, action) => {
+      var {
+        itemId,
+        errorBar
+      } = action.payload;
+      if (state[itemId]) {
+        state[itemId] = state[itemId].filter(e => e.dataKey !== errorBar.dataKey || e.direction !== errorBar.direction);
+      }
+    }
+  }
+});
+var {
+  addErrorBar,
+  removeErrorBar
+} = errorBarSlice.actions;
+var errorBarReducer = errorBarSlice.reducer;
+
+/***/ }),
+
 /***/ "./node_modules/recharts/es6/state/externalEventsMiddleware.js":
 /*!*********************************************************************!*\
   !*** ./node_modules/recharts/es6/state/externalEventsMiddleware.js ***!
@@ -63909,11 +64157,9 @@ externalEventsMiddleware.startListening({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   addBar: () => (/* binding */ addBar),
 /* harmony export */   addCartesianGraphicalItem: () => (/* binding */ addCartesianGraphicalItem),
 /* harmony export */   addPolarGraphicalItem: () => (/* binding */ addPolarGraphicalItem),
 /* harmony export */   graphicalItemsReducer: () => (/* binding */ graphicalItemsReducer),
-/* harmony export */   removeBar: () => (/* binding */ removeBar),
 /* harmony export */   removeCartesianGraphicalItem: () => (/* binding */ removeCartesianGraphicalItem),
 /* harmony export */   removePolarGraphicalItem: () => (/* binding */ removePolarGraphicalItem),
 /* harmony export */   replaceCartesianGraphicalItem: () => (/* binding */ replaceCartesianGraphicalItem)
@@ -63924,13 +64170,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * ErrorBars have lot more settings but all the others are scoped to the component itself.
- * Only some of them required to be reported to the global store because XAxis and YAxis need to know
- * if the error bar is contributing to extending the axis domain.
+ * Unique ID of the graphical item.
+ * This is used to identify the graphical item in the state and in the React tree.
+ * This is required for every graphical item - it's either provided by the user or generated automatically.
  */
 
 var initialState = {
-  countOfBars: 0,
   cartesianItems: [],
   polarItems: []
 };
@@ -63938,12 +64183,6 @@ var graphicalItemsSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.creat
   name: 'graphicalItems',
   initialState,
   reducers: {
-    addBar(state) {
-      state.countOfBars += 1;
-    },
-    removeBar(state) {
-      state.countOfBars -= 1;
-    },
     addCartesianGraphicalItem(state, action) {
       state.cartesianItems.push((0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.castDraft)(action.payload));
     },
@@ -63975,8 +64214,6 @@ var graphicalItemsSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.creat
   }
 });
 var {
-  addBar,
-  removeBar,
   addCartesianGraphicalItem,
   replaceCartesianGraphicalItem,
   removeCartesianGraphicalItem,
@@ -64652,7 +64889,8 @@ var {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   selectArea: () => (/* binding */ selectArea)
+/* harmony export */   selectArea: () => (/* binding */ selectArea),
+/* harmony export */   selectGraphicalItemStackedData: () => (/* binding */ selectGraphicalItemStackedData)
 /* harmony export */ });
 /* harmony import */ var reselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! reselect */ "./node_modules/reselect/dist/reselect.mjs");
 /* harmony import */ var _cartesian_Area__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../cartesian/Area */ "./node_modules/recharts/es6/cartesian/Area.js");
@@ -64660,6 +64898,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../context/chartLayoutContext */ "./node_modules/recharts/es6/context/chartLayoutContext.js");
 /* harmony import */ var _dataSelectors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./dataSelectors */ "./node_modules/recharts/es6/state/selectors/dataSelectors.js");
 /* harmony import */ var _util_ChartUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../util/ChartUtils */ "./node_modules/recharts/es6/util/ChartUtils.js");
+/* harmony import */ var _util_stacks_getStackSeriesIdentifier__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../util/stacks/getStackSeriesIdentifier */ "./node_modules/recharts/es6/util/stacks/getStackSeriesIdentifier.js");
+
 
 
 
@@ -64676,8 +64916,24 @@ var selectBandSize = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_
   }
   return (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_5__.getBandSizeOfAxis)(yAxis, yAxisTicks, false);
 });
-var selectGraphicalItemStackedData = (state, xAxisId, yAxisId, isPanorama, areaSettings) => {
+var pickAreaId = (_state, _xAxisId, _yAxisId, _isPanorama, id) => id;
+
+/*
+ * There is a race condition problem because we read some data from props and some from the state.
+ * The state is updated through a dispatch and is one render behind,
+ * and so we have this weird one tick render where the displayedData in one selector have the old dataKey
+ * but the new dataKey in another selector.
+ *
+ * A proper fix is to either move everything into the state, or read the dataKey always from props
+ * - but this is a smaller change.
+ */
+var selectSynchronisedAreaSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_2__.selectUnfilteredCartesianItems, pickAreaId], (graphicalItems, id) => graphicalItems.filter(item => item.type === 'area').find(item => item.id === id));
+var selectGraphicalItemStackedData = (state, xAxisId, yAxisId, isPanorama, id) => {
   var _stackGroups$stackId;
+  var areaSettings = selectSynchronisedAreaSettings(state, xAxisId, yAxisId, isPanorama, id);
+  if (areaSettings == null) {
+    return undefined;
+  }
   var layout = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_3__.selectChartLayout)(state);
   var isXAxisCategorical = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_5__.isCategoricalAxis)(layout, 'xAxis');
   var stackGroups;
@@ -64690,40 +64946,15 @@ var selectGraphicalItemStackedData = (state, xAxisId, yAxisId, isPanorama, areaS
     return undefined;
   }
   var {
-    dataKey,
     stackId
   } = areaSettings;
-  if (stackId == null) {
+  var stackSeriesIdentifier = (0,_util_stacks_getStackSeriesIdentifier__WEBPACK_IMPORTED_MODULE_6__.getStackSeriesIdentifier)(areaSettings);
+  if (stackId == null || stackSeriesIdentifier == null) {
     return undefined;
   }
   var groups = (_stackGroups$stackId = stackGroups[stackId]) === null || _stackGroups$stackId === void 0 ? void 0 : _stackGroups$stackId.stackedData;
-  return groups === null || groups === void 0 ? void 0 : groups.find(v => v.key === dataKey);
+  return groups === null || groups === void 0 ? void 0 : groups.find(v => v.key === stackSeriesIdentifier);
 };
-var pickAreaSettings = (_state, _xAxisId, _yAxisId, _isPanorama, areaSettings) => areaSettings;
-
-/*
- * There is a race condition problem because we read some data from props and some from the state.
- * The state is updated through a dispatch and is one render behind,
- * and so we have this weird one tick render where the displayedData in one selector have the old dataKey
- * but the new dataKey in another selector.
- *
- * A proper fix is to either move everything into the state, or read the dataKey always from props
- * - but this is a smaller change.
- */
-var selectSynchronisedAreaSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_2__.selectUnfilteredCartesianItems, pickAreaSettings], (graphicalItems, areaSettingsFromProps) => {
-  if (graphicalItems.some(cgis => cgis.type === 'area' && areaSettingsFromProps.dataKey === cgis.dataKey && (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_5__.getNormalizedStackId)(areaSettingsFromProps.stackId) === cgis.stackId && areaSettingsFromProps.data === cgis.data)) {
-    /*
-     * now, at least one of the areas has the same dataKey as the one in props.
-     * Is this a perfect match? Maybe not because we could theoretically have two different Areas with the same dataKey
-     * and the same stackId and the same data but still different areas, yes,
-     * but the chances of that happening are ... lowish.
-     *
-     * A proper fix would be to store the areaSettings in a state too, and compare references directly instead of enumerating the properties.
-     */
-    return areaSettingsFromProps;
-  }
-  return undefined;
-});
 var selectArea = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_3__.selectChartLayout, selectXAxisWithScale, selectYAxisWithScale, selectXAxisTicks, selectYAxisTicks, selectGraphicalItemStackedData, _dataSelectors__WEBPACK_IMPORTED_MODULE_4__.selectChartDataWithIndexesIfNotInPanorama, selectBandSize, selectSynchronisedAreaSettings], (layout, xAxis, yAxis, xAxisTicks, yAxisTicks, stackedData, _ref, bandSize, areaSettings) => {
   var {
     chartData,
@@ -64809,6 +65040,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   mergeDomains: () => (/* binding */ mergeDomains),
 /* harmony export */   selectAllAppliedNumericalValuesIncludingErrorValues: () => (/* binding */ selectAllAppliedNumericalValuesIncludingErrorValues),
 /* harmony export */   selectAllAppliedValues: () => (/* binding */ selectAllAppliedValues),
+/* harmony export */   selectAllErrorBarSettings: () => (/* binding */ selectAllErrorBarSettings),
 /* harmony export */   selectAllXAxesOffsetSteps: () => (/* binding */ selectAllXAxesOffsetSteps),
 /* harmony export */   selectAllYAxesOffsetSteps: () => (/* binding */ selectAllYAxesOffsetSteps),
 /* harmony export */   selectAxisDomain: () => (/* binding */ selectAxisDomain),
@@ -64828,12 +65060,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   selectCategoricalDomain: () => (/* binding */ selectCategoricalDomain),
 /* harmony export */   selectChartDirection: () => (/* binding */ selectChartDirection),
 /* harmony export */   selectDisplayedData: () => (/* binding */ selectDisplayedData),
+/* harmony export */   selectDisplayedStackedData: () => (/* binding */ selectDisplayedStackedData),
 /* harmony export */   selectDomainDefinition: () => (/* binding */ selectDomainDefinition),
 /* harmony export */   selectDomainOfStackGroups: () => (/* binding */ selectDomainOfStackGroups),
 /* harmony export */   selectDuplicateDomain: () => (/* binding */ selectDuplicateDomain),
 /* harmony export */   selectErrorBarsSettings: () => (/* binding */ selectErrorBarsSettings),
+/* harmony export */   selectErrorBarsSettingsExceptStacked: () => (/* binding */ selectErrorBarsSettingsExceptStacked),
 /* harmony export */   selectHasBar: () => (/* binding */ selectHasBar),
 /* harmony export */   selectNiceTicks: () => (/* binding */ selectNiceTicks),
+/* harmony export */   selectNumericalDomain: () => (/* binding */ selectNumericalDomain),
 /* harmony export */   selectRealScaleType: () => (/* binding */ selectRealScaleType),
 /* harmony export */   selectReferenceAreas: () => (/* binding */ selectReferenceAreas),
 /* harmony export */   selectReferenceAreasByAxis: () => (/* binding */ selectReferenceAreasByAxis),
@@ -64843,6 +65078,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   selectReferenceLinesByAxis: () => (/* binding */ selectReferenceLinesByAxis),
 /* harmony export */   selectSmallestDistanceBetweenValues: () => (/* binding */ selectSmallestDistanceBetweenValues),
 /* harmony export */   selectStackGroups: () => (/* binding */ selectStackGroups),
+/* harmony export */   selectStackedCartesianItemsSettings: () => (/* binding */ selectStackedCartesianItemsSettings),
 /* harmony export */   selectTicksOfAxis: () => (/* binding */ selectTicksOfAxis),
 /* harmony export */   selectTicksOfGraphicalItem: () => (/* binding */ selectTicksOfGraphicalItem),
 /* harmony export */   selectUnfilteredCartesianItems: () => (/* binding */ selectUnfilteredCartesianItems),
@@ -64876,11 +65112,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pickAxisId__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./pickAxisId */ "./node_modules/recharts/es6/state/selectors/pickAxisId.js");
 /* harmony import */ var _combiners_combineAxisRangeWithReverse__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./combiners/combineAxisRangeWithReverse */ "./node_modules/recharts/es6/state/selectors/combiners/combineAxisRangeWithReverse.js");
 /* harmony import */ var _util_Constants__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../util/Constants */ "./node_modules/recharts/es6/util/Constants.js");
+/* harmony import */ var _util_stacks_getStackSeriesIdentifier__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../util/stacks/getStackSeriesIdentifier */ "./node_modules/recharts/es6/util/stacks/getStackSeriesIdentifier.js");
+/* harmony import */ var _selectTooltipAxis__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./selectTooltipAxis */ "./node_modules/recharts/es6/state/selectors/selectTooltipAxis.js");
+/* harmony import */ var _combiners_combineDisplayedStackedData__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./combiners/combineDisplayedStackedData */ "./node_modules/recharts/es6/state/selectors/combiners/combineDisplayedStackedData.js");
+/* harmony import */ var _types_StackedGraphicalItem__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../types/StackedGraphicalItem */ "./node_modules/recharts/es6/state/types/StackedGraphicalItem.js");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+
 
 
 
@@ -65091,7 +65335,7 @@ var selectAxisSettings = (state, axisType, axisId) => {
  * @param state RechartsRootState
  * @return boolean true if there is at least one Bar or RadialBar
  */
-var selectHasBar = state => state.graphicalItems.countOfBars > 0;
+var selectHasBar = state => state.graphicalItems.cartesianItems.some(item => item.type === 'bar') || state.graphicalItems.polarItems.some(item => item.type === 'radialBar');
 
 /**
  * Filters CartesianGraphicalItemSettings by the relevant axis ID
@@ -65128,7 +65372,10 @@ var combineGraphicalItemsSettings = (graphicalItems, axisSettings, axisPredicate
   return !item.hide;
 });
 var selectCartesianItemsSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectUnfilteredCartesianItems, selectBaseAxis, selectAxisPredicate], combineGraphicalItemsSettings);
-var filterGraphicalNotStackedItems = cartesianItems => cartesianItems.filter(item => item.stackId === undefined);
+var selectStackedCartesianItemsSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectCartesianItemsSettings], cartesianItems => {
+  return cartesianItems.filter(item => item.type === 'area' || item.type === 'bar').filter(_types_StackedGraphicalItem__WEBPACK_IMPORTED_MODULE_23__.isStacked);
+});
+var filterGraphicalNotStackedItems = cartesianItems => cartesianItems.filter(item => !('stackId' in item) || item.stackId === undefined);
 var selectCartesianItemsSettingsExceptStacked = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectCartesianItemsSettings], filterGraphicalNotStackedItems);
 var combineGraphicalItemsData = cartesianItems => cartesianItems.map(item => item.data).filter(Boolean).flat(1);
 
@@ -65262,6 +65509,7 @@ function getErrorDomainByDataKey(entry, appliedValue, relevantErrorBars) {
     return [appliedValue - lowBound, appliedValue + highBound];
   }));
 }
+var selectDisplayedStackedData = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectStackedCartesianItemsSettings, _dataSelectors__WEBPACK_IMPORTED_MODULE_5__.selectChartDataWithIndexesIfNotInPanorama, _selectTooltipAxis__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxis], _combiners_combineDisplayedStackedData__WEBPACK_IMPORTED_MODULE_22__.combineDisplayedStackedData);
 var combineStackGroups = (displayedData, items, stackOffsetType) => {
   var initialItemsGroups = {};
   var itemsGroup = items.reduce((acc, item) => {
@@ -65276,7 +65524,7 @@ var combineStackGroups = (displayedData, items, stackOffsetType) => {
   }, initialItemsGroups);
   return Object.fromEntries(Object.entries(itemsGroup).map(_ref2 => {
     var [stackId, graphicalItems] = _ref2;
-    var dataKeys = graphicalItems.map(i => i.dataKey);
+    var dataKeys = graphicalItems.map(_util_stacks_getStackSeriesIdentifier__WEBPACK_IMPORTED_MODULE_20__.getStackSeriesIdentifier);
     return [stackId, {
       // @ts-expect-error getStackedData requires that the input is array of objects, Recharts does not test for that
       stackedData: (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_4__.getStackedData)(displayedData, dataKeys, stackOffsetType),
@@ -65284,12 +65532,13 @@ var combineStackGroups = (displayedData, items, stackOffsetType) => {
     }];
   }));
 };
+
 /**
  * Stack groups are groups of graphical items that stack on each other.
  * Stack is a function of axis type (X, Y), axis ID, and stack ID.
  * Graphical items that do not have a stack ID are not going to be present in stack groups.
  */
-var selectStackGroups = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectDisplayedData, selectCartesianItemsSettings, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_14__.selectStackOffsetType], combineStackGroups);
+var selectStackGroups = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectDisplayedStackedData, selectStackedCartesianItemsSettings, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_14__.selectStackOffsetType], combineStackGroups);
 var combineDomainOfStackGroups = (stackGroups, _ref3, axisType) => {
   var {
     dataStartIndex,
@@ -65306,12 +65555,12 @@ var combineDomainOfStackGroups = (stackGroups, _ref3, axisType) => {
   return domainOfStackGroups;
 };
 var selectDomainOfStackGroups = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectStackGroups, _dataSelectors__WEBPACK_IMPORTED_MODULE_5__.selectChartDataWithIndexes, _pickAxisType__WEBPACK_IMPORTED_MODULE_16__.pickAxisType], combineDomainOfStackGroups);
-var combineAppliedNumericalValuesIncludingErrorValues = (data, axisSettings, items, axisType) => {
+var combineAppliedNumericalValuesIncludingErrorValues = (data, axisSettings, items, errorBars, axisType) => {
   if (items.length > 0) {
     return data.flatMap(entry => {
       return items.flatMap(item => {
-        var _item$errorBars, _axisSettings$dataKey;
-        var relevantErrorBars = (_item$errorBars = item.errorBars) === null || _item$errorBars === void 0 ? void 0 : _item$errorBars.filter(errorBar => isErrorBarRelevantForAxisType(axisType, errorBar));
+        var _errorBars$item$id, _axisSettings$dataKey;
+        var relevantErrorBars = (_errorBars$item$id = errorBars[item.id]) === null || _errorBars$item$id === void 0 ? void 0 : _errorBars$item$id.filter(errorBar => isErrorBarRelevantForAxisType(axisType, errorBar));
         var valueByDataKey = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_4__.getValueByDataKey)(entry, (_axisSettings$dataKey = axisSettings.dataKey) !== null && _axisSettings$dataKey !== void 0 ? _axisSettings$dataKey : item.dataKey);
         return {
           value: valueByDataKey,
@@ -65331,7 +65580,16 @@ var combineAppliedNumericalValuesIncludingErrorValues = (data, axisSettings, ite
     errorDomain: []
   }));
 };
-var selectAllAppliedNumericalValuesIncludingErrorValues = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)(selectDisplayedData, selectBaseAxis, selectCartesianItemsSettingsExceptStacked, _pickAxisType__WEBPACK_IMPORTED_MODULE_16__.pickAxisType, combineAppliedNumericalValuesIncludingErrorValues);
+var selectAllErrorBarSettings = state => state.errorBars;
+var combineRelevantErrorBarSettings = (cartesianItemsSettings, allErrorBarSettings, axisType) => {
+  return cartesianItemsSettings.flatMap(item => {
+    return allErrorBarSettings[item.id];
+  }).filter(Boolean).filter(e => {
+    return isErrorBarRelevantForAxisType(axisType, e);
+  });
+};
+var selectErrorBarsSettingsExceptStacked = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectCartesianItemsSettingsExceptStacked, selectAllErrorBarSettings, _pickAxisType__WEBPACK_IMPORTED_MODULE_16__.pickAxisType], combineRelevantErrorBarSettings);
+var selectAllAppliedNumericalValuesIncludingErrorValues = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectDisplayedData, selectBaseAxis, selectCartesianItemsSettingsExceptStacked, selectAllErrorBarSettings, _pickAxisType__WEBPACK_IMPORTED_MODULE_16__.pickAxisType], combineAppliedNumericalValuesIncludingErrorValues);
 function onlyAllowNumbersAndStringsAndDates(item) {
   var {
     value
@@ -65441,15 +65699,17 @@ var selectReferenceElementsDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.cre
   return mergeDomains(dotsDomain, areasDomain, linesDomain);
 });
 var selectDomainDefinition = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectBaseAxis], getDomainDefinition);
-var combineNumericalDomain = (axisSettings, domainDefinition, domainOfStackGroups, allDataWithErrorDomains, referenceElementsDomain) => {
+var combineNumericalDomain = (axisSettings, domainDefinition, domainOfStackGroups, allDataWithErrorDomains, referenceElementsDomain, layout, axisType) => {
   var domainFromUserPreference = (0,_util_isDomainSpecifiedByUser__WEBPACK_IMPORTED_MODULE_6__.numericalDomainSpecifiedWithoutRequiringData)(domainDefinition, axisSettings.allowDataOverflow);
   if (domainFromUserPreference != null) {
     // We're done! No need to compute anything else.
     return domainFromUserPreference;
   }
-  return (0,_util_isDomainSpecifiedByUser__WEBPACK_IMPORTED_MODULE_6__.parseNumericalUserDomain)(domainDefinition, mergeDomains(domainOfStackGroups, referenceElementsDomain, computeNumericalDomain(allDataWithErrorDomains)), axisSettings.allowDataOverflow);
+  var shouldIncludeDomainOfStackGroups = layout === 'vertical' && axisType === 'xAxis' || layout === 'horizontal' && axisType === 'yAxis';
+  var mergedDomains = shouldIncludeDomainOfStackGroups ? mergeDomains(domainOfStackGroups, referenceElementsDomain, computeNumericalDomain(allDataWithErrorDomains)) : mergeDomains(referenceElementsDomain, computeNumericalDomain(allDataWithErrorDomains));
+  return (0,_util_isDomainSpecifiedByUser__WEBPACK_IMPORTED_MODULE_6__.parseNumericalUserDomain)(domainDefinition, mergedDomains, axisSettings.allowDataOverflow);
 };
-var selectNumericalDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectBaseAxis, selectDomainDefinition, selectDomainOfStackGroups, selectAllAppliedNumericalValuesIncludingErrorValues, selectReferenceElementsDomain], combineNumericalDomain);
+var selectNumericalDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectBaseAxis, selectDomainDefinition, selectDomainOfStackGroups, selectAllAppliedNumericalValuesIncludingErrorValues, selectReferenceElementsDomain, _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_3__.selectChartLayout, _pickAxisType__WEBPACK_IMPORTED_MODULE_16__.pickAxisType], combineNumericalDomain);
 
 /**
  * Expand by design maps everything between 0 and 1,
@@ -65458,7 +65718,7 @@ var selectNumericalDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelec
  */
 var expandDomain = [0, 1];
 var combineAxisDomain = (axisSettings, layout, displayedData, allAppliedValues, stackOffsetType, axisType, numericalDomain) => {
-  if (axisSettings == null || displayedData == null || displayedData.length === 0) {
+  if ((axisSettings == null || displayedData == null || displayedData.length === 0) && numericalDomain === undefined) {
     return undefined;
   }
   var {
@@ -65712,14 +65972,7 @@ var selectAxisRange = (state, axisType, axisId, isPanorama) => {
 };
 var selectAxisRangeWithReverse = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectBaseAxis, selectAxisRange], _combiners_combineAxisRangeWithReverse__WEBPACK_IMPORTED_MODULE_18__.combineAxisRangeWithReverse);
 var selectAxisScale = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectBaseAxis, selectRealScaleType, selectAxisDomainIncludingNiceTicks, selectAxisRangeWithReverse], combineScaleFunction);
-var selectErrorBarsSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)(selectCartesianItemsSettings, _pickAxisType__WEBPACK_IMPORTED_MODULE_16__.pickAxisType, (items, axisType) => {
-  return items.flatMap(item => {
-    var _item$errorBars2;
-    return (_item$errorBars2 = item.errorBars) !== null && _item$errorBars2 !== void 0 ? _item$errorBars2 : [];
-  }).filter(e => {
-    return isErrorBarRelevantForAxisType(axisType, e);
-  });
-});
+var selectErrorBarsSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectCartesianItemsSettings, selectAllErrorBarSettings, _pickAxisType__WEBPACK_IMPORTED_MODULE_16__.pickAxisType], combineRelevantErrorBarSettings);
 function compareIds(a, b) {
   if (a.id < b.id) {
     return -1;
@@ -66076,11 +66329,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   combineStackedData: () => (/* binding */ combineStackedData),
 /* harmony export */   selectAllBarPositions: () => (/* binding */ selectAllBarPositions),
 /* harmony export */   selectAllVisibleBars: () => (/* binding */ selectAllVisibleBars),
+/* harmony export */   selectAxisBandSize: () => (/* binding */ selectAxisBandSize),
 /* harmony export */   selectBarBandSize: () => (/* binding */ selectBarBandSize),
 /* harmony export */   selectBarCartesianAxisSize: () => (/* binding */ selectBarCartesianAxisSize),
 /* harmony export */   selectBarPosition: () => (/* binding */ selectBarPosition),
 /* harmony export */   selectBarRectangles: () => (/* binding */ selectBarRectangles),
-/* harmony export */   selectBarSizeList: () => (/* binding */ selectBarSizeList)
+/* harmony export */   selectBarSizeList: () => (/* binding */ selectBarSizeList),
+/* harmony export */   selectMaxBarSize: () => (/* binding */ selectMaxBarSize)
 /* harmony export */ });
 /* harmony import */ var reselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! reselect */ "./node_modules/reselect/dist/reselect.mjs");
 /* harmony import */ var _axisSelectors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./axisSelectors */ "./node_modules/recharts/es6/state/selectors/axisSelectors.js");
@@ -66092,6 +66347,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _selectChartOffsetInternal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./selectChartOffsetInternal */ "./node_modules/recharts/es6/state/selectors/selectChartOffsetInternal.js");
 /* harmony import */ var _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./rootPropsSelectors */ "./node_modules/recharts/es6/state/selectors/rootPropsSelectors.js");
 /* harmony import */ var _util_isWellBehavedNumber__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../util/isWellBehavedNumber */ "./node_modules/recharts/es6/util/isWellBehavedNumber.js");
+/* harmony import */ var _util_stacks_getStackSeriesIdentifier__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../util/stacks/getStackSeriesIdentifier */ "./node_modules/recharts/es6/util/stacks/getStackSeriesIdentifier.js");
+/* harmony import */ var _types_StackedGraphicalItem__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../types/StackedGraphicalItem */ "./node_modules/recharts/es6/state/types/StackedGraphicalItem.js");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -66107,12 +66364,15 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 
 
 
+
+
 var pickXAxisId = (_state, xAxisId) => xAxisId;
 var pickYAxisId = (_state, _xAxisId, yAxisId) => yAxisId;
 var pickIsPanorama = (_state, _xAxisId, _yAxisId, isPanorama) => isPanorama;
-var pickBarSettings = (_state, _xAxisId, _yAxisId, _isPanorama, barSettings) => barSettings;
-var pickMaxBarSize = (_state, _xAxisId, _yAxisId, _isPanorama, barSettings) => barSettings.maxBarSize;
-var pickCells = (_state, _xAxisId, _yAxisId, _isPanorama, _barSettings, cells) => cells;
+var pickBarId = (_state, _xAxisId, _yAxisId, _isPanorama, id) => id;
+var selectSynchronisedBarSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectUnfilteredCartesianItems, pickBarId], (graphicalItems, id) => graphicalItems.filter(item => item.type === 'bar').find(item => item.id === id));
+var selectMaxBarSize = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectSynchronisedBarSettings], barSettings => barSettings === null || barSettings === void 0 ? void 0 : barSettings.maxBarSize);
+var pickCells = (_state, _xAxisId, _yAxisId, _isPanorama, _id, cells) => cells;
 var getBarSize = (globalSize, totalSize, selfSize) => {
   var barSize = selfSize !== null && selfSize !== void 0 ? selfSize : globalSize;
   if ((0,_util_DataUtils__WEBPACK_IMPORTED_MODULE_2__.isNullish)(barSize)) {
@@ -66140,24 +66400,9 @@ var selectBarCartesianAxisSize = (state, xAxisId, yAxisId) => {
   }
   return (0,_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectCartesianAxisSize)(state, 'yAxis', yAxisId);
 };
-
-/**
- * Some graphical items allow data stacking. The stacks are optional,
- * so all props here are optional too.
- */
-
-/**
- * Some graphical items allow data stacking.
- * This interface is used to represent the items that are stacked
- * because the user has provided the stackId and dataKey properties.
- */
-
-function isStacked(graphicalItem) {
-  return graphicalItem.stackId != null && graphicalItem.dataKey != null;
-}
 var combineBarSizeList = (allBars, globalSize, totalSize) => {
   var initialValue = {};
-  var stackedBars = allBars.filter(isStacked);
+  var stackedBars = allBars.filter(_types_StackedGraphicalItem__WEBPACK_IMPORTED_MODULE_11__.isStacked);
   var unstackedBars = allBars.filter(b => b.stackId == null);
   var groupByStack = stackedBars.reduce((acc, bar) => {
     if (!acc[bar.stackId]) {
@@ -66188,8 +66433,12 @@ var combineBarSizeList = (allBars, globalSize, totalSize) => {
   return [...stackedSizeList, ...unstackedSizeList];
 };
 var selectBarSizeList = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectAllVisibleBars, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_8__.selectRootBarSize, selectBarCartesianAxisSize], combineBarSizeList);
-var selectBarBandSize = (state, xAxisId, yAxisId, isPanorama, barSettings) => {
+var selectBarBandSize = (state, xAxisId, yAxisId, isPanorama, id) => {
   var _ref2, _getBandSizeOfAxis;
+  var barSettings = selectSynchronisedBarSettings(state, xAxisId, yAxisId, isPanorama, id);
+  if (barSettings == null) {
+    return undefined;
+  }
   var layout = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_5__.selectChartLayout)(state);
   var globalMaxBarSize = (0,_rootPropsSelectors__WEBPACK_IMPORTED_MODULE_8__.selectRootMaxBarSize)(state);
   var {
@@ -66295,23 +66544,24 @@ var combineAllBarPositions = (sizeList, globalMaxBarSize, barGap, barCategoryGap
   }
   return allBarPositions;
 };
-var selectAllBarPositions = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectBarSizeList, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_8__.selectRootMaxBarSize, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_8__.selectBarGap, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_8__.selectBarCategoryGap, selectBarBandSize, selectAxisBandSize, pickMaxBarSize], combineAllBarPositions);
+var selectAllBarPositions = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectBarSizeList, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_8__.selectRootMaxBarSize, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_8__.selectBarGap, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_8__.selectBarCategoryGap, selectBarBandSize, selectAxisBandSize, selectMaxBarSize], combineAllBarPositions);
 var selectXAxisWithScale = (state, xAxisId, _yAxisId, isPanorama) => (0,_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectAxisWithScale)(state, 'xAxis', xAxisId, isPanorama);
 var selectYAxisWithScale = (state, _xAxisId, yAxisId, isPanorama) => (0,_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectAxisWithScale)(state, 'yAxis', yAxisId, isPanorama);
 var selectXAxisTicks = (state, xAxisId, _yAxisId, isPanorama) => (0,_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectTicksOfGraphicalItem)(state, 'xAxis', xAxisId, isPanorama);
 var selectYAxisTicks = (state, _xAxisId, yAxisId, isPanorama) => (0,_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectTicksOfGraphicalItem)(state, 'yAxis', yAxisId, isPanorama);
-var selectBarPosition = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectAllBarPositions, pickBarSettings], (allBarPositions, barSettings) => {
-  if (allBarPositions == null) {
+var selectBarPosition = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectAllBarPositions, selectSynchronisedBarSettings], (allBarPositions, barSettings) => {
+  if (allBarPositions == null || barSettings == null) {
     return undefined;
   }
-  var position = allBarPositions.find(p => p.stackId === barSettings.stackId && p.dataKeys.includes(barSettings.dataKey));
+  var position = allBarPositions.find(p => p.stackId === barSettings.stackId && barSettings.dataKey != null && p.dataKeys.includes(barSettings.dataKey));
   if (position == null) {
     return undefined;
   }
   return position.position;
 });
 var combineStackedData = (stackGroups, barSettings) => {
-  if (!stackGroups || (barSettings === null || barSettings === void 0 ? void 0 : barSettings.dataKey) == null) {
+  var stackSeriesIdentifier = (0,_util_stacks_getStackSeriesIdentifier__WEBPACK_IMPORTED_MODULE_10__.getStackSeriesIdentifier)(barSettings);
+  if (!stackGroups || stackSeriesIdentifier == null || barSettings == null) {
     return undefined;
   }
   var {
@@ -66330,18 +66580,9 @@ var combineStackedData = (stackGroups, barSettings) => {
   if (!stackedData) {
     return undefined;
   }
-  var stack = stackedData.find(sd => sd.key === barSettings.dataKey);
-  return stack;
+  return stackedData.find(sd => sd.key === stackSeriesIdentifier);
 };
-var selectSynchronisedBarSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectUnfilteredCartesianItems, pickBarSettings], (graphicalItems, barSettingsFromProps) => {
-  if (graphicalItems.some(cgis => cgis.type === 'bar' && barSettingsFromProps.dataKey === cgis.dataKey && barSettingsFromProps.stackId === cgis.stackId &&
-  // barSettingsFromProps.data === cgis.data && // bar doesn't support data and one is undefined and another is null and this condition breaks
-  barSettingsFromProps.stackId === cgis.stackId)) {
-    return barSettingsFromProps;
-  }
-  return undefined;
-});
-var selectStackedDataOfItem = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectBarStackGroups, pickBarSettings], combineStackedData);
+var selectStackedDataOfItem = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectBarStackGroups, selectSynchronisedBarSettings], combineStackedData);
 var selectBarRectangles = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_selectChartOffsetInternal__WEBPACK_IMPORTED_MODULE_7__.selectChartOffsetInternal, selectXAxisWithScale, selectYAxisWithScale, selectXAxisTicks, selectYAxisTicks, selectBarPosition, _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_5__.selectChartLayout, _dataSelectors__WEBPACK_IMPORTED_MODULE_6__.selectChartDataWithIndexesIfNotInPanorama, selectAxisBandSize, selectStackedDataOfItem, selectSynchronisedBarSettings, pickCells], (offset, xAxis, yAxis, xAxisTicks, yAxisTicks, pos, layout, _ref3, bandSize, stackedData, barSettings, cells) => {
   var {
     chartData,
@@ -66545,6 +66786,70 @@ var combineCoordinateForDefaultIndex = (width, height, layout, offset, tooltipTi
 
 /***/ }),
 
+/***/ "./node_modules/recharts/es6/state/selectors/combiners/combineDisplayedStackedData.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/recharts/es6/state/selectors/combiners/combineDisplayedStackedData.js ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   combineDisplayedStackedData: () => (/* binding */ combineDisplayedStackedData)
+/* harmony export */ });
+/* harmony import */ var _util_stacks_getStackSeriesIdentifier__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../util/stacks/getStackSeriesIdentifier */ "./node_modules/recharts/es6/util/stacks/getStackSeriesIdentifier.js");
+/* harmony import */ var _util_ChartUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../util/ChartUtils */ "./node_modules/recharts/es6/util/ChartUtils.js");
+
+
+
+/**
+ * In a stacked chart, each graphical item has its own data. That data could be either:
+ * - defined on the chart root, in which case the item gets a unique dataKey
+ * - or defined on the item itself, in which case multiple items can share the same dataKey
+ *
+ * That means we cannot use the dataKey as a unique identifier for the item.
+ *
+ * This type represents a single data point in a stacked chart, where each key is a series identifier
+ * and the value is the numeric value for that series using the numerical axis dataKey.
+ */
+
+function combineDisplayedStackedData(stackedGraphicalItems, _ref, tooltipAxisSettings) {
+  var {
+    chartData = []
+  } = _ref;
+  var tooltipDataKey = tooltipAxisSettings === null || tooltipAxisSettings === void 0 ? void 0 : tooltipAxisSettings.dataKey;
+
+  // A map of tooltip data keys to the stacked data points
+  var knownItemsByDataKey = new Map();
+  stackedGraphicalItems.forEach(item => {
+    var _item$data;
+    // If there is no data on the individual item then we use the root chart data
+    var resolvedData = (_item$data = item.data) !== null && _item$data !== void 0 ? _item$data : chartData;
+    if (resolvedData == null || resolvedData.length === 0) {
+      // if that didn't work then we skip this item
+      return;
+    }
+    var stackIdentifier = (0,_util_stacks_getStackSeriesIdentifier__WEBPACK_IMPORTED_MODULE_0__.getStackSeriesIdentifier)(item);
+    resolvedData.forEach((entry, index) => {
+      var tooltipValue = tooltipDataKey == null ? index : String((0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_1__.getValueByDataKey)(entry, tooltipDataKey, null));
+      var numericValue = (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_1__.getValueByDataKey)(entry, item.dataKey, 0);
+      var curr;
+      if (knownItemsByDataKey.has(tooltipValue)) {
+        curr = knownItemsByDataKey.get(tooltipValue);
+      } else {
+        curr = {};
+      }
+      Object.assign(curr, {
+        [stackIdentifier]: numericValue
+      });
+      knownItemsByDataKey.set(tooltipValue, curr);
+    });
+  });
+  return Array.from(knownItemsByDataKey.values());
+}
+
+/***/ }),
+
 /***/ "./node_modules/recharts/es6/state/selectors/combiners/combineTooltipInteractionState.js":
 /*!***********************************************************************************************!*\
   !*** ./node_modules/recharts/es6/state/selectors/combiners/combineTooltipInteractionState.js ***!
@@ -66630,6 +66935,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _util_DataUtils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../util/DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
 /* harmony import */ var _util_ChartUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../util/ChartUtils */ "./node_modules/recharts/es6/util/ChartUtils.js");
+/* harmony import */ var _util_getSliced__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../util/getSliced */ "./node_modules/recharts/es6/util/getSliced.js");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -66637,15 +66943,7 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
-function getSliced(arr, startIndex, endIndex) {
-  if (!Array.isArray(arr)) {
-    return arr;
-  }
-  if (arr && startIndex + endIndex !== 0) {
-    return arr.slice(startIndex, endIndex + 1);
-  }
-  return arr;
-}
+
 function selectFinalData(dataDefinedOnItem, dataDefinedOnChart) {
   /*
    * If a payload has data specified directly from the graphical item, prefer that.
@@ -66674,7 +66972,7 @@ var combineTooltipPayload = (tooltipPayloadConfigurations, activeIndex, chartDat
       settings
     } = _ref;
     var finalData = selectFinalData(dataDefinedOnItem, chartData);
-    var sliced = getSliced(finalData, dataStartIndex, dataEndIndex);
+    var sliced = Array.isArray(finalData) ? (0,_util_getSliced__WEBPACK_IMPORTED_MODULE_2__.getSliced)(finalData, dataStartIndex, dataEndIndex) : finalData;
     var finalDataKey = (_settings$dataKey = settings === null || settings === void 0 ? void 0 : settings.dataKey) !== null && _settings$dataKey !== void 0 ? _settings$dataKey : tooltipAxis === null || tooltipAxis === void 0 ? void 0 : tooltipAxis.dataKey;
     // BaseAxisProps does not support nameKey but it could!
     var finalNameKey = settings === null || settings === void 0 ? void 0 : settings.nameKey; // ?? tooltipAxis?.nameKey;
@@ -66861,7 +67159,7 @@ var selectChartDataAndAlwaysIgnoreIndexes = (0,reselect__WEBPACK_IMPORTED_MODULE
     dataStartIndex: 0
   };
 });
-var selectChartDataWithIndexesIfNotInPanorama = (state, _xAxisId, _yAxisId, isPanorama) => {
+var selectChartDataWithIndexesIfNotInPanorama = (state, _unused1, _unused2, isPanorama) => {
   if (isPanorama) {
     return selectChartDataAndAlwaysIgnoreIndexes(state);
   }
@@ -66934,7 +67232,10 @@ var selectBandSize = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_
   }
   return (0,_util_ChartUtils__WEBPACK_IMPORTED_MODULE_5__.getBandSizeOfAxis)(yAxis, yAxisTicks, false);
 });
-var pickLineSettings = (_state, _xAxisId, _yAxisId, _isPanorama, lineSettings) => lineSettings;
+var pickLineId = (_state, _xAxisId, _yAxisId, _isPanorama, id) => id;
+function isLineSettings(item) {
+  return item.type === 'line';
+}
 
 /*
  * There is a race condition problem because we read some data from props and some from the state.
@@ -66942,23 +67243,9 @@ var pickLineSettings = (_state, _xAxisId, _yAxisId, _isPanorama, lineSettings) =
  * and so we have this weird one tick render where the displayedData in one selector have the old dataKey
  * but the new dataKey in another selector.
  *
- * A proper fix is to either move everything into the state, or read the dataKey always from props
- * - but this is a smaller change.
+ * So here instead of reading the dataKey from the props, we always read it from the state.
  */
-var selectSynchronisedLineSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_4__.selectUnfilteredCartesianItems, pickLineSettings], (graphicalItems, lineSettingsFromProps) => {
-  if (graphicalItems.some(cgis => cgis.type === 'line' && lineSettingsFromProps.dataKey === cgis.dataKey && lineSettingsFromProps.data === cgis.data)) {
-    /*
-     * now, at least one of the lines has the same dataKey as the one in props.
-     * Is this a perfect match? Maybe not because we could theoretically have two different Lines with the same dataKey
-     * and the same stackId and the same data but still different lines, yes,
-     * but the chances of that happening are ... lowish.
-     *
-     * A proper fix would be to store the lineSettings in a state too, and compare references directly instead of enumerating the properties.
-     */
-    return lineSettingsFromProps;
-  }
-  return undefined;
-});
+var selectSynchronisedLineSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_4__.selectUnfilteredCartesianItems, pickLineId], (graphicalItems, id) => graphicalItems.filter(isLineSettings).find(x => x.id === id));
 var selectLinePoints = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_3__.selectChartLayout, selectXAxisWithScale, selectYAxisWithScale, selectXAxisTicks, selectYAxisTicks, selectSynchronisedLineSettings, selectBandSize, _dataSelectors__WEBPACK_IMPORTED_MODULE_2__.selectChartDataWithIndexesIfNotInPanorama], (layout, xAxis, yAxis, xAxisTicks, yAxisTicks, lineSettings, bandSize, _ref) => {
   var {
     chartData,
@@ -67055,20 +67342,24 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 
 
 
-var pickPieSettings = (_state, pieSettings) => pieSettings;
+var pickId = (_state, id) => id;
+var selectSynchronisedPieSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_polarSelectors__WEBPACK_IMPORTED_MODULE_5__.selectUnfilteredPolarItems, pickId], (graphicalItems, id) => graphicalItems.filter(item => item.type === 'pie').find(item => item.id === id));
 
 // Keep stable reference to an empty array to prevent re-renders
 var emptyArray = [];
-var pickCells = (_state, _pieSettings, cells) => {
+var pickCells = (_state, _id, cells) => {
   if ((cells === null || cells === void 0 ? void 0 : cells.length) === 0) {
     return emptyArray;
   }
   return cells;
 };
-var selectDisplayedData = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_dataSelectors__WEBPACK_IMPORTED_MODULE_2__.selectChartDataAndAlwaysIgnoreIndexes, pickPieSettings, pickCells], (_ref, pieSettings, cells) => {
+var selectDisplayedData = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_dataSelectors__WEBPACK_IMPORTED_MODULE_2__.selectChartDataAndAlwaysIgnoreIndexes, selectSynchronisedPieSettings, pickCells], (_ref, pieSettings, cells) => {
   var {
     chartData
   } = _ref;
+  if (pieSettings == null) {
+    return undefined;
+  }
   var displayedData;
   if ((pieSettings === null || pieSettings === void 0 ? void 0 : pieSettings.data) != null && pieSettings.data.length > 0) {
     displayedData = pieSettings.data;
@@ -67083,8 +67374,8 @@ var selectDisplayedData = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelecto
   }
   return displayedData;
 });
-var selectPieLegend = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectDisplayedData, pickPieSettings, pickCells], (displayedData, pieSettings, cells) => {
-  if (displayedData == null) {
+var selectPieLegend = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectDisplayedData, selectSynchronisedPieSettings, pickCells], (displayedData, pieSettings, cells) => {
+  if (displayedData == null || pieSettings == null) {
     return undefined;
   }
   return displayedData.map((entry, i) => {
@@ -67105,12 +67396,6 @@ var selectPieLegend = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([
       type: pieSettings.legendType
     };
   });
-});
-var selectSynchronisedPieSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_polarSelectors__WEBPACK_IMPORTED_MODULE_5__.selectUnfilteredPolarItems, pickPieSettings], (graphicalItems, pieSettingsFromProps) => {
-  if (graphicalItems.some(pgis => pgis.type === 'pie' && pieSettingsFromProps.dataKey === pgis.dataKey && pieSettingsFromProps.data === pgis.data)) {
-    return pieSettingsFromProps;
-  }
-  return undefined;
 });
 var selectPieSectors = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectDisplayedData, selectSynchronisedPieSettings, pickCells, _selectChartOffsetInternal__WEBPACK_IMPORTED_MODULE_3__.selectChartOffsetInternal], (displayedData, pieSettings, cells, offset) => {
   if (pieSettings == null || displayedData == null) {
@@ -67376,7 +67661,7 @@ var selectAllPolarAppliedNumericalValues = (0,reselect__WEBPACK_IMPORTED_MODULE_
   }));
 });
 var unsupportedInPolarChart = () => undefined;
-var selectPolarNumericalDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_2__.selectBaseAxis, _axisSelectors__WEBPACK_IMPORTED_MODULE_2__.selectDomainDefinition, unsupportedInPolarChart, selectAllPolarAppliedNumericalValues, unsupportedInPolarChart], _axisSelectors__WEBPACK_IMPORTED_MODULE_2__.combineNumericalDomain);
+var selectPolarNumericalDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_2__.selectBaseAxis, _axisSelectors__WEBPACK_IMPORTED_MODULE_2__.selectDomainDefinition, unsupportedInPolarChart, selectAllPolarAppliedNumericalValues, unsupportedInPolarChart, _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_3__.selectChartLayout, _pickAxisType__WEBPACK_IMPORTED_MODULE_5__.pickAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_2__.combineNumericalDomain);
 var selectPolarAxisDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_2__.selectBaseAxis, _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_3__.selectChartLayout, selectPolarDisplayedData, selectPolarAppliedValues, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_7__.selectStackOffsetType, _pickAxisType__WEBPACK_IMPORTED_MODULE_5__.pickAxisType, selectPolarNumericalDomain], _axisSelectors__WEBPACK_IMPORTED_MODULE_2__.combineAxisDomain);
 var selectPolarNiceTicks = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectPolarAxisDomain, _axisSelectors__WEBPACK_IMPORTED_MODULE_2__.selectBaseAxis, _axisSelectors__WEBPACK_IMPORTED_MODULE_2__.selectRealScaleType], _axisSelectors__WEBPACK_IMPORTED_MODULE_2__.combineNiceTicks);
 var selectPolarAxisDomainIncludingNiceTicks = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_2__.selectBaseAxis, selectPolarAxisDomain, selectPolarNiceTicks, _pickAxisType__WEBPACK_IMPORTED_MODULE_5__.pickAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_2__.combineAxisDomainWithNiceTicks);
@@ -67431,6 +67716,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _selectChartOffsetInternal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./selectChartOffsetInternal */ "./node_modules/recharts/es6/state/selectors/selectChartOffsetInternal.js");
 /* harmony import */ var _selectors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./selectors */ "./node_modules/recharts/es6/state/selectors/selectors.js");
 /* harmony import */ var _polarAxisSelectors__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./polarAxisSelectors */ "./node_modules/recharts/es6/state/selectors/polarAxisSelectors.js");
+/* harmony import */ var _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./selectTooltipAxisType */ "./node_modules/recharts/es6/state/selectors/selectTooltipAxisType.js");
+
 
 
 
@@ -67438,7 +67725,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var pickChartPointer = (_state, chartPointer) => chartPointer;
-var selectActivePropsFromChartPointer = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([pickChartPointer, _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_1__.selectChartLayout, _polarAxisSelectors__WEBPACK_IMPORTED_MODULE_5__.selectPolarViewBox, _tooltipSelectors__WEBPACK_IMPORTED_MODULE_2__.selectTooltipAxisType, _tooltipSelectors__WEBPACK_IMPORTED_MODULE_2__.selectTooltipAxisRangeWithReverse, _tooltipSelectors__WEBPACK_IMPORTED_MODULE_2__.selectTooltipAxisTicks, _selectors__WEBPACK_IMPORTED_MODULE_4__.selectOrderedTooltipTicks, _selectChartOffsetInternal__WEBPACK_IMPORTED_MODULE_3__.selectChartOffsetInternal], _selectors__WEBPACK_IMPORTED_MODULE_4__.combineActiveProps);
+var selectActivePropsFromChartPointer = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([pickChartPointer, _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_1__.selectChartLayout, _polarAxisSelectors__WEBPACK_IMPORTED_MODULE_5__.selectPolarViewBox, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_6__.selectTooltipAxisType, _tooltipSelectors__WEBPACK_IMPORTED_MODULE_2__.selectTooltipAxisRangeWithReverse, _tooltipSelectors__WEBPACK_IMPORTED_MODULE_2__.selectTooltipAxisTicks, _selectors__WEBPACK_IMPORTED_MODULE_4__.selectOrderedTooltipTicks, _selectChartOffsetInternal__WEBPACK_IMPORTED_MODULE_3__.selectChartOffsetInternal], _selectors__WEBPACK_IMPORTED_MODULE_4__.combineActiveProps);
 
 /***/ }),
 
@@ -67626,6 +67913,75 @@ var selectPlotArea = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_
 
 /***/ }),
 
+/***/ "./node_modules/recharts/es6/state/selectors/selectTooltipAxis.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/recharts/es6/state/selectors/selectTooltipAxis.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   selectTooltipAxis: () => (/* binding */ selectTooltipAxis)
+/* harmony export */ });
+/* harmony import */ var _axisSelectors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./axisSelectors */ "./node_modules/recharts/es6/state/selectors/axisSelectors.js");
+/* harmony import */ var _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./selectTooltipAxisType */ "./node_modules/recharts/es6/state/selectors/selectTooltipAxisType.js");
+/* harmony import */ var _selectTooltipAxisId__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./selectTooltipAxisId */ "./node_modules/recharts/es6/state/selectors/selectTooltipAxisId.js");
+
+
+
+var selectTooltipAxis = state => {
+  var axisType = (0,_selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_1__.selectTooltipAxisType)(state);
+  var axisId = (0,_selectTooltipAxisId__WEBPACK_IMPORTED_MODULE_2__.selectTooltipAxisId)(state);
+  return (0,_axisSelectors__WEBPACK_IMPORTED_MODULE_0__.selectAxisSettings)(state, axisType, axisId);
+};
+
+/***/ }),
+
+/***/ "./node_modules/recharts/es6/state/selectors/selectTooltipAxisId.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/recharts/es6/state/selectors/selectTooltipAxisId.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   selectTooltipAxisId: () => (/* binding */ selectTooltipAxisId)
+/* harmony export */ });
+var selectTooltipAxisId = state => state.tooltip.settings.axisId;
+
+/***/ }),
+
+/***/ "./node_modules/recharts/es6/state/selectors/selectTooltipAxisType.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/recharts/es6/state/selectors/selectTooltipAxisType.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   selectTooltipAxisType: () => (/* binding */ selectTooltipAxisType)
+/* harmony export */ });
+/* harmony import */ var _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../context/chartLayoutContext */ "./node_modules/recharts/es6/context/chartLayoutContext.js");
+
+var selectTooltipAxisType = state => {
+  var layout = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_0__.selectChartLayout)(state);
+  if (layout === 'horizontal') {
+    return 'xAxis';
+  }
+  if (layout === 'vertical') {
+    return 'yAxis';
+  }
+  if (layout === 'centric') {
+    return 'angleAxis';
+  }
+  return 'radiusAxis';
+};
+
+/***/ }),
+
 /***/ "./node_modules/recharts/es6/state/selectors/selectTooltipEventType.js":
 /*!*****************************************************************************!*\
   !*** ./node_modules/recharts/es6/state/selectors/selectTooltipEventType.js ***!
@@ -67752,6 +68108,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _selectTooltipPayloadSearcher__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./selectTooltipPayloadSearcher */ "./node_modules/recharts/es6/state/selectors/selectTooltipPayloadSearcher.js");
 /* harmony import */ var _selectTooltipState__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./selectTooltipState */ "./node_modules/recharts/es6/state/selectors/selectTooltipState.js");
 /* harmony import */ var _combiners_combineTooltipPayload__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./combiners/combineTooltipPayload */ "./node_modules/recharts/es6/state/selectors/combiners/combineTooltipPayload.js");
+/* harmony import */ var _selectTooltipAxis__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./selectTooltipAxis */ "./node_modules/recharts/es6/state/selectors/selectTooltipAxis.js");
+
 
 
 
@@ -67802,7 +68160,7 @@ var selectActiveCoordinate = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSele
   return (_tooltipInteractionSt = tooltipInteractionState.coordinate) !== null && _tooltipInteractionSt !== void 0 ? _tooltipInteractionSt : defaultIndexCoordinate;
 });
 var selectActiveLabel = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)(_tooltipSelectors__WEBPACK_IMPORTED_MODULE_5__.selectTooltipAxisTicks, selectActiveIndex, _combiners_combineActiveLabel__WEBPACK_IMPORTED_MODULE_10__.combineActiveLabel);
-var selectTooltipPayload = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipPayloadConfigurations, selectActiveIndex, _dataSelectors__WEBPACK_IMPORTED_MODULE_4__.selectChartDataWithIndexes, _tooltipSelectors__WEBPACK_IMPORTED_MODULE_5__.selectTooltipAxis, selectActiveLabel, _selectTooltipPayloadSearcher__WEBPACK_IMPORTED_MODULE_15__.selectTooltipPayloadSearcher, pickTooltipEventType], _combiners_combineTooltipPayload__WEBPACK_IMPORTED_MODULE_17__.combineTooltipPayload);
+var selectTooltipPayload = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipPayloadConfigurations, selectActiveIndex, _dataSelectors__WEBPACK_IMPORTED_MODULE_4__.selectChartDataWithIndexes, _selectTooltipAxis__WEBPACK_IMPORTED_MODULE_18__.selectTooltipAxis, selectActiveLabel, _selectTooltipPayloadSearcher__WEBPACK_IMPORTED_MODULE_15__.selectTooltipPayloadSearcher, pickTooltipEventType], _combiners_combineTooltipPayload__WEBPACK_IMPORTED_MODULE_17__.combineTooltipPayload);
 var selectIsTooltipActive = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipInteractionState], tooltipInteractionState => {
   return {
     isActive: tooltipInteractionState.active,
@@ -67846,15 +68204,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   selectAllGraphicalItemsSettings: () => (/* binding */ selectAllGraphicalItemsSettings),
 /* harmony export */   selectAllUnfilteredGraphicalItems: () => (/* binding */ selectAllUnfilteredGraphicalItems),
 /* harmony export */   selectIsTooltipActive: () => (/* binding */ selectIsTooltipActive),
-/* harmony export */   selectTooltipAxis: () => (/* binding */ selectTooltipAxis),
 /* harmony export */   selectTooltipAxisDomain: () => (/* binding */ selectTooltipAxisDomain),
 /* harmony export */   selectTooltipAxisDomainIncludingNiceTicks: () => (/* binding */ selectTooltipAxisDomainIncludingNiceTicks),
-/* harmony export */   selectTooltipAxisId: () => (/* binding */ selectTooltipAxisId),
 /* harmony export */   selectTooltipAxisRangeWithReverse: () => (/* binding */ selectTooltipAxisRangeWithReverse),
 /* harmony export */   selectTooltipAxisRealScaleType: () => (/* binding */ selectTooltipAxisRealScaleType),
 /* harmony export */   selectTooltipAxisScale: () => (/* binding */ selectTooltipAxisScale),
 /* harmony export */   selectTooltipAxisTicks: () => (/* binding */ selectTooltipAxisTicks),
-/* harmony export */   selectTooltipAxisType: () => (/* binding */ selectTooltipAxisType),
 /* harmony export */   selectTooltipCategoricalDomain: () => (/* binding */ selectTooltipCategoricalDomain),
 /* harmony export */   selectTooltipDisplayedData: () => (/* binding */ selectTooltipDisplayedData),
 /* harmony export */   selectTooltipGraphicalItemsData: () => (/* binding */ selectTooltipGraphicalItemsData)
@@ -67879,6 +68234,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _selectTooltipPayloadSearcher__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./selectTooltipPayloadSearcher */ "./node_modules/recharts/es6/state/selectors/selectTooltipPayloadSearcher.js");
 /* harmony import */ var _selectTooltipState__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./selectTooltipState */ "./node_modules/recharts/es6/state/selectors/selectTooltipState.js");
 /* harmony import */ var _combiners_combineTooltipPayload__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./combiners/combineTooltipPayload */ "./node_modules/recharts/es6/state/selectors/combiners/combineTooltipPayload.js");
+/* harmony import */ var _selectTooltipAxisId__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./selectTooltipAxisId */ "./node_modules/recharts/es6/state/selectors/selectTooltipAxisId.js");
+/* harmony import */ var _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./selectTooltipAxisType */ "./node_modules/recharts/es6/state/selectors/selectTooltipAxisType.js");
+/* harmony import */ var _selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./selectTooltipAxis */ "./node_modules/recharts/es6/state/selectors/selectTooltipAxis.js");
+/* harmony import */ var _combiners_combineDisplayedStackedData__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./combiners/combineDisplayedStackedData */ "./node_modules/recharts/es6/state/selectors/combiners/combineDisplayedStackedData.js");
+/* harmony import */ var _types_StackedGraphicalItem__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../types/StackedGraphicalItem */ "./node_modules/recharts/es6/state/types/StackedGraphicalItem.js");
 
 
 
@@ -67899,29 +68259,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var selectTooltipAxisType = state => {
-  var layout = (0,_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_2__.selectChartLayout)(state);
-  if (layout === 'horizontal') {
-    return 'xAxis';
-  }
-  if (layout === 'vertical') {
-    return 'yAxis';
-  }
-  if (layout === 'centric') {
-    return 'angleAxis';
-  }
-  return 'radiusAxis';
-};
-var selectTooltipAxisId = state => state.tooltip.settings.axisId;
-var selectTooltipAxis = state => {
-  var axisType = selectTooltipAxisType(state);
-  var axisId = selectTooltipAxisId(state);
-  return (0,_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectAxisSettings)(state, axisType, axisId);
-};
-var selectTooltipAxisRealScaleType = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipAxis, _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_2__.selectChartLayout, _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectHasBar, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_5__.selectChartName, selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineRealScaleType);
+
+
+
+
+
+var selectTooltipAxisRealScaleType = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis, _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_2__.selectChartLayout, _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectHasBar, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_5__.selectChartName, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineRealScaleType);
 var selectAllUnfilteredGraphicalItems = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([state => state.graphicalItems.cartesianItems, state => state.graphicalItems.polarItems], (cartesianItems, polarItems) => [...cartesianItems, ...polarItems]);
-var selectTooltipAxisPredicate = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipAxisType, selectTooltipAxisId], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.itemAxisPredicate);
-var selectAllGraphicalItemsSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectAllUnfilteredGraphicalItems, selectTooltipAxis, selectTooltipAxisPredicate], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineGraphicalItemsSettings);
+var selectTooltipAxisPredicate = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType, _selectTooltipAxisId__WEBPACK_IMPORTED_MODULE_20__.selectTooltipAxisId], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.itemAxisPredicate);
+var selectAllGraphicalItemsSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectAllUnfilteredGraphicalItems, _selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis, selectTooltipAxisPredicate], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineGraphicalItemsSettings);
+var selectAllStackedGraphicalItemsSettings = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectAllGraphicalItemsSettings], graphicalItems => graphicalItems.filter(_types_StackedGraphicalItem__WEBPACK_IMPORTED_MODULE_24__.isStacked));
 var selectTooltipGraphicalItemsData = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectAllGraphicalItemsSettings], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineGraphicalItemsData);
 
 /**
@@ -67931,33 +68278,35 @@ var selectTooltipGraphicalItemsData = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.c
  * so we don't need to worry what would happen there.
  */
 var selectTooltipDisplayedData = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipGraphicalItemsData, _dataSelectors__WEBPACK_IMPORTED_MODULE_4__.selectChartDataWithIndexes], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineDisplayedData);
-var selectAllTooltipAppliedValues = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipDisplayedData, selectTooltipAxis, selectAllGraphicalItemsSettings], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineAppliedValues);
-var selectTooltipAxisDomainDefinition = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipAxis], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.getDomainDefinition);
-var selectTooltipStackGroups = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipDisplayedData, selectAllGraphicalItemsSettings, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_5__.selectStackOffsetType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineStackGroups);
-var selectTooltipDomainOfStackGroups = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipStackGroups, _dataSelectors__WEBPACK_IMPORTED_MODULE_4__.selectChartDataWithIndexes, selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineDomainOfStackGroups);
+var selectTooltipStackedData = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectAllStackedGraphicalItemsSettings, _dataSelectors__WEBPACK_IMPORTED_MODULE_4__.selectChartDataWithIndexes, _selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis], _combiners_combineDisplayedStackedData__WEBPACK_IMPORTED_MODULE_23__.combineDisplayedStackedData);
+var selectAllTooltipAppliedValues = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipDisplayedData, _selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis, selectAllGraphicalItemsSettings], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineAppliedValues);
+var selectTooltipAxisDomainDefinition = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.getDomainDefinition);
+var selectAllStackedGraphicalItems = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectAllGraphicalItemsSettings], graphicalItems => graphicalItems.filter(_types_StackedGraphicalItem__WEBPACK_IMPORTED_MODULE_24__.isStacked));
+var selectTooltipStackGroups = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipStackedData, selectAllStackedGraphicalItems, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_5__.selectStackOffsetType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineStackGroups);
+var selectTooltipDomainOfStackGroups = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipStackGroups, _dataSelectors__WEBPACK_IMPORTED_MODULE_4__.selectChartDataWithIndexes, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineDomainOfStackGroups);
 var selectTooltipItemsSettingsExceptStacked = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectAllGraphicalItemsSettings], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.filterGraphicalNotStackedItems);
-var selectTooltipAllAppliedNumericalValuesIncludingErrorValues = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipDisplayedData, selectTooltipAxis, selectTooltipItemsSettingsExceptStacked, selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineAppliedNumericalValuesIncludingErrorValues);
-var selectReferenceDotsByTooltipAxis = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectReferenceDots, selectTooltipAxisType, selectTooltipAxisId], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.filterReferenceElements);
-var selectTooltipReferenceDotsDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectReferenceDotsByTooltipAxis, selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineDotsDomain);
-var selectReferenceAreasByTooltipAxis = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectReferenceAreas, selectTooltipAxisType, selectTooltipAxisId], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.filterReferenceElements);
-var selectTooltipReferenceAreasDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectReferenceAreasByTooltipAxis, selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineAreasDomain);
-var selectReferenceLinesByTooltipAxis = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectReferenceLines, selectTooltipAxisType, selectTooltipAxisId], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.filterReferenceElements);
-var selectTooltipReferenceLinesDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectReferenceLinesByTooltipAxis, selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineLinesDomain);
+var selectTooltipAllAppliedNumericalValuesIncludingErrorValues = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipDisplayedData, _selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis, selectTooltipItemsSettingsExceptStacked, _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectAllErrorBarSettings, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineAppliedNumericalValuesIncludingErrorValues);
+var selectReferenceDotsByTooltipAxis = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectReferenceDots, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType, _selectTooltipAxisId__WEBPACK_IMPORTED_MODULE_20__.selectTooltipAxisId], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.filterReferenceElements);
+var selectTooltipReferenceDotsDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectReferenceDotsByTooltipAxis, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineDotsDomain);
+var selectReferenceAreasByTooltipAxis = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectReferenceAreas, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType, _selectTooltipAxisId__WEBPACK_IMPORTED_MODULE_20__.selectTooltipAxisId], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.filterReferenceElements);
+var selectTooltipReferenceAreasDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectReferenceAreasByTooltipAxis, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineAreasDomain);
+var selectReferenceLinesByTooltipAxis = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectReferenceLines, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType, _selectTooltipAxisId__WEBPACK_IMPORTED_MODULE_20__.selectTooltipAxisId], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.filterReferenceElements);
+var selectTooltipReferenceLinesDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectReferenceLinesByTooltipAxis, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineLinesDomain);
 var selectTooltipReferenceElementsDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipReferenceDotsDomain, selectTooltipReferenceLinesDomain, selectTooltipReferenceAreasDomain], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.mergeDomains);
-var selectTooltipNumericalDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipAxis, selectTooltipAxisDomainDefinition, selectTooltipDomainOfStackGroups, selectTooltipAllAppliedNumericalValuesIncludingErrorValues, selectTooltipReferenceElementsDomain], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineNumericalDomain);
-var selectTooltipAxisDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipAxis, _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_2__.selectChartLayout, selectTooltipDisplayedData, selectAllTooltipAppliedValues, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_5__.selectStackOffsetType, selectTooltipAxisType, selectTooltipNumericalDomain], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineAxisDomain);
-var selectTooltipNiceTicks = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipAxisDomain, selectTooltipAxis, selectTooltipAxisRealScaleType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineNiceTicks);
-var selectTooltipAxisDomainIncludingNiceTicks = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipAxis, selectTooltipAxisDomain, selectTooltipNiceTicks, selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineAxisDomainWithNiceTicks);
+var selectTooltipNumericalDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis, selectTooltipAxisDomainDefinition, selectTooltipDomainOfStackGroups, selectTooltipAllAppliedNumericalValuesIncludingErrorValues, selectTooltipReferenceElementsDomain, _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_2__.selectChartLayout, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineNumericalDomain);
+var selectTooltipAxisDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis, _context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_2__.selectChartLayout, selectTooltipDisplayedData, selectAllTooltipAppliedValues, _rootPropsSelectors__WEBPACK_IMPORTED_MODULE_5__.selectStackOffsetType, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType, selectTooltipNumericalDomain], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineAxisDomain);
+var selectTooltipNiceTicks = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipAxisDomain, _selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis, selectTooltipAxisRealScaleType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineNiceTicks);
+var selectTooltipAxisDomainIncludingNiceTicks = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis, selectTooltipAxisDomain, selectTooltipNiceTicks, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineAxisDomainWithNiceTicks);
 var selectTooltipAxisRange = state => {
-  var axisType = selectTooltipAxisType(state);
-  var axisId = selectTooltipAxisId(state);
+  var axisType = (0,_selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType)(state);
+  var axisId = (0,_selectTooltipAxisId__WEBPACK_IMPORTED_MODULE_20__.selectTooltipAxisId)(state);
   var isPanorama = false; // Tooltip never displays in panorama so this is safe to assume
   return (0,_axisSelectors__WEBPACK_IMPORTED_MODULE_1__.selectAxisRange)(state, axisType, axisId, isPanorama);
 };
-var selectTooltipAxisRangeWithReverse = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipAxis, selectTooltipAxisRange], _combiners_combineAxisRangeWithReverse__WEBPACK_IMPORTED_MODULE_7__.combineAxisRangeWithReverse);
-var selectTooltipAxisScale = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipAxis, selectTooltipAxisRealScaleType, selectTooltipAxisDomainIncludingNiceTicks, selectTooltipAxisRangeWithReverse], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineScaleFunction);
-var selectTooltipDuplicateDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_2__.selectChartLayout, selectAllTooltipAppliedValues, selectTooltipAxis, selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineDuplicateDomain);
-var selectTooltipCategoricalDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_2__.selectChartLayout, selectAllTooltipAppliedValues, selectTooltipAxis, selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineCategoricalDomain);
+var selectTooltipAxisRangeWithReverse = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis, selectTooltipAxisRange], _combiners_combineAxisRangeWithReverse__WEBPACK_IMPORTED_MODULE_7__.combineAxisRangeWithReverse);
+var selectTooltipAxisScale = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis, selectTooltipAxisRealScaleType, selectTooltipAxisDomainIncludingNiceTicks, selectTooltipAxisRangeWithReverse], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineScaleFunction);
+var selectTooltipDuplicateDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_2__.selectChartLayout, selectAllTooltipAppliedValues, _selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineDuplicateDomain);
+var selectTooltipCategoricalDomain = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_2__.selectChartLayout, selectAllTooltipAppliedValues, _selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType], _axisSelectors__WEBPACK_IMPORTED_MODULE_1__.combineCategoricalDomain);
 var combineTicksOfTooltipAxis = (layout, axis, realScaleType, scale, range, duplicateDomain, categoricalDomain, axisType) => {
   if (!axis) {
     return undefined;
@@ -67991,7 +68340,7 @@ var combineTicksOfTooltipAxis = (layout, axis, realScaleType, scale, range, dupl
     offset
   }));
 };
-var selectTooltipAxisTicks = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_2__.selectChartLayout, selectTooltipAxis, selectTooltipAxisRealScaleType, selectTooltipAxisScale, selectTooltipAxisRange, selectTooltipDuplicateDomain, selectTooltipCategoricalDomain, selectTooltipAxisType], combineTicksOfTooltipAxis);
+var selectTooltipAxisTicks = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_context_chartLayoutContext__WEBPACK_IMPORTED_MODULE_2__.selectChartLayout, _selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis, selectTooltipAxisRealScaleType, selectTooltipAxisScale, selectTooltipAxisRange, selectTooltipDuplicateDomain, selectTooltipCategoricalDomain, _selectTooltipAxisType__WEBPACK_IMPORTED_MODULE_21__.selectTooltipAxisType], combineTicksOfTooltipAxis);
 var selectTooltipEventType = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([_selectTooltipEventType__WEBPACK_IMPORTED_MODULE_8__.selectDefaultTooltipEventType, _selectTooltipEventType__WEBPACK_IMPORTED_MODULE_8__.selectValidateTooltipEventTypes, _selectTooltipSettings__WEBPACK_IMPORTED_MODULE_10__.selectTooltipSettings], (defaultTooltipEventType, validateTooltipEventType, settings) => (0,_selectTooltipEventType__WEBPACK_IMPORTED_MODULE_8__.combineTooltipEventType)(settings.shared, defaultTooltipEventType, validateTooltipEventType));
 var selectTooltipTrigger = state => state.tooltip.settings.trigger;
 var selectDefaultIndex = state => state.tooltip.settings.defaultIndex;
@@ -68013,7 +68362,7 @@ var selectActiveTooltipCoordinate = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.cre
   return defaultIndexCoordinate;
 });
 var selectIsTooltipActive = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipInteractionState], tooltipInteractionState => tooltipInteractionState.active);
-var selectActiveTooltipPayload = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipPayloadConfigurations, selectActiveTooltipIndex, _dataSelectors__WEBPACK_IMPORTED_MODULE_4__.selectChartDataWithIndexes, selectTooltipAxis, selectActiveLabel, _selectTooltipPayloadSearcher__WEBPACK_IMPORTED_MODULE_17__.selectTooltipPayloadSearcher, selectTooltipEventType], _combiners_combineTooltipPayload__WEBPACK_IMPORTED_MODULE_19__.combineTooltipPayload);
+var selectActiveTooltipPayload = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectTooltipPayloadConfigurations, selectActiveTooltipIndex, _dataSelectors__WEBPACK_IMPORTED_MODULE_4__.selectChartDataWithIndexes, _selectTooltipAxis__WEBPACK_IMPORTED_MODULE_22__.selectTooltipAxis, selectActiveLabel, _selectTooltipPayloadSearcher__WEBPACK_IMPORTED_MODULE_17__.selectTooltipPayloadSearcher, selectTooltipEventType], _combiners_combineTooltipPayload__WEBPACK_IMPORTED_MODULE_19__.combineTooltipPayload);
 var selectActiveTooltipDataPoints = (0,reselect__WEBPACK_IMPORTED_MODULE_0__.createSelector)([selectActiveTooltipPayload], payload => {
   if (payload == null) {
     return undefined;
@@ -68092,6 +68441,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _keyboardEventsMiddleware__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./keyboardEventsMiddleware */ "./node_modules/recharts/es6/state/keyboardEventsMiddleware.js");
 /* harmony import */ var _externalEventsMiddleware__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./externalEventsMiddleware */ "./node_modules/recharts/es6/state/externalEventsMiddleware.js");
 /* harmony import */ var _touchEventsMiddleware__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./touchEventsMiddleware */ "./node_modules/recharts/es6/state/touchEventsMiddleware.js");
+/* harmony import */ var _errorBarSlice__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./errorBarSlice */ "./node_modules/recharts/es6/state/errorBarSlice.js");
+
 
 
 
@@ -68114,6 +68465,7 @@ var rootReducer = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.combineReduce
   brush: _brushSlice__WEBPACK_IMPORTED_MODULE_11__.brushReducer,
   cartesianAxis: _cartesianAxisSlice__WEBPACK_IMPORTED_MODULE_8__.cartesianAxisReducer,
   chartData: _chartDataSlice__WEBPACK_IMPORTED_MODULE_4__.chartDataReducer,
+  errorBars: _errorBarSlice__WEBPACK_IMPORTED_MODULE_19__.errorBarReducer,
   graphicalItems: _graphicalItemsSlice__WEBPACK_IMPORTED_MODULE_9__.graphicalItemsReducer,
   layout: _layoutSlice__WEBPACK_IMPORTED_MODULE_5__.chartLayoutReducer,
   legend: _legendSlice__WEBPACK_IMPORTED_MODULE_12__.legendReducer,
@@ -68423,6 +68775,34 @@ touchEventMiddleware.startListening({
     }
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/recharts/es6/state/types/StackedGraphicalItem.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/recharts/es6/state/types/StackedGraphicalItem.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   isStacked: () => (/* binding */ isStacked)
+/* harmony export */ });
+/**
+ * Some graphical items allow data stacking. The stacks are optional,
+ * so all props here are optional too.
+ */
+
+/**
+ * Some graphical items allow data stacking.
+ * This interface is used to represent the items that are stacked
+ * because the user has provided the stackId and dataKey properties.
+ */
+
+function isStacked(graphicalItem) {
+  return graphicalItem.stackId != null && graphicalItem.dataKey != null;
+}
 
 /***/ }),
 
@@ -69116,11 +69496,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var victory_vendor_d3_shape__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! victory-vendor/d3-shape */ "./node_modules/victory-vendor/es/d3-shape.js");
 /* harmony import */ var _DataUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
 /* harmony import */ var _PolarUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PolarUtils */ "./node_modules/recharts/es6/util/PolarUtils.js");
+/* harmony import */ var _getSliced__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./getSliced */ "./node_modules/recharts/es6/util/getSliced.js");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -69481,7 +69863,7 @@ var getStackedData = (data, dataKeys, offsetType) => {
 
 /**
  * Stack IDs in the external props allow numbers; but internally we use it as an object key
- * and object keys are always strings. Also it would be kinda confusing if stackId=8 and stackId='8' were different stacks
+ * and object keys are always strings. Also, it would be kinda confusing if stackId=8 and stackId='8' were different stacks
  * so let's just force a string.
  */
 
@@ -69566,7 +69948,8 @@ var getDomainOfStackGroups = (stackGroups, startIndex, endIndex) => {
       stackedData
     } = group;
     var domain = stackedData.reduce((res, entry) => {
-      var s = getDomainOfSingle(entry.slice(startIndex, endIndex + 1));
+      var sliced = (0,_getSliced__WEBPACK_IMPORTED_MODULE_5__.getSliced)(entry, startIndex, endIndex);
+      var s = getDomainOfSingle(sliced);
       return [Math.min(res[0], s[0]), Math.max(res[1], s[1])];
     }, [Infinity, -Infinity]);
     return [Math.min(domain[0], result[0]), Math.max(domain[1], result[1])];
@@ -69753,20 +70136,27 @@ var DEFAULT_Y_AXIS_WIDTH = 60;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getStringSize: () => (/* binding */ getStringSize)
+/* harmony export */   clearStringCache: () => (/* binding */ clearStringCache),
+/* harmony export */   configureTextMeasurement: () => (/* binding */ configureTextMeasurement),
+/* harmony export */   getStringCacheStats: () => (/* binding */ getStringCacheStats),
+/* harmony export */   getStringSize: () => (/* binding */ getStringSize),
+/* harmony export */   getTextMeasurementConfig: () => (/* binding */ getTextMeasurementConfig)
 /* harmony export */ });
 /* harmony import */ var _Global__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Global */ "./node_modules/recharts/es6/util/Global.js");
+/* harmony import */ var _LRUCache__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LRUCache */ "./node_modules/recharts/es6/util/LRUCache.js");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
-var stringCache = {
-  widthCache: {},
-  cacheCount: 0
+
+var defaultConfig = {
+  cacheSize: 2000,
+  enableCache: true
 };
-var MAX_CACHE_NUM = 2000;
+var currentConfig = _objectSpread({}, defaultConfig);
+var stringCache = new _LRUCache__WEBPACK_IMPORTED_MODULE_1__.LRUCache(currentConfig.cacheSize);
 var SPAN_STYLE = {
   position: 'absolute',
   top: '-20000px',
@@ -69777,31 +70167,24 @@ var SPAN_STYLE = {
   whiteSpace: 'pre'
 };
 var MEASUREMENT_SPAN_ID = 'recharts_measurement_span';
-function removeInvalidKeys(obj) {
-  var copyObj = _objectSpread({}, obj);
-  Object.keys(copyObj).forEach(key => {
-    if (!copyObj[key]) {
-      delete copyObj[key];
-    }
-  });
-  return copyObj;
+function createCacheKey(text, style) {
+  // Simple string concatenation for better performance than JSON.stringify
+  var fontSize = style.fontSize || '';
+  var fontFamily = style.fontFamily || '';
+  var fontWeight = style.fontWeight || '';
+  var fontStyle = style.fontStyle || '';
+  var letterSpacing = style.letterSpacing || '';
+  var textTransform = style.textTransform || '';
+  return "".concat(text, "|").concat(fontSize, "|").concat(fontFamily, "|").concat(fontWeight, "|").concat(fontStyle, "|").concat(letterSpacing, "|").concat(textTransform);
 }
-var getStringSize = function getStringSize(text) {
-  var style = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  if (text === undefined || text === null || _Global__WEBPACK_IMPORTED_MODULE_0__.Global.isSsr) {
-    return {
-      width: 0,
-      height: 0
-    };
-  }
-  var copyStyle = removeInvalidKeys(style);
-  var cacheKey = JSON.stringify({
-    text,
-    copyStyle
-  });
-  if (stringCache.widthCache[cacheKey]) {
-    return stringCache.widthCache[cacheKey];
-  }
+
+/**
+ * Measure text using DOM (accurate but slower)
+ * @param text - The text to measure
+ * @param style - CSS style properties to apply
+ * @returns The size of the text
+ */
+var measureTextWithDOM = (text, style) => {
   try {
     var measurementSpan = document.getElementById(MEASUREMENT_SPAN_ID);
     if (!measurementSpan) {
@@ -69810,22 +70193,15 @@ var getStringSize = function getStringSize(text) {
       measurementSpan.setAttribute('aria-hidden', 'true');
       document.body.appendChild(measurementSpan);
     }
-    // Need to use CSS Object Model (CSSOM) to be able to comply with Content Security Policy (CSP)
-    // https://en.wikipedia.org/wiki/Content_Security_Policy
-    var measurementSpanStyle = _objectSpread(_objectSpread({}, SPAN_STYLE), copyStyle);
-    Object.assign(measurementSpan.style, measurementSpanStyle);
+
+    // Apply styles directly without unnecessary object creation
+    Object.assign(measurementSpan.style, SPAN_STYLE, style);
     measurementSpan.textContent = "".concat(text);
     var rect = measurementSpan.getBoundingClientRect();
-    var result = {
+    return {
       width: rect.width,
       height: rect.height
     };
-    stringCache.widthCache[cacheKey] = result;
-    if (++stringCache.cacheCount > MAX_CACHE_NUM) {
-      stringCache.cacheCount = 0;
-      stringCache.widthCache = {};
-    }
-    return result;
   } catch (_unused) {
     return {
       width: 0,
@@ -69833,6 +70209,68 @@ var getStringSize = function getStringSize(text) {
     };
   }
 };
+var getStringSize = function getStringSize(text) {
+  var style = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  if (text === undefined || text === null || _Global__WEBPACK_IMPORTED_MODULE_0__.Global.isSsr) {
+    return {
+      width: 0,
+      height: 0
+    };
+  }
+
+  // If caching is disabled, measure directly
+  if (!currentConfig.enableCache) {
+    return measureTextWithDOM(text, style);
+  }
+  var cacheKey = createCacheKey(text, style);
+  var cachedResult = stringCache.get(cacheKey);
+  if (cachedResult) {
+    return cachedResult;
+  }
+
+  // Measure using DOM
+  var result = measureTextWithDOM(text, style);
+
+  // Store in LRU cache
+  stringCache.set(cacheKey, result);
+  return result;
+};
+
+/**
+ * Configure text measurement behavior
+ * @param config - Partial configuration to apply
+ * @returns void
+ */
+var configureTextMeasurement = config => {
+  var newConfig = _objectSpread(_objectSpread({}, currentConfig), config);
+  if (newConfig.cacheSize !== currentConfig.cacheSize) {
+    stringCache = new _LRUCache__WEBPACK_IMPORTED_MODULE_1__.LRUCache(newConfig.cacheSize);
+  }
+  currentConfig = newConfig;
+};
+
+/**
+ * Get current text measurement configuration
+ * @returns Current configuration
+ */
+var getTextMeasurementConfig = () => _objectSpread({}, currentConfig);
+
+/**
+ * Clear the string size cache. Useful for testing or memory management.
+ * @returns void
+ */
+var clearStringCache = () => {
+  stringCache.clear();
+};
+
+/**
+ * Get cache statistics for debugging purposes.
+ * @returns Cache statistics including size and max size
+ */
+var getStringCacheStats = () => ({
+  size: stringCache.size(),
+  maxSize: currentConfig.cacheSize
+});
 
 /***/ }),
 
@@ -70056,6 +70494,55 @@ var parseIsSsrByDefault = () => !(typeof window !== 'undefined' && window.docume
 var Global = {
   isSsr: parseIsSsrByDefault()
 };
+
+/***/ }),
+
+/***/ "./node_modules/recharts/es6/util/LRUCache.js":
+/*!****************************************************!*\
+  !*** ./node_modules/recharts/es6/util/LRUCache.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LRUCache: () => (/* binding */ LRUCache)
+/* harmony export */ });
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * Simple LRU (Least Recently Used) cache implementation
+ */
+class LRUCache {
+  constructor(maxSize) {
+    _defineProperty(this, "cache", new Map());
+    this.maxSize = maxSize;
+  }
+  get(key) {
+    var value = this.cache.get(key);
+    if (value !== undefined) {
+      this.cache.delete(key);
+      this.cache.set(key, value);
+    }
+    return value;
+  }
+  set(key, value) {
+    if (this.cache.has(key)) {
+      this.cache.delete(key);
+    } else if (this.cache.size >= this.maxSize) {
+      var firstKey = this.cache.keys().next().value;
+      this.cache.delete(firstKey);
+    }
+    this.cache.set(key, value);
+  }
+  clear() {
+    this.cache.clear();
+  }
+  size() {
+    return this.cache.size;
+  }
+}
 
 /***/ }),
 
@@ -70288,6 +70775,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_is__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-is */ "./node_modules/react-is/cjs/react-is.development.js");
 /* harmony import */ var _DataUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./types */ "./node_modules/recharts/es6/util/types.js");
+/* harmony import */ var _excludeEventProps__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./excludeEventProps */ "./node_modules/recharts/es6/util/excludeEventProps.js");
+/* harmony import */ var _svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./svgPropertiesNoEvents */ "./node_modules/recharts/es6/util/svgPropertiesNoEvents.js");
+
+
 
 
 
@@ -70385,14 +70876,33 @@ var isClipDot = dot => {
  */
 var isValidSpreadableProp = (property, key, includeEvents, svgElementType) => {
   var _ref;
+  if (typeof key === 'symbol' || typeof key === 'number') {
+    // Allow symbols and numbers as valid keys
+    return true;
+  }
   /**
    * If the svg element type is explicitly included, check against the filtered element key map
    * to determine if there are attributes that should only exist on that element type.
    * @todo Add an internal cjs version of https://github.com/wooorm/svg-element-attributes for full coverage.
    */
   var matchingElementTypeKeys = (_ref = svgElementType && (_types__WEBPACK_IMPORTED_MODULE_4__.FilteredElementKeyMap === null || _types__WEBPACK_IMPORTED_MODULE_4__.FilteredElementKeyMap === void 0 ? void 0 : _types__WEBPACK_IMPORTED_MODULE_4__.FilteredElementKeyMap[svgElementType])) !== null && _ref !== void 0 ? _ref : [];
-  return key.startsWith('data-') || typeof property !== 'function' && (svgElementType && matchingElementTypeKeys.includes(key) || _types__WEBPACK_IMPORTED_MODULE_4__.SVGElementPropKeys.includes(key)) || includeEvents && _types__WEBPACK_IMPORTED_MODULE_4__.EventKeys.includes(key);
+  var isDataAttribute = key.startsWith('data-');
+  var isSpecificSvgAttribute = typeof property !== 'function' && (Boolean(svgElementType) && matchingElementTypeKeys.includes(key) || (0,_svgPropertiesNoEvents__WEBPACK_IMPORTED_MODULE_6__.isSvgElementPropKey)(key));
+  var isEventAttribute = Boolean(includeEvents) && (0,_excludeEventProps__WEBPACK_IMPORTED_MODULE_5__.isEventKey)(key);
+  return isDataAttribute || isSpecificSvgAttribute || isEventAttribute;
 };
+
+/**
+ * Filters the props object to only include valid SVG attributes or event handlers.
+ * @deprecated do not use this function, as it is not type-safe and may lead to unexpected behavior. Returns `any`.
+ * Instead, use:
+ * - `excludeEventProps` to exclude event handlers
+ * - `svgOnlyNoEvents` to exclude non-SVG attributes, and exclude event handlers too
+ * @param props - The props object to filter, which can be a Record, Component, FunctionComponent, boolean, or unknown.
+ * @param includeEvents - A boolean indicating whether to include event handlers in the filtered props.
+ * @param svgElementType - An optional parameter specifying the type of SVG element to filter attributes for.
+ * @returns A new object containing only valid SVG attributes or event handlers, or null if the input is not valid.
+ */
 var filterProps = (props, includeEvents, svgElementType) => {
   if (!props || typeof props === 'function' || typeof props === 'boolean') {
     return null;
@@ -70836,6 +71346,43 @@ function getRadialCursorPoints(activeCoordinate) {
 
 /***/ }),
 
+/***/ "./node_modules/recharts/es6/util/excludeEventProps.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/recharts/es6/util/excludeEventProps.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   excludeEventProps: () => (/* binding */ excludeEventProps),
+/* harmony export */   isEventKey: () => (/* binding */ isEventKey)
+/* harmony export */ });
+var EventKeys = ['dangerouslySetInnerHTML', 'onCopy', 'onCopyCapture', 'onCut', 'onCutCapture', 'onPaste', 'onPasteCapture', 'onCompositionEnd', 'onCompositionEndCapture', 'onCompositionStart', 'onCompositionStartCapture', 'onCompositionUpdate', 'onCompositionUpdateCapture', 'onFocus', 'onFocusCapture', 'onBlur', 'onBlurCapture', 'onChange', 'onChangeCapture', 'onBeforeInput', 'onBeforeInputCapture', 'onInput', 'onInputCapture', 'onReset', 'onResetCapture', 'onSubmit', 'onSubmitCapture', 'onInvalid', 'onInvalidCapture', 'onLoad', 'onLoadCapture', 'onError', 'onErrorCapture', 'onKeyDown', 'onKeyDownCapture', 'onKeyPress', 'onKeyPressCapture', 'onKeyUp', 'onKeyUpCapture', 'onAbort', 'onAbortCapture', 'onCanPlay', 'onCanPlayCapture', 'onCanPlayThrough', 'onCanPlayThroughCapture', 'onDurationChange', 'onDurationChangeCapture', 'onEmptied', 'onEmptiedCapture', 'onEncrypted', 'onEncryptedCapture', 'onEnded', 'onEndedCapture', 'onLoadedData', 'onLoadedDataCapture', 'onLoadedMetadata', 'onLoadedMetadataCapture', 'onLoadStart', 'onLoadStartCapture', 'onPause', 'onPauseCapture', 'onPlay', 'onPlayCapture', 'onPlaying', 'onPlayingCapture', 'onProgress', 'onProgressCapture', 'onRateChange', 'onRateChangeCapture', 'onSeeked', 'onSeekedCapture', 'onSeeking', 'onSeekingCapture', 'onStalled', 'onStalledCapture', 'onSuspend', 'onSuspendCapture', 'onTimeUpdate', 'onTimeUpdateCapture', 'onVolumeChange', 'onVolumeChangeCapture', 'onWaiting', 'onWaitingCapture', 'onAuxClick', 'onAuxClickCapture', 'onClick', 'onClickCapture', 'onContextMenu', 'onContextMenuCapture', 'onDoubleClick', 'onDoubleClickCapture', 'onDrag', 'onDragCapture', 'onDragEnd', 'onDragEndCapture', 'onDragEnter', 'onDragEnterCapture', 'onDragExit', 'onDragExitCapture', 'onDragLeave', 'onDragLeaveCapture', 'onDragOver', 'onDragOverCapture', 'onDragStart', 'onDragStartCapture', 'onDrop', 'onDropCapture', 'onMouseDown', 'onMouseDownCapture', 'onMouseEnter', 'onMouseLeave', 'onMouseMove', 'onMouseMoveCapture', 'onMouseOut', 'onMouseOutCapture', 'onMouseOver', 'onMouseOverCapture', 'onMouseUp', 'onMouseUpCapture', 'onSelect', 'onSelectCapture', 'onTouchCancel', 'onTouchCancelCapture', 'onTouchEnd', 'onTouchEndCapture', 'onTouchMove', 'onTouchMoveCapture', 'onTouchStart', 'onTouchStartCapture', 'onPointerDown', 'onPointerDownCapture', 'onPointerMove', 'onPointerMoveCapture', 'onPointerUp', 'onPointerUpCapture', 'onPointerCancel', 'onPointerCancelCapture', 'onPointerEnter', 'onPointerEnterCapture', 'onPointerLeave', 'onPointerLeaveCapture', 'onPointerOver', 'onPointerOverCapture', 'onPointerOut', 'onPointerOutCapture', 'onGotPointerCapture', 'onGotPointerCaptureCapture', 'onLostPointerCapture', 'onLostPointerCaptureCapture', 'onScroll', 'onScrollCapture', 'onWheel', 'onWheelCapture', 'onAnimationStart', 'onAnimationStartCapture', 'onAnimationEnd', 'onAnimationEndCapture', 'onAnimationIteration', 'onAnimationIterationCapture', 'onTransitionEnd', 'onTransitionEndCapture'];
+function isEventKey(key) {
+  if (typeof key !== 'string') {
+    return false;
+  }
+  var allowedEventKeys = EventKeys;
+  return allowedEventKeys.includes(key);
+}
+
+/**
+ * Filters out event properties from the given object.
+ * This function is useful for cleaning up props before passing them to a React component,
+ * @param obj - The object containing properties to filter.
+ * @returns A new object containing only the properties that are not event handlers.
+ */
+function excludeEventProps(obj) {
+  var filteredEntries = Object.entries(obj).filter(_ref => {
+    var [key] = _ref;
+    return !isEventKey(key);
+  });
+  return Object.fromEntries(filteredEntries);
+}
+
+/***/ }),
+
 /***/ "./node_modules/recharts/es6/util/getChartPointer.js":
 /*!***********************************************************!*\
   !*** ./node_modules/recharts/es6/util/getChartPointer.js ***!
@@ -70918,6 +71465,29 @@ function getEveryNthWithCondition(array, n, isValid) {
     }
   }
   return result;
+}
+
+/***/ }),
+
+/***/ "./node_modules/recharts/es6/util/getSliced.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/recharts/es6/util/getSliced.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getSliced: () => (/* binding */ getSliced)
+/* harmony export */ });
+function getSliced(arr, startIndex, endIndex) {
+  if (!Array.isArray(arr)) {
+    return arr;
+  }
+  if (arr && startIndex + endIndex !== 0) {
+    return arr.slice(startIndex, endIndex + 1);
+  }
+  return arr;
 }
 
 /***/ }),
@@ -71727,6 +72297,72 @@ var memoize = fn => {
 
 /***/ }),
 
+/***/ "./node_modules/recharts/es6/util/stacks/getStackSeriesIdentifier.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/recharts/es6/util/stacks/getStackSeriesIdentifier.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getStackSeriesIdentifier: () => (/* binding */ getStackSeriesIdentifier)
+/* harmony export */ });
+/**
+ * Returns identifier for stack series which is one individual graphical item in the stack.
+ * @param graphicalItem - The graphical item representing the series in the stack.
+ * @return The identifier for the series in the stack
+ */
+function getStackSeriesIdentifier(graphicalItem) {
+  return graphicalItem === null || graphicalItem === void 0 ? void 0 : graphicalItem.id;
+}
+
+/***/ }),
+
+/***/ "./node_modules/recharts/es6/util/svgPropertiesNoEvents.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/recharts/es6/util/svgPropertiesNoEvents.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   isSvgElementPropKey: () => (/* binding */ isSvgElementPropKey),
+/* harmony export */   svgPropertiesNoEvents: () => (/* binding */ svgPropertiesNoEvents)
+/* harmony export */ });
+var SVGElementPropKeys = ['aria-activedescendant', 'aria-atomic', 'aria-autocomplete', 'aria-busy', 'aria-checked', 'aria-colcount', 'aria-colindex', 'aria-colspan', 'aria-controls', 'aria-current', 'aria-describedby', 'aria-details', 'aria-disabled', 'aria-errormessage', 'aria-expanded', 'aria-flowto', 'aria-haspopup', 'aria-hidden', 'aria-invalid', 'aria-keyshortcuts', 'aria-label', 'aria-labelledby', 'aria-level', 'aria-live', 'aria-modal', 'aria-multiline', 'aria-multiselectable', 'aria-orientation', 'aria-owns', 'aria-placeholder', 'aria-posinset', 'aria-pressed', 'aria-readonly', 'aria-relevant', 'aria-required', 'aria-roledescription', 'aria-rowcount', 'aria-rowindex', 'aria-rowspan', 'aria-selected', 'aria-setsize', 'aria-sort', 'aria-valuemax', 'aria-valuemin', 'aria-valuenow', 'aria-valuetext', 'className', 'color', 'height', 'id', 'lang', 'max', 'media', 'method', 'min', 'name', 'style',
+/*
+ * removed 'type' SVGElementPropKey because we do not currently use any SVG elements
+ * that can use it, and it conflicts with the recharts prop 'type'
+ * https://github.com/recharts/recharts/pull/3327
+ * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/type
+ */
+// 'type',
+'target', 'width', 'role', 'tabIndex', 'accentHeight', 'accumulate', 'additive', 'alignmentBaseline', 'allowReorder', 'alphabetic', 'amplitude', 'arabicForm', 'ascent', 'attributeName', 'attributeType', 'autoReverse', 'azimuth', 'baseFrequency', 'baselineShift', 'baseProfile', 'bbox', 'begin', 'bias', 'by', 'calcMode', 'capHeight', 'clip', 'clipPath', 'clipPathUnits', 'clipRule', 'colorInterpolation', 'colorInterpolationFilters', 'colorProfile', 'colorRendering', 'contentScriptType', 'contentStyleType', 'cursor', 'cx', 'cy', 'd', 'decelerate', 'descent', 'diffuseConstant', 'direction', 'display', 'divisor', 'dominantBaseline', 'dur', 'dx', 'dy', 'edgeMode', 'elevation', 'enableBackground', 'end', 'exponent', 'externalResourcesRequired', 'fill', 'fillOpacity', 'fillRule', 'filter', 'filterRes', 'filterUnits', 'floodColor', 'floodOpacity', 'focusable', 'fontFamily', 'fontSize', 'fontSizeAdjust', 'fontStretch', 'fontStyle', 'fontVariant', 'fontWeight', 'format', 'from', 'fx', 'fy', 'g1', 'g2', 'glyphName', 'glyphOrientationHorizontal', 'glyphOrientationVertical', 'glyphRef', 'gradientTransform', 'gradientUnits', 'hanging', 'horizAdvX', 'horizOriginX', 'href', 'ideographic', 'imageRendering', 'in2', 'in', 'intercept', 'k1', 'k2', 'k3', 'k4', 'k', 'kernelMatrix', 'kernelUnitLength', 'kerning', 'keyPoints', 'keySplines', 'keyTimes', 'lengthAdjust', 'letterSpacing', 'lightingColor', 'limitingConeAngle', 'local', 'markerEnd', 'markerHeight', 'markerMid', 'markerStart', 'markerUnits', 'markerWidth', 'mask', 'maskContentUnits', 'maskUnits', 'mathematical', 'mode', 'numOctaves', 'offset', 'opacity', 'operator', 'order', 'orient', 'orientation', 'origin', 'overflow', 'overlinePosition', 'overlineThickness', 'paintOrder', 'panose1', 'pathLength', 'patternContentUnits', 'patternTransform', 'patternUnits', 'pointerEvents', 'pointsAtX', 'pointsAtY', 'pointsAtZ', 'preserveAlpha', 'preserveAspectRatio', 'primitiveUnits', 'r', 'radius', 'refX', 'refY', 'renderingIntent', 'repeatCount', 'repeatDur', 'requiredExtensions', 'requiredFeatures', 'restart', 'result', 'rotate', 'rx', 'ry', 'seed', 'shapeRendering', 'slope', 'spacing', 'specularConstant', 'specularExponent', 'speed', 'spreadMethod', 'startOffset', 'stdDeviation', 'stemh', 'stemv', 'stitchTiles', 'stopColor', 'stopOpacity', 'strikethroughPosition', 'strikethroughThickness', 'string', 'stroke', 'strokeDasharray', 'strokeDashoffset', 'strokeLinecap', 'strokeLinejoin', 'strokeMiterlimit', 'strokeOpacity', 'strokeWidth', 'surfaceScale', 'systemLanguage', 'tableValues', 'targetX', 'targetY', 'textAnchor', 'textDecoration', 'textLength', 'textRendering', 'to', 'transform', 'u1', 'u2', 'underlinePosition', 'underlineThickness', 'unicode', 'unicodeBidi', 'unicodeRange', 'unitsPerEm', 'vAlphabetic', 'values', 'vectorEffect', 'version', 'vertAdvY', 'vertOriginX', 'vertOriginY', 'vHanging', 'vIdeographic', 'viewTarget', 'visibility', 'vMathematical', 'widths', 'wordSpacing', 'writingMode', 'x1', 'x2', 'x', 'xChannelSelector', 'xHeight', 'xlinkActuate', 'xlinkArcrole', 'xlinkHref', 'xlinkRole', 'xlinkShow', 'xlinkTitle', 'xlinkType', 'xmlBase', 'xmlLang', 'xmlns', 'xmlnsXlink', 'xmlSpace', 'y1', 'y2', 'y', 'yChannelSelector', 'z', 'zoomAndPan', 'ref', 'key', 'angle'];
+function isSvgElementPropKey(key) {
+  if (typeof key !== 'string') {
+    return false;
+  }
+  var allowedSvgKeys = SVGElementPropKeys;
+  return allowedSvgKeys.includes(key);
+}
+
+/**
+ * Filters an object to only include SVG properties. Removes all event handlers too.
+ * @param obj - The object to filter
+ * @returns A new object containing only valid SVG properties, excluding event handlers.
+ */
+function svgPropertiesNoEvents(obj) {
+  var filteredEntries = Object.entries(obj).filter(_ref => {
+    var [key] = _ref;
+    return isSvgElementPropKey(key);
+  });
+  return Object.fromEntries(filteredEntries);
+}
+
+/***/ }),
+
 /***/ "./node_modules/recharts/es6/util/tooltip/translate.js":
 /*!*************************************************************!*\
   !*** ./node_modules/recharts/es6/util/tooltip/translate.js ***!
@@ -71878,14 +72514,14 @@ function getTooltipTranslate(_ref4) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   EventKeys: () => (/* binding */ EventKeys),
 /* harmony export */   FilteredElementKeyMap: () => (/* binding */ FilteredElementKeyMap),
-/* harmony export */   SVGElementPropKeys: () => (/* binding */ SVGElementPropKeys),
 /* harmony export */   adaptEventHandlers: () => (/* binding */ adaptEventHandlers),
 /* harmony export */   adaptEventsOfChild: () => (/* binding */ adaptEventsOfChild)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _excludeEventProps__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./excludeEventProps */ "./node_modules/recharts/es6/util/excludeEventProps.js");
+
 
 
 /**
@@ -71916,15 +72552,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 var SVGContainerPropKeys = ['viewBox', 'children'];
-var SVGElementPropKeys = ['aria-activedescendant', 'aria-atomic', 'aria-autocomplete', 'aria-busy', 'aria-checked', 'aria-colcount', 'aria-colindex', 'aria-colspan', 'aria-controls', 'aria-current', 'aria-describedby', 'aria-details', 'aria-disabled', 'aria-errormessage', 'aria-expanded', 'aria-flowto', 'aria-haspopup', 'aria-hidden', 'aria-invalid', 'aria-keyshortcuts', 'aria-label', 'aria-labelledby', 'aria-level', 'aria-live', 'aria-modal', 'aria-multiline', 'aria-multiselectable', 'aria-orientation', 'aria-owns', 'aria-placeholder', 'aria-posinset', 'aria-pressed', 'aria-readonly', 'aria-relevant', 'aria-required', 'aria-roledescription', 'aria-rowcount', 'aria-rowindex', 'aria-rowspan', 'aria-selected', 'aria-setsize', 'aria-sort', 'aria-valuemax', 'aria-valuemin', 'aria-valuenow', 'aria-valuetext', 'className', 'color', 'height', 'id', 'lang', 'max', 'media', 'method', 'min', 'name', 'style',
-/*
- * removed 'type' SVGElementPropKey because we do not currently use any SVG elements
- * that can use it, and it conflicts with the recharts prop 'type'
- * https://github.com/recharts/recharts/pull/3327
- * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/type
- */
-// 'type',
-'target', 'width', 'role', 'tabIndex', 'accentHeight', 'accumulate', 'additive', 'alignmentBaseline', 'allowReorder', 'alphabetic', 'amplitude', 'arabicForm', 'ascent', 'attributeName', 'attributeType', 'autoReverse', 'azimuth', 'baseFrequency', 'baselineShift', 'baseProfile', 'bbox', 'begin', 'bias', 'by', 'calcMode', 'capHeight', 'clip', 'clipPath', 'clipPathUnits', 'clipRule', 'colorInterpolation', 'colorInterpolationFilters', 'colorProfile', 'colorRendering', 'contentScriptType', 'contentStyleType', 'cursor', 'cx', 'cy', 'd', 'decelerate', 'descent', 'diffuseConstant', 'direction', 'display', 'divisor', 'dominantBaseline', 'dur', 'dx', 'dy', 'edgeMode', 'elevation', 'enableBackground', 'end', 'exponent', 'externalResourcesRequired', 'fill', 'fillOpacity', 'fillRule', 'filter', 'filterRes', 'filterUnits', 'floodColor', 'floodOpacity', 'focusable', 'fontFamily', 'fontSize', 'fontSizeAdjust', 'fontStretch', 'fontStyle', 'fontVariant', 'fontWeight', 'format', 'from', 'fx', 'fy', 'g1', 'g2', 'glyphName', 'glyphOrientationHorizontal', 'glyphOrientationVertical', 'glyphRef', 'gradientTransform', 'gradientUnits', 'hanging', 'horizAdvX', 'horizOriginX', 'href', 'ideographic', 'imageRendering', 'in2', 'in', 'intercept', 'k1', 'k2', 'k3', 'k4', 'k', 'kernelMatrix', 'kernelUnitLength', 'kerning', 'keyPoints', 'keySplines', 'keyTimes', 'lengthAdjust', 'letterSpacing', 'lightingColor', 'limitingConeAngle', 'local', 'markerEnd', 'markerHeight', 'markerMid', 'markerStart', 'markerUnits', 'markerWidth', 'mask', 'maskContentUnits', 'maskUnits', 'mathematical', 'mode', 'numOctaves', 'offset', 'opacity', 'operator', 'order', 'orient', 'orientation', 'origin', 'overflow', 'overlinePosition', 'overlineThickness', 'paintOrder', 'panose1', 'pathLength', 'patternContentUnits', 'patternTransform', 'patternUnits', 'pointerEvents', 'pointsAtX', 'pointsAtY', 'pointsAtZ', 'preserveAlpha', 'preserveAspectRatio', 'primitiveUnits', 'r', 'radius', 'refX', 'refY', 'renderingIntent', 'repeatCount', 'repeatDur', 'requiredExtensions', 'requiredFeatures', 'restart', 'result', 'rotate', 'rx', 'ry', 'seed', 'shapeRendering', 'slope', 'spacing', 'specularConstant', 'specularExponent', 'speed', 'spreadMethod', 'startOffset', 'stdDeviation', 'stemh', 'stemv', 'stitchTiles', 'stopColor', 'stopOpacity', 'strikethroughPosition', 'strikethroughThickness', 'string', 'stroke', 'strokeDasharray', 'strokeDashoffset', 'strokeLinecap', 'strokeLinejoin', 'strokeMiterlimit', 'strokeOpacity', 'strokeWidth', 'surfaceScale', 'systemLanguage', 'tableValues', 'targetX', 'targetY', 'textAnchor', 'textDecoration', 'textLength', 'textRendering', 'to', 'transform', 'u1', 'u2', 'underlinePosition', 'underlineThickness', 'unicode', 'unicodeBidi', 'unicodeRange', 'unitsPerEm', 'vAlphabetic', 'values', 'vectorEffect', 'version', 'vertAdvY', 'vertOriginX', 'vertOriginY', 'vHanging', 'vIdeographic', 'viewTarget', 'visibility', 'vMathematical', 'widths', 'wordSpacing', 'writingMode', 'x1', 'x2', 'x', 'xChannelSelector', 'xHeight', 'xlinkActuate', 'xlinkArcrole', 'xlinkHref', 'xlinkRole', 'xlinkShow', 'xlinkTitle', 'xlinkType', 'xmlBase', 'xmlLang', 'xmlns', 'xmlnsXlink', 'xmlSpace', 'y1', 'y2', 'y', 'yChannelSelector', 'z', 'zoomAndPan', 'ref', 'key', 'angle'];
 var PolyElementKeys = ['points', 'pathLength'];
 
 /** svg element types that have specific attribute filtration requirements */
@@ -71935,7 +72562,6 @@ var FilteredElementKeyMap = {
   polygon: PolyElementKeys,
   polyline: PolyElementKeys
 };
-var EventKeys = ['dangerouslySetInnerHTML', 'onCopy', 'onCopyCapture', 'onCut', 'onCutCapture', 'onPaste', 'onPasteCapture', 'onCompositionEnd', 'onCompositionEndCapture', 'onCompositionStart', 'onCompositionStartCapture', 'onCompositionUpdate', 'onCompositionUpdateCapture', 'onFocus', 'onFocusCapture', 'onBlur', 'onBlurCapture', 'onChange', 'onChangeCapture', 'onBeforeInput', 'onBeforeInputCapture', 'onInput', 'onInputCapture', 'onReset', 'onResetCapture', 'onSubmit', 'onSubmitCapture', 'onInvalid', 'onInvalidCapture', 'onLoad', 'onLoadCapture', 'onError', 'onErrorCapture', 'onKeyDown', 'onKeyDownCapture', 'onKeyPress', 'onKeyPressCapture', 'onKeyUp', 'onKeyUpCapture', 'onAbort', 'onAbortCapture', 'onCanPlay', 'onCanPlayCapture', 'onCanPlayThrough', 'onCanPlayThroughCapture', 'onDurationChange', 'onDurationChangeCapture', 'onEmptied', 'onEmptiedCapture', 'onEncrypted', 'onEncryptedCapture', 'onEnded', 'onEndedCapture', 'onLoadedData', 'onLoadedDataCapture', 'onLoadedMetadata', 'onLoadedMetadataCapture', 'onLoadStart', 'onLoadStartCapture', 'onPause', 'onPauseCapture', 'onPlay', 'onPlayCapture', 'onPlaying', 'onPlayingCapture', 'onProgress', 'onProgressCapture', 'onRateChange', 'onRateChangeCapture', 'onSeeked', 'onSeekedCapture', 'onSeeking', 'onSeekingCapture', 'onStalled', 'onStalledCapture', 'onSuspend', 'onSuspendCapture', 'onTimeUpdate', 'onTimeUpdateCapture', 'onVolumeChange', 'onVolumeChangeCapture', 'onWaiting', 'onWaitingCapture', 'onAuxClick', 'onAuxClickCapture', 'onClick', 'onClickCapture', 'onContextMenu', 'onContextMenuCapture', 'onDoubleClick', 'onDoubleClickCapture', 'onDrag', 'onDragCapture', 'onDragEnd', 'onDragEndCapture', 'onDragEnter', 'onDragEnterCapture', 'onDragExit', 'onDragExitCapture', 'onDragLeave', 'onDragLeaveCapture', 'onDragOver', 'onDragOverCapture', 'onDragStart', 'onDragStartCapture', 'onDrop', 'onDropCapture', 'onMouseDown', 'onMouseDownCapture', 'onMouseEnter', 'onMouseLeave', 'onMouseMove', 'onMouseMoveCapture', 'onMouseOut', 'onMouseOutCapture', 'onMouseOver', 'onMouseOverCapture', 'onMouseUp', 'onMouseUpCapture', 'onSelect', 'onSelectCapture', 'onTouchCancel', 'onTouchCancelCapture', 'onTouchEnd', 'onTouchEndCapture', 'onTouchMove', 'onTouchMoveCapture', 'onTouchStart', 'onTouchStartCapture', 'onPointerDown', 'onPointerDownCapture', 'onPointerMove', 'onPointerMoveCapture', 'onPointerUp', 'onPointerUpCapture', 'onPointerCancel', 'onPointerCancelCapture', 'onPointerEnter', 'onPointerEnterCapture', 'onPointerLeave', 'onPointerLeaveCapture', 'onPointerOver', 'onPointerOverCapture', 'onPointerOut', 'onPointerOutCapture', 'onGotPointerCapture', 'onGotPointerCaptureCapture', 'onLostPointerCapture', 'onLostPointerCaptureCapture', 'onScroll', 'onScrollCapture', 'onWheel', 'onWheelCapture', 'onAnimationStart', 'onAnimationStartCapture', 'onAnimationEnd', 'onAnimationEndCapture', 'onAnimationIteration', 'onAnimationIterationCapture', 'onTransitionEnd', 'onTransitionEndCapture'];
 
 /** The type of easing function to use for animations */
 
@@ -72002,7 +72628,7 @@ var adaptEventHandlers = (props, newHandler) => {
   }
   var out = {};
   Object.keys(inputProps).forEach(key => {
-    if (EventKeys.includes(key)) {
+    if ((0,_excludeEventProps__WEBPACK_IMPORTED_MODULE_1__.isEventKey)(key)) {
       out[key] = newHandler || (e => inputProps[key](inputProps, e));
     }
   });
@@ -72019,7 +72645,7 @@ var adaptEventsOfChild = (props, data, index) => {
   var out = null;
   Object.keys(props).forEach(key => {
     var item = props[key];
-    if (EventKeys.includes(key) && typeof item === 'function') {
+    if ((0,_excludeEventProps__WEBPACK_IMPORTED_MODULE_1__.isEventKey)(key) && typeof item === 'function') {
       if (!out) out = {};
       out[key] = getEventHandlerOfChild(item, data, index);
     }
@@ -72174,6 +72800,44 @@ function useElementOffset() {
 
 /***/ }),
 
+/***/ "./node_modules/recharts/es6/util/useId.js":
+/*!*************************************************!*\
+  !*** ./node_modules/recharts/es6/util/useId.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useId: () => (/* binding */ useId),
+/* harmony export */   useIdFallback: () => (/* binding */ useIdFallback)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _DataUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DataUtils */ "./node_modules/recharts/es6/util/DataUtils.js");
+var _ref;
+
+
+
+/**
+ * Fallback for React.useId() for versions prior to React 18.
+ * Generates a unique ID using a simple counter and a prefix.
+ *
+ * @returns A unique ID that remains consistent across renders.
+ */
+var useIdFallback = () => {
+  var [id] = react__WEBPACK_IMPORTED_MODULE_0__.useState(() => (0,_DataUtils__WEBPACK_IMPORTED_MODULE_1__.uniqueId)('uid-'));
+  return id;
+};
+
+/*
+ * This weird syntax is used to avoid a build-time error in React 17 and earlier when building with Webpack.
+ * See https://github.com/webpack/webpack/issues/14814
+ */
+var useId = (_ref = react__WEBPACK_IMPORTED_MODULE_0__['useId'.toString()]) !== null && _ref !== void 0 ? _ref : useIdFallback;
+
+/***/ }),
+
 /***/ "./node_modules/recharts/es6/util/useReportScale.js":
 /*!**********************************************************!*\
   !*** ./node_modules/recharts/es6/util/useReportScale.js ***!
@@ -72212,6 +72876,53 @@ function useReportScale() {
   }, [ref, dispatch, scale]);
   return setRef;
 }
+
+/***/ }),
+
+/***/ "./node_modules/recharts/es6/util/useUniqueId.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/recharts/es6/util/useUniqueId.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useUniqueId: () => (/* binding */ useUniqueId)
+/* harmony export */ });
+/* harmony import */ var _useId__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./useId */ "./node_modules/recharts/es6/util/useId.js");
+
+
+/**
+ * A hook that generates a unique ID. It uses React.useId() in React 18+ for SSR safety
+ * and falls back to a client-side-only unique ID generator for older versions.
+ *
+ * The ID will stay the same across renders, and you can optionally provide a prefix.
+ *
+ * @param [prefix] - An optional prefix for the generated ID.
+ * @param [customId] - An optional custom ID to override the generated one.
+ * @returns The unique ID.
+ */
+function useUniqueId(prefix, customId) {
+  /*
+   * We have to call this hook here even if we don't use the result because
+   * rules of hooks demand that hooks are never called conditionally.
+   */
+  var generatedId = (0,_useId__WEBPACK_IMPORTED_MODULE_0__.useId)();
+
+  // If a custom ID is provided, it always takes precedence.
+  if (customId) {
+    return customId;
+  }
+
+  // Apply the prefix if one was provided.
+  return prefix ? "".concat(prefix, "-").concat(generatedId) : generatedId;
+}
+
+/**
+ * The useUniqueId hook returns a unique ID that is either reused from external props or generated internally.
+ * Either way the ID is now guaranteed to be present so no more nulls or undefined.
+ */
 
 /***/ }),
 
@@ -77680,22 +78391,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_MonitoringDashboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/MonitoringDashboard */ "./src/components/MonitoringDashboard.tsx");
 /* harmony import */ var _components_DiagnosticsPanel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/DiagnosticsPanel */ "./src/components/DiagnosticsPanel.tsx");
-/* harmony import */ var _components_ui_tabs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/ui/tabs */ "./src/components/ui/tabs.tsx");
-/* harmony import */ var _components_ui_card__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/ui/card */ "./src/components/ui/card.tsx");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/circle-alert.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/circle-check-big.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/circle-x.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/loader-circle.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/activity.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye-off.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/settings.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/shield.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/stethoscope.js");
-/* harmony import */ var _globals_css__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./globals.css */ "./src/globals.css");
+/* harmony import */ var _components_TestRunnerSafe__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/TestRunnerSafe */ "./src/components/TestRunnerSafe.tsx");
+/* harmony import */ var _components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/ui/tabs */ "./src/components/ui/tabs.tsx");
+/* harmony import */ var _components_ui_card__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/ui/card */ "./src/components/ui/card.tsx");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/circle-alert.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/circle-check-big.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/circle-x.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/loader-circle.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/activity.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye-off.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/settings.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/shield.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/stethoscope.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/terminal.js");
+/* harmony import */ var _globals_css__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./globals.css */ "./src/globals.css");
 
 
 
+
+// import { DebugLogs } from './components/DebugLogs';
 
 
 
@@ -77713,6 +78428,10 @@ function App() {
     const [configPath, setConfigPath] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
     const [showSecret, setShowSecret] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
     const [activeTab, setActiveTab] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('connect');
+    // Debug tab changes
+    react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(() => {
+        console.log('[App] Active tab changed to:', activeTab);
+    }, [activeTab]);
     // Update status periodically
     (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
         const updateStatus = async () => {
@@ -77726,19 +78445,22 @@ function App() {
                     wslStatus: wsl,
                     replicantStatus: replicant
                 }));
-                // If replicant is running, switch to monitoring tab
-                if (replicant.running && activeTab === 'connect') {
-                    setActiveTab('monitoring');
-                }
+                // Only auto-switch to monitoring tab once after connecting
+                // Don't switch if user is on a different tab
+                // Comment out for now as it's interfering with other tabs
+                // if (replicant.running && activeTab === 'connect') {
+                //   setActiveTab('monitoring');
+                // }
             }
             catch (error) {
                 console.error('Failed to update status:', error);
             }
         };
         updateStatus();
-        const interval = setInterval(updateStatus, 2000);
+        // Reduce update frequency to lower CPU usage
+        const interval = setInterval(updateStatus, 5000); // Changed from 2000ms to 5000ms
         return () => clearInterval(interval);
-    }, [activeTab]);
+    }, []); // Remove activeTab dependency to prevent multiple intervals
     const handleConnect = async (e) => {
         e.preventDefault();
         if (!secret) {
@@ -77752,13 +78474,7 @@ function App() {
             success: null
         }));
         try {
-            // Check WSL first
-            if (!state.wslStatus.running) {
-                const startResult = await window.electronAPI.startWsl();
-                if (!startResult.success) {
-                    throw new Error(startResult.message || 'Failed to start WSL');
-                }
-            }
+            // No WSL needed - running natively!
             // Start replicant
             const result = await window.electronAPI.login({
                 secret,
@@ -77821,54 +78537,56 @@ function App() {
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", { className: "text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent" }, "ONE Filer Control Center"),
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-slate-600 dark:text-slate-400 mt-2" }, "Manage your distributed storage system")),
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "mb-6 grid grid-cols-2 gap-4" },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.Card, null,
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardHeader, { className: "pb-3" },
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardTitle, { className: "text-sm font-medium" }, "WSL Status")),
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardContent, null,
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "flex items-center gap-2" }, state.wslStatus.installed ? (state.wslStatus.running ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "h-5 w-5 text-green-500" }),
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-sm font-medium" }, "Running"))) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "h-5 w-5 text-yellow-500" }),
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-sm font-medium" }, "Stopped")))) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "h-5 w-5 text-red-500" }),
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-sm font-medium" }, "Not Installed")))))),
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.Card, null,
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardHeader, { className: "pb-3" },
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardTitle, { className: "text-sm font-medium" }, "Replicant Status")),
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardContent, null,
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.Card, null,
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardHeader, { className: "pb-3" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardTitle, { className: "text-sm font-medium" }, "Native Mode")),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardContent, null,
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "flex items-center gap-2" },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "h-5 w-5 text-green-500" }),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-sm font-medium" }, "ProjFS Ready")))),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.Card, null,
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardHeader, { className: "pb-3" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardTitle, { className: "text-sm font-medium" }, "Replicant Status")),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardContent, null,
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "flex items-center gap-2" }, state.replicantStatus.running ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "h-5 w-5 text-green-500" }),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "h-5 w-5 text-green-500" }),
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-sm font-medium" },
                                 "Running ",
                                 state.replicantStatus.pid && `(PID: ${state.replicantStatus.pid})`))) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "h-5 w-5 text-red-500" }),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_8__["default"], { className: "h-5 w-5 text-red-500" }),
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-sm font-medium" }, "Stopped"))))))),
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_3__.Tabs, { value: activeTab, onValueChange: setActiveTab },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_3__.TabsList, { className: "grid w-full grid-cols-4" },
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_3__.TabsTrigger, { value: "connect", className: "flex items-center gap-2" },
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_13__["default"], { className: "h-4 w-4" }),
-                        "Connect"),
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_3__.TabsTrigger, { value: "monitoring", className: "flex items-center gap-2" },
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_9__["default"], { className: "h-4 w-4" }),
-                        "Monitoring"),
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_3__.TabsTrigger, { value: "settings", className: "flex items-center gap-2" },
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_12__["default"], { className: "h-4 w-4" }),
-                        "Settings"),
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_3__.TabsTrigger, { value: "diagnostics", className: "flex items-center gap-2" },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__.Tabs, { value: activeTab, onValueChange: setActiveTab },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__.TabsList, { className: "grid w-full grid-cols-6" },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__.TabsTrigger, { value: "connect", className: "flex items-center gap-2" },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_14__["default"], { className: "h-4 w-4" }),
-                        "Diagnostics")),
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_3__.TabsContent, { value: "connect", className: "mt-6" },
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.Card, null,
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardHeader, null,
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardTitle, null, "Connect to ONE Instance"),
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardDescription, null, "Enter your secret to start the replicant service")),
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardContent, null,
+                        "Connect"),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__.TabsTrigger, { value: "monitoring", className: "flex items-center gap-2" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_10__["default"], { className: "h-4 w-4" }),
+                        "Monitoring"),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__.TabsTrigger, { value: "tests", className: "flex items-center gap-2" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "h-4 w-4" }),
+                        "Tests"),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__.TabsTrigger, { value: "settings", className: "flex items-center gap-2" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_13__["default"], { className: "h-4 w-4" }),
+                        "Settings"),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__.TabsTrigger, { value: "diagnostics", className: "flex items-center gap-2" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_15__["default"], { className: "h-4 w-4" }),
+                        "Diagnostics"),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__.TabsTrigger, { value: "debug", className: "flex items-center gap-2" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_16__["default"], { className: "h-4 w-4" }),
+                        "Debug")),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__.TabsContent, { value: "connect", className: "mt-6" },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.Card, null,
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardHeader, null,
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardTitle, null, "Connect to ONE Instance"),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardDescription, null, "Enter your secret to start the replicant service")),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardContent, null,
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", { onSubmit: handleConnect, className: "space-y-4" },
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null,
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", { htmlFor: "secret", className: "block text-sm font-medium mb-1" }, "Password"),
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "relative" },
                                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", { id: "secret", type: showSecret ? 'text' : 'password', value: secret, onChange: (e) => setSecret(e.target.value), className: "w-full px-3 py-2 border rounded-md pr-10", placeholder: "Enter your ONE instance secret", required: true, disabled: state.isConnecting }),
-                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { type: "button", onClick: () => setShowSecret(!showSecret), className: "absolute right-2 top-2 text-gray-500 hover:text-gray-700" }, showSecret ? react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_10__["default"], { className: "h-5 w-5" }) : react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_11__["default"], { className: "h-5 w-5" })))),
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { type: "button", onClick: () => setShowSecret(!showSecret), className: "absolute right-2 top-2 text-gray-500 hover:text-gray-700" }, showSecret ? react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_11__["default"], { className: "h-5 w-5" }) : react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_12__["default"], { className: "h-5 w-5" })))),
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null,
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", { htmlFor: "configPath", className: "block text-sm font-medium mb-1" }, "Config Path (Optional)"),
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", { id: "configPath", type: "text", value: configPath, onChange: (e) => setConfigPath(e.target.value), className: "w-full px-3 py-2 border rounded-md", placeholder: "Leave empty for default config", disabled: state.isConnecting })),
@@ -77878,33 +78596,37 @@ function App() {
                                     state.mountPoint && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "mt-1" },
                                         "Mount point: ",
                                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("code", { className: "font-mono" }, state.mountPoint))))),
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "flex gap-3" }, state.replicantStatus.running ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { type: "button", onClick: handleDisconnect, className: "flex-1 bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-colors" }, "Stop Replicant")) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { type: "submit", disabled: state.isConnecting || !state.wslStatus.installed, className: "flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2" }, state.isConnecting ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
-                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_8__["default"], { className: "h-4 w-4 animate-spin" }),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "flex gap-3" }, state.replicantStatus.running ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { type: "button", onClick: handleDisconnect, className: "flex-1 bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-colors" }, "Stop Replicant")) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { type: "submit", disabled: state.isConnecting, className: "flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2" }, state.isConnecting ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_9__["default"], { className: "h-4 w-4 animate-spin" }),
                                     "Starting Replicant...")) : ('Start Replicant')))))))),
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_3__.TabsContent, { value: "monitoring", className: "mt-6" }, state.replicantStatus.running ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_MonitoringDashboard__WEBPACK_IMPORTED_MODULE_1__.MonitoringDashboard, null)) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.Card, null,
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardContent, { className: "pt-6" },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__.TabsContent, { value: "monitoring", className: "mt-6" }, state.replicantStatus.running && activeTab === 'monitoring' ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_MonitoringDashboard__WEBPACK_IMPORTED_MODULE_1__.MonitoringDashboard, null)) : state.replicantStatus.running ? null : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.Card, null,
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardContent, { className: "pt-6" },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-center py-8" },
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "h-12 w-12 text-yellow-500 mx-auto mb-4" }),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "h-12 w-12 text-yellow-500 mx-auto mb-4" }),
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", { className: "text-lg font-medium mb-2" }, "Replicant Not Running"),
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-sm text-gray-600" }, "Start the replicant service to view monitoring data")))))),
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_3__.TabsContent, { value: "settings", className: "mt-6" },
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.Card, null,
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardHeader, null,
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardTitle, null, "Settings"),
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardDescription, null, "Configure ONE Filer behavior")),
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_4__.CardContent, null,
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__.TabsContent, { value: "settings", className: "mt-6" },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.Card, null,
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardHeader, null,
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardTitle, null, "Settings"),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardDescription, null, "Configure ONE Filer behavior")),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_card__WEBPACK_IMPORTED_MODULE_5__.CardContent, null,
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "space-y-4" },
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null,
-                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", { className: "text-sm font-medium mb-2" }, "WSL Distribution"),
-                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-sm text-gray-600" }, state.wslStatus.distros.length > 0 ? state.wslStatus.distros.join(', ') : 'None')),
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", { className: "text-sm font-medium mb-2" }, "Filesystem Mode"),
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-sm text-gray-600" }, "Native Windows (ProjFS)")),
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null,
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", { className: "text-sm font-medium mb-2" }, "Installation Path"),
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-sm text-gray-600 font-mono" }, "C:\\Program Files\\ONE Filer")),
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null,
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", { className: "text-sm font-medium mb-2" }, "Version"),
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-sm text-gray-600" }, "1.0.0")))))),
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_3__.TabsContent, { value: "diagnostics", className: "mt-6" },
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_DiagnosticsPanel__WEBPACK_IMPORTED_MODULE_2__.DiagnosticsPanel, null))))));
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__.TabsContent, { value: "tests", className: "mt-6" },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_TestRunnerSafe__WEBPACK_IMPORTED_MODULE_3__.TestRunnerSafe, null)),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__.TabsContent, { value: "diagnostics", className: "mt-6" },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_DiagnosticsPanel__WEBPACK_IMPORTED_MODULE_2__.DiagnosticsPanel, null)),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_tabs__WEBPACK_IMPORTED_MODULE_4__.TabsContent, { value: "debug", className: "mt-6" },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "h-[600px]" }))))));
 }
 
 
@@ -77999,7 +78721,7 @@ function DiagnosticsPanel() {
                     "Service Status"),
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardDescription, null, "Current status of all registered services")),
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardContent, null,
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "space-y-3" }, Object.entries(diagnostics.services).map(([name, service]) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { key: name, className: "border rounded-lg p-4" },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "space-y-3" }, diagnostics?.services && Object.entries(diagnostics.services).map(([name, service]) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { key: name, className: "border rounded-lg p-4" },
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "flex items-center justify-between" },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "flex items-center gap-3" },
                             getStatusIcon(service.status),
@@ -78148,7 +78870,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function MonitoringDashboard() {
+const MonitoringDashboard = react__WEBPACK_IMPORTED_MODULE_0___default().memo(function MonitoringDashboard() {
+    const [activeTab, setActiveTab] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('overview');
     const [systemMetrics, setSystemMetrics] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
         cpu: 0,
         memory: { used: 0, total: 0, percentage: 0 },
@@ -78193,42 +78916,70 @@ function MonitoringDashboard() {
     // Fetch metrics from electron IPC
     (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
         const fetchMetrics = async () => {
+            // Only fetch metrics if component is actually visible
+            if (document.hidden)
+                return;
             try {
                 const metrics = await window.electronAPI.getSystemMetrics();
-                setSystemMetrics(metrics.system);
-                setReplicantMetrics(metrics.replicant);
-                setWSLMetrics(metrics.wsl);
+                if (metrics.system)
+                    setSystemMetrics(metrics.system);
+                if (metrics.replicant)
+                    setReplicantMetrics(metrics.replicant);
+                if (metrics.wsl)
+                    setWSLMetrics(metrics.wsl);
                 // Update history data
                 const timestamp = (0,date_fns__WEBPACK_IMPORTED_MODULE_31__.format)(new Date(), 'HH:mm:ss');
-                setCpuHistory(prev => [...prev.slice(-20), { time: timestamp, cpu: metrics.system.cpu }]);
-                setNetworkHistory(prev => [...prev.slice(-20), {
+                // Optimize array updates to prevent memory leaks
+                setCpuHistory(prev => {
+                    const newEntry = { time: timestamp, cpu: metrics.system.cpu };
+                    return prev.length >= 20 ? [...prev.slice(1), newEntry] : [...prev, newEntry];
+                });
+                setNetworkHistory(prev => {
+                    const newEntry = {
                         time: timestamp,
                         in: metrics.system.network.bytesIn / 1024,
                         out: metrics.system.network.bytesOut / 1024
-                    }]);
-                setSyncHistory(prev => [...prev.slice(-20), {
+                    };
+                    return prev.length >= 20 ? [...prev.slice(1), newEntry] : [...prev, newEntry];
+                });
+                setSyncHistory(prev => {
+                    const newEntry = {
                         time: timestamp,
                         synced: metrics.replicant.objectsSynced,
                         queue: metrics.replicant.syncQueue
-                    }]);
-                setOperationsHistory(prev => [...prev.slice(-20), {
+                    };
+                    return prev.length >= 20 ? [...prev.slice(1), newEntry] : [...prev, newEntry];
+                });
+                setOperationsHistory(prev => {
+                    const newEntry = {
                         time: timestamp,
                         reads: metrics.replicant.operations.reads,
                         writes: metrics.replicant.operations.writes,
                         deletes: metrics.replicant.operations.deletes
-                    }]);
-                setBandwidthHistory(prev => [...prev.slice(-20), {
+                    };
+                    return prev.length >= 20 ? [...prev.slice(1), newEntry] : [...prev, newEntry];
+                });
+                setBandwidthHistory(prev => {
+                    const newEntry = {
                         time: timestamp,
                         upload: metrics.replicant.bandwidth.upload / 1024 / 1024, // Convert to MB
                         download: metrics.replicant.bandwidth.download / 1024 / 1024
-                    }]);
+                    };
+                    return prev.length >= 20 ? [...prev.slice(1), newEntry] : [...prev, newEntry];
+                });
             }
             catch (error) {
                 console.error('Failed to fetch metrics:', error);
             }
         };
         fetchMetrics();
-        const interval = setInterval(fetchMetrics, 2000);
+        // Only update when component is visible
+        const interval = setInterval(() => {
+            // Check if document is visible to avoid updating when minimized
+            if (document.visibilityState === 'visible') {
+                fetchMetrics();
+            }
+        }, 15000); // Increased to 15 seconds
         return () => clearInterval(interval);
     }, []);
     const formatBytes = (bytes) => {
@@ -78330,7 +79081,7 @@ function MonitoringDashboard() {
                         formatBytes(replicantMetrics.bandwidth.upload),
                         " \u2193",
                         formatBytes(replicantMetrics.bandwidth.download))))),
-        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_tabs__WEBPACK_IMPORTED_MODULE_2__.Tabs, { defaultValue: "overview", className: "space-y-4" },
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_tabs__WEBPACK_IMPORTED_MODULE_2__.Tabs, { defaultValue: "overview", value: activeTab, onValueChange: setActiveTab, className: "space-y-4" },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_tabs__WEBPACK_IMPORTED_MODULE_2__.TabsList, null,
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_tabs__WEBPACK_IMPORTED_MODULE_2__.TabsTrigger, { value: "overview" }, "Overview"),
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_tabs__WEBPACK_IMPORTED_MODULE_2__.TabsTrigger, { value: "performance" }, "Performance"),
@@ -78383,23 +79134,24 @@ function MonitoringDashboard() {
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_4__.Tooltip, { formatter: (value) => formatBytes(value) })))))),
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.Card, null,
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardHeader, null,
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardTitle, null, "WSL Environment"),
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardDescription, null, "Windows Subsystem for Linux status")),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardTitle, null, "ProjFS Environment"),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardDescription, null, "Windows Projected File System status")),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardContent, null,
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "grid grid-cols-4 gap-4" },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "space-y-1" },
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-sm font-medium" }, "Status"),
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-2xl font-bold" }, wslMetrics.status === 'running' ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-green-600" }, "Running")) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-red-600" }, "Stopped")))),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-2xl font-bold" },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-green-600" }, "Active"))),
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "space-y-1" },
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-sm font-medium" }, "Distribution"),
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-2xl font-bold" }, wslMetrics.distro)),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-sm font-medium" }, "Mount Point"),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-2xl font-bold" }, "C:\\OneFiler")),
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "space-y-1" },
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-sm font-medium" }, "Processes"),
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-2xl font-bold" }, wslMetrics.processes)),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-sm font-medium" }, "Provider"),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-2xl font-bold" }, "one.ifsprojfs")),
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "space-y-1" },
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-sm font-medium" }, "Memory Usage"),
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-2xl font-bold" }, formatBytes(wslMetrics.memory))))))),
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_tabs__WEBPACK_IMPORTED_MODULE_2__.TabsContent, { value: "performance", className: "space-y-4" },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-sm font-medium" }, "Architecture"),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-2xl font-bold" }, "2-Layer")))))),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_tabs__WEBPACK_IMPORTED_MODULE_2__.TabsContent, { value: "performance", className: "space-y-4" }, activeTab === 'performance' && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.Card, null,
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardHeader, null,
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardTitle, null, "CPU Usage History"),
@@ -78411,7 +79163,7 @@ function MonitoringDashboard() {
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_12__.XAxis, { dataKey: "time" }),
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_13__.YAxis, { domain: [0, 100] }),
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_4__.Tooltip, null),
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, { type: "monotone", dataKey: "cpu", stroke: "#3b82f6", strokeWidth: 2 }))))),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, { type: "monotone", dataKey: "cpu", stroke: "#3b82f6", strokeWidth: 2, isAnimationActive: false }))))),
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.Card, null,
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardHeader, null,
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardTitle, null, "Sync Activity"),
@@ -78423,8 +79175,8 @@ function MonitoringDashboard() {
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_12__.XAxis, { dataKey: "time" }),
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_13__.YAxis, null),
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_4__.Tooltip, null),
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_10__.Area, { type: "monotone", dataKey: "synced", stackId: "1", stroke: "#10b981", fill: "#10b981" }),
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_10__.Area, { type: "monotone", dataKey: "queue", stackId: "1", stroke: "#f59e0b", fill: "#f59e0b" }))))),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_10__.Area, { type: "monotone", dataKey: "synced", stackId: "1", stroke: "#10b981", fill: "#10b981", isAnimationActive: false }),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_10__.Area, { type: "monotone", dataKey: "queue", stackId: "1", stroke: "#f59e0b", fill: "#f59e0b", isAnimationActive: false }))))),
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.Card, null,
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardHeader, null,
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardTitle, null, "File Operations"),
@@ -78450,9 +79202,9 @@ function MonitoringDashboard() {
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_12__.XAxis, { dataKey: "time" }),
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_13__.YAxis, null),
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_4__.Tooltip, { formatter: (value) => `${value.toFixed(2)} MB` }),
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_10__.Area, { type: "monotone", dataKey: "upload", stackId: "1", stroke: "#3b82f6", fill: "#3b82f6", name: "Upload" }),
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_10__.Area, { type: "monotone", dataKey: "download", stackId: "1", stroke: "#10b981", fill: "#10b981", name: "Download" })))))),
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_tabs__WEBPACK_IMPORTED_MODULE_2__.TabsContent, { value: "network", className: "space-y-4" },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_10__.Area, { type: "monotone", dataKey: "upload", stackId: "1", stroke: "#3b82f6", fill: "#3b82f6", name: "Upload", isAnimationActive: false }),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_10__.Area, { type: "monotone", dataKey: "download", stackId: "1", stroke: "#10b981", fill: "#10b981", name: "Download", isAnimationActive: false })))))))),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_tabs__WEBPACK_IMPORTED_MODULE_2__.TabsContent, { value: "network", className: "space-y-4" }, activeTab === 'network' && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.Card, null,
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardHeader, null,
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardTitle, null, "Network Traffic"),
@@ -78464,8 +79216,8 @@ function MonitoringDashboard() {
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_12__.XAxis, { dataKey: "time" }),
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_13__.YAxis, null),
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_4__.Tooltip, { formatter: (value) => `${value.toFixed(2)} KB/s` }),
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, { type: "monotone", dataKey: "in", stroke: "#10b981", name: "Incoming", strokeWidth: 2 }),
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, { type: "monotone", dataKey: "out", stroke: "#ef4444", name: "Outgoing", strokeWidth: 2 }))))),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, { type: "monotone", dataKey: "in", stroke: "#10b981", name: "Incoming", strokeWidth: 2, isAnimationActive: false }),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, { type: "monotone", dataKey: "out", stroke: "#ef4444", name: "Outgoing", strokeWidth: 2, isAnimationActive: false }))))),
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.Card, null,
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardHeader, null,
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardTitle, null, "Active Connections"),
@@ -78473,7 +79225,7 @@ function MonitoringDashboard() {
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardContent, null,
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "space-y-2" }, replicantMetrics.connections > 0 ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-sm text-muted-foreground" },
                             replicantMetrics.connections,
-                            " active connection(s)")) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-sm text-muted-foreground" }, "No active connections")))))),
+                            " active connection(s)")) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-sm text-muted-foreground" }, "No active connections")))))))),
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_tabs__WEBPACK_IMPORTED_MODULE_2__.TabsContent, { value: "logs", className: "space-y-4" },
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.Card, null,
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardHeader, null,
@@ -78499,6 +79251,295 @@ function MonitoringDashboard() {
                                     "[",
                                     (0,date_fns__WEBPACK_IMPORTED_MODULE_31__.format)(new Date(), 'HH:mm:ss'),
                                     "] Sync queue processing: 5 objects")))))))));
+});
+
+
+/***/ }),
+
+/***/ "./src/components/TestRunner.tsx":
+/*!***************************************!*\
+  !*** ./src/components/TestRunner.tsx ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TestRunner: () => (/* binding */ TestRunner)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ui_card__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui/card */ "./src/components/ui/card.tsx");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/circle-alert.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/circle-check-big.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/circle-x.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/loader-circle.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/check.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/chevron-down.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/chevron-right.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/clock.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/copy.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/play.js");
+
+
+
+function TestRunner() {
+    const [isRunning, setIsRunning] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+    const [testResults, setTestResults] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+    const [expandedSuites, setExpandedSuites] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(new Set());
+    const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+    const [selectedSuite, setSelectedSuite] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+    const [copied, setCopied] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+    // Prevent component from unmounting
+    react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(() => {
+        console.log('[TestRunner UI] Component mounted');
+        return () => {
+            console.log('[TestRunner UI] Component unmounting - this should not happen during tests!');
+        };
+    }, []);
+    const runAllTests = async () => {
+        console.log('[TestRunner UI] Starting test execution...');
+        setIsRunning(true);
+        setError(null);
+        setTestResults([]);
+        try {
+            const result = await window.electronAPI.runTests();
+            console.log('[TestRunner UI] Test result received:', result);
+            if (result && result.success && result.results) {
+                console.log('[TestRunner UI] Setting test results:', result.results);
+                setTestResults(result.results);
+                // Keep the results visible
+                setExpandedSuites(new Set(result.results.map(r => r.name)));
+            }
+            else {
+                const errorMsg = result?.error || 'Failed to run tests';
+                console.error('[TestRunner UI] Test failed:', errorMsg);
+                setError(errorMsg);
+                // Don't clear results on error
+            }
+        }
+        catch (err) {
+            console.error('[TestRunner UI] Test execution error:', err);
+            setError(`Test execution error: ${err}`);
+            // Don't clear results on error
+        }
+        finally {
+            setIsRunning(false);
+        }
+    };
+    const runSingleSuite = async (suiteName) => {
+        setIsRunning(true);
+        setError(null);
+        setSelectedSuite(suiteName);
+        try {
+            const result = await window.electronAPI.runTestSuite(suiteName);
+            if (result.success && result.result) {
+                // Update or add the suite result
+                setTestResults(prev => {
+                    const filtered = prev.filter(r => r.name !== suiteName);
+                    return [...filtered, result.result];
+                });
+                setExpandedSuites(prev => new Set([...prev, suiteName]));
+            }
+            else {
+                setError(result.error || `Failed to run suite: ${suiteName}`);
+            }
+        }
+        catch (err) {
+            setError(`Test execution error: ${err}`);
+        }
+        finally {
+            setIsRunning(false);
+            setSelectedSuite(null);
+        }
+    };
+    const toggleSuite = (suiteName) => {
+        setExpandedSuites(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(suiteName)) {
+                newSet.delete(suiteName);
+            }
+            else {
+                newSet.add(suiteName);
+            }
+            return newSet;
+        });
+    };
+    const getStatusIcon = (status) => {
+        switch (status) {
+            case 'pass':
+                return react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"], { className: "w-4 h-4 text-green-500" });
+            case 'fail':
+                return react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], { className: "w-4 h-4 text-red-500" });
+            case 'skip':
+                return react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_2__["default"], { className: "w-4 h-4 text-yellow-500" });
+        }
+    };
+    const getSuiteStatus = (suite) => {
+        if (suite.failed > 0)
+            return 'fail';
+        if (suite.skipped > 0 && suite.passed === 0)
+            return 'skip';
+        return 'pass';
+    };
+    const getTotalStats = () => {
+        const total = testResults.reduce((acc, suite) => ({
+            passed: acc.passed + suite.passed,
+            failed: acc.failed + suite.failed,
+            skipped: acc.skipped + suite.skipped,
+            duration: acc.duration + suite.duration
+        }), { passed: 0, failed: 0, skipped: 0, duration: 0 });
+        return total;
+    };
+    const copyTestResults = () => {
+        const results = testResults.map(suite => {
+            const header = `${suite.name}\n${suite.passed}/${suite.tests.length} passed\n`;
+            const tests = suite.tests.map(test => `  ${test.status === 'pass' ? '✓' : test.status === 'fail' ? '✗' : '○'} ${test.test}${test.error ? '\n    Error: ' + test.error : ''}`).join('\n');
+            return header + tests;
+        }).join('\n\n');
+        const summary = `\nTest Summary:\n${getTotalStats().passed} passed, ${getTotalStats().failed} failed, ${getTotalStats().skipped} skipped\n`;
+        navigator.clipboard.writeText(results + summary);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "p-6 space-y-6" },
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.Card, null,
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardHeader, null,
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardTitle, { className: "flex items-center justify-between" },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "Test Runner"),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "flex gap-2" },
+                        testResults.length > 0 && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: copyTestResults, className: "px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 flex items-center gap-2" }, copied ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-4 h-4" }),
+                            "Copied!")) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_10__["default"], { className: "w-4 h-4" }),
+                            "Copy Results")))),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: runAllTests, disabled: isRunning, className: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2" }, isRunning ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "w-4 h-4 animate-spin" }),
+                            "Running...")) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_11__["default"], { className: "w-4 h-4" }),
+                            "Run All Tests"))))),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardDescription, null, "Execute unit, integration, and end-to-end tests")),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardContent, null,
+                error && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-700" }, error)),
+                testResults && testResults.length > 0 && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "space-y-4" },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "grid grid-cols-4 gap-4 p-4 bg-gray-50 rounded" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-center" },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-2xl font-bold text-green-600" }, getTotalStats().passed),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-sm text-gray-600" }, "Passed")),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-center" },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-2xl font-bold text-red-600" }, getTotalStats().failed),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-sm text-gray-600" }, "Failed")),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-center" },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-2xl font-bold text-yellow-600" }, getTotalStats().skipped),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-sm text-gray-600" }, "Skipped")),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-center" },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-2xl font-bold text-blue-600" },
+                                (getTotalStats().duration / 1000).toFixed(2),
+                                "s"),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-sm text-gray-600" }, "Duration"))),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "space-y-2" }, testResults && Array.isArray(testResults) && testResults.map((suite) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { key: suite.name, className: "border rounded" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "p-3 flex items-center justify-between cursor-pointer hover:bg-gray-50", onClick: () => toggleSuite(suite.name) },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "flex items-center gap-2" },
+                                expandedSuites.has(suite.name) ?
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "w-4 h-4" }) :
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_8__["default"], { className: "w-4 h-4" }),
+                                getStatusIcon(getSuiteStatus(suite)),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "font-medium" }, suite.name)),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "flex items-center gap-4" },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "flex items-center gap-2 text-sm" },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-green-600" }, suite.passed),
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-gray-400" }, "/"),
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-red-600" }, suite.failed),
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-gray-400" }, "/"),
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-yellow-600" }, suite.skipped)),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: (e) => {
+                                        e.stopPropagation();
+                                        runSingleSuite(suite.name);
+                                    }, disabled: isRunning, className: "px-2 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50" }, isRunning && selectedSuite === suite.name ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "w-3 h-3 animate-spin" })) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_11__["default"], { className: "w-3 h-3" }))))),
+                        expandedSuites.has(suite.name) && suite.tests && Array.isArray(suite.tests) && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "border-t" }, suite.tests.map((test, idx) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { key: idx, className: "px-6 py-2 flex items-center justify-between hover:bg-gray-50 text-sm" },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "flex items-center gap-2" },
+                                getStatusIcon(test.status),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, test.test)),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "flex items-center gap-2" },
+                                test.duration && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-gray-500" },
+                                    test.duration,
+                                    "ms")),
+                                test.error && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { className: "text-red-500 text-xs max-w-xs truncate" }, test.error)))))))))))))),
+                !isRunning && testResults.length === 0 && !error && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-center py-8 text-gray-500" },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_9__["default"], { className: "w-12 h-12 mx-auto mb-3" }),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "No test results yet"),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { className: "text-sm mt-1" }, "Click \"Run All Tests\" to start"))))),
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.Card, null,
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardHeader, null,
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardTitle, null, "Quick Tests"),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardDescription, null, "Run individual test suites")),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_1__.CardContent, null,
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "grid grid-cols-3 gap-3" },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: () => runSingleSuite('Cache System'), disabled: isRunning, className: "p-3 border rounded hover:bg-gray-50 disabled:opacity-50" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "font-medium" }, "Cache System"),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-sm text-gray-500" }, "Unit tests")),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: () => runSingleSuite('Application Layer'), disabled: isRunning, className: "p-3 border rounded hover:bg-gray-50 disabled:opacity-50" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "font-medium" }, "Application"),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-sm text-gray-500" }, "IPC & UI tests")),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: () => runSingleSuite('End-to-End'), disabled: isRunning, className: "p-3 border rounded hover:bg-gray-50 disabled:opacity-50" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "font-medium" }, "End-to-End"),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-sm text-gray-500" }, "Full stack tests")))))));
+}
+
+
+/***/ }),
+
+/***/ "./src/components/TestRunnerSafe.tsx":
+/*!*******************************************!*\
+  !*** ./src/components/TestRunnerSafe.tsx ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TestRunnerSafe: () => (/* binding */ TestRunnerSafe)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _TestRunner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TestRunner */ "./src/components/TestRunner.tsx");
+/* harmony import */ var _ui_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ui/card */ "./src/components/ui/card.tsx");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/circle-alert.js");
+
+
+
+
+class TestRunnerErrorBoundary extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
+    constructor(props) {
+        super(props);
+        this.state = { hasError: false, error: null };
+    }
+    static getDerivedStateFromError(error) {
+        console.error('[TestRunner ErrorBoundary] Caught error:', error);
+        return { hasError: true, error };
+    }
+    componentDidCatch(error, errorInfo) {
+        console.error('[TestRunner ErrorBoundary] Error details:', error, errorInfo);
+    }
+    render() {
+        if (this.state.hasError) {
+            return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_2__.Card, null,
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardHeader, null,
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardTitle, { className: "text-red-600 flex items-center gap-2" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"], { className: "h-5 w-5" }),
+                        "Test Runner Error")),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardContent, null,
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "text-sm text-gray-600" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "The test runner encountered an error:"),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("pre", { className: "mt-2 p-2 bg-gray-100 rounded text-xs overflow-auto" }, this.state.error?.message || 'Unknown error'),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: () => this.setState({ hasError: false, error: null }), className: "mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" }, "Try Again")))));
+        }
+        return this.props.children;
+    }
+}
+function TestRunnerSafe() {
+    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TestRunnerErrorBoundary, null,
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_TestRunner__WEBPACK_IMPORTED_MODULE_1__.TestRunner, null)));
 }
 
 
@@ -78882,8 +79923,8 @@ __webpack_require__.r(__webpack_exports__);
 // Create root element
 const root = react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot(document.getElementById('root'));
 // Render the app
-root.render(react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().StrictMode), null,
-    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_App__WEBPACK_IMPORTED_MODULE_2__.App, null)));
+// Disable StrictMode to prevent double execution of effects
+root.render(react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_App__WEBPACK_IMPORTED_MODULE_2__.App, null));
 
 })();
 

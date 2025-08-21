@@ -1,33 +1,186 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
-/******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./src/renderer.ts":
-/*!*************************!*\
-  !*** ./src/renderer.ts ***!
-  \*************************/
-/***/ (() => {
-
-eval("{\nconst loginForm = document.getElementById('loginForm');\nconst statusDiv = document.getElementById('status');\nconst connectedView = document.getElementById('connectedView');\nconst loginBtn = document.getElementById('loginBtn');\nconst logoutBtn = document.getElementById('logoutBtn');\nconst refreshBtn = document.getElementById('refreshBtn');\nconst wslStatusSpan = document.getElementById('wslStatus');\nconst replicantStatusSpan = document.getElementById('replicantStatus');\nlet isConnected = false;\nlet statusCheckInterval = null;\nfunction showStatus(message, isError = false) {\n    statusDiv.className = isError ? 'status error' : 'status success';\n    statusDiv.textContent = message;\n    statusDiv.style.display = 'block';\n}\nfunction hideStatus() {\n    statusDiv.className = 'status';\n    statusDiv.textContent = '';\n    statusDiv.style.display = 'none';\n}\n// Check and update status indicators\nasync function updateStatus() {\n    try {\n        // Check WSL status\n        const wslStatus = await window.electronAPI.checkWslStatus();\n        if (!wslStatus.installed) {\n            wslStatusSpan.textContent = 'Not Installed';\n            wslStatusSpan.className = 'status-value error';\n        }\n        else if (wslStatus.running) {\n            wslStatusSpan.textContent = 'Running';\n            wslStatusSpan.className = 'status-value success';\n        }\n        else {\n            wslStatusSpan.textContent = 'Stopped';\n            wslStatusSpan.className = 'status-value warning';\n        }\n        // Check replicant status\n        const replicantStatus = await window.electronAPI.checkReplicantStatus();\n        if (replicantStatus.running) {\n            replicantStatusSpan.textContent = `Running (PID: ${replicantStatus.pid})`;\n            replicantStatusSpan.className = 'status-value success';\n        }\n        else {\n            replicantStatusSpan.textContent = 'Stopped';\n            replicantStatusSpan.className = 'status-value error';\n        }\n    }\n    catch (error) {\n        console.error('Error checking status:', error);\n    }\n}\n// Start periodic status updates\nfunction startStatusUpdates() {\n    updateStatus();\n    statusCheckInterval = setInterval(updateStatus, 2000);\n}\n// Stop periodic status updates\nfunction stopStatusUpdates() {\n    if (statusCheckInterval) {\n        clearInterval(statusCheckInterval);\n        statusCheckInterval = null;\n    }\n}\nloginForm.addEventListener('submit', async (e) => {\n    e.preventDefault();\n    const secret = loginForm.secret.value;\n    const configPath = loginForm.configPath.value.trim() || undefined;\n    // Validate inputs\n    if (!secret) {\n        showStatus('Please enter your password', true);\n        return;\n    }\n    // Check WSL status first\n    const wslStatus = await window.electronAPI.checkWslStatus();\n    if (!wslStatus.installed) {\n        showStatus('WSL is not installed. Please install WSL first.', true);\n        return;\n    }\n    if (!wslStatus.running) {\n        showStatus('Starting WSL...', false);\n        const startResult = await window.electronAPI.startWsl();\n        if (!startResult.success) {\n            showStatus(startResult.message || 'Failed to start WSL', true);\n            return;\n        }\n    }\n    // Disable form\n    loginBtn.disabled = true;\n    loginBtn.textContent = 'Starting...';\n    hideStatus();\n    try {\n        const result = await window.electronAPI.login({\n            secret,\n            configPath\n        });\n        if (result.success) {\n            // Show success\n            showStatus(result.message, false);\n            // Update mount path if provided\n            if (result.mountPoint) {\n                const mountPathElement = document.querySelector('.mount-path');\n                if (mountPathElement) {\n                    mountPathElement.textContent = result.mountPoint;\n                }\n            }\n            // Hide login form and show connected view\n            setTimeout(() => {\n                loginForm.style.display = 'none';\n                hideStatus();\n                connectedView.style.display = 'block';\n                isConnected = true;\n            }, 1500);\n        }\n        else {\n            // Show error\n            showStatus(result.message, true);\n        }\n    }\n    catch (error) {\n        const errorMessage = error instanceof Error ? error.message : 'Failed to start replicant';\n        showStatus(errorMessage, true);\n    }\n    finally {\n        // Re-enable form\n        loginBtn.disabled = false;\n        loginBtn.textContent = 'Start';\n    }\n});\nlogoutBtn.addEventListener('click', async () => {\n    logoutBtn.disabled = true;\n    logoutBtn.textContent = 'Stopping...';\n    try {\n        const result = await window.electronAPI.stopReplicant();\n        if (result.success) {\n            // Reset UI\n            connectedView.style.display = 'none';\n            loginForm.style.display = 'block';\n            isConnected = false;\n            // Clear sensitive data\n            loginForm.secret.value = '';\n            showStatus('Replicant stopped successfully', false);\n            setTimeout(hideStatus, 2000);\n        }\n        else {\n            showStatus(result.message || 'Failed to stop replicant', true);\n        }\n    }\n    catch (error) {\n        const errorMessage = error instanceof Error ? error.message : 'Failed to stop replicant';\n        showStatus(errorMessage, true);\n    }\n    finally {\n        logoutBtn.disabled = false;\n        logoutBtn.textContent = 'Stop';\n    }\n});\n// Refresh button handler\nrefreshBtn.addEventListener('click', async () => {\n    refreshBtn.disabled = true;\n    refreshBtn.textContent = 'Refreshing...';\n    await updateStatus();\n    setTimeout(() => {\n        refreshBtn.disabled = false;\n        refreshBtn.textContent = 'Refresh Status';\n    }, 500);\n});\n// Handle window close\nwindow.addEventListener('beforeunload', async (e) => {\n    if (isConnected) {\n        e.preventDefault();\n        e.returnValue = '';\n        // Attempt to stop replicant before closing\n        await window.electronAPI.stopReplicant();\n    }\n});\n// Start status monitoring when page loads\nwindow.addEventListener('DOMContentLoaded', () => {\n    startStatusUpdates();\n});\n// Stop status monitoring when page unloads\nwindow.addEventListener('unload', () => {\n    stopStatusUpdates();\n});\n\n\n//# sourceURL=webpack://one-filer-login/./src/renderer.ts?\n}");
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./src/renderer.ts"]();
-/******/ 	
-/******/ })()
-;
+"use strict";
+const loginForm = document.getElementById('loginForm');
+const statusDiv = document.getElementById('status');
+const connectedView = document.getElementById('connectedView');
+const loginBtn = document.getElementById('loginBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const refreshBtn = document.getElementById('refreshBtn');
+const wslStatusSpan = document.getElementById('wslStatus');
+const replicantStatusSpan = document.getElementById('replicantStatus');
+let isConnected = false;
+let statusCheckInterval = null;
+function showStatus(message, isError = false) {
+    statusDiv.className = isError ? 'status error' : 'status success';
+    statusDiv.textContent = message;
+    statusDiv.style.display = 'block';
+}
+function hideStatus() {
+    statusDiv.className = 'status';
+    statusDiv.textContent = '';
+    statusDiv.style.display = 'none';
+}
+// Check and update status indicators
+async function updateStatus() {
+    try {
+        // Check WSL status
+        const wslStatus = await window.electronAPI.checkWslStatus();
+        if (!wslStatus.installed) {
+            wslStatusSpan.textContent = 'Not Installed';
+            wslStatusSpan.className = 'status-value error';
+        }
+        else if (wslStatus.running) {
+            wslStatusSpan.textContent = 'Running';
+            wslStatusSpan.className = 'status-value success';
+        }
+        else {
+            wslStatusSpan.textContent = 'Stopped';
+            wslStatusSpan.className = 'status-value warning';
+        }
+        // Check replicant status
+        const replicantStatus = await window.electronAPI.checkReplicantStatus();
+        if (replicantStatus.running) {
+            replicantStatusSpan.textContent = `Running (PID: ${replicantStatus.pid})`;
+            replicantStatusSpan.className = 'status-value success';
+        }
+        else {
+            replicantStatusSpan.textContent = 'Stopped';
+            replicantStatusSpan.className = 'status-value error';
+        }
+    }
+    catch (error) {
+        console.error('Error checking status:', error);
+    }
+}
+// Start periodic status updates
+function startStatusUpdates() {
+    updateStatus();
+    statusCheckInterval = setInterval(updateStatus, 2000);
+}
+// Stop periodic status updates
+function stopStatusUpdates() {
+    if (statusCheckInterval) {
+        clearInterval(statusCheckInterval);
+        statusCheckInterval = null;
+    }
+}
+loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const secret = loginForm.secret.value;
+    const configPath = loginForm.configPath.value.trim() || undefined;
+    // Validate inputs
+    if (!secret) {
+        showStatus('Please enter your password', true);
+        return;
+    }
+    // Check WSL status first
+    const wslStatus = await window.electronAPI.checkWslStatus();
+    if (!wslStatus.installed) {
+        showStatus('WSL is not installed. Please install WSL first.', true);
+        return;
+    }
+    if (!wslStatus.running) {
+        showStatus('Starting WSL...', false);
+        const startResult = await window.electronAPI.startWsl();
+        if (!startResult.success) {
+            showStatus(startResult.message || 'Failed to start WSL', true);
+            return;
+        }
+    }
+    // Disable form
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Starting...';
+    hideStatus();
+    try {
+        const result = await window.electronAPI.login({
+            secret,
+            configPath
+        });
+        if (result.success) {
+            // Show success
+            showStatus(result.message, false);
+            // Update mount path if provided
+            if (result.mountPoint) {
+                const mountPathElement = document.querySelector('.mount-path');
+                if (mountPathElement) {
+                    mountPathElement.textContent = result.mountPoint;
+                }
+            }
+            // Hide login form and show connected view
+            setTimeout(() => {
+                loginForm.style.display = 'none';
+                hideStatus();
+                connectedView.style.display = 'block';
+                isConnected = true;
+            }, 1500);
+        }
+        else {
+            // Show error
+            showStatus(result.message, true);
+        }
+    }
+    catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Failed to start replicant';
+        showStatus(errorMessage, true);
+    }
+    finally {
+        // Re-enable form
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Start';
+    }
+});
+logoutBtn.addEventListener('click', async () => {
+    logoutBtn.disabled = true;
+    logoutBtn.textContent = 'Stopping...';
+    try {
+        const result = await window.electronAPI.stopReplicant();
+        if (result.success) {
+            // Reset UI
+            connectedView.style.display = 'none';
+            loginForm.style.display = 'block';
+            isConnected = false;
+            // Clear sensitive data
+            loginForm.secret.value = '';
+            showStatus('Replicant stopped successfully', false);
+            setTimeout(hideStatus, 2000);
+        }
+        else {
+            showStatus(result.message || 'Failed to stop replicant', true);
+        }
+    }
+    catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Failed to stop replicant';
+        showStatus(errorMessage, true);
+    }
+    finally {
+        logoutBtn.disabled = false;
+        logoutBtn.textContent = 'Stop';
+    }
+});
+// Refresh button handler
+refreshBtn.addEventListener('click', async () => {
+    refreshBtn.disabled = true;
+    refreshBtn.textContent = 'Refreshing...';
+    await updateStatus();
+    setTimeout(() => {
+        refreshBtn.disabled = false;
+        refreshBtn.textContent = 'Refresh Status';
+    }, 500);
+});
+// Handle window close
+window.addEventListener('beforeunload', async (e) => {
+    if (isConnected) {
+        e.preventDefault();
+        e.returnValue = '';
+        // Attempt to stop replicant before closing
+        await window.electronAPI.stopReplicant();
+    }
+});
+// Start status monitoring when page loads
+window.addEventListener('DOMContentLoaded', () => {
+    startStatusUpdates();
+});
+// Stop status monitoring when page unloads
+window.addEventListener('unload', () => {
+    stopStatusUpdates();
+});
+//# sourceMappingURL=renderer.js.map

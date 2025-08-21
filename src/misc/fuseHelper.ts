@@ -25,7 +25,7 @@ import {
     EROFS, 
     EBUSY, 
     ENOTEMPTY 
-} from '../fuse/native-fuse3.js';
+} from '../fuse/types.js';
 import {COLOR} from '@refinio/one.core/lib/logger.js';
 
 export function splitRoutePath(routePath: string): {
