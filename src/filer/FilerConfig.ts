@@ -10,7 +10,7 @@ export interface FilerConfig {
 
 export const DefaultFilerConfig: FilerConfig = {
     mountPoint: 'mnt',
-    pairingUrl: 'https://leute.dev.refinio.one/invites/invitePartner/?invited=true/',
+    pairingUrl: 'https://leute.dev.refinio.one/invites/invitePartner/?invited=true',
     iomMode: 'light',
     logCalls: false,
     fuseOptions: {}
@@ -36,7 +36,7 @@ export function checkFilerConfig(config: unknown): Partial<FilerConfig> {
         throw new Error('"iomMode" of filer configuration needs to be "light" or "full"');
     }
 
-    if (Object.hasOwn(config, 'logCalls') !== undefined && typeof config.logCalls !== 'boolean') {
+    if (Object.hasOwn(config, 'logCalls') && typeof config.logCalls !== 'boolean') {
         throw new Error('"logCalls" of filer configuration needs to be a boolean');
     }
 

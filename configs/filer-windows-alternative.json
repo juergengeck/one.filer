@@ -5,7 +5,7 @@
     "useFiler": true,
     "filerConfig": {
         "mountPoint": "/home/refinio/one-files",
-        "pairingUrl": "https://leute.dev.refinio.one/invites/invitePartner/?invited=true/",
+        "pairingUrl": "https://leute.dev.refinio.one/invites/invitePartner/?invited=true",
         "iomMode": "light",
         "logCalls": true,
         "fuseOptions": {

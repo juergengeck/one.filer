@@ -1,0 +1,59 @@
+{
+  "test": {
+    "timeout": 30000,
+    "retries": 2,
+    "verbose": true,
+    "cleanup": true
+  },
+  "filer": {
+    "mountPoint": "test-mount",
+    "pairingUrl": "https://leute.dev.refinio.one/invites/invitePartner/?invited=true",
+    "iomMode": "light",
+    "logCalls": false,
+    "fuseOptions": {}
+  },
+  "api": {
+    "port": 3000,
+    "host": "localhost",
+    "timeout": 5000
+  },
+  "instance": {
+    "name": "test-instance",
+    "email": "test@example.com",
+    "directory": "./test-data",
+    "encryptStorage": false
+  },
+  "profiles": {
+    "test": {
+      "url": "localhost:3000",
+      "personKeys": {
+        "personId": "test-person-id",
+        "privateKey": "test-private-key"
+      }
+    },
+    "test-windows": {
+      "url": "localhost:3001",
+      "personKeys": {
+        "personId": "test-windows-person-id",
+        "privateKey": "test-windows-private-key"
+      }
+    }
+  },
+  "testData": {
+    "files": [
+      {
+        "path": "/test-data/sample.txt",
+        "content": "Sample test file content"
+      },
+      {
+        "path": "/test-data/large-file.bin",
+        "size": 1048576,
+        "type": "binary"
+      }
+    ],
+    "directories": [
+      "/test-data/subdir1",
+      "/test-data/subdir2/nested"
+    ]
+  }
+}

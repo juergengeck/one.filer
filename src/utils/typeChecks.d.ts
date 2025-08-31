@@ -2,9 +2,9 @@
  * Local type checking utilities to replace missing exports from one.core
  */
 /**
- * Checks if a value is a non-null object
+ * Checks if a value is a non-null object (excluding arrays)
  * @param thing - The value to check
- * @returns true if the value is a non-null object
+ * @returns true if the value is a non-null object but not an array
  */
 export declare function isObject(thing: unknown): thing is Record<string, any>;
 /**

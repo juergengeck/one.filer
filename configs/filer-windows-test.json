@@ -1,21 +1,14 @@
 {
-    "directory": "data",
+    "directory": "C:\\OneFilerDataWin",
     "commServerUrl": "wss://comm10.dev.refinio.one",
     "createEveryoneGroup": true,
     "useFiler": true,
     "filerConfig": {
-        "mountPoint": "/home/refinio/one-files",
-        "pairingUrl": "https://leute.dev.refinio.one/invites/invitePartner/?invited=true/",
+        "useProjFS": true,
+        "mountPoint": "C:\\OneFiler",
+        "pairingUrl": "https://leute.dev.refinio.one/invites/invitePartner/?invited=true",
         "iomMode": "light",
-        "logCalls": true,
-        "fuseOptions": {
-            "allow_other": true,
-            "allow_root": true,
-            "default_permissions": true,
-            "uid": 1000,
-            "gid": 1000,
-            "umask": "022"
-        }
+        "logCalls": true
     },
     "connectionsConfig": {
         "commServerUrl": "wss://comm10.dev.refinio.one",

@@ -35,14 +35,28 @@ function processDirectory(dir, processedCount = 0) {
     
     for (const item of items) {
         const fullPath = join(dir, item);
-        const stat = statSync(fullPath);
         
-        if (stat.isDirectory()) {
-            processedCount = processDirectory(fullPath, processedCount);
-        } else if (item.endsWith('.js')) {
-            if (addJsExtensions(fullPath)) {
-                processedCount++;
+        try {
+            const stat = statSync(fullPath);
+            
+            if (stat.isDirectory()) {
+                // Skip node_modules and build directories
+                if (item === 'node_modules' || item === 'build' || item === 'node_gyp_bins') {
+                    continue;
+                }
+                processedCount = processDirectory(fullPath, processedCount);
+            } else if (item.endsWith('.js')) {
+                if (addJsExtensions(fullPath)) {
+                    processedCount++;
+                }
             }
+        } catch (error) {
+            // Skip files/directories we can't access
+            if (error.code === 'EACCES' || error.code === 'EPERM') {
+                console.warn(`Skipping inaccessible path: ${fullPath}`);
+                continue;
+            }
+            throw error;
         }
     }
     

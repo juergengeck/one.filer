@@ -1,15 +1,18 @@
+"use strict";
 /// <reference types="node" />
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.handleError = exports.logFuseError = exports.splitRoutePath = void 0;
 /**
  * @author Sebastian Sandru <sebastian@refinio.com>
  * @copyright REFINIO GmbH
  * @license SEE LICENSE IN LICENSE.md
  * @version 0.0.1
  */
-import { FS_ERRORS, FS_INTERNAL_ERROR_CODE } from '@refinio/one.models/lib/fileSystems/FileSystemErrors.js';
-import { createError } from '@refinio/one.core/lib/errors.js';
-import { EPERM, ENOENT, EIO, EACCES, EEXIST, ENOTDIR, EISDIR, EINVAL, ENOSPC, EROFS, EBUSY, ENOTEMPTY } from '../fuse/native-fuse3.js';
-import { COLOR } from '@refinio/one.core/lib/logger.js';
-export function splitRoutePath(routePath) {
+const FileSystemErrors_js_1 = require("@refinio/one.models/lib/fileSystems/FileSystemErrors.js");
+const errors_js_1 = require("@refinio/one.core/lib/errors.js");
+const types_js_1 = require("../fuse/types.js");
+const logger_js_1 = require("@refinio/one.core/lib/logger.js");
+function splitRoutePath(routePath) {
     // Assume a leading slash in this method
     const dirs = routePath.split('/');
     // calculate prefix
@@ -27,22 +30,23 @@ export function splitRoutePath(routePath) {
         rest: rest
     };
 }
+exports.splitRoutePath = splitRoutePath;
 /**
  * Maps FUSE error codes to one.core filesystem error codes
  */
 const FUSE_TO_FS_ERRORS = {
-    [EPERM]: 'FSE-EPERM', // Operation not permitted
-    [ENOENT]: 'FSE-ENOENT', // No such file or directory
-    [EIO]: 'FSE-EIO', // I/O error
-    [EACCES]: 'FSE-EACCES', // Permission denied
-    [EEXIST]: 'FSE-EEXIST', // File exists
-    [ENOTDIR]: 'FSE-ENOTDIR', // Not a directory
-    [EISDIR]: 'FSE-EISDIR', // Is a directory
-    [EINVAL]: 'FSE-EINVAL', // Invalid argument
-    [ENOSPC]: 'FSE-ENOSPC', // No space left on device
-    [EROFS]: 'FSE-EROFS', // Read-only file system
-    [EBUSY]: 'FSE-EBUSY', // Device or resource busy
-    [ENOTEMPTY]: 'FSE-ENOTEMPTY' // Directory not empty
+    [types_js_1.EPERM]: 'FSE-EPERM',
+    [types_js_1.ENOENT]: 'FSE-ENOENT',
+    [types_js_1.EIO]: 'FSE-EIO',
+    [types_js_1.EACCES]: 'FSE-EACCES',
+    [types_js_1.EEXIST]: 'FSE-EEXIST',
+    [types_js_1.ENOTDIR]: 'FSE-ENOTDIR',
+    [types_js_1.EISDIR]: 'FSE-EISDIR',
+    [types_js_1.EINVAL]: 'FSE-EINVAL',
+    [types_js_1.ENOSPC]: 'FSE-ENOSPC',
+    [types_js_1.EROFS]: 'FSE-EROFS',
+    [types_js_1.EBUSY]: 'FSE-EBUSY',
+    [types_js_1.ENOTEMPTY]: 'FSE-ENOTEMPTY' // Directory not empty
 };
 /**
  * Maps a FUSE error code to a one.core filesystem error
@@ -50,33 +54,34 @@ const FUSE_TO_FS_ERRORS = {
 function mapFuseError(fuseCode, path) {
     const fsErrorCode = FUSE_TO_FS_ERRORS[fuseCode];
     if (fsErrorCode) {
-        return createError(fsErrorCode, {
-            message: FS_ERRORS[fsErrorCode].message,
+        return (0, errors_js_1.createError)(fsErrorCode, {
+            message: FileSystemErrors_js_1.FS_ERRORS[fsErrorCode].message,
             path
         });
     }
-    return createError('FSE-UNK', {
-        message: FS_ERRORS['FSE-UNK'].message,
+    return (0, errors_js_1.createError)('FSE-UNK', {
+        message: FileSystemErrors_js_1.FS_ERRORS['FSE-UNK'].message,
         path
     });
 }
 /**
  * Enhanced error logging for FUSE operations
  */
-export function logFuseError(error, operation, severity = 'error') {
-    const color = severity === 'error' ? COLOR.FG_RED : COLOR.FG_YELLOW;
-    console.log(`${color}[${severity.toUpperCase()}]:${COLOR.OFF}`, `Operation: ${operation}`, `Path: ${error.path || 'unknown'}`, `Error: ${error.message}`);
+function logFuseError(error, operation, severity = 'error') {
+    const color = severity === 'error' ? logger_js_1.COLOR.FG_RED : logger_js_1.COLOR.FG_YELLOW;
+    console.log(`${color}[${severity.toUpperCase()}]:${logger_js_1.COLOR.OFF}`, `Operation: ${operation}`, `Path: ${error.path || 'unknown'}`, `Error: ${error.message}`);
     if (error.stack) {
         console.log(error.stack);
     }
 }
+exports.logFuseError = logFuseError;
 /**
  * Handles filesystem errors with enhanced logging and mapping
  * @param err - The error to handle
  * @param logCalls - Whether to log the error
  * @param operation - The operation that caused the error (for logging)
  */
-export function handleError(err, logCalls = false, operation = 'unknown') {
+function handleError(err, logCalls = false, operation = 'unknown') {
     // Handle raw FUSE error codes
     if (typeof err === 'number') {
         const mappedError = mapFuseError(err);
@@ -91,22 +96,23 @@ export function handleError(err, logCalls = false, operation = 'unknown') {
     // If it's already a filesystem error, extract the code
     if (err.message && err.message.includes(':')) {
         const code = err.message.slice(0, err.message.indexOf(':'));
-        if (FS_ERRORS[code]) {
-            if (FS_ERRORS[code].linuxErrCode === FS_INTERNAL_ERROR_CODE) {
+        if (FileSystemErrors_js_1.FS_ERRORS[code]) {
+            if (FileSystemErrors_js_1.FS_ERRORS[code].linuxErrCode === FileSystemErrors_js_1.FS_INTERNAL_ERROR_CODE) {
                 console.log(new Error().stack);
                 console.error(err);
                 return 0;
             }
-            return FS_ERRORS[code].linuxErrCode;
+            return FileSystemErrors_js_1.FS_ERRORS[code].linuxErrCode;
         }
     }
     // Handle one.core errors
-    if (err.code && FS_ERRORS[err.code]) {
-        return FS_ERRORS[err.code].linuxErrCode;
+    if (err.code && FileSystemErrors_js_1.FS_ERRORS[err.code]) {
+        return FileSystemErrors_js_1.FS_ERRORS[err.code].linuxErrCode;
     }
     // Unknown error
     console.log(new Error().stack);
     console.error(err);
     return 0;
 }
+exports.handleError = handleError;
 //# sourceMappingURL=fuseHelper.js.map

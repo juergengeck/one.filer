@@ -54,6 +54,18 @@ startCommand
         'The filer mount point path. Defaults to' +
             ` "${DefaultFilerConfig.mountPoint}" if not found in config.`
     )
+    .option(
+        '--enable-admin-api',
+        'Enable the admin API interface for remote management'
+    )
+    .option(
+        '--api-port <number>',
+        'Port for the admin API server. Defaults to 3000'
+    )
+    .option(
+        '--api-host <string>',
+        'Host for the admin API server. Defaults to localhost'
+    )
     .action(async options => {
         try {
             // Note: Logger options are currently not functional due to missing exports
@@ -62,18 +74,29 @@ startCommand
             const config = await readJsonFileOrEmpty(options.config || 'config.json');
             const replicantConfig = checkReplicantConfig(config);
 
+            assignConfigOption(replicantConfig, 'directory', options.directory);
             assignConfigOption(replicantConfig, 'commServerUrl', options.commServerUrl);
             assignConfigOption(replicantConfig, 'useFiler', options.filer);
-            assignConfigOption(replicantConfig, 'filer.pairingUrl', options.pairingUrl);
-            assignConfigOption(replicantConfig, 'filer.iomMode', options.pairingIomMode);
-            assignConfigOption(replicantConfig, 'filer.logCalls', options.filerLogCalls);
-            assignConfigOption(replicantConfig, 'filer.mountPoint', options.filerMountPoint);
+            assignConfigOption(replicantConfig, 'filerConfig.pairingUrl', options.pairingUrl);
+            assignConfigOption(replicantConfig, 'filerConfig.iomMode', options.pairingIomMode);
+            assignConfigOption(replicantConfig, 'filerConfig.logCalls', options.filerLogCalls);
+            assignConfigOption(replicantConfig, 'filerConfig.mountPoint', options.filerMountPoint);
 
             // If no credentials exist create them
             const replicant = new Replicant(replicantConfig);
             await replicant.start(options.secret);
 
             console.log(`[info]: Replicant started successfully`);
+
+            // Start admin API if enabled
+            if (options.enableAdminApi) {
+                const apiConfig = {
+                    port: options.apiPort ? parseInt(options.apiPort) : 3000,
+                    host: options.apiHost || 'localhost'
+                };
+                await replicant.startAdminApi(apiConfig);
+                console.log(`[info]: Admin API started on ${apiConfig.host}:${apiConfig.port}`);
+            }
 
             // Keep the application alive since FUSE needs to stay running
             // Without this, Node.js would exit after the Promise resolves

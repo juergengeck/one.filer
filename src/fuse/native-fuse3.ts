@@ -116,11 +116,16 @@ export class Fuse extends EventEmitter {
         };
 
         // Create the FUSE instance using the N-API addon
-        this.fuseInstance = new fuseAddon.Fuse(mountPath, operations, this.options);
+        // The addon exports the Fuse class directly
+        const FuseClass = fuseAddon.Fuse || fuseAddon;
+        this.fuseInstance = new FuseClass(mountPath, operations, this.options);
         
-        // Forward events
-        this.fuseInstance.on('mount', () => this.emit('mount'));
-        this.fuseInstance.on('unmount', () => this.emit('unmount'));
+        // Forward events if supported by the addon
+        // The C++ addon might not have EventEmitter support
+        if (this.fuseInstance.on && typeof this.fuseInstance.on === 'function') {
+            this.fuseInstance.on('mount', () => this.emit('mount'));
+            this.fuseInstance.on('unmount', () => this.emit('unmount'));
+        }
     }
 
     mount(callback: (err?: Error | null) => void): void {
@@ -166,7 +171,8 @@ export class Fuse extends EventEmitter {
     }
 
     static unmount(mountPath: string, callback: (err?: Error) => void): void {
-        fuseAddon.Fuse.unmount(mountPath, callback);
+        const FuseClass = fuseAddon.Fuse || fuseAddon;
+        FuseClass.unmount(mountPath, callback);
     }
 
     static isConfigured(callback: (err: Error | null, isConfigured: boolean) => void): void {
@@ -176,12 +182,14 @@ export class Fuse extends EventEmitter {
             return;
         }
 
-        fuseAddon.Fuse.isConfigured(callback);
+        const FuseClass = fuseAddon.Fuse || fuseAddon;
+        FuseClass.isConfigured(callback);
     }
 
     static configure(callback: (err?: Error) => void): void {
         // No configuration needed - FUSE3 should be installed at system level
-        fuseAddon.Fuse.configure(callback);
+        const FuseClass = fuseAddon.Fuse || fuseAddon;
+        FuseClass.configure(callback);
     }
 }
 

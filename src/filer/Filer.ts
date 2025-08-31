@@ -8,9 +8,10 @@ import TemporaryFileSystem from '@refinio/one.models/lib/fileSystems/TemporaryFi
 import ObjectsFileSystem from '@refinio/one.models/lib/fileSystems/ObjectsFileSystem.js';
 import DebugFileSystem from '@refinio/one.models/lib/fileSystems/DebugFileSystem.js';
 import TypesFileSystem from '@refinio/one.models/lib/fileSystems/TypesFileSystem.js';
-import PairingFileSystem from '@refinio/one.models/lib/fileSystems/PairingFileSystem.js';
 import ChatFileSystem from '@refinio/one.models/lib/fileSystems/ChatFileSystem.js';
+import PairingFileSystem from '@refinio/one.models/lib/fileSystems/PairingFileSystem.js';
 
+import {TestDataFileSystem} from '../fileSystems/TestDataFileSystem.js';
 import {COMMIT_HASH} from '../commit-hash';
 import {DefaultFilerConfig} from './FilerConfig';
 import type {FilerConfig} from './FilerConfig';
@@ -98,12 +99,19 @@ export class Filer {
             this.models.connections,
             this.models.channelManager
         );
+        console.log('[TRACE] Creating PairingFileSystem with:', {
+            hasConnections: !!this.models.connections,
+            hasIomManager: !!this.models.iomManager,
+            pairingUrl: this.config.pairingUrl,
+            iomMode: this.config.iomMode
+        });
         const pairingFileSystem = new PairingFileSystem(
             this.models.connections,
             this.models.iomManager,
             this.config.pairingUrl,
-            this.config.iomMode
+            this.config.iomMode as 'full' | 'light'
         );
+        console.log('[TRACE] PairingFileSystem created');
         const objectsFileSystem = new ObjectsFileSystem();
         const typesFileSystem = new TypesFileSystem();
 
@@ -115,6 +123,13 @@ export class Filer {
         await rootFileSystem.mountFileSystem('/invites', pairingFileSystem);
         await rootFileSystem.mountFileSystem('/objects', objectsFileSystem);
         await rootFileSystem.mountFileSystem('/types', typesFileSystem);
+        
+        // Mount test data filesystem
+        const testDataFileSystem = new TestDataFileSystem();
+        await rootFileSystem.mountFileSystem('/test-data', testDataFileSystem);
+        
+        // Initialize test-data immediately to ensure it's ready
+        await testDataFileSystem.initialize();
 
         return rootFileSystem as unknown as IFileSystem;
     }

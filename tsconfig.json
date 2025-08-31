@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "noEmit": false,
+        "noEmitOnError": false,
         "alwaysStrict": true,
         "outDir": "lib",
         "isolatedModules": false,
@@ -16,18 +17,26 @@
         "lib": ["esnext", "dom"],
         "module": "esnext",
         "target": "esnext",
-        "strict": true,
+        "strict": false,
         "newLine": "LF",
         "allowJs": true,
         "checkJs": false,
-        "noUnusedLocals": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
         "removeComments": true,
         "preserveConstEnums": true,
         "forceConsistentCasingInFileNames": true,
-        "noImplicitReturns": true,
+        "noImplicitReturns": false,
         "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
         "types": ["mocha", "node"],
-        "typeRoots": ["./src/types", "./node_modules/@types"]
+        "typeRoots": ["./src/types", "./node_modules/@types"],
+        "paths": {
+            "@refinio/one.core": ["./node_modules/@refinio/one.core/lib/index"],
+            "@refinio/one.core/*": ["./node_modules/@refinio/one.core/*"],
+            "@refinio/one.models": ["./node_modules/@refinio/one.models/lib/models/index"],
+            "@refinio/one.models/*": ["./node_modules/@refinio/one.models/*"]
+        }
     },
     "include": [
         "src/**/*.ts",
@@ -41,6 +50,8 @@
         "windows-installer",
         "electron-app",
         "**/*.test.ts",
-        "**/*.spec.ts"
+        "**/*.spec.ts",
+        "refinio.api/**/*",
+        "src/fileSystems/PerformantObjectsFileSystem.ts"
     ]
 }

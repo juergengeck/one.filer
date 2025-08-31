@@ -1,23 +1,48 @@
+"use strict";
 /// <reference types="node" />
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * @author Sebastian Sandru <sebastian@refinio.com>
  * @copyright REFINIO GmbH
  * @license SEE LICENSE IN LICENSE.md
  * @version 0.0.1
  */
-import { createError } from '@refinio/one.core/lib/errors.js';
-import * as path from 'path';
-import * as fs from 'fs';
-import { stat, rename, unlink } from 'fs/promises';
-import { getInstanceIdHash } from '@refinio/one.core/lib/instance.js';
-import { createHash } from 'crypto';
-import { FS_ERRORS } from '@refinio/one.models/lib/fileSystems/FileSystemErrors.js';
-import { createTempFileName, CREATION_STATUS } from '@refinio/one.core/lib/storage-base-common.js';
-import { logFuseError } from '../misc/fuseHelper';
+const errors_js_1 = require("@refinio/one.core/lib/errors.js");
+const path = __importStar(require("path"));
+const fs = __importStar(require("fs"));
+const promises_1 = require("fs/promises");
+const instance_js_1 = require("@refinio/one.core/lib/instance.js");
+const crypto_1 = require("crypto");
+const FileSystemErrors_js_1 = require("@refinio/one.models/lib/fileSystems/FileSystemErrors.js");
+const storage_base_common_js_1 = require("@refinio/one.core/lib/storage-base-common.js");
+const fuseHelper_1 = require("../misc/fuseHelper");
 /**
  * File system proxy that adds additional functionalities to be used in {@link FuseApiToIFileSystemAdapter}
  */
-export default class FuseTemporaryFilesManager {
+class FuseTemporaryFilesManager {
     oneStoragePath;
     /**
      * Operating System name
@@ -37,9 +62,9 @@ export default class FuseTemporaryFilesManager {
      * @param folder
      */
     static getOnePath(storage, folder) {
-        const instanceIdHash = getInstanceIdHash();
+        const instanceIdHash = (0, instance_js_1.getInstanceIdHash)();
         if (instanceIdHash === undefined) {
-            throw createError('FSE-EINVAL', {
+            throw (0, errors_js_1.createError)('FSE-EINVAL', {
                 message: 'Instance ID hash is not set'
             });
         }
@@ -55,9 +80,9 @@ export default class FuseTemporaryFilesManager {
             return fs.statSync(tmpFilePath);
         }
         catch (err) {
-            logFuseError(err, 'statTemporaryFile');
-            throw createError('FSE-ENOENT', {
-                message: FS_ERRORS['FSE-ENOENT'].message,
+            (0, fuseHelper_1.logFuseError)(err, 'statTemporaryFile');
+            throw (0, errors_js_1.createError)('FSE-ENOENT', {
+                message: FileSystemErrors_js_1.FS_ERRORS['FSE-ENOENT'].message,
                 path: fileName
             });
         }
@@ -71,11 +96,11 @@ export default class FuseTemporaryFilesManager {
         this.throwErrorForMacOSHiddenFiles(fileName);
         const readStream = fs.createReadStream(this.retrieveTemporaryFilePath(fileName));
         return new Promise((resolve, reject) => {
-            const cryptoHashObj = createHash('sha256');
+            const cryptoHashObj = (0, crypto_1.createHash)('sha256');
             readStream.once('error', err => {
-                logFuseError(err, 'releaseTemporaryFile');
-                reject(createError('FSE-ENOENT', {
-                    message: FS_ERRORS['FSE-ENOENT'].message,
+                (0, fuseHelper_1.logFuseError)(err, 'releaseTemporaryFile');
+                reject((0, errors_js_1.createError)('FSE-ENOENT', {
+                    message: FileSystemErrors_js_1.FS_ERRORS['FSE-ENOENT'].message,
                     path: fileName
                 }));
             });
@@ -90,9 +115,9 @@ export default class FuseTemporaryFilesManager {
                 this.persistTemporaryFileAsBlob(fileName, hash)
                     .then(_ => resolve(hash))
                     .catch(err => {
-                    logFuseError(err, 'releaseTemporaryFile');
-                    reject(createError('FSE-ENOENT', {
-                        message: FS_ERRORS['FSE-ENOENT'].message,
+                    (0, fuseHelper_1.logFuseError)(err, 'releaseTemporaryFile');
+                    reject((0, errors_js_1.createError)('FSE-ENOENT', {
+                        message: FileSystemErrors_js_1.FS_ERRORS['FSE-ENOENT'].message,
                         path: fileName
                     }));
                 });
@@ -114,9 +139,9 @@ export default class FuseTemporaryFilesManager {
             return new Promise((resolve, reject) => {
                 fs.write(temporaryFile.temporaryFileDescriptor, buffer, 0, length, position, (err, written) => {
                     if (err) {
-                        logFuseError(err, 'writeToTemporaryFile');
-                        reject(createError('FSE-EIO', {
-                            message: FS_ERRORS['FSE-EIO'].message,
+                        (0, fuseHelper_1.logFuseError)(err, 'writeToTemporaryFile');
+                        reject((0, errors_js_1.createError)('FSE-EIO', {
+                            message: FileSystemErrors_js_1.FS_ERRORS['FSE-EIO'].message,
                             path: fileName
                         }));
                     }
@@ -126,8 +151,8 @@ export default class FuseTemporaryFilesManager {
                 });
             });
         }
-        throw createError('FSE-ENOENT', {
-            message: FS_ERRORS['FSE-ENOENT'].message,
+        throw (0, errors_js_1.createError)('FSE-ENOENT', {
+            message: FileSystemErrors_js_1.FS_ERRORS['FSE-ENOENT'].message,
             path: fileName
         });
     }
@@ -150,30 +175,30 @@ export default class FuseTemporaryFilesManager {
     async persistTemporaryFileAsBlob(temporaryFileName, persistedFileName) {
         const temporaryFile = this.fileToTemporaryFileMap.get(temporaryFileName);
         if (!temporaryFile) {
-            throw createError('FSE-ENOENT', {
-                message: FS_ERRORS['FSE-ENOENT'].message,
+            throw (0, errors_js_1.createError)('FSE-ENOENT', {
+                message: FileSystemErrors_js_1.FS_ERRORS['FSE-ENOENT'].message,
                 path: temporaryFileName
             });
         }
         const persistedFilePath = path.join(FuseTemporaryFilesManager.getOnePath(this.oneStoragePath, 'objects'), persistedFileName);
-        return stat(persistedFilePath)
+        return (0, promises_1.stat)(persistedFilePath)
             .then(stats => {
             if (stats.size === 0) {
                 // The file exists but is empty. This is a remnant of a failed write.
                 // Delete it and try again.
-                return unlink(persistedFilePath)
-                    .then(() => rename(temporaryFile.temporaryFilePath, persistedFilePath).then(() => {
+                return (0, promises_1.unlink)(persistedFilePath)
+                    .then(() => (0, promises_1.rename)(temporaryFile.temporaryFilePath, persistedFilePath).then(() => {
                     return new Promise((resolve, reject) => fs.close(temporaryFile.temporaryFileDescriptor, closeErr => {
                         if (closeErr) {
-                            logFuseError(closeErr, 'persistTemporaryFileAsBlob');
-                            reject(createError('SST-MV3', {
+                            (0, fuseHelper_1.logFuseError)(closeErr, 'persistTemporaryFileAsBlob');
+                            reject((0, errors_js_1.createError)('SST-MV3', {
                                 message: `File not found: ${temporaryFileName}`,
                                 path: temporaryFileName
                             }));
                         }
                         else {
                             this.fileToTemporaryFileMap.delete(temporaryFileName);
-                            resolve(CREATION_STATUS.NEW);
+                            resolve(storage_base_common_js_1.CREATION_STATUS.NEW);
                         }
                     }));
                 }))
@@ -183,16 +208,16 @@ export default class FuseTemporaryFilesManager {
                         // While this is seemingly okay since the target already
                         // exists so that it seems we've got what we wanted the
                         // disappearance of the file is unexpected.
-                        throw createError('SST-MV2', {
+                        throw (0, errors_js_1.createError)('SST-MV2', {
                             message: `File not found: ${temporaryFileName}`,
                             path: temporaryFileName
                         });
                     }
-                    throw createError('SST-MV6', unlinkErr);
+                    throw (0, errors_js_1.createError)('SST-MV6', unlinkErr);
                 });
             }
             // This is an "impossible" error, but you never know
-            throw createError('SST-MV7', {
+            throw (0, errors_js_1.createError)('SST-MV7', {
                 message: `Move operation failed from ${temporaryFile.temporaryFilePath} to ${persistedFilePath}`,
                 path: temporaryFile.temporaryFilePath
             });
@@ -201,33 +226,33 @@ export default class FuseTemporaryFilesManager {
             if (err.code === 'ENOENT') {
                 // "No such file or directory" - perfect, go ahead and move the file to one
                 // objects space.
-                return rename(temporaryFile.temporaryFilePath, persistedFilePath)
+                return (0, promises_1.rename)(temporaryFile.temporaryFilePath, persistedFilePath)
                     .then(() => {
                     return new Promise((resolve, reject) => fs.close(temporaryFile.temporaryFileDescriptor, closeErr => {
                         if (closeErr) {
-                            logFuseError(closeErr, 'persistTemporaryFileAsBlob');
-                            reject(createError('SST-MV3', {
+                            (0, fuseHelper_1.logFuseError)(closeErr, 'persistTemporaryFileAsBlob');
+                            reject((0, errors_js_1.createError)('SST-MV3', {
                                 message: `File not found: ${temporaryFileName}`,
                                 path: temporaryFileName
                             }));
                         }
                         else {
                             this.fileToTemporaryFileMap.delete(temporaryFileName);
-                            resolve(CREATION_STATUS.NEW);
+                            resolve(storage_base_common_js_1.CREATION_STATUS.NEW);
                         }
                     }));
                 })
                     .catch((renameErr) => {
                     if (renameErr.code === 'ENOENT') {
-                        throw createError('SST-MV3', {
+                        throw (0, errors_js_1.createError)('SST-MV3', {
                             message: `File not found: ${temporaryFileName}`,
                             path: temporaryFileName
                         });
                     }
-                    throw createError('SST-MV4', renameErr);
+                    throw (0, errors_js_1.createError)('SST-MV4', renameErr);
                 });
             }
-            throw createError('SST-MV5', err);
+            throw (0, errors_js_1.createError)('SST-MV5', err);
         });
     }
     /**
@@ -235,12 +260,12 @@ export default class FuseTemporaryFilesManager {
      */
     throwErrorForMacOSHiddenFiles(fileName) {
         if (this.platform === 'darwin' && fileName.startsWith('.')) {
-            logFuseError(createError('FSE-MACH', {
-                message: FS_ERRORS['FSE-MACH'].message,
+            (0, fuseHelper_1.logFuseError)((0, errors_js_1.createError)('FSE-MACH', {
+                message: FileSystemErrors_js_1.FS_ERRORS['FSE-MACH'].message,
                 path: fileName
             }), 'throwErrorForMacOSHiddenFiles');
-            throw createError('FSE-MACH', {
-                message: FS_ERRORS['FSE-MACH'].message,
+            throw (0, errors_js_1.createError)('FSE-MACH', {
+                message: FileSystemErrors_js_1.FS_ERRORS['FSE-MACH'].message,
                 path: fileName
             });
         }
@@ -253,8 +278,8 @@ export default class FuseTemporaryFilesManager {
         this.throwErrorForMacOSHiddenFiles(fileName);
         const existingFile = this.fileToTemporaryFileMap.get(fileName);
         if (!existingFile) {
-            throw createError('FSE-ENOENT', {
-                message: FS_ERRORS['FSE-ENOENT'].message,
+            throw (0, errors_js_1.createError)('FSE-ENOENT', {
+                message: FileSystemErrors_js_1.FS_ERRORS['FSE-ENOENT'].message,
                 path: fileName
             });
         }
@@ -266,7 +291,7 @@ export default class FuseTemporaryFilesManager {
      */
     async createTemporaryFile(fileName) {
         this.throwErrorForMacOSHiddenFiles(fileName);
-        const tmpFilePath = path.join(FuseTemporaryFilesManager.getOnePath(this.oneStoragePath, 'tmp'), createTempFileName());
+        const tmpFilePath = path.join(FuseTemporaryFilesManager.getOnePath(this.oneStoragePath, 'tmp'), (0, storage_base_common_js_1.createTempFileName)());
         try {
             const fd = fs.openSync(tmpFilePath, 'a');
             this.fileToTemporaryFileMap.set(fileName, {
@@ -276,12 +301,13 @@ export default class FuseTemporaryFilesManager {
             return fd;
         }
         catch (err) {
-            logFuseError(err, 'createTemporaryFile');
-            throw createError('FSE-ENOENT', {
-                message: FS_ERRORS['FSE-ENOENT'].message,
+            (0, fuseHelper_1.logFuseError)(err, 'createTemporaryFile');
+            throw (0, errors_js_1.createError)('FSE-ENOENT', {
+                message: FileSystemErrors_js_1.FS_ERRORS['FSE-ENOENT'].message,
                 path: fileName
             });
         }
     }
 }
+exports.default = FuseTemporaryFilesManager;
 //# sourceMappingURL=FuseTemporaryFilesManager.js.map

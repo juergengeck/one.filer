@@ -1,0 +1,209 @@
+name: ONE.filer Tests
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  schedule:
+    # Run tests daily at 2 AM UTC
+    - cron: '0 2 * * *'
+
+jobs:
+  test-linux:
+    name: Linux FUSE3 Tests
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: Install FUSE3 dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfuse3-dev fuse3
+          
+      - name: Install Node dependencies
+        run: npm ci
+      
+      - name: Build project
+        run: npm run build
+      
+      - name: Build FUSE N-API addon
+        run: |
+          cd lib/fuse/n-api
+          npm install
+          npm run build
+          cd ../../..
+      
+      - name: Run Linux component tests
+        run: npm run test:component:linux
+        env:
+          NODE_ENV: test
+      
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-test-results-${{ matrix.node-version }}
+          path: test-report.json
+
+  test-windows:
+    name: Windows ProjFS Tests
+    runs-on: windows-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: Enable Windows ProjFS feature
+        run: |
+          Enable-WindowsOptionalFeature -Online -FeatureName Client-ProjFS -NoRestart
+        shell: powershell
+      
+      - name: Install Node dependencies
+        run: npm ci
+      
+      - name: Build project
+        run: npm run build
+      
+      - name: Build Windows native modules
+        working-directory: electron-app
+        run: |
+          npm ci
+          npm run build:native
+      
+      - name: Run Windows component tests
+        run: npm run test:component:windows
+        env:
+          NODE_ENV: test
+      
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-test-results-${{ matrix.node-version }}
+          path: test-report.json
+
+  integration-tests:
+    name: Integration Tests
+    needs: [test-linux, test-windows]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfuse3-dev fuse3
+          npm ci
+      
+      - name: Build project
+        run: npm run build
+      
+      - name: Build FUSE N-API addon
+        run: |
+          cd lib/fuse/n-api
+          npm install
+          npm run build
+          cd ../../..
+      
+      - name: Run integration tests
+        run: npm run test:integration
+        env:
+          NODE_ENV: test
+          TEST_COMM_SERVER: wss://comm10.dev.refinio.one
+      
+      - name: Upload integration test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: integration-test-results
+          path: test-report.json
+
+  test-summary:
+    name: Test Summary
+    needs: [test-linux, test-windows, integration-tests]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Download all test results
+        uses: actions/download-artifact@v3
+        with:
+          path: test-results
+      
+      - name: Generate summary
+        run: |
+          echo "## Test Results Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Check if any test results exist
+          if ls test-results/*/test-report.json 1> /dev/null 2>&1; then
+            for report in test-results/*/test-report.json; do
+              suite_name=$(basename $(dirname $report))
+              echo "### $suite_name" >> $GITHUB_STEP_SUMMARY
+              
+              # Extract summary from JSON (requires jq)
+              if command -v jq > /dev/null; then
+                total=$(jq '.summary.total' $report)
+                passed=$(jq '.summary.passed' $report)
+                failed=$(jq '.summary.failed' $report)
+                skipped=$(jq '.summary.skipped' $report)
+                
+                echo "- Total: $total" >> $GITHUB_STEP_SUMMARY
+                echo "- ✅ Passed: $passed" >> $GITHUB_STEP_SUMMARY
+                echo "- ❌ Failed: $failed" >> $GITHUB_STEP_SUMMARY
+                echo "- ⏭️ Skipped: $skipped" >> $GITHUB_STEP_SUMMARY
+              else
+                echo "Report file: $report" >> $GITHUB_STEP_SUMMARY
+              fi
+              echo "" >> $GITHUB_STEP_SUMMARY
+            done
+          else
+            echo "No test results found" >> $GITHUB_STEP_SUMMARY
+          fi
+      
+      - name: Check overall status
+        run: |
+          failed=0
+          if ls test-results/*/test-report.json 1> /dev/null 2>&1; then
+            for report in test-results/*/test-report.json; do
+              if command -v jq > /dev/null; then
+                report_failed=$(jq '.summary.failed' $report)
+                failed=$((failed + report_failed))
+              fi
+            done
+          fi
+          
+          if [ $failed -gt 0 ]; then
+            echo "❌ Tests failed: $failed failures detected"
+            exit 1
+          else
+            echo "✅ All tests passed!"
+          fi

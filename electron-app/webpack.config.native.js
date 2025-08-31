@@ -40,6 +40,10 @@ module.exports = [
     },
     resolve: {
       extensions: ['.ts', '.js', '.mjs'],
+      extensionAlias: {
+        '.js': ['.js', '.ts'],
+        '.mjs': ['.mjs', '.mts']
+      },
       alias: {
         '@refinio': path.resolve(__dirname, '../node_modules/@refinio')
       },

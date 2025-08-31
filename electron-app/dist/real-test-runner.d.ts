@@ -19,5 +19,7 @@ export declare class RealTestRunner {
     private testFileOperations;
     private testCacheSystem;
     private checkProviderStatus;
+    private testProjFSFeatures;
+    private testErrorRecovery;
 }
 //# sourceMappingURL=real-test-runner.d.ts.map

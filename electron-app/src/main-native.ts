@@ -11,7 +11,9 @@ import type { FilerConfigWithProjFS } from '../../lib/filer/FilerWithProjFS.js';
 import type { ReplicantConfig } from '../../lib/ReplicantConfig.js';
 import { SimpleTestRunner } from './simple-test-runner';
 import { RealTestRunner } from './real-test-runner';
+import { IntegratedTestRunner } from './integrated-test-runner';
 import { SingletonManager } from './services/SingletonManager';
+import { RefinioApiService } from './services/RefinioApiService';
 // import { ONEInitializer } from './services/oneInitializer';
 import * as http from 'http';
 
@@ -46,6 +48,7 @@ let replicant: Replicant | null = null;
 let tray: Tray | null = null;
 let isQuitting = false;
 let replicantStartTime: Date | null = null;
+let apiService: RefinioApiService | null = null;
 
 // Metrics cache for monitoring
 let metricsCache = {
@@ -151,13 +154,14 @@ function handleIPCMessage(message: any): void {
 }
 
 function createWindow(): void {
+  console.log('[createWindow] Creating main window...');
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     minWidth: 1000,
     minHeight: 700,
     resizable: true,
-    show: !config.startMinimized,
+    show: false,  // Start hidden, show after load
     title: 'ONE Filer',
     webPreferences: {
       nodeIntegration: false,
@@ -167,6 +171,7 @@ function createWindow(): void {
     icon: join(__dirname, '..', 'assets', 'icon.png')
   });
 
+  console.log('[createWindow] Window created, loading HTML...');
   // Load the React-based app
   mainWindow.loadFile(join(__dirname, '..', 'index-react.html'));
   
@@ -176,7 +181,16 @@ function createWindow(): void {
   });
   
   mainWindow.webContents.on('did-finish-load', () => {
-    console.log('Page loaded successfully');
+    console.log('[createWindow] Page loaded successfully, showing window...');
+    mainWindow.center();  // Force window to center of screen
+    mainWindow.show();
+    mainWindow.focus();
+    mainWindow.moveTop();  // Bring to front
+    console.log('[createWindow] Window should now be visible at center of screen');
+    
+    // Debug window bounds
+    const bounds = mainWindow.getBounds();
+    console.log('[createWindow] Window bounds:', bounds);
   });
   
   // Hide menu bar
@@ -362,8 +376,12 @@ app.whenReady().then(async () => {
     
     createTray();
     
+    console.log('[App Ready] Config startMinimized:', config.startMinimized);
     if (!config.startMinimized) {
+      console.log('[App Ready] Creating window because startMinimized is false');
       createWindow();
+    } else {
+      console.log('[App Ready] NOT creating window because startMinimized is true');
     }
 
     app.on('activate', () => {
@@ -468,7 +486,7 @@ async function handleLogin(event: any, loginData: LoginRequest): Promise<LoginRe
         projfsRoot: config.projfsRoot || 'C:\\OneFiler',  // ProjFS mount point
         mountPoint: config.mountPoint || 'C:\\OneFiler',  // Keep for compatibility
         logCalls: false,
-        pairingUrl: 'https://leute.refinio.one',
+        pairingUrl: 'https://edda.dev.refinio.one/invites/invitePartner/?invited=true',
         iomMode: 'full',
         // COW cache debug options
         disableCowCache: config.disableCowCache || false,
@@ -517,6 +535,22 @@ async function handleLogin(event: any, loginData: LoginRequest): Promise<LoginRe
       
       console.log('Replicant started successfully');
       replicantStartTime = new Date();
+      
+      // Start refinio.api service for management
+      try {
+        console.log('Starting refinio.api service...');
+        apiService = new RefinioApiService({
+          enabled: true,
+          port: 8080,
+          host: 'localhost'
+        });
+        apiService.setReplicant(replicant);
+        await apiService.start();
+        console.log('✅ refinio.api service started for management operations');
+      } catch (error) {
+        console.error('⚠️ Failed to start refinio.api service:', error);
+        // Continue without API service
+      }
       
       // Verify ProjFS mount if using ProjFS mode
       if ((replicantConfig.filerConfig as any)?.useProjFS) {
@@ -652,6 +686,13 @@ ipcMain.handle('logout', async (): Promise<{ success: boolean; message?: string 
 // Stop replicant
 async function stopReplicant(): Promise<{ success: boolean; message?: string }> {
   try {
+    // Stop API service first
+    if (apiService) {
+      console.log('Stopping refinio.api service...');
+      await apiService.stop();
+      apiService = null;
+    }
+    
     if (replicant) {
       await replicant.stop();
       replicant = null;
@@ -844,47 +885,54 @@ ipcMain.handle('start-wsl', async (): Promise<{ success: boolean; message?: stri
 // Test runner IPC handlers
 const testRunner = new SimpleTestRunner();
 const realTestRunner = new RealTestRunner();
+const integratedTestRunner = new IntegratedTestRunner();
 
-ipcMain.handle('run-tests', async () => {
+ipcMain.handle('run-tests', async (event, testType: 'all' | 'quick' = 'all') => {
   try {
-    console.log('[TestRunner] Starting REAL test execution...');
+    console.log(`[IntegratedTestRunner] Starting ${testType} test execution...`);
     
-    // Check if replicant is running first
-    if (!replicant || !(replicant as any).filer) {
-      console.log('[TestRunner] Replicant not running, using mock tests');
-      const results = await testRunner.runAllTests();
-      return {
-        success: true,
-        results
-      };
+    // Set up progress callback to send updates to renderer
+    integratedTestRunner.setProgressCallback((progress) => {
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send('test-progress', progress);
+      }
+    });
+    
+    // Check if replicant is running for enhanced testing
+    const hasReplicant = replicant && (replicant as any).filer;
+    console.log(`[IntegratedTestRunner] Replicant status: ${hasReplicant ? 'running' : 'not running'}`);
+    
+    // Run integrated tests
+    let results;
+    if (testType === 'quick') {
+      results = await integratedTestRunner.runQuickTests();
+    } else {
+      results = await integratedTestRunner.runAllTests();
     }
     
-    // Run real tests
-    const results = await realTestRunner.runRealTests();
-    console.log('[TestRunner] Real tests completed:', results);
+    console.log(`[IntegratedTestRunner] ${testType} tests completed:`, results.length, 'suites');
     
-    // Convert to expected format
-    const formattedResults = results.map(suite => ({
-      name: suite.name,
-      tests: suite.tests.map(test => ({
-        suite: suite.name,
-        test: test.name,
-        status: test.status,
-        error: test.error,
-        duration: test.duration
-      })),
-      passed: suite.passed,
-      failed: suite.failed,
-      skipped: 0,
-      duration: suite.duration
-    }));
+    // Format results for renderer
+    const totalTests = results.reduce((sum, suite) => sum + suite.tests.length, 0);
+    const totalPassed = results.reduce((sum, suite) => sum + suite.passed, 0);
+    const totalFailed = results.reduce((sum, suite) => sum + suite.failed, 0);
+    const totalDuration = results.reduce((sum, suite) => sum + suite.duration, 0);
     
     return {
       success: true,
-      results: formattedResults
+      results: {
+        suites: results,
+        summary: {
+          totalTests,
+          totalPassed,
+          totalFailed,
+          totalDuration,
+          testType
+        }
+      }
     };
   } catch (error) {
-    console.error('[TestRunner] Test execution failed:', error);
+    console.error('[IntegratedTestRunner] Test execution failed:', error);
     return {
       success: false,
       error: (error as Error).message

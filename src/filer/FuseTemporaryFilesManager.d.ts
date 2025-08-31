@@ -1,3 +1,6 @@
+/// <reference types="node" />
+/// <reference types="node" />
+/// <reference types="node" />
 import type { Stats } from 'fs';
 import type { SHA256Hash } from '../types/compatibility.js';
 import type { BLOB } from '@refinio/one.core/lib/recipes.js';

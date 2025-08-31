@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Native FUSE3 Bindings for Linux/WSL2
  *
@@ -9,29 +10,34 @@
  * @copyright REFINIO GmbH
  * @license SEE LICENSE IN LICENSE.md
  */
-import { EventEmitter } from 'events';
-import { createRequire } from 'module';
-import path from 'path';
-import fs from 'fs';
-const require = createRequire(import.meta.url);
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Fuse = exports.ENOTEMPTY = exports.EBUSY = exports.EROFS = exports.ENOSPC = exports.EINVAL = exports.EISDIR = exports.ENOTDIR = exports.EEXIST = exports.EACCES = exports.EIO = exports.ENOENT = exports.EPERM = void 0;
+const events_1 = require("events");
+const module_1 = require("module");
+const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
+const require = (0, module_1.createRequire)(import.meta.url);
 // Try to load the N-API addon
 let fuseAddon;
 try {
     // Convert file URL to path properly
-    const currentDir = path.dirname(new URL(import.meta.url).pathname);
+    const currentDir = path_1.default.dirname(new URL(import.meta.url).pathname);
     // Try multiple paths where the addon might be located
     const possiblePaths = [
         // Relative to current file location (src/fuse/)
-        path.resolve(currentDir, '../../lib/fuse/n-api/index.cjs'),
+        path_1.default.resolve(currentDir, '../../lib/fuse/n-api/index.cjs'),
         // Absolute path
-        path.resolve(process.cwd(), 'lib/fuse/n-api/index.cjs'),
+        path_1.default.resolve(process.cwd(), 'lib/fuse/n-api/index.cjs'),
         // Fallback absolute path
         '/mnt/c/Users/juerg/source/one.filer/lib/fuse/n-api/index.cjs'
     ];
     let loaded = false;
     for (const addonPath of possiblePaths) {
         try {
-            if (fs.existsSync(addonPath)) {
+            if (fs_1.default.existsSync(addonPath)) {
                 fuseAddon = require(addonPath);
                 console.log(`✅ Loaded FUSE3 N-API addon from: ${addonPath}`);
                 loaded = true;
@@ -53,42 +59,42 @@ catch (err) {
     throw new Error(`FUSE3 N-API addon not found: ${err.message}`);
 }
 // Re-export error constants
-export const EPERM = fuseAddon.EPERM;
-export const ENOENT = fuseAddon.ENOENT;
-export const EIO = fuseAddon.EIO;
-export const EACCES = fuseAddon.EACCES;
-export const EEXIST = fuseAddon.EEXIST;
-export const ENOTDIR = fuseAddon.ENOTDIR;
-export const EISDIR = fuseAddon.EISDIR;
-export const EINVAL = fuseAddon.EINVAL;
-export const ENOSPC = fuseAddon.ENOSPC;
-export const EROFS = fuseAddon.EROFS;
-export const EBUSY = fuseAddon.EBUSY;
-export const ENOTEMPTY = fuseAddon.ENOTEMPTY;
+exports.EPERM = fuseAddon.EPERM;
+exports.ENOENT = fuseAddon.ENOENT;
+exports.EIO = fuseAddon.EIO;
+exports.EACCES = fuseAddon.EACCES;
+exports.EEXIST = fuseAddon.EEXIST;
+exports.ENOTDIR = fuseAddon.ENOTDIR;
+exports.EISDIR = fuseAddon.EISDIR;
+exports.EINVAL = fuseAddon.EINVAL;
+exports.ENOSPC = fuseAddon.ENOSPC;
+exports.EROFS = fuseAddon.EROFS;
+exports.EBUSY = fuseAddon.EBUSY;
+exports.ENOTEMPTY = fuseAddon.ENOTEMPTY;
 /**
  * Native Linux FUSE3 implementation using N-API
  * This runs exclusively in WSL2/Linux and exposes filesystems to Windows
  * through the WSL2 file bridge (\\wsl$\Ubuntu\path)
  */
-export class Fuse extends EventEmitter {
+class Fuse extends events_1.EventEmitter {
     fuseInstance;
     mountPath;
     operations;
     options;
     mounted = false;
     // Static error codes
-    static EPERM = EPERM;
-    static ENOENT = ENOENT;
-    static EIO = EIO;
-    static EACCES = EACCES;
-    static EEXIST = EEXIST;
-    static ENOTDIR = ENOTDIR;
-    static EISDIR = EISDIR;
-    static EINVAL = EINVAL;
-    static ENOSPC = ENOSPC;
-    static EROFS = EROFS;
-    static EBUSY = EBUSY;
-    static ENOTEMPTY = ENOTEMPTY;
+    static EPERM = exports.EPERM;
+    static ENOENT = exports.ENOENT;
+    static EIO = exports.EIO;
+    static EACCES = exports.EACCES;
+    static EEXIST = exports.EEXIST;
+    static ENOTDIR = exports.ENOTDIR;
+    static EISDIR = exports.EISDIR;
+    static EINVAL = exports.EINVAL;
+    static ENOSPC = exports.ENOSPC;
+    static EROFS = exports.EROFS;
+    static EBUSY = exports.EBUSY;
+    static ENOTEMPTY = exports.ENOTEMPTY;
     constructor(mountPath, operations, options = {}) {
         super();
         if (process.platform !== 'linux') {
@@ -98,11 +104,13 @@ export class Fuse extends EventEmitter {
         this.operations = operations;
         this.options = {
             ...options,
-            force: true, // Allow mounting over existing mount points
+            force: true,
             local: true // Mark as local filesystem for better Windows integration
         };
         // Create the FUSE instance using the N-API addon
-        this.fuseInstance = new fuseAddon.Fuse(mountPath, operations, this.options);
+        // The addon exports the Fuse class directly
+        const FuseClass = fuseAddon.Fuse || fuseAddon;
+        this.fuseInstance = new FuseClass(mountPath, operations, this.options);
         // Forward events
         this.fuseInstance.on('mount', () => this.emit('mount'));
         this.fuseInstance.on('unmount', () => this.emit('unmount'));
@@ -144,7 +152,8 @@ export class Fuse extends EventEmitter {
         return this.mountPath;
     }
     static unmount(mountPath, callback) {
-        fuseAddon.Fuse.unmount(mountPath, callback);
+        const FuseClass = fuseAddon.Fuse || fuseAddon;
+        FuseClass.unmount(mountPath, callback);
     }
     static isConfigured(callback) {
         // Check if we're on Linux and FUSE is available
@@ -152,11 +161,14 @@ export class Fuse extends EventEmitter {
             callback(new Error('Not running on Linux/WSL2'), false);
             return;
         }
-        fuseAddon.Fuse.isConfigured(callback);
+        const FuseClass = fuseAddon.Fuse || fuseAddon;
+        FuseClass.isConfigured(callback);
     }
     static configure(callback) {
         // No configuration needed - FUSE3 should be installed at system level
-        fuseAddon.Fuse.configure(callback);
+        const FuseClass = fuseAddon.Fuse || fuseAddon;
+        FuseClass.configure(callback);
     }
 }
+exports.Fuse = Fuse;
 //# sourceMappingURL=native-fuse3.js.map

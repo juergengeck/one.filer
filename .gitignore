@@ -132,20 +132,35 @@ fabric.properties
 # Development and debugging files
 # Log files (all types)
 **/*.log
+logs/
 
-# Development test files and scripts in root
-test-*
-debug-*
-minimal-*
-working-*
-quick-*
-progressive-*
-check-*
-direct-*
+# Archive directories (old files that have been cleaned up)
+archive-data/
+archive-configs/
+scripts/archive/
+
+# Development test files and scripts in root (now organized)
+/test-*
+/debug-*
+/minimal-*
+/working-*
+/quick-*
+/progressive-*
+/check-*
+/direct-*
 
 # Test directories and packages
 test-package/
 **/test-package/
+test-data-*/
+test-projfs-*/
+test-instance*/
+onedev-data-*/
+onefiler-data-*/
+fresh-onefiler-*/
+data-test-*/
+data-sync-*/
+data-windows-*/
 
 # Environment variables
 .env
@@ -173,13 +188,12 @@ nul
 *.ps1
 *.cmd
 
-# Documentation files (temporary)
-*.md
+# Documentation files in root (moved to docs/)
+/*.md
 !README.md
 !LICENSE.md
-!GETTING_STARTED.md
-!MANUAL_SETUP.md
 !CLAUDE.md
+!PROJECT_STRUCTURE.md
 
 # Package files
 package-*.json
@@ -199,6 +213,49 @@ one-filer.bat
 start-fuse-for-windows.sh
 start-one-filer.sh
 wsl-fuse-alternative.bat
+
+# Application output and logs
+app-output*.txt
+app-debug*.txt
+app-fresh.txt
+electron-logs.txt
+login-trigger.txt
+recent-log.txt
+*-output.txt
+*-debug.txt
+
+# Config files (should be environment-specific)
+config.json
+config-*.json
+!electron-app/config.json
+!configs/*.json
+
+# Temp files and patches
+temp_backup.js
+test_png_copy.png
+trace-invites-enum.js
+trigger-login.js
+*.patch
+null
+
+# Package folder (external package that was accidentally copied)
+package/
+
+# Temp models and cache
+temp-models/
+src/cache/
+
+# Async utilities (temporary testing)
+src/filer/AsyncCallbackInterceptor.ts
+src/filer/AsyncPrefetchManager.ts
+src/filer/CachedProjFSProvider.ts
+src/filer/DirectoryInvalidator.ts
+
+# Test artifacts
+test/app/
+test/e2e/
+test/mocks/
+test/*.cjs
 
 # Build files
 build.cjs
@@ -223,11 +280,12 @@ configs/*
 .mocharc.json
 .nycrc.json
 
-# Scripts archive and test directories
-scripts/archive/
-scripts/fixes/
-scripts/setup/
-scripts/testing/
+# Scripts organized directories (keep tracked)
+# scripts/archive/   # Old scripts archived for reference
+# scripts/fixes/     # Debug and fix utilities
+# scripts/setup/     # Setup and build scripts  
+# scripts/testing/   # Test scripts
+# scripts/utilities/ # Utility scripts
 test/functional/
 test/integration/
 test/scripts/

@@ -110,13 +110,14 @@ function handleIPCMessage(message) {
     }
 }
 function createWindow() {
+    console.log('[createWindow] Creating main window...');
     mainWindow = new BrowserWindow({
         width: 1200,
         height: 800,
         minWidth: 1000,
         minHeight: 700,
         resizable: true,
-        show: !config.startMinimized,
+        show: false, // Start hidden, show after load
         title: 'ONE Filer',
         webPreferences: {
             nodeIntegration: false,
@@ -125,6 +126,7 @@ function createWindow() {
         },
         icon: join(__dirname, '..', 'assets', 'icon.png')
     });
+    console.log('[createWindow] Window created, loading HTML...');
     // Load the React-based app
     mainWindow.loadFile(join(__dirname, '..', 'index-react.html'));
     // Log any load errors
@@ -132,7 +134,15 @@ function createWindow() {
         console.error('Failed to load:', errorCode, errorDescription);
     });
     mainWindow.webContents.on('did-finish-load', () => {
-        console.log('Page loaded successfully');
+        console.log('[createWindow] Page loaded successfully, showing window...');
+        mainWindow.center(); // Force window to center of screen
+        mainWindow.show();
+        mainWindow.focus();
+        mainWindow.moveTop(); // Bring to front
+        console.log('[createWindow] Window should now be visible at center of screen');
+        // Debug window bounds
+        const bounds = mainWindow.getBounds();
+        console.log('[createWindow] Window bounds:', bounds);
     });
     // Hide menu bar
     mainWindow.setMenu(null);
@@ -302,8 +312,13 @@ app.whenReady().then(async () => {
         // Initialize one.core
         await initializeOneCore();
         createTray();
+        console.log('[App Ready] Config startMinimized:', config.startMinimized);
         if (!config.startMinimized) {
+            console.log('[App Ready] Creating window because startMinimized is false');
             createWindow();
+        }
+        else {
+            console.log('[App Ready] NOT creating window because startMinimized is true');
         }
         app.on('activate', () => {
             if (BrowserWindow.getAllWindows().length === 0) {

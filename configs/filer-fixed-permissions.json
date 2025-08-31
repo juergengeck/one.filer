@@ -5,7 +5,7 @@
     "useFiler": true,
     "filerConfig": {
         "mountPoint": "/home/gecko/one-filer-shared",
-        "pairingUrl": "https://leute.dev.refinio.one/invites/invitePartner/?invited=true/",
+        "pairingUrl": "https://leute.dev.refinio.one/invites/invitePartner/?invited=true",
         "iomMode": "light",
         "logCalls": true,
         "fuseOptions": {

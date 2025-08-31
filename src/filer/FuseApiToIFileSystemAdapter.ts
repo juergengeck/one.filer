@@ -251,6 +251,18 @@ export default class FuseApiToIFileSystemAdapter {
                     cb(0, bufferR.length);
                 })
                 .catch((err: Error) => cb(handleError(err, this.logCalls), 0));
+        } else {
+            // Handle regular file reading when chunked reading is not supported
+            this.fs
+                .readFile(givenPath)
+                .then((res: FileSystemFile) => {
+                    const content = Buffer.from(res.content);
+                    const end = Math.min(position + length, content.length);
+                    const slice = content.slice(position, end);
+                    slice.copy(buffer);
+                    cb(0, slice.length);
+                })
+                .catch((err: Error) => cb(handleError(err, this.logCalls), 0));
         }
     }
 

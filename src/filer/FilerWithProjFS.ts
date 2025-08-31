@@ -3,17 +3,23 @@ import TemporaryFileSystem from '@refinio/one.models/lib/fileSystems/TemporaryFi
 import ObjectsFileSystem from '@refinio/one.models/lib/fileSystems/ObjectsFileSystem.js';
 import DebugFileSystem from '@refinio/one.models/lib/fileSystems/DebugFileSystem.js';
 import TypesFileSystem from '@refinio/one.models/lib/fileSystems/TypesFileSystem.js';
-import PairingFileSystem from '@refinio/one.models/lib/fileSystems/PairingFileSystem.js';
 import ChatFileSystem from '@refinio/one.models/lib/fileSystems/ChatFileSystem.js';
+import PairingFileSystem from '@refinio/one.models/lib/fileSystems/PairingFileSystem.js';
 
-// Import our CachedProjFSProvider which wraps IFSProjFSProvider with proper file content handling
-import { CachedProjFSProvider } from './CachedProjFSProvider.js';
+// Import IFSProjFSProvider directly from the one.ifsprojfs package
+import { createRequire } from 'module';
+// Fix for cross-platform builds: ensure Windows paths on Windows
+const moduleUrl = typeof process !== 'undefined' && process.platform === 'win32' && import.meta.url.startsWith('file:///mnt/c/')
+    ? 'file:///' + import.meta.url.slice(14).replace(/\//g, '\\')
+    : import.meta.url;
+const require = createRequire(moduleUrl);
 
 import {COMMIT_HASH} from '../commit-hash.js';
 import {DefaultFilerConfig} from './FilerConfig.js';
 import type {FilerConfig} from './FilerConfig.js';
 import {fillMissingWithDefaults} from '../misc/configHelper.js';
 import { join } from 'path';
+import {TestDataFileSystem} from '../fileSystems/TestDataFileSystem.js';
 
 // Extend FilerConfig to support ProjFS-specific settings
 export interface FilerConfigWithProjFS extends FilerConfig {
@@ -45,7 +51,7 @@ export class FilerWithProjFS {
     private readonly config: FilerConfigWithProjFS;
     private shutdownFunctions: Array<() => Promise<void>> = [];
     private rootFileSystem: IFileSystem | null = null;
-    private projfsProvider: CachedProjFSProvider | null = null;  // CachedProjFSProvider instance
+    private projfsProvider: any | null = null;  // IFSProjFSProvider instance
     private instanceDirectory: string = '';
 
     constructor(models: FilerModels, config: Partial<FilerConfigWithProjFS>) {
@@ -94,32 +100,32 @@ export class FilerWithProjFS {
             this.instanceDirectory = (instanceModule as any).getInstanceDirectory();
             console.log('[ProjFS] Instance directory:', this.instanceDirectory);
             
-            // Create message bus for ProjFS debug messages
-            const { createMessageBus } = await import('@refinio/one.core/lib/message-bus.js');
-            const messageBus = createMessageBus('projfs-provider');
+            // Load IFSProjFSProvider from one.ifsprojfs package
+            const IFSProjFSProvider = require('../../one.ifsprojfs/IFSProjFSProvider.js');
             
-            // Create our CachedProjFSProvider with COW cache and file content handling
-            console.log('[ProjFS] Creating CachedProjFSProvider instance with COW cache...');
-            this.projfsProvider = new CachedProjFSProvider({
+            // Create IFSProjFSProvider instance
+            console.log('[ProjFS] Creating IFSProjFSProvider instance...');
+            this.projfsProvider = new IFSProjFSProvider({
                 instancePath: this.instanceDirectory,
-                virtualRoot: this.config.projfsRoot || 'C:\\OneFiler',
+                virtualRoot: this.config.mountPoint || this.config.projfsRoot || 'C:\\OneFiler',
                 fileSystem: this.rootFileSystem!,
                 debug: this.config.verboseLogging || false,
                 disableCowCache: this.config.disableCowCache || false,
                 disableInMemoryCache: this.config.disableInMemoryCache || false,
                 verboseLogging: this.config.verboseLogging || false,
-                traceAllOperations: this.config.traceAllOperations || false
+                traceAllOperations: this.config.traceAllOperations || false,
+                skipObjectsPreCache: true  // Skip objects pre-caching to avoid hangs
             });
             
-            // Initialize the provider
-            await this.projfsProvider.init();
+            // Mount the provider
+            console.log('[ProjFS] Mounting with performance optimizations...');
+            await this.projfsProvider.mount();
             
-            // Set up models for smart caching
-            this.projfsProvider.setModels({
-                leuteModel: this.models.leuteModel,
-                topicModel: this.models.topicModel,
-                channelManager: this.models.channelManager
-            });
+            // Objects enumeration will be automatically unrestricted after first call
+            console.log('[ProjFS] Objects enumeration limit will be removed after first access');
+            
+            // Note: IFSProjFSProvider doesn't have setModels method
+            // Models integration would need to be handled differently if needed
             
             // Log configuration
             if (this.config.verboseLogging) {
@@ -134,7 +140,7 @@ export class FilerWithProjFS {
             // Listen for debug messages (if supported by provider)
             if (this.projfsProvider && typeof (this.projfsProvider as any).on === 'function') {
                 (this.projfsProvider as any).on('debug', (msg: string) => {
-                    messageBus.send('debug', msg);
+                    console.log('[ProjFS Debug]', msg);
                 });
             }
             
@@ -202,19 +208,8 @@ export class FilerWithProjFS {
                 }
             }
             
-            // Mount the provider
-            console.log('[ProjFS] About to call mount()...');
-            try {
-                await this.projfsProvider.mount();
-                console.log('[ProjFS] mount() returned successfully');
-            } catch (mountError) {
-                console.error('[ProjFS] Mount failed:', mountError);
-                console.error('[ProjFS] Mount error stack:', (mountError as Error).stack);
-                throw mountError;
-            }
-            
-            // Send success message to message bus
-            messageBus.send('debug', '[ProjFS] Mounted successfully at ' + (this.config.projfsRoot || 'C\\OneFiler'));
+            // Mount already happened above, so just log success
+            console.log('[ProjFS] Provider mounted successfully at', this.config.mountPoint || this.config.projfsRoot || 'C:\\OneFiler');
             
             // Add shutdown function
             this.shutdownFunctions.push(async () => {
@@ -292,17 +287,21 @@ export class FilerWithProjFS {
     }
 
     async shutdown(): Promise<void> {
+        console.log('[FilerWithProjFS] Shutdown called - unmounting ProjFS...');
         for await (const fn of this.shutdownFunctions) {
             try {
+                console.log('[FilerWithProjFS] Calling shutdown function...');
                 await fn();
+                console.log('[FilerWithProjFS] Shutdown function completed');
             } catch (e) {
-                console.error('Failed to execute shutdown routine', e);
+                console.error('[FilerWithProjFS] Failed to execute shutdown routine', e);
             }
         }
 
         this.shutdownFunctions = [];
         this.rootFileSystem = null;
         this.projfsProvider = null;
+        console.log('[FilerWithProjFS] Shutdown complete');
     }
 
     private async setupRootFileSystem(): Promise<IFileSystem> {
@@ -326,10 +325,37 @@ export class FilerWithProjFS {
             this.models.connections,
             this.models.iomManager,
             this.config.pairingUrl!,
-            this.config.iomMode!
+            this.config.iomMode! as 'full' | 'light'
         );
 
-        const objectsFileSystem = new ObjectsFileSystem();
+        // Create ObjectsFileSystem with performance patch
+        const baseObjectsFileSystem = new ObjectsFileSystem();
+        
+        // Patch the readDir method to limit objects enumeration during initial ProjFS pre-caching
+        const originalReadDir = baseObjectsFileSystem.readDir.bind(baseObjectsFileSystem);
+        let hasBeenEnumerated = false;
+        
+        baseObjectsFileSystem.readDir = async function(path: string) {
+            console.log(`[ObjectsFS-PATCH] readDir called with path: ${path}`);
+            
+            if (path === '/' && !hasBeenEnumerated) {
+                console.log('[ObjectsFS-PATCH] First enumeration - limiting to 50 objects for performance');
+                const result = await originalReadDir(path);
+                if (result?.children && result.children.length > 50) {
+                    console.log(`[ObjectsFS-PATCH] Limiting objects: ${result.children.length} -> 50`);
+                    hasBeenEnumerated = true;
+                    return {
+                        children: result.children.slice(0, 50)
+                    };
+                }
+                hasBeenEnumerated = true;
+                return result;
+            }
+            
+            // For subsequent calls, return full results
+            return originalReadDir(path);
+        };
+        
         const typesFileSystem = new TypesFileSystem();
 
         // Set commit hash for debug filesystem
@@ -340,8 +366,15 @@ export class FilerWithProjFS {
         await rootFileSystem.mountFileSystem('/chats', chatFileSystem);
         await rootFileSystem.mountFileSystem('/debug', debugFileSystem);
         await rootFileSystem.mountFileSystem('/invites', pairingFileSystem);
-        await rootFileSystem.mountFileSystem('/objects', objectsFileSystem);
+        await rootFileSystem.mountFileSystem('/objects', baseObjectsFileSystem);
         await rootFileSystem.mountFileSystem('/types', typesFileSystem);
+        
+        // Mount test data filesystem
+        const testDataFileSystem = new TestDataFileSystem();
+        await rootFileSystem.mountFileSystem('/test-data', testDataFileSystem);
+        
+        // Initialize test-data immediately to ensure it's ready for ProjFS cache
+        await testDataFileSystem.initialize();
 
         return rootFileSystem;
     }

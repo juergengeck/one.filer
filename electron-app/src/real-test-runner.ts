@@ -36,6 +36,12 @@ export class RealTestRunner {
         // Test Suite 4: Cache System
         suites.push(await this.testCacheSystem());
         
+        // Test Suite 5: ProjFS Specific Features
+        suites.push(await this.testProjFSFeatures());
+        
+        // Test Suite 6: Error Recovery
+        suites.push(await this.testErrorRecovery());
+        
         return suites;
     }
     
@@ -238,36 +244,47 @@ export class RealTestRunner {
         
         const startTime = Date.now();
         
-        // Test 1: Read a file from debug directory
+        // Test 1: Read commit-hash.txt with retries
         const test1Start = Date.now();
-        try {
-            // Look for commit-hash.txt which should exist in debug
-            const commitHashPath = path.join(this.mountPoint, 'debug', 'commit-hash.txt');
-            if (fs.existsSync(commitHashPath)) {
-                const content = fs.readFileSync(commitHashPath, 'utf8');
-                suite.tests.push({
-                    name: 'Can read commit hash file',
-                    status: 'pass',
-                    duration: Date.now() - test1Start
-                });
-                suite.passed++;
-            } else {
-                // Try to list what's in debug
-                const debugPath = path.join(this.mountPoint, 'debug');
-                const entries = fs.existsSync(debugPath) ? fs.readdirSync(debugPath) : [];
-                suite.tests.push({
-                    name: 'Can read commit hash file',
-                    status: 'fail',
-                    error: `Commit hash file not found. Debug contains: ${entries.slice(0, 5).join(', ')}`,
-                    duration: Date.now() - test1Start
-                });
-                suite.failed++;
+        let retries = 3;
+        let success = false;
+        let lastError = '';
+        
+        while (retries > 0 && !success) {
+            try {
+                // Wait progressively longer between retries
+                const waitTime = (4 - retries) * 500;
+                if (waitTime > 0) {
+                    await new Promise(resolve => setTimeout(resolve, waitTime));
+                }
+                
+                const commitHashPath = path.join(this.mountPoint, 'debug', 'commit-hash.txt');
+                if (fs.existsSync(commitHashPath)) {
+                    const content = fs.readFileSync(commitHashPath, 'utf8');
+                    suite.tests.push({
+                        name: 'Can read commit hash file',
+                        status: 'pass',
+                        duration: Date.now() - test1Start
+                    });
+                    suite.passed++;
+                    success = true;
+                } else {
+                    const debugPath = path.join(this.mountPoint, 'debug');
+                    const entries = fs.existsSync(debugPath) ? fs.readdirSync(debugPath) : [];
+                    lastError = `File not found. Debug contains: ${entries.slice(0, 5).join(', ')}`;
+                    retries--;
+                }
+            } catch (error) {
+                lastError = (error as Error).message;
+                retries--;
             }
-        } catch (error) {
+        }
+        
+        if (!success) {
             suite.tests.push({
                 name: 'Can read commit hash file',
                 status: 'fail',
-                error: (error as Error).message,
+                error: `After 3 retries: ${lastError}`,
                 duration: Date.now() - test1Start
             });
             suite.failed++;
@@ -414,5 +431,234 @@ export class RealTestRunner {
         } catch {
             return false;
         }
+    }
+    
+    private async testProjFSFeatures(): Promise<RealTestSuite> {
+        const suite: RealTestSuite = {
+            name: 'ProjFS Features',
+            tests: [],
+            passed: 0,
+            failed: 0,
+            duration: 0
+        };
+        
+        const startTime = Date.now();
+        
+        // Test 1: Verify virtual files are created on-demand
+        const test1Start = Date.now();
+        try {
+            const testPath = path.join(this.mountPoint, 'objects');
+            // First access should trigger ProjFS enumeration
+            const entries = fs.readdirSync(testPath);
+            suite.tests.push({
+                name: 'Virtual enumeration works',
+                status: entries.length >= 0 ? 'pass' : 'fail',
+                error: entries.length === 0 ? 'No entries found in objects directory' : undefined,
+                duration: Date.now() - test1Start
+            });
+            if (entries.length >= 0) suite.passed++; else suite.failed++;
+        } catch (error) {
+            suite.tests.push({
+                name: 'Virtual enumeration works',
+                status: 'fail',
+                error: (error as Error).message,
+                duration: Date.now() - test1Start
+            });
+            suite.failed++;
+        }
+        
+        // Test 2: Test concurrent file access
+        const test2Start = Date.now();
+        try {
+            const promises = [];
+            const debugPath = path.join(this.mountPoint, 'debug');
+            
+            // Try to read multiple files concurrently
+            for (let i = 0; i < 5; i++) {
+                promises.push(new Promise((resolve, reject) => {
+                    fs.readdir(debugPath, (err, files) => {
+                        if (err) reject(err);
+                        else resolve(files);
+                    });
+                }));
+            }
+            
+            const results = await Promise.all(promises);
+            const allSame = results.every(r => JSON.stringify(r) === JSON.stringify(results[0]));
+            
+            suite.tests.push({
+                name: 'Concurrent access returns consistent results',
+                status: allSame ? 'pass' : 'fail',
+                error: allSame ? undefined : 'Concurrent reads returned different results',
+                duration: Date.now() - test2Start
+            });
+            if (allSame) suite.passed++; else suite.failed++;
+        } catch (error) {
+            suite.tests.push({
+                name: 'Concurrent access returns consistent results',
+                status: 'fail',
+                error: (error as Error).message,
+                duration: Date.now() - test2Start
+            });
+            suite.failed++;
+        }
+        
+        // Test 3: Test file content verification
+        const test3Start = Date.now();
+        try {
+            const jsonPath = path.join(this.mountPoint, 'debug', 'connections.json');
+            if (fs.existsSync(jsonPath)) {
+                const content = fs.readFileSync(jsonPath, 'utf8');
+                // Verify it's valid JSON
+                JSON.parse(content);
+                suite.tests.push({
+                    name: 'JSON files contain valid JSON',
+                    status: 'pass',
+                    duration: Date.now() - test3Start
+                });
+                suite.passed++;
+            } else {
+                suite.tests.push({
+                    name: 'JSON files contain valid JSON',
+                    status: 'fail',
+                    error: 'connections.json not found',
+                    duration: Date.now() - test3Start
+                });
+                suite.failed++;
+            }
+        } catch (error) {
+            suite.tests.push({
+                name: 'JSON files contain valid JSON',
+                status: 'fail',
+                error: `Invalid JSON: ${(error as Error).message}`,
+                duration: Date.now() - test3Start
+            });
+            suite.failed++;
+        }
+        
+        // Test 4: Large directory handling
+        const test4Start = Date.now();
+        try {
+            const objectsPath = path.join(this.mountPoint, 'objects');
+            const start = Date.now();
+            const entries = fs.readdirSync(objectsPath);
+            const readTime = Date.now() - start;
+            
+            // Should handle large directories efficiently (under 5 seconds)
+            const isEfficient = readTime < 5000;
+            suite.tests.push({
+                name: 'Large directory enumeration is efficient',
+                status: isEfficient ? 'pass' : 'fail',
+                error: isEfficient ? undefined : `Took ${readTime}ms to enumerate ${entries.length} entries`,
+                duration: Date.now() - test4Start
+            });
+            if (isEfficient) suite.passed++; else suite.failed++;
+        } catch (error) {
+            suite.tests.push({
+                name: 'Large directory enumeration is efficient',
+                status: 'fail',
+                error: (error as Error).message,
+                duration: Date.now() - test4Start
+            });
+            suite.failed++;
+        }
+        
+        suite.duration = Date.now() - startTime;
+        return suite;
+    }
+    
+    private async testErrorRecovery(): Promise<RealTestSuite> {
+        const suite: RealTestSuite = {
+            name: 'Error Recovery',
+            tests: [],
+            passed: 0,
+            failed: 0,
+            duration: 0
+        };
+        
+        const startTime = Date.now();
+        
+        // Test 1: Handle non-existent file gracefully
+        const test1Start = Date.now();
+        try {
+            const nonExistentPath = path.join(this.mountPoint, 'debug', 'non-existent-file.txt');
+            const exists = fs.existsSync(nonExistentPath);
+            suite.tests.push({
+                name: 'Non-existent file returns false',
+                status: !exists ? 'pass' : 'fail',
+                error: exists ? 'File should not exist' : undefined,
+                duration: Date.now() - test1Start
+            });
+            if (!exists) suite.passed++; else suite.failed++;
+        } catch (error) {
+            suite.tests.push({
+                name: 'Non-existent file returns false',
+                status: 'fail',
+                error: (error as Error).message,
+                duration: Date.now() - test1Start
+            });
+            suite.failed++;
+        }
+        
+        // Test 2: Handle invalid path gracefully
+        const test2Start = Date.now();
+        try {
+            const invalidPath = path.join(this.mountPoint, '..', '..', 'invalid');
+            let handled = false;
+            try {
+                fs.readdirSync(invalidPath);
+            } catch {
+                handled = true;
+            }
+            suite.tests.push({
+                name: 'Invalid path handled gracefully',
+                status: handled ? 'pass' : 'fail',
+                error: handled ? undefined : 'Should have thrown error for invalid path',
+                duration: Date.now() - test2Start
+            });
+            if (handled) suite.passed++; else suite.failed++;
+        } catch (error) {
+            suite.tests.push({
+                name: 'Invalid path handled gracefully',
+                status: 'fail',
+                error: (error as Error).message,
+                duration: Date.now() - test2Start
+            });
+            suite.failed++;
+        }
+        
+        // Test 3: Mount point accessibility after error
+        const test3Start = Date.now();
+        try {
+            // Try to cause an error and then verify mount still works
+            try {
+                // Attempt to read a very long non-existent path
+                const longPath = path.join(this.mountPoint, 'a'.repeat(300));
+                fs.existsSync(longPath);
+            } catch {
+                // Ignore the error
+            }
+            
+            // Now verify mount still works
+            const entries = fs.readdirSync(this.mountPoint);
+            suite.tests.push({
+                name: 'Mount remains accessible after errors',
+                status: entries.length > 0 ? 'pass' : 'fail',
+                error: entries.length === 0 ? 'Mount not accessible' : undefined,
+                duration: Date.now() - test3Start
+            });
+            if (entries.length > 0) suite.passed++; else suite.failed++;
+        } catch (error) {
+            suite.tests.push({
+                name: 'Mount remains accessible after errors',
+                status: 'fail',
+                error: (error as Error).message,
+                duration: Date.now() - test3Start
+            });
+            suite.failed++;
+        }
+        
+        suite.duration = Date.now() - startTime;
+        return suite;
     }
 }

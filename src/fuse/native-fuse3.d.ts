@@ -9,7 +9,10 @@
  * @copyright REFINIO GmbH
  * @license SEE LICENSE IN LICENSE.md
  */
+/// <reference types="node" />
 import { EventEmitter } from 'events';
+import type { FuseOperations } from './types.js';
+export type { Stats, FuseOperations } from './types.js';
 export declare const EPERM: any;
 export declare const ENOENT: any;
 export declare const EIO: any;
@@ -22,56 +25,6 @@ export declare const ENOSPC: any;
 export declare const EROFS: any;
 export declare const EBUSY: any;
 export declare const ENOTEMPTY: any;
-export interface Stats {
-    mtime: Date;
-    atime: Date;
-    ctime: Date;
-    size: number;
-    mode: number;
-    uid: number;
-    gid: number;
-    nlink?: number;
-}
-export interface FuseError extends Error {
-    code: string;
-    path?: string;
-}
-export interface FuseOperations {
-    init?: (cb: (err: number) => void) => void;
-    error?: (err: Error) => void;
-    access?: (path: string, mode: number, cb: (err: number) => void) => void;
-    statfs?: (path: string, cb: (err: number, stat?: any) => void) => void;
-    getattr?: (path: string, cb: (err: number, stat?: Stats) => void) => void;
-    fgetattr?: (path: string, fd: number, cb: (err: number, stat?: Stats) => void) => void;
-    flush?: (path: string, fd: number, cb: (err: number) => void) => void;
-    fsync?: (path: string, datasync: boolean, fd: number, cb: (err: number) => void) => void;
-    fsyncdir?: (path: string, datasync: boolean, fd: number, cb: (err: number) => void) => void;
-    readdir?: (path: string, cb: (err: number, files?: string[], stats?: Stats[]) => void) => void;
-    truncate?: (path: string, size: number, cb: (err: number) => void) => void;
-    ftruncate?: (path: string, fd: number, size: number, cb: (err: number) => void) => void;
-    readlink?: (path: string, cb: (err: number, linkString?: string) => void) => void;
-    chown?: (path: string, uid: number, gid: number, cb: (err: number) => void) => void;
-    chmod?: (path: string, mode: number, cb: (err: number) => void) => void;
-    mknod?: (path: string, mode: number, dev: number, cb: (err: number) => void) => void;
-    setxattr?: (path: string, name: string, value: Buffer, size: number, flags: number, cb: (err: number) => void) => void;
-    getxattr?: (path: string, name: string, cb: (err: number, value?: Buffer) => void) => void;
-    listxattr?: (path: string, cb: (err: number, list?: string[]) => void) => void;
-    removexattr?: (path: string, name: string, cb: (err: number) => void) => void;
-    open?: (path: string, flags: number, cb: (err: number, fd?: number) => void) => void;
-    opendir?: (path: string, flags: number, cb: (err: number, fd?: number) => void) => void;
-    read?: (path: string, fd: number, buffer: Buffer, length: number, position: number, cb: (err: number, bytesRead?: number) => void) => void;
-    write?: (path: string, fd: number, buffer: Buffer, length: number, position: number, cb: (err: number, bytesWritten?: number) => void) => void;
-    release?: (path: string, fd: number, cb: (err: number) => void) => void;
-    releasedir?: (path: string, fd: number, cb: (err: number) => void) => void;
-    create?: (path: string, mode: number, cb: (err: number, fd?: number) => void) => void;
-    utimens?: (path: string, atime: number, mtime: number, cb: (err: number) => void) => void;
-    unlink?: (path: string, cb: (err: number) => void) => void;
-    rename?: (src: string, dest: string, cb: (err: number) => void) => void;
-    link?: (src: string, dest: string, cb: (err: number) => void) => void;
-    symlink?: (src: string, dest: string, cb: (err: number) => void) => void;
-    mkdir?: (path: string, mode: number, cb: (err: number) => void) => void;
-    rmdir?: (path: string, cb: (err: number) => void) => void;
-}
 /**
  * Native Linux FUSE3 implementation using N-API
  * This runs exclusively in WSL2/Linux and exposes filesystems to Windows

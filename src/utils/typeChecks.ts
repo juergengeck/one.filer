@@ -3,12 +3,12 @@
  */
 
 /**
- * Checks if a value is a non-null object
+ * Checks if a value is a non-null object (excluding arrays)
  * @param thing - The value to check
- * @returns true if the value is a non-null object
+ * @returns true if the value is a non-null object but not an array
  */
 export function isObject(thing: unknown): thing is Record<string, any> {
-    return typeof thing === 'object' && thing !== null;
+    return typeof thing === 'object' && thing !== null && !Array.isArray(thing);
 }
 
 /**

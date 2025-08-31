@@ -1,0 +1,23 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": ".",
+    "module": "commonjs",
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "types": ["node", "mocha", "chai"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "**/*.test.ts",
+    "run-all-tests.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.test.js",
+    "disabled/**/*"
+  ]
+}

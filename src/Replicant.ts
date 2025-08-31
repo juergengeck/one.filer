@@ -29,6 +29,7 @@ import {
 import AccessRightsManager from './AccessRightsManager';
 import type {ReplicantConfig} from './ReplicantConfig';
 import {DefaultReplicantConfig} from './ReplicantConfig';
+import type {FilerApiIntegration} from './api/FilerApiIntegration';
 
 /**
  * This class is the central component for the replicant.
@@ -53,6 +54,7 @@ export default class Replicant {
     private readonly topicModel: TopicModel;
     private readonly notifications: Notifications;
     private filer?: Filer | FilerWithProjFS;
+    private apiIntegration?: FilerApiIntegration;
 
     constructor(config: Partial<ReplicantConfig>) {
         if (process.platform !== 'win32' && isFunction(process.getuid) && process.getuid() === 0) {
@@ -159,9 +161,46 @@ export default class Replicant {
     }
 
     /**
+     * Start the admin API integration
+     * @param config - Configuration for the API server
+     */
+    public async startAdminApi(config?: {
+        port?: number;
+        host?: string;
+        instanceConfig?: any;
+    }): Promise<void> {
+        if (!this.filer) {
+            throw new Error('Filer must be initialized before starting admin API');
+        }
+
+        const models = {
+            channelManager: this.channelManager,
+            connections: this.connections,
+            leuteModel: this.leuteModel,
+            notifications: this.notifications,
+            topicModel: this.topicModel,
+            iomManager: this.iomManager
+        };
+
+        // Dynamic import to avoid circular dependencies
+        const { createFilerApiIntegration } = await import('./api/FilerApiIntegration.js');
+        this.apiIntegration = await createFilerApiIntegration(models, config);
+        console.log('[REPLICANT] Admin API integration started');
+    }
+
+    /**
      * Stop the replicant.
      */
     public async stop(): Promise<void> {
+        // Stop API integration first if it exists
+        if (this.apiIntegration) {
+            try {
+                await this.apiIntegration.stop();
+            } catch (e) {
+                console.error('Error stopping API integration:', e);
+            }
+        }
+
         for (const component of [
             this.connections,
             this.topicModel,

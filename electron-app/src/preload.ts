@@ -112,9 +112,9 @@ export interface ElectronAPI {
   runDiagnostics: () => Promise<Record<string, any>>;
   onDebugLog: (callback: (log: LogEntry) => void) => void;
   removeDebugLogListener: (callback: (log: LogEntry) => void) => void;
-  runTests: () => Promise<{
+  runTests: (testType?: 'all' | 'quick') => Promise<{
     success: boolean;
-    results?: TestSuiteResult[];
+    results?: any;
     error?: string;
   }>;
   runTestSuite: (suiteName: string) => Promise<{
@@ -127,6 +127,7 @@ export interface ElectronAPI {
     diagnostics?: any;
     error?: string;
   }>;
+  onTestProgress: (callback: (progress: any) => void) => void;
 }
 
 declare global {
@@ -153,9 +154,13 @@ const electronAPI: ElectronAPI = {
     // For now, we'll remove all listeners
     ipcRenderer.removeAllListeners('debug-log');
   },
-  runTests: () => ipcRenderer.invoke('run-tests'),
+  runTests: (testType) => ipcRenderer.invoke('run-tests', testType),
   runTestSuite: (suiteName) => ipcRenderer.invoke('run-test-suite', suiteName),
-  getTestDiagnostics: () => ipcRenderer.invoke('get-test-diagnostics')
+  getTestDiagnostics: () => ipcRenderer.invoke('get-test-diagnostics'),
+  onTestProgress: (callback) => {
+    const handler = (_event: Electron.IpcRendererEvent, progress: any) => callback(progress);
+    ipcRenderer.on('test-progress', handler);
+  }
 };
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI);

@@ -56,6 +56,51 @@
         <div class="button-group">
           <button id="logoutBtn">Stop</button>
           <button id="refreshBtn">Refresh Status</button>
+          <button id="testBtn">Run Tests</button>
+        </div>
+      </div>
+      
+      <div id="testView" class="test-view" style="display: none;">
+        <div class="test-header">
+          <h3>Cross-Platform Integration Tests</h3>
+          <div class="test-controls">
+            <button id="runAllTestsBtn" class="btn-primary">Run All Tests</button>
+            <button id="runQuickTestsBtn" class="btn-secondary">Quick Tests</button>
+            <button id="backToMainBtn" class="btn-back">← Back</button>
+          </div>
+        </div>
+        
+        <div id="testProgress" class="test-progress" style="display: none;">
+          <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+          </div>
+          <div id="progressText" class="progress-text">Initializing tests...</div>
+        </div>
+        
+        <div id="testResults" class="test-results">
+          <div class="test-summary" id="testSummary" style="display: none;">
+            <h4>Test Summary</h4>
+            <div class="summary-stats">
+              <div class="stat-item">
+                <span class="stat-label">Total:</span>
+                <span id="totalTests" class="stat-value">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Passed:</span>
+                <span id="passedTests" class="stat-value success">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Failed:</span>
+                <span id="failedTests" class="stat-value error">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Duration:</span>
+                <span id="testDuration" class="stat-value">0ms</span>
+              </div>
+            </div>
+          </div>
+          
+          <div id="testSuites" class="test-suites"></div>
         </div>
       </div>
     </div>

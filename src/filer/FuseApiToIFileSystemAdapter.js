@@ -1,16 +1,21 @@
+"use strict";
 /// <reference types="node" />
-import { Fuse } from '../fuse/native-fuse3.js';
-import { OEvent } from '@refinio/one.models/lib/misc/OEvent.js';
-import { FS_ERRORS } from '@refinio/one.models/lib/fileSystems/FileSystemErrors.js';
-import { createError } from '@refinio/one.core/lib/errors.js';
-import { handleError } from '../misc/fuseHelper';
-import FuseTemporaryFilesManager from './FuseTemporaryFilesManager';
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const types_js_1 = require("../fuse/types.js");
+const OEvent_js_1 = require("@refinio/one.models/lib/misc/OEvent.js");
+const FileSystemErrors_js_1 = require("@refinio/one.models/lib/fileSystems/FileSystemErrors.js");
+const errors_js_1 = require("@refinio/one.core/lib/errors.js");
+const fuseHelper_1 = require("../misc/fuseHelper");
+const FuseTemporaryFilesManager_1 = __importDefault(require("./FuseTemporaryFilesManager"));
 let fuseFd = 10;
 /**
  * This class implements the fuse api and forward those calls to {@link IFileSystem}.
  */
-export default class FuseApiToIFileSystemAdapter {
-    onFilePersisted = new OEvent();
+class FuseApiToIFileSystemAdapter {
+    onFilePersisted = new OEvent_js_1.OEvent();
     constTimes = new Date();
     regularFileMode = 0o0100666;
     // 0o0040000 octal number for directory type concatenated with the desired mode private
@@ -37,7 +42,7 @@ export default class FuseApiToIFileSystemAdapter {
     constructor(fs, oneStoragePath, logCalls = false) {
         this.fs = fs;
         this.logCalls = logCalls;
-        this.tmpFilesMgr = new FuseTemporaryFilesManager(oneStoragePath);
+        this.tmpFilesMgr = new FuseTemporaryFilesManager_1.default(oneStoragePath);
     }
     fuseInit(cb) {
         cb(0);
@@ -101,14 +106,14 @@ export default class FuseApiToIFileSystemAdapter {
                         if (disconnect) {
                             disconnect();
                         }
-                        reject(createError('FSE-ENOENT', {
-                            message: FS_ERRORS['FSE-ENOENT'].message,
+                        reject((0, errors_js_1.createError)('FSE-ENOENT', {
+                            message: FileSystemErrors_js_1.FS_ERRORS['FSE-ENOENT'].message,
                             path
                         }));
                     }, 10000);
                 })
                     .then(res => cb(0, res))
-                    .catch(err => cb(handleError(err, this.logCalls, 'getattr')));
+                    .catch(err => cb((0, fuseHelper_1.handleError)(err, this.logCalls, 'getattr')));
             }
         }
         else {
@@ -126,7 +131,7 @@ export default class FuseApiToIFileSystemAdapter {
                     gid: this.getGid()
                 });
             })
-                .catch((err) => cb(handleError(err, this.logCalls, 'getattr')));
+                .catch((err) => cb((0, fuseHelper_1.handleError)(err, this.logCalls, 'getattr')));
         }
     }
     /**
@@ -157,7 +162,7 @@ export default class FuseApiToIFileSystemAdapter {
         this.fs
             .readDir(path)
             .then((res) => cb(0, res.children))
-            .catch((err) => cb(handleError(err, this.logCalls)));
+            .catch((err) => cb((0, fuseHelper_1.handleError)(err, this.logCalls)));
     }
     /**
      *
@@ -195,7 +200,20 @@ export default class FuseApiToIFileSystemAdapter {
                 bufferR.copy(buffer);
                 cb(0, bufferR.length);
             })
-                .catch((err) => cb(handleError(err, this.logCalls), 0));
+                .catch((err) => cb((0, fuseHelper_1.handleError)(err, this.logCalls), 0));
+        }
+        else {
+            // Handle regular file reading when chunked reading is not supported
+            this.fs
+                .readFile(givenPath)
+                .then((res) => {
+                const content = Buffer.from(res.content);
+                const end = Math.min(position + length, content.length);
+                const slice = content.slice(position, end);
+                slice.copy(buffer);
+                cb(0, slice.length);
+            })
+                .catch((err) => cb((0, fuseHelper_1.handleError)(err, this.logCalls), 0));
         }
     }
     /**
@@ -208,7 +226,7 @@ export default class FuseApiToIFileSystemAdapter {
         this.fs
             .createDir(dirPath, 0o0040777)
             .then(() => cb(0))
-            .catch((err) => cb(handleError(err, this.logCalls)));
+            .catch((err) => cb((0, fuseHelper_1.handleError)(err, this.logCalls)));
     }
     /**
      * Flush on temporary files
@@ -267,10 +285,10 @@ export default class FuseApiToIFileSystemAdapter {
                 this.onFilePersisted.emit({ path: path });
                 cb(0);
             })
-                .catch(err => cb(handleError(err, this.logCalls)));
+                .catch(err => cb((0, fuseHelper_1.handleError)(err, this.logCalls)));
         }
         else {
-            cb(Fuse.ENOENT);
+            cb(types_js_1.ENOENT);
         }
     }
     /**
@@ -287,38 +305,38 @@ export default class FuseApiToIFileSystemAdapter {
         this.fs
             .unlink(path)
             .then((result) => cb(result))
-            .catch((err) => cb(handleError(err, this.logCalls)));
+            .catch((err) => cb((0, fuseHelper_1.handleError)(err, this.logCalls)));
     }
     /** Rename file. */
     fuseRename(src, dest, cb) {
         this.fs
             .rename(src, dest)
             .then((result) => cb(result))
-            .catch((err) => cb(handleError(err, this.logCalls)));
+            .catch((err) => cb((0, fuseHelper_1.handleError)(err, this.logCalls)));
     }
     /** Remove directory. */
     fuseRmdir(path, cb) {
         this.fs
             .rmdir(path)
             .then((result) => cb(result))
-            .catch((err) => cb(handleError(err, this.logCalls)));
+            .catch((err) => cb((0, fuseHelper_1.handleError)(err, this.logCalls)));
     }
     /** Change mode of file. */
     fuseChmod(path, mode, cb) {
         this.fs
             .chmod(path, mode)
             .then((result) => cb(result))
-            .catch((err) => cb(handleError(err, this.logCalls)));
+            .catch((err) => cb((0, fuseHelper_1.handleError)(err, this.logCalls)));
     }
     fuseMknod(_path, _mode, _dev, cb) {
-        cb(handleError(createError('FSE-ENOSYS', {
-            message: FS_ERRORS['FSE-ENOSYS'].message
+        cb((0, fuseHelper_1.handleError)((0, errors_js_1.createError)('FSE-ENOSYS', {
+            message: FileSystemErrors_js_1.FS_ERRORS['FSE-ENOSYS'].message
         }), this.logCalls, 'mknod'));
     }
     fuseSetxattr(_path, _name, _value, _size, _flags, cb) {
         // If we want to store it, we need to store the value Buffer somewhere
-        cb(handleError(createError('FSE-ENOSYS', {
-            message: FS_ERRORS['FSE-ENOSYS'].message
+        cb((0, fuseHelper_1.handleError)((0, errors_js_1.createError)('FSE-ENOSYS', {
+            message: FileSystemErrors_js_1.FS_ERRORS['FSE-ENOSYS'].message
         }), this.logCalls, 'setxattr'));
     }
     fuseGetxattr(_path, _name, _size, cb) {
@@ -329,8 +347,8 @@ export default class FuseApiToIFileSystemAdapter {
         cb(0, []);
     }
     fuseRemovexattr(_path, _name, cb) {
-        cb(handleError(createError('FSE-ENOSYS', {
-            message: FS_ERRORS['FSE-ENOSYS'].message
+        cb((0, fuseHelper_1.handleError)((0, errors_js_1.createError)('FSE-ENOSYS', {
+            message: FileSystemErrors_js_1.FS_ERRORS['FSE-ENOSYS'].message
         }), this.logCalls, 'removexattr'));
     }
     /**
@@ -350,7 +368,7 @@ export default class FuseApiToIFileSystemAdapter {
             });
             cb(0, fd, mode);
         })
-            .catch(err => cb(handleError(err, this.logCalls)));
+            .catch(err => cb((0, fuseHelper_1.handleError)(err, this.logCalls)));
     }
     /**
      *
@@ -365,7 +383,7 @@ export default class FuseApiToIFileSystemAdapter {
         this.tmpFilesMgr
             .writeToTemporaryFile(givenPath, buffer, length, position)
             .then(bytesWritten => cb(0, bytesWritten))
-            .catch(err => cb(handleError(err, this.logCalls), 0));
+            .catch(err => cb((0, fuseHelper_1.handleError)(err, this.logCalls), 0));
     }
     /**
      * fuseAccess is called to check rights for an inode.
@@ -392,8 +410,8 @@ export default class FuseApiToIFileSystemAdapter {
         });
     }
     fuseFgetattr(_path, _fd, cb) {
-        cb(handleError(createError('FSE-ENOSYS', {
-            message: FS_ERRORS['FSE-ENOSYS'].message
+        cb((0, fuseHelper_1.handleError)((0, errors_js_1.createError)('FSE-ENOSYS', {
+            message: FileSystemErrors_js_1.FS_ERRORS['FSE-ENOSYS'].message
         }), this.logCalls, 'fgetattr'));
     }
     /**
@@ -417,29 +435,30 @@ export default class FuseApiToIFileSystemAdapter {
         cb(0);
     }
     fuseLink(_src, _dest, cb) {
-        cb(handleError(createError('FSE-ENOSYS', {
-            message: FS_ERRORS['FSE-ENOSYS'].message
+        cb((0, fuseHelper_1.handleError)((0, errors_js_1.createError)('FSE-ENOSYS', {
+            message: FileSystemErrors_js_1.FS_ERRORS['FSE-ENOSYS'].message
         }), this.logCalls, 'link'));
     }
     fuseSymlink(src, dest, cb) {
         this.fs
             .symlink(src, dest)
             .then(() => cb(0))
-            .catch((err) => cb(handleError(err, this.logCalls)));
+            .catch((err) => cb((0, fuseHelper_1.handleError)(err, this.logCalls)));
     }
     fuseReadlink(path, cb) {
         this.fs
             .readlink(path)
             .then((res) => cb(0, Buffer.from(res.content).toString()))
-            .catch((err) => cb(handleError(err, this.logCalls)));
+            .catch((err) => cb((0, fuseHelper_1.handleError)(err, this.logCalls)));
     }
     fuseFsync(_path, _datasync, _fd, cb) {
         cb(0);
     }
     fuseFsyncdir(_path, _datasync, _fd, cb) {
-        cb(handleError(createError('FSE-ENOSYS', {
-            message: FS_ERRORS['FSE-ENOSYS'].message
+        cb((0, fuseHelper_1.handleError)((0, errors_js_1.createError)('FSE-ENOSYS', {
+            message: FileSystemErrors_js_1.FS_ERRORS['FSE-ENOSYS'].message
         }), this.logCalls, 'fsyncdir'));
     }
 }
+exports.default = FuseApiToIFileSystemAdapter;
 //# sourceMappingURL=FuseApiToIFileSystemAdapter.js.map

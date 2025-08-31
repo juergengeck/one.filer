@@ -1,13 +1,19 @@
-import fs from 'fs';
-import path from 'path';
-import FuseApiToIFileSystemAdapter from './FuseApiToIFileSystemAdapter';
-import { splitRoutePath } from '../misc/fuseHelper';
-import { isFunction } from '../utils/typeChecks';
-import { getFuse } from '../fuse/index.js';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FuseFrontend = void 0;
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
+const FuseApiToIFileSystemAdapter_1 = __importDefault(require("./FuseApiToIFileSystemAdapter"));
+const fuseHelper_1 = require("../misc/fuseHelper");
+const typeChecks_1 = require("../utils/typeChecks");
+const index_js_1 = require("../fuse/index.js");
 /**
  *  This is a fuse frontend.
  */
-export class FuseFrontend {
+class FuseFrontend {
     fuseInstance = null;
     Fuse;
     /** Start the fuse frontend.
@@ -22,16 +28,16 @@ export class FuseFrontend {
             throw Error('Fuse frontend already started');
         }
         // Get the platform-appropriate FUSE implementation
-        this.Fuse = await getFuse();
+        this.Fuse = await (0, index_js_1.getFuse)();
         // Resolve mount point to absolute path
-        const absoluteMountPoint = path.resolve(mountPoint);
+        const absoluteMountPoint = path_1.default.resolve(mountPoint);
         console.log(`🔧 Resolved mount point: ${mountPoint} -> ${absoluteMountPoint}`);
         FuseFrontend.setupMountPoint(absoluteMountPoint);
         // If we plan to have multiple implementations of the fuse API, then we need to move
         // this part outside this class. But at the moment we don't plan to do it (The
         // IFileSystem hopefully fits all), so it is easier not to expose this extra layer to
         // the outside.
-        const fuseFileSystemAdapter = new FuseApiToIFileSystemAdapter(rootFileSystem, absoluteMountPoint, logCalls);
+        const fuseFileSystemAdapter = new FuseApiToIFileSystemAdapter_1.default(rootFileSystem, absoluteMountPoint, logCalls);
         // Why fuseHandlers: Fuse.OPERATIONS
         // THE TYPE HAS BEEN ADDED TO THAT THE FUNCTIONS ARE CHECKED AGAINST Fuse.OPERATIONS
         // Fuse.OPERATIONS has all members set to "optional", which makes the type for
@@ -138,7 +144,7 @@ export class FuseFrontend {
         }
     }
     static async isFuseNativeConfigured() {
-        const Fuse = await getFuse();
+        const Fuse = await (0, index_js_1.getFuse)();
         return new Promise((resolve, reject) => {
             Fuse.isConfigured((err, isConfigured) => {
                 if (err !== null) {
@@ -149,7 +155,7 @@ export class FuseFrontend {
         });
     }
     static async configureFuseNative() {
-        const Fuse = await getFuse();
+        const Fuse = await (0, index_js_1.getFuse)();
         return new Promise((resolve, reject) => {
             Fuse.configure(errConfigure => {
                 if (errConfigure) {
@@ -171,13 +177,13 @@ export class FuseFrontend {
         switch (process.platform) {
             case 'win32':
                 // the mounting folder must not exist on win32
-                if (fs.existsSync(mountPoint)) {
-                    fs.rmdirSync(mountPoint);
+                if (fs_1.default.existsSync(mountPoint)) {
+                    fs_1.default.rmdirSync(mountPoint);
                 }
                 break;
             default:
-                if (!fs.existsSync(mountPoint)) {
-                    fs.mkdirSync(mountPoint);
+                if (!fs_1.default.existsSync(mountPoint)) {
+                    fs_1.default.mkdirSync(mountPoint);
                 }
                 break;
         }
@@ -208,7 +214,7 @@ export class FuseFrontend {
     static logFuseCallCB(name, handler, ...args) {
         const normalArgs = args.slice(0, -1);
         const cbArg = args[args.length - 1];
-        if (!isFunction(cbArg)) {
+        if (!(0, typeChecks_1.isFunction)(cbArg)) {
             throw new Error(`cbArg is not a function but ${typeof cbArg}: ${String(cbArg)}`);
         }
         // Call the normal arguments and with a special callback functions to intercept the answers
@@ -224,7 +230,7 @@ export class FuseFrontend {
             const route = String(normalArgs[0]) === '/'
                 ? '\x1b[40mroot\x1b[0m'
                 : String(normalArgs[0]).includes('/')
-                    ? `\x1b[40m${splitRoutePath(normalArgs[0]).prefix}\x1b[0m`
+                    ? `\x1b[40m${(0, fuseHelper_1.splitRoutePath)(normalArgs[0]).prefix}\x1b[0m`
                     : '';
             if (route === '.git') {
                 cbArg(...argscb);
@@ -241,4 +247,5 @@ export class FuseFrontend {
         });
     }
 }
+exports.FuseFrontend = FuseFrontend;
 //# sourceMappingURL=FuseFrontend.js.map

@@ -1,14 +1,18 @@
-import { isObject } from '../utils/typeChecks';
-import { readFile } from 'fs/promises';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.assignConfigOption = exports.readJsonFileOrEmpty = exports.fillMissingWithDefaults = void 0;
+const typeChecks_1 = require("../utils/typeChecks");
+const promises_1 = require("fs/promises");
 /**
  * Fills the required fields of a partial configuration with the fields from a default config.
  *
  * @param partialConfig
  * @param defaults
  */
-export function fillMissingWithDefaults(partialConfig, defaults) {
+function fillMissingWithDefaults(partialConfig, defaults) {
     return Object.assign({}, defaults, partialConfig);
 }
+exports.fillMissingWithDefaults = fillMissingWithDefaults;
 /**
  * Read a .json file and parse its context - or return an empty object if file does not exist.
  *
@@ -16,10 +20,10 @@ export function fillMissingWithDefaults(partialConfig, defaults) {
  *
  * @param fileName
  */
-export async function readJsonFileOrEmpty(fileName) {
+async function readJsonFileOrEmpty(fileName) {
     let obj;
     try {
-        obj = JSON.parse(await readFile(fileName, 'utf8'));
+        obj = JSON.parse(await (0, promises_1.readFile)(fileName, 'utf8'));
     }
     catch (err) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -30,6 +34,7 @@ export async function readJsonFileOrEmpty(fileName) {
     }
     return obj;
 }
+exports.readJsonFileOrEmpty = readJsonFileOrEmpty;
 /**
  * This function can be used to assign a value to a tree of objects.
  *
@@ -47,7 +52,7 @@ export async function readJsonFileOrEmpty(fileName) {
  * @param dottedPath - The path to the element to add / change
  * @param value - The value to assign
  */
-export function assignConfigOption(config, dottedPath, value) {
+function assignConfigOption(config, dottedPath, value) {
     if (value === undefined) {
         return;
     }
@@ -65,10 +70,11 @@ export function assignConfigOption(config, dottedPath, value) {
         config[first] = value;
         return;
     }
-    if (!isObject(config[first])) {
+    if (!(0, typeChecks_1.isObject)(config[first])) {
         throw new Error('Cannot assign config value, because inner path element points to a type that is not' +
             ' an object');
     }
     assignConfigOption(config[first], other.join('.'), value);
 }
+exports.assignConfigOption = assignConfigOption;
 //# sourceMappingURL=configHelper.js.map

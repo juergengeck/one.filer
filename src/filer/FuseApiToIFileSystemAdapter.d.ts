@@ -1,10 +1,12 @@
+/// <reference types="node" />
+/// <reference types="node" />
 /**
  * @author Sebastian Sandru <sebastian@refinio.com>
  * @copyright REFINIO GmbH
  * @license SEE LICENSE IN LICENSE.md
  * @version 0.0.1
  */
-import type { Stats as FuseStats } from '../fuse/native-fuse3.js';
+import type { Stats as FuseStats } from '../fuse/types.js';
 import type { IFileSystem } from '@refinio/one.models/lib/fileSystems/IFileSystem.js';
 /**
  * This class implements the fuse api and forward those calls to {@link IFileSystem}.

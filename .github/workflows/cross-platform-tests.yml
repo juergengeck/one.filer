@@ -1,0 +1,241 @@
+name: Cross-Platform Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test-linux:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: Install FUSE3
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y fuse3 libfuse3-dev
+    
+    - name: Install dependencies
+      run: |
+        npm install
+        cd packages/one.filer.linux
+        npm install
+        npm run build:addon
+    
+    - name: Install refinio.cli
+      run: |
+        cd refinio.cli
+        npm install
+        npm link
+    
+    - name: Run Linux tests
+      run: |
+        # Start ONE instance in background
+        cd packages/one.filer.linux
+        npm start -- -s test-secret --filer true &
+        ONE_PID=$!
+        
+        # Wait for startup
+        sleep 10
+        
+        # Run tests
+        node ../../test-cross-platform-refinio-cli.js
+        TEST_RESULT=$?
+        
+        # Stop ONE instance
+        kill $ONE_PID || true
+        
+        exit $TEST_RESULT
+    
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: linux-test-results
+        path: test-results/
+
+  test-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: Enable ProjFS
+      run: |
+        Enable-WindowsOptionalFeature -Online -FeatureName Client-ProjFS -NoRestart
+      shell: powershell
+    
+    - name: Install dependencies
+      run: |
+        npm install
+        cd electron-app
+        npm install
+        npm run build:native
+    
+    - name: Install refinio.cli
+      run: |
+        cd refinio.cli
+        npm install
+        npm link
+    
+    - name: Run Windows tests
+      run: |
+        # Run tests (Electron app will start automatically)
+        node test-cross-platform-refinio-cli.js
+      shell: cmd
+    
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: windows-test-results
+        path: test-results/
+
+  test-wsl:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup WSL
+      uses: Vampire/setup-wsl@v2
+      with:
+        distribution: Ubuntu-22.04
+    
+    - name: Setup environment in WSL
+      shell: wsl-bash {0}
+      run: |
+        # Update packages
+        sudo apt-get update
+        sudo apt-get install -y nodejs npm fuse3 libfuse3-dev build-essential
+        
+        # Install Node 18
+        curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+        sudo apt-get install -y nodejs
+    
+    - name: Install dependencies in WSL
+      shell: wsl-bash {0}
+      run: |
+        npm install
+        cd packages/one.filer.linux
+        npm install
+        npm run build:addon
+    
+    - name: Install refinio.cli in WSL
+      shell: wsl-bash {0}
+      run: |
+        cd refinio.cli
+        npm install
+        npm link
+    
+    - name: Run WSL tests
+      shell: wsl-bash {0}
+      run: |
+        # Start ONE instance in background
+        cd packages/one.filer.linux
+        npm start -- -s test-secret --filer true &
+        ONE_PID=$!
+        
+        # Wait for startup
+        sleep 10
+        
+        # Run tests
+        node ../../test-cross-platform-refinio-cli.js
+        TEST_RESULT=$?
+        
+        # Stop ONE instance
+        kill $ONE_PID || true
+        
+        exit $TEST_RESULT
+    
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: wsl-test-results
+        path: test-results/
+
+  cross-platform-sync:
+    needs: [test-linux, test-windows]
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Download test results
+      uses: actions/download-artifact@v3
+      with:
+        path: test-results/
+    
+    - name: Analyze cross-platform compatibility
+      run: |
+        echo "Analyzing test results for cross-platform compatibility..."
+        
+        # Check if all platforms passed
+        LINUX_PASSED=false
+        WINDOWS_PASSED=false
+        
+        if [ -f "test-results/linux-test-results/passed" ]; then
+          LINUX_PASSED=true
+        fi
+        
+        if [ -f "test-results/windows-test-results/passed" ]; then
+          WINDOWS_PASSED=true
+        fi
+        
+        echo "Linux tests: $LINUX_PASSED"
+        echo "Windows tests: $WINDOWS_PASSED"
+        
+        if [ "$LINUX_PASSED" = true ] && [ "$WINDOWS_PASSED" = true ]; then
+          echo "✅ Cross-platform compatibility verified!"
+          exit 0
+        else
+          echo "❌ Cross-platform compatibility issues detected"
+          exit 1
+        fi
+    
+    - name: Generate compatibility report
+      if: always()
+      run: |
+        cat > compatibility-report.md << EOF
+        # Cross-Platform Compatibility Report
+        
+        ## Test Results
+        - Linux: ${{ needs.test-linux.result }}
+        - Windows: ${{ needs.test-windows.result }}
+        - WSL: ${{ needs.test-wsl.result }}
+        
+        ## Platform Features
+        - Linux: FUSE3 filesystem
+        - Windows: ProjFS virtualization
+        - WSL: Linux FUSE3 with Windows interop
+        
+        ## refinio.cli Compatibility
+        All platforms use the same refinio.cli commands for:
+        - Mounting/unmounting filesystems
+        - Configuration management
+        - Status monitoring
+        - Data operations
+        
+        Generated: $(date)
+        EOF
+    
+    - name: Upload compatibility report
+      uses: actions/upload-artifact@v3
+      with:
+        name: compatibility-report
+        path: compatibility-report.md
